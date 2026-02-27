@@ -1,0 +1,41 @@
+reform_id,reform_name,year,value
+combined,All policies combined,2026,-83.37261769209078
+combined,All policies combined,2027,-95.88632944820645
+combined,All policies combined,2028,-99.15561136608416
+combined,All policies combined,2029,-102.48461887104618
+combined,All policies combined,2030,-106.10953143913645
+scp_inflation,SCP inflation adjustment (£28.20/week),2026,-19.55755970331444
+scp_inflation,SCP inflation adjustment (£28.20/week),2027,-18.90143153005326
+scp_inflation,SCP inflation adjustment (£28.20/week),2028,-18.97710159857563
+scp_inflation,SCP inflation adjustment (£28.20/week),2029,-19.060581822089308
+scp_inflation,SCP inflation adjustment (£28.20/week),2030,-19.146228091866217
+scp_baby_boost,SCP Premium for under-ones (£40/week),2026,-0.0
+scp_baby_boost,SCP Premium for under-ones (£40/week),2027,-8.847663347952404
+scp_baby_boost,SCP Premium for under-ones (£40/week),2028,-9.042416191507101
+scp_baby_boost,SCP Premium for under-ones (£40/week),2029,-9.282249192914035
+scp_baby_boost,SCP Premium for under-ones (£40/week),2030,-9.52499300741169
+income_tax_basic_uplift,Basic rate threshold +7.4%,2026,-33.31598868410882
+income_tax_basic_uplift,Basic rate threshold +7.4%,2027,-34.276273416580345
+income_tax_basic_uplift,Basic rate threshold +7.4%,2028,-35.29958001794659
+income_tax_basic_uplift,Basic rate threshold +7.4%,2029,-36.29404661117755
+income_tax_basic_uplift,Basic rate threshold +7.4%,2030,-37.348572232366315
+income_tax_intermediate_uplift,Intermediate rate threshold +7.4%,2026,-30.499696310636953
+income_tax_intermediate_uplift,Intermediate rate threshold +7.4%,2027,-32.51184906904511
+income_tax_intermediate_uplift,Intermediate rate threshold +7.4%,2028,-34.00577321039646
+income_tax_intermediate_uplift,Intermediate rate threshold +7.4%,2029,-35.52695335720138
+income_tax_intermediate_uplift,Intermediate rate threshold +7.4%,2030,-37.27655175466754
+higher_rate_freeze,Higher rate threshold freeze,2026,-0.0
+higher_rate_freeze,Higher rate threshold freeze,2027,111.77812356833934
+higher_rate_freeze,Higher rate threshold freeze,2028,235.16159393374357
+higher_rate_freeze,Higher rate threshold freeze,2029,245.18169202886648
+higher_rate_freeze,Higher rate threshold freeze,2030,254.59829998345654
+advanced_rate_freeze,Advanced rate threshold freeze,2026,-0.0
+advanced_rate_freeze,Advanced rate threshold freeze,2027,9.685348979024532
+advanced_rate_freeze,Advanced rate threshold freeze,2028,19.363622059537594
+advanced_rate_freeze,Advanced rate threshold freeze,2029,19.830422969582663
+advanced_rate_freeze,Advanced rate threshold freeze,2030,19.927049358699204
+top_rate_freeze,Top rate threshold freeze,2026,-0.0
+top_rate_freeze,Top rate threshold freeze,2027,1.9865054897742356
+top_rate_freeze,Top rate threshold freeze,2028,4.640771643690957
+top_rate_freeze,Top rate threshold freeze,2029,5.285367848081056
+top_rate_freeze,Top rate threshold freeze,2030,5.576671318763467

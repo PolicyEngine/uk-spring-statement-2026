@@ -1,0 +1,113 @@
+/* Decile Chart styling */
+
+.decile-chart {
+  background: var(--pe-surface);
+  border: 1px solid var(--pe-gray-200);
+  border-radius: var(--pe-radius-lg);
+  padding: var(--pe-space-lg);
+}
+
+.decile-chart .chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: var(--pe-space-md);
+}
+
+.decile-chart .chart-title {
+  font-family: var(--pe-font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--pe-gray-800);
+  margin: 0 0 6px 0;
+}
+
+.decile-chart .chart-description {
+  font-size: 0.875rem;
+  color: var(--pe-gray-500);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.decile-chart .chart-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--pe-space-md);
+  margin-bottom: var(--pe-space-md);
+  flex-wrap: wrap;
+}
+
+.decile-chart .year-toggle {
+  display: inline-flex;
+  background: var(--pe-gray-100);
+  border-radius: 6px;
+  padding: 2px;
+  margin-left: auto;
+}
+
+.decile-chart .year-toggle button {
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--pe-gray-600);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.decile-chart .year-toggle button:hover {
+  color: var(--pe-gray-800);
+}
+
+.decile-chart .year-toggle button.active {
+  background: white;
+  color: var(--pe-teal-700);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.decile-chart .view-toggle {
+  display: inline-flex;
+  background: var(--pe-gray-100);
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.decile-chart .view-toggle button {
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--pe-gray-600);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.decile-chart .view-toggle button:hover {
+  color: var(--pe-gray-800);
+}
+
+.decile-chart .view-toggle button.active {
+  background: white;
+  color: var(--pe-teal-700);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.decile-chart .chart-note {
+  font-size: 0.75rem;
+  color: var(--pe-gray-400);
+  margin: var(--pe-space-md) 0 0 0;
+  line-height: 1.4;
+}
+
+.decile-chart .chart-empty {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--pe-gray-400);
+  background: var(--pe-gray-50);
+  border-radius: var(--pe-radius-md);
+}
