@@ -1,276 +1,276 @@
 year,decile,outcome,share
-2026,1st,Lose more than 5%,0.0
-2026,1st,Lose less than 5%,0.0
-2026,1st,No change,1.0
-2026,1st,Gain less than 5%,0.0
-2026,1st,Gain more than 5%,0.0
-2026,2nd,Lose more than 5%,0.0
-2026,2nd,Lose less than 5%,0.0
-2026,2nd,No change,1.0
-2026,2nd,Gain less than 5%,0.0
-2026,2nd,Gain more than 5%,0.0
-2026,3rd,Lose more than 5%,0.0
-2026,3rd,Lose less than 5%,0.0
-2026,3rd,No change,1.0
-2026,3rd,Gain less than 5%,0.0
-2026,3rd,Gain more than 5%,0.0
-2026,4th,Lose more than 5%,0.0
-2026,4th,Lose less than 5%,0.0
-2026,4th,No change,1.0
-2026,4th,Gain less than 5%,0.0
-2026,4th,Gain more than 5%,0.0
-2026,5th,Lose more than 5%,0.0
-2026,5th,Lose less than 5%,0.0
-2026,5th,No change,1.0
-2026,5th,Gain less than 5%,0.0
-2026,5th,Gain more than 5%,0.0
-2026,6th,Lose more than 5%,0.0
-2026,6th,Lose less than 5%,0.0
-2026,6th,No change,1.0
-2026,6th,Gain less than 5%,0.0
-2026,6th,Gain more than 5%,0.0
-2026,7th,Lose more than 5%,0.0
-2026,7th,Lose less than 5%,0.0
-2026,7th,No change,1.0
-2026,7th,Gain less than 5%,0.0
-2026,7th,Gain more than 5%,0.0
-2026,8th,Lose more than 5%,0.0
-2026,8th,Lose less than 5%,0.0
-2026,8th,No change,1.0
-2026,8th,Gain less than 5%,0.0
-2026,8th,Gain more than 5%,0.0
+2026,1st,Lose more than 5%,0.003588456128435063
+2026,1st,Lose less than 5%,0.0040980518038138385
+2026,1st,No change,0.9477600002451908
+2026,1st,Gain less than 5%,0.04316734269823038
+2026,1st,Gain more than 5%,0.0013861491243300102
+2026,2nd,Lose more than 5%,0.0014519814345184962
+2026,2nd,Lose less than 5%,0.00152994179735113
+2026,2nd,No change,0.9763020334870605
+2026,2nd,Gain less than 5%,0.019278491166723834
+2026,2nd,Gain more than 5%,0.0014375521143460287
+2026,3rd,Lose more than 5%,1.134064713466854e-05
+2026,3rd,Lose less than 5%,0.0015791426335324097
+2026,3rd,No change,0.9851807796384523
+2026,3rd,Gain less than 5%,0.010861547930898451
+2026,3rd,Gain more than 5%,0.0023671891499821365
+2026,4th,Lose more than 5%,1.352600574963601e-05
+2026,4th,Lose less than 5%,0.0003390258063541088
+2026,4th,No change,0.997294759099829
+2026,4th,Gain less than 5%,0.0015196415025011908
+2026,4th,Gain more than 5%,0.0008330475855660725
+2026,5th,Lose more than 5%,0.0051356091973205975
+2026,5th,Lose less than 5%,0.0009182962414090315
+2026,5th,No change,0.9916329829786502
+2026,5th,Gain less than 5%,0.0022977545785939444
+2026,5th,Gain more than 5%,1.5357004026221944e-05
+2026,6th,Lose more than 5%,0.0001034603029005416
+2026,6th,Lose less than 5%,0.0003948357108072325
+2026,6th,No change,0.9970526853233909
+2026,6th,Gain less than 5%,0.0022032321426259088
+2026,6th,Gain more than 5%,0.0002457865202754973
+2026,7th,Lose more than 5%,0.006701531753188732
+2026,7th,Lose less than 5%,0.00020084146290064484
+2026,7th,No change,0.9872816377986482
+2026,7th,Gain less than 5%,0.005649270609415134
+2026,7th,Gain more than 5%,0.0001667183758472417
+2026,8th,Lose more than 5%,7.885230298477537e-05
+2026,8th,Lose less than 5%,1.600165143458112e-05
+2026,8th,No change,0.9897843353128988
+2026,8th,Gain less than 5%,0.009524639355917736
+2026,8th,Gain more than 5%,0.0005961713767640827
 2026,9th,Lose more than 5%,0.0
 2026,9th,Lose less than 5%,0.0
-2026,9th,No change,1.0
-2026,9th,Gain less than 5%,0.0
-2026,9th,Gain more than 5%,0.0
-2026,10th,Lose more than 5%,0.0
+2026,9th,No change,0.9861350878257589
+2026,9th,Gain less than 5%,0.013862308570134794
+2026,9th,Gain more than 5%,2.6036041063458904e-06
+2026,10th,Lose more than 5%,0.005089949299462445
 2026,10th,Lose less than 5%,0.0
-2026,10th,No change,1.0
-2026,10th,Gain less than 5%,0.0
-2026,10th,Gain more than 5%,0.0
-2026,All,Lose more than 5%,0.0
-2026,All,Lose less than 5%,0.0
-2026,All,No change,1.0
-2026,All,Gain less than 5%,0.0
-2026,All,Gain more than 5%,0.0
-2027,1st,Lose more than 5%,0.0
-2027,1st,Lose less than 5%,0.0
-2027,1st,No change,1.0
-2027,1st,Gain less than 5%,0.0
-2027,1st,Gain more than 5%,0.0
-2027,2nd,Lose more than 5%,0.0
-2027,2nd,Lose less than 5%,0.0
-2027,2nd,No change,1.0
-2027,2nd,Gain less than 5%,0.0
-2027,2nd,Gain more than 5%,0.0
-2027,3rd,Lose more than 5%,0.0
-2027,3rd,Lose less than 5%,0.0
-2027,3rd,No change,1.0
-2027,3rd,Gain less than 5%,0.0
-2027,3rd,Gain more than 5%,0.0
-2027,4th,Lose more than 5%,0.0
-2027,4th,Lose less than 5%,0.0
-2027,4th,No change,1.0
-2027,4th,Gain less than 5%,0.0
-2027,4th,Gain more than 5%,0.0
-2027,5th,Lose more than 5%,0.0
-2027,5th,Lose less than 5%,0.0
-2027,5th,No change,1.0
-2027,5th,Gain less than 5%,0.0
-2027,5th,Gain more than 5%,0.0
-2027,6th,Lose more than 5%,0.0
-2027,6th,Lose less than 5%,0.0
-2027,6th,No change,1.0
-2027,6th,Gain less than 5%,0.0
-2027,6th,Gain more than 5%,0.0
-2027,7th,Lose more than 5%,0.0
-2027,7th,Lose less than 5%,0.0
-2027,7th,No change,1.0
-2027,7th,Gain less than 5%,0.0
-2027,7th,Gain more than 5%,0.0
-2027,8th,Lose more than 5%,0.0
-2027,8th,Lose less than 5%,0.0
-2027,8th,No change,1.0
-2027,8th,Gain less than 5%,0.0
-2027,8th,Gain more than 5%,0.0
+2026,10th,No change,0.956282643195625
+2026,10th,Gain less than 5%,0.03236474862711772
+2026,10th,Gain more than 5%,0.006262658877794868
+2026,All,Lose more than 5%,0.0022174707071694957
+2026,All,Lose less than 5%,0.0009076137107602977
+2026,All,No change,0.9814706944905505
+2026,All,Gain less than 5%,0.014072897718215908
+2026,All,Gain more than 5%,0.0013313233733038506
+2027,1st,Lose more than 5%,0.0039047779593303724
+2027,1st,Lose less than 5%,0.2910341384393943
+2027,1st,No change,0.5225717572364299
+2027,1st,Gain less than 5%,0.1811943936550268
+2027,1st,Gain more than 5%,0.0012949327098185877
+2027,2nd,Lose more than 5%,0.0014665986514748879
+2027,2nd,Lose less than 5%,0.37947893500922103
+2027,2nd,No change,0.44241518271432184
+2027,2nd,Gain less than 5%,0.17519080978879928
+2027,2nd,Gain more than 5%,0.0014484738361829942
+2027,3rd,Lose more than 5%,1.1377997708996649e-05
+2027,3rd,Lose less than 5%,0.32037457302116984
+2027,3rd,No change,0.5684511027483009
+2027,3rd,Gain less than 5%,0.10859031160768223
+2027,3rd,Gain more than 5%,0.002572634625138189
+2027,4th,Lose more than 5%,0.0002463074954584472
+2027,4th,Lose less than 5%,0.2681531522530694
+2027,4th,No change,0.6518901302254578
+2027,4th,Gain less than 5%,0.07910469603871159
+2027,4th,Gain more than 5%,0.0006057139873026753
+2027,5th,Lose more than 5%,0.005143827901174483
+2027,5th,Lose less than 5%,0.2235366319021381
+2027,5th,No change,0.7288277378236272
+2027,5th,Gain less than 5%,0.04248061406204653
+2027,5th,Gain more than 5%,1.1188311013705845e-05
+2027,6th,Lose more than 5%,0.00010187716925605217
+2027,6th,Lose less than 5%,0.12199957542685184
+2027,6th,No change,0.8433435425804002
+2027,6th,Gain less than 5%,0.03429005089595294
+2027,6th,Gain more than 5%,0.00026495392753897744
+2027,7th,Lose more than 5%,0.00020482778459988786
+2027,7th,Lose less than 5%,0.14020264919276448
+2027,7th,No change,0.8381395583200397
+2027,7th,Gain less than 5%,0.02128546277818536
+2027,7th,Gain more than 5%,0.00016750192441054355
+2027,8th,Lose more than 5%,0.0064861918409962315
+2027,8th,Lose less than 5%,0.06420511190322528
+2027,8th,No change,0.9167701951809388
+2027,8th,Gain less than 5%,0.01194587718532085
+2027,8th,Gain more than 5%,0.0005926238895187958
 2027,9th,Lose more than 5%,0.0
-2027,9th,Lose less than 5%,0.0
-2027,9th,No change,1.0
-2027,9th,Gain less than 5%,0.0
-2027,9th,Gain more than 5%,0.0
-2027,10th,Lose more than 5%,0.0
-2027,10th,Lose less than 5%,0.0
-2027,10th,No change,1.0
-2027,10th,Gain less than 5%,0.0
-2027,10th,Gain more than 5%,0.0
-2027,All,Lose more than 5%,0.0
-2027,All,Lose less than 5%,0.0
-2027,All,No change,1.0
-2027,All,Gain less than 5%,0.0
-2027,All,Gain more than 5%,0.0
-2028,1st,Lose more than 5%,0.0
-2028,1st,Lose less than 5%,0.0
-2028,1st,No change,1.0
-2028,1st,Gain less than 5%,0.0
-2028,1st,Gain more than 5%,0.0
-2028,2nd,Lose more than 5%,0.0
-2028,2nd,Lose less than 5%,0.0
-2028,2nd,No change,1.0
-2028,2nd,Gain less than 5%,0.0
-2028,2nd,Gain more than 5%,0.0
-2028,3rd,Lose more than 5%,0.0
-2028,3rd,Lose less than 5%,0.0
-2028,3rd,No change,1.0
-2028,3rd,Gain less than 5%,0.0
-2028,3rd,Gain more than 5%,0.0
-2028,4th,Lose more than 5%,0.0
-2028,4th,Lose less than 5%,0.0
-2028,4th,No change,1.0
-2028,4th,Gain less than 5%,0.0
-2028,4th,Gain more than 5%,0.0
-2028,5th,Lose more than 5%,0.0
-2028,5th,Lose less than 5%,0.0
-2028,5th,No change,1.0
-2028,5th,Gain less than 5%,0.0
-2028,5th,Gain more than 5%,0.0
-2028,6th,Lose more than 5%,0.0
-2028,6th,Lose less than 5%,0.0
-2028,6th,No change,1.0
-2028,6th,Gain less than 5%,0.0
-2028,6th,Gain more than 5%,0.0
-2028,7th,Lose more than 5%,0.0
-2028,7th,Lose less than 5%,0.0
-2028,7th,No change,1.0
-2028,7th,Gain less than 5%,0.0
-2028,7th,Gain more than 5%,0.0
-2028,8th,Lose more than 5%,0.0
-2028,8th,Lose less than 5%,0.0
-2028,8th,No change,1.0
-2028,8th,Gain less than 5%,0.0
-2028,8th,Gain more than 5%,0.0
-2028,9th,Lose more than 5%,0.0
-2028,9th,Lose less than 5%,0.0
-2028,9th,No change,1.0
-2028,9th,Gain less than 5%,0.0
-2028,9th,Gain more than 5%,0.0
-2028,10th,Lose more than 5%,0.0
-2028,10th,Lose less than 5%,0.0
-2028,10th,No change,1.0
-2028,10th,Gain less than 5%,0.0
-2028,10th,Gain more than 5%,0.0
-2028,All,Lose more than 5%,0.0
-2028,All,Lose less than 5%,0.0
-2028,All,No change,1.0
-2028,All,Gain less than 5%,0.0
-2028,All,Gain more than 5%,0.0
-2029,1st,Lose more than 5%,0.0
-2029,1st,Lose less than 5%,0.0
-2029,1st,No change,1.0
-2029,1st,Gain less than 5%,0.0
-2029,1st,Gain more than 5%,0.0
-2029,2nd,Lose more than 5%,0.0
-2029,2nd,Lose less than 5%,0.0
-2029,2nd,No change,1.0
-2029,2nd,Gain less than 5%,0.0
-2029,2nd,Gain more than 5%,0.0
-2029,3rd,Lose more than 5%,0.0
-2029,3rd,Lose less than 5%,0.0
-2029,3rd,No change,1.0
-2029,3rd,Gain less than 5%,0.0
-2029,3rd,Gain more than 5%,0.0
-2029,4th,Lose more than 5%,0.0
-2029,4th,Lose less than 5%,0.0
-2029,4th,No change,1.0
-2029,4th,Gain less than 5%,0.0
-2029,4th,Gain more than 5%,0.0
-2029,5th,Lose more than 5%,0.0
-2029,5th,Lose less than 5%,0.0
-2029,5th,No change,1.0
-2029,5th,Gain less than 5%,0.0
-2029,5th,Gain more than 5%,0.0
-2029,6th,Lose more than 5%,0.0
-2029,6th,Lose less than 5%,0.0
-2029,6th,No change,1.0
-2029,6th,Gain less than 5%,0.0
-2029,6th,Gain more than 5%,0.0
-2029,7th,Lose more than 5%,0.0
-2029,7th,Lose less than 5%,0.0
-2029,7th,No change,1.0
-2029,7th,Gain less than 5%,0.0
-2029,7th,Gain more than 5%,0.0
-2029,8th,Lose more than 5%,0.0
-2029,8th,Lose less than 5%,0.0
-2029,8th,No change,1.0
-2029,8th,Gain less than 5%,0.0
-2029,8th,Gain more than 5%,0.0
-2029,9th,Lose more than 5%,0.0
-2029,9th,Lose less than 5%,0.0
-2029,9th,No change,1.0
-2029,9th,Gain less than 5%,0.0
-2029,9th,Gain more than 5%,0.0
-2029,10th,Lose more than 5%,0.0
-2029,10th,Lose less than 5%,0.0
-2029,10th,No change,1.0
-2029,10th,Gain less than 5%,0.0
-2029,10th,Gain more than 5%,0.0
-2029,All,Lose more than 5%,0.0
-2029,All,Lose less than 5%,0.0
-2029,All,No change,1.0
-2029,All,Gain less than 5%,0.0
-2029,All,Gain more than 5%,0.0
-2030,1st,Lose more than 5%,0.0
-2030,1st,Lose less than 5%,0.0
-2030,1st,No change,1.0
-2030,1st,Gain less than 5%,0.0
-2030,1st,Gain more than 5%,0.0
-2030,2nd,Lose more than 5%,0.0
-2030,2nd,Lose less than 5%,0.0
-2030,2nd,No change,1.0
-2030,2nd,Gain less than 5%,0.0
-2030,2nd,Gain more than 5%,0.0
-2030,3rd,Lose more than 5%,0.0
-2030,3rd,Lose less than 5%,0.0
-2030,3rd,No change,1.0
-2030,3rd,Gain less than 5%,0.0
-2030,3rd,Gain more than 5%,0.0
-2030,4th,Lose more than 5%,0.0
-2030,4th,Lose less than 5%,0.0
-2030,4th,No change,1.0
-2030,4th,Gain less than 5%,0.0
-2030,4th,Gain more than 5%,0.0
-2030,5th,Lose more than 5%,0.0
-2030,5th,Lose less than 5%,0.0
-2030,5th,No change,1.0
-2030,5th,Gain less than 5%,0.0
-2030,5th,Gain more than 5%,0.0
-2030,6th,Lose more than 5%,0.0
-2030,6th,Lose less than 5%,0.0
-2030,6th,No change,1.0
-2030,6th,Gain less than 5%,0.0
-2030,6th,Gain more than 5%,0.0
-2030,7th,Lose more than 5%,0.0
-2030,7th,Lose less than 5%,0.0
-2030,7th,No change,1.0
-2030,7th,Gain less than 5%,0.0
-2030,7th,Gain more than 5%,0.0
-2030,8th,Lose more than 5%,0.0
-2030,8th,Lose less than 5%,0.0
-2030,8th,No change,1.0
-2030,8th,Gain less than 5%,0.0
-2030,8th,Gain more than 5%,0.0
-2030,9th,Lose more than 5%,0.0
-2030,9th,Lose less than 5%,0.0
-2030,9th,No change,1.0
-2030,9th,Gain less than 5%,0.0
-2030,9th,Gain more than 5%,0.0
-2030,10th,Lose more than 5%,0.0
-2030,10th,Lose less than 5%,0.0
-2030,10th,No change,1.0
-2030,10th,Gain less than 5%,0.0
-2030,10th,Gain more than 5%,0.0
-2030,All,Lose more than 5%,0.0
-2030,All,Lose less than 5%,0.0
-2030,All,No change,1.0
-2030,All,Gain less than 5%,0.0
-2030,All,Gain more than 5%,0.0
+2027,9th,Lose less than 5%,0.02213026137145353
+2027,9th,No change,0.9708726052694878
+2027,9th,Gain less than 5%,0.006994520858798827
+2027,9th,Gain more than 5%,2.6125002598258946e-06
+2027,10th,Lose more than 5%,0.0002697160729275004
+2027,10th,Lose less than 5%,0.029889163707232897
+2027,10th,No change,0.951680591728465
+2027,10th,Gain less than 5%,0.013175523493108847
+2027,10th,Gain more than 5%,0.004985004998265785
+2027,All,Lose more than 5%,0.0017835502872926858
+2027,All,Lose less than 5%,0.18610041922265208
+2027,All,No change,0.743496240382747
+2027,All,Gain less than 5%,0.06742522603636332
+2027,All,Gain more than 5%,0.0011945640709450079
+2028,1st,Lose more than 5%,0.00412615585662092
+2028,1st,Lose less than 5%,0.29299780165107403
+2028,1st,No change,0.5177895473827401
+2028,1st,Gain less than 5%,0.18379174683628424
+2028,1st,Gain more than 5%,0.0012947482732808325
+2028,2nd,Lose more than 5%,0.001672931242976737
+2028,2nd,Lose less than 5%,0.39543962306691377
+2028,2nd,No change,0.42651593403508303
+2028,2nd,Gain less than 5%,0.1749127173157391
+2028,2nd,Gain more than 5%,0.0014587943392874113
+2028,3rd,Lose more than 5%,2.614464940352919e-05
+2028,3rd,Lose less than 5%,0.3355061279825
+2028,3rd,No change,0.5563156035673287
+2028,3rd,Gain less than 5%,0.10581208065241922
+2028,3rd,Gain more than 5%,0.0023400431483486094
+2028,4th,Lose more than 5%,0.00028368168594097105
+2028,4th,Lose less than 5%,0.2628442719683398
+2028,4th,No change,0.6556856008148754
+2028,4th,Gain less than 5%,0.08056821953118709
+2028,4th,Gain more than 5%,0.0006182259996566861
+2028,5th,Lose more than 5%,0.005200697070092856
+2028,5th,Lose less than 5%,0.2622321371414398
+2028,5th,No change,0.6906965421761894
+2028,5th,Gain less than 5%,0.04185945373910528
+2028,5th,Gain more than 5%,1.1169873172618614e-05
+2028,6th,Lose more than 5%,0.0001996102037046133
+2028,6th,Lose less than 5%,0.13832375707947284
+2028,6th,No change,0.8275591119081064
+2028,6th,Gain less than 5%,0.0334675886594447
+2028,6th,Gain more than 5%,0.00044993214927159113
+2028,7th,Lose more than 5%,1.4182604033877353e-05
+2028,7th,Lose less than 5%,0.1532502544217765
+2028,7th,No change,0.8263613520803271
+2028,7th,Gain less than 5%,0.019506957833639222
+2028,7th,Gain more than 5%,0.0008672530602232108
+2028,8th,Lose more than 5%,0.0065641998140156645
+2028,8th,Lose less than 5%,0.058988756458410244
+2028,8th,No change,0.9272874196375103
+2028,8th,Gain less than 5%,0.006559872854241127
+2028,8th,Gain more than 5%,0.0005997512358227571
+2028,9th,Lose more than 5%,0.001615779841715802
+2028,9th,Lose less than 5%,0.04824553204862797
+2028,9th,No change,0.9488814156128869
+2028,9th,Gain less than 5%,0.0009980747419685947
+2028,9th,Gain more than 5%,0.0002591977548005689
+2028,10th,Lose more than 5%,9.102661270972437e-05
+2028,10th,Lose less than 5%,0.04716796900677017
+2028,10th,No change,0.9418774892437634
+2028,10th,Gain less than 5%,0.004699751103663274
+2028,10th,Gain more than 5%,0.006163764033093482
+2028,All,Lose more than 5%,0.0019794409581214696
+2028,All,Lose less than 5%,0.19949962308253252
+2028,All,No change,0.7318970016458811
+2028,All,Gain less than 5%,0.06521764632676917
+2028,All,Gain more than 5%,0.0014062879866957767
+2029,1st,Lose more than 5%,0.00413630505008607
+2029,1st,Lose less than 5%,0.2947764189908315
+2029,1st,No change,0.5097619563136442
+2029,1st,Gain less than 5%,0.18991709447803665
+2029,1st,Gain more than 5%,0.001408225167401707
+2029,2nd,Lose more than 5%,0.0016677495436202522
+2029,2nd,Lose less than 5%,0.4305058519765534
+2029,2nd,No change,0.39125865548147387
+2029,2nd,Gain less than 5%,0.17508474288307024
+2029,2nd,Gain more than 5%,0.0014830001152822216
+2029,3rd,Lose more than 5%,3.8900068363024575e-05
+2029,3rd,Lose less than 5%,0.3585854820377803
+2029,3rd,No change,0.5366814780685879
+2029,3rd,Gain less than 5%,0.10237172431334343
+2029,3rd,Gain more than 5%,0.0023224155119252977
+2029,4th,Lose more than 5%,0.00036032579652245904
+2029,4th,Lose less than 5%,0.2749315598232694
+2029,4th,No change,0.6415720203645121
+2029,4th,Gain less than 5%,0.082519339283524
+2029,4th,Gain more than 5%,0.0006167547321721812
+2029,5th,Lose more than 5%,0.00528210160821089
+2029,5th,Lose less than 5%,0.2767344344623371
+2029,5th,No change,0.675180827967563
+2029,5th,Gain less than 5%,0.042482268546099204
+2029,5th,Gain more than 5%,0.0003203674157897475
+2029,6th,Lose more than 5%,0.00019957177357058167
+2029,6th,Lose less than 5%,0.16115169643166669
+2029,6th,No change,0.8051892538229417
+2029,6th,Gain less than 5%,0.033009687935410766
+2029,6th,Gain more than 5%,0.00044979003641029973
+2029,7th,Lose more than 5%,1.410655115725516e-05
+2029,7th,Lose less than 5%,0.1552917192619132
+2029,7th,No change,0.8249423233048077
+2029,7th,Gain less than 5%,0.01886764021503835
+2029,7th,Gain more than 5%,0.0008842106670835449
+2029,8th,Lose more than 5%,0.006519813036798466
+2029,8th,Lose less than 5%,0.062061948517701256
+2029,8th,No change,0.9174819464872851
+2029,8th,Gain less than 5%,0.013340596213319511
+2029,8th,Gain more than 5%,0.0005956957448956867
+2029,9th,Lose more than 5%,0.001622508194117665
+2029,9th,Lose less than 5%,0.05858450881835301
+2029,9th,No change,0.9379172342671173
+2029,9th,Gain less than 5%,0.0016154716268403577
+2029,9th,Gain more than 5%,0.0002602770935717622
+2029,10th,Lose more than 5%,0.007733405936848057
+2029,10th,Lose less than 5%,0.05621531168835989
+2029,10th,No change,0.9349590854045848
+2029,10th,Gain less than 5%,0.0010723121198103595
+2029,10th,Gain more than 5%,1.988485039683772e-05
+2029,All,Lose more than 5%,0.0027574787559294716
+2029,All,Lose less than 5%,0.21288389320087658
+2029,All,No change,0.7174944781482517
+2029,All,Gain less than 5%,0.0660280877614493
+2029,All,Gain more than 5%,0.0008360621334929286
+2030,1st,Lose more than 5%,0.0067005225549827685
+2030,1st,Lose less than 5%,0.4519116964321259
+2030,1st,No change,0.3403410303560371
+2030,1st,Gain less than 5%,0.19914129099618627
+2030,1st,Gain more than 5%,0.0019054596606678013
+2030,2nd,Lose more than 5%,0.0003184392090771974
+2030,2nd,Lose less than 5%,0.4695644925821656
+2030,2nd,No change,0.3572827558234632
+2030,2nd,Gain less than 5%,0.17134022669472834
+2030,2nd,Gain more than 5%,0.001494085690565774
+2030,3rd,Lose more than 5%,4.5139820381744196e-05
+2030,3rd,Lose less than 5%,0.43977712629951793
+2030,3rd,No change,0.45444768621332776
+2030,3rd,Gain less than 5%,0.10336671372892235
+2030,3rd,Gain more than 5%,0.0023633339378501986
+2030,4th,Lose more than 5%,0.0008249493751393884
+2030,4th,Lose less than 5%,0.31039826589588787
+2030,4th,No change,0.6037219486037311
+2030,4th,Gain less than 5%,0.08420715067676277
+2030,4th,Gain more than 5%,0.0008476854484788901
+2030,5th,Lose more than 5%,0.005283008574863911
+2030,5th,Lose less than 5%,0.2827558132059203
+2030,5th,No change,0.6679601735925388
+2030,5th,Gain less than 5%,0.04388298646664175
+2030,5th,Gain more than 5%,0.00011801816003505972
+2030,6th,Lose more than 5%,0.0002017735406128133
+2030,6th,Lose less than 5%,0.17185140334571772
+2030,6th,No change,0.7927301521250152
+2030,6th,Gain less than 5%,0.03476644803878442
+2030,6th,Gain more than 5%,0.00045022294986978115
+2030,7th,Lose more than 5%,1.4164076802252751e-05
+2030,7th,Lose less than 5%,0.16597138341165873
+2030,7th,No change,0.8090797528725262
+2030,7th,Gain less than 5%,0.024011558128535303
+2030,7th,Gain more than 5%,0.0009231415104777902
+2030,8th,Lose more than 5%,0.00655850979215556
+2030,8th,Lose less than 5%,0.07115092361187257
+2030,8th,No change,0.900739030833651
+2030,8th,Gain less than 5%,0.020765658808700686
+2030,8th,Gain more than 5%,0.0007858769536201272
+2030,9th,Lose more than 5%,0.0016313135207037773
+2030,9th,Lose less than 5%,0.05916048874876685
+2030,9th,No change,0.9293155195296747
+2030,9th,Gain less than 5%,0.009630988590337789
+2030,9th,Gain more than 5%,0.00026168961051688385
+2030,10th,Lose more than 5%,0.005104540968884547
+2030,10th,Lose less than 5%,0.03264172216273909
+2030,10th,No change,0.9525290576910078
+2030,10th,Gain less than 5%,0.009408982255817662
+2030,10th,Gain more than 5%,0.00031569692155085025
+2030,All,Lose more than 5%,0.0026682361433603956
+2030,All,Lose less than 5%,0.24551833156963726
+2030,All,No change,0.6808147107640974
+2030,All,Gain less than 5%,0.07005220043854174
+2030,All,Gain more than 5%,0.0009465210843633158
