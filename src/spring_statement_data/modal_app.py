@@ -87,7 +87,9 @@ def fastapi_app():
         calculate_mtr_data,
     )
 
-    executor = ThreadPoolExecutor(max_workers=3)
+    # Serialize all calculations — PolicyEngine's TaxBenefitSystem is not
+    # thread-safe and concurrent simulations contaminate shared state.
+    executor = ThreadPoolExecutor(max_workers=1)
 
     api = FastAPI(
         title="Spring Statement 2026 Calculator API",

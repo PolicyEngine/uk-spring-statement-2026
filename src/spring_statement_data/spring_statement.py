@@ -669,8 +669,6 @@ def calculate_multi_year_net_impact(
         if not (p.get("region") and p["region"] != region)
     ]
 
-    pre_statement_scenario = get_pre_statement_scenario()
-
     def _calculate_year(year):
         growth_factor = (1 + salary_growth_rate) ** (year - 2026)
         grown_income = employment_income * growth_factor
@@ -711,10 +709,13 @@ def calculate_multi_year_net_impact(
             except Exception:
                 return 0.0
 
+        # Fresh scenario each iteration to avoid state contamination
+        scenario = get_pre_statement_scenario()
+
         # Baseline = November 2025 (pre-statement)
         baseline_sim = Simulation(
             situation=situation,
-            scenario=pre_statement_scenario,
+            scenario=scenario,
         )
         baseline_net = float(
             baseline_sim.calculate("household_net_income", year)[0]
@@ -744,16 +745,11 @@ def calculate_multi_year_net_impact(
 
         return str(year), impact, breakdown
 
-    from concurrent.futures import ThreadPoolExecutor
-
-    with ThreadPoolExecutor(max_workers=5) as pool:
-        futures = [
-            pool.submit(_calculate_year, yr) for yr in range(2026, 2031)
-        ]
-        for future in futures:
-            year_str, impact, breakdown = future.result()
-            yearly_impact[year_str] = impact
-            yearly_breakdown[year_str] = breakdown
+    # Run sequentially with fresh scenario each iteration
+    for yr in range(2026, 2031):
+        year_str, impact, breakdown = _calculate_year(yr)
+        yearly_impact[year_str] = impact
+        yearly_breakdown[year_str] = breakdown
 
     return {
         "yearly_impact": yearly_impact,

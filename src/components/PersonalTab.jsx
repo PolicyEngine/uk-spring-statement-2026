@@ -26,14 +26,6 @@ const COLORS = {
   border: "#e2e8f0",
 };
 
-const MTR_COLORS = {
-  incomeTax: "#14B8A6",
-  ni: "#5EEAD4",
-  benefitsTaper: "#F59E0B",
-  baselineLine: "#9CA3AF",
-  reformLine: "#344054",
-};
-
 function formatCurrency(value) {
   const absVal = Math.abs(value);
   const formatted =
@@ -87,13 +79,8 @@ export default function PersonalTab() {
   const [multiYearData, setMultiYearData] = useState(null);
   const [multiYearLoading, setMultiYearLoading] = useState(false);
 
-  // MTR state
-  const [mtrData, setMtrData] = useState(null);
-  const [mtrLoading, setMtrLoading] = useState(false);
-
   // Chart refs
   const multiYearChartRef = useRef(null);
-  const mtrChartRef = useRef(null);
 
   const handleCalculate = useCallback(async () => {
     setLoading(true);
@@ -101,8 +88,6 @@ export default function PersonalTab() {
     setResult(null);
     setMultiYearData(null);
     setMultiYearLoading(true);
-    setMtrData(null);
-    setMtrLoading(true);
 
     const effectiveStudentLoanPlan =
       draftStudentLoan === "NO_STUDENT_LOAN" && draftHasPostgrad
@@ -139,12 +124,6 @@ export default function PersonalTab() {
       body: JSON.stringify(requestBody),
     });
 
-    const mtrPromise = fetch(`${API_URL}/spring-statement/mtr`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestBody),
-    });
-
     try {
       const response = await mainPromise;
       if (!response.ok) {
@@ -165,12 +144,6 @@ export default function PersonalTab() {
       .then((d) => d && setMultiYearData(d))
       .catch(() => {})
       .finally(() => setMultiYearLoading(false));
-
-    mtrPromise
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => d && setMtrData(d))
-      .catch(() => {})
-      .finally(() => setMtrLoading(false));
   }, [
     draftIncome, draftChildren, draftChildrenAges, draftRent, draftIsCouple,
     draftPartnerIncome, draftAdultAge, draftPartnerAge, draftRegion,
@@ -289,180 +262,6 @@ export default function PersonalTab() {
     g.selectAll(".axis-y text")
       .attr("font-size", "11px").attr("font-weight", "500").attr("fill", "#475569");
   }, [multiYearChartData]);
-
-  // D3 MTR chart
-  useEffect(() => {
-    if (!mtrChartRef.current || !mtrData?.reform?.length) return;
-
-    const container = mtrChartRef.current;
-    d3.select(container).selectAll("*").remove();
-
-    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-    const containerWidth = container.clientWidth;
-    const width = containerWidth - margin.left - margin.right;
-    const height = 360 - margin.top - margin.bottom;
-
-    const svg = d3.select(container)
-      .append("svg")
-      .attr("width", containerWidth)
-      .attr("height", height + margin.top + margin.bottom);
-
-    const g = svg.append("g")
-      .attr("transform", `translate(${margin.left},${margin.top})`);
-
-    const reformData = mtrData.reform;
-    const baselineData = mtrData.baseline;
-
-    const x = d3.scaleLinear()
-      .domain([0, d3.max(reformData, (d) => d.income)])
-      .range([0, width]);
-
-    const allTotals = [...reformData, ...baselineData].map((d) => d.total * 100);
-    const yMin = Math.min(0, d3.min(allTotals));
-    const yMax = Math.max(100, d3.max(allTotals));
-    const y = d3.scaleLinear().domain([yMin, yMax]).range([height, 0]);
-
-    g.append("g").attr("class", "grid")
-      .call(d3.axisLeft(y).tickSize(-width).tickFormat("").ticks(10));
-
-    // Stacked areas — positive components stack up from 0, negative stack down
-    // Benefits taper can be negative (earning more triggers extra benefits)
-
-    // Positive stack: income_tax, then NI on top
-    const areaIT = d3.area()
-      .x((d) => x(d.income))
-      .y0(y(0))
-      .y1((d) => y(Math.max(0, d.income_tax) * 100))
-      .curve(d3.curveStepAfter);
-    g.append("path").datum(reformData)
-      .attr("fill", MTR_COLORS.incomeTax).attr("fill-opacity", 0.7).attr("d", areaIT);
-
-    const areaNI = d3.area()
-      .x((d) => x(d.income))
-      .y0((d) => y(Math.max(0, d.income_tax) * 100))
-      .y1((d) => y((Math.max(0, d.income_tax) + Math.max(0, d.national_insurance)) * 100))
-      .curve(d3.curveStepAfter);
-    g.append("path").datum(reformData)
-      .attr("fill", MTR_COLORS.ni).attr("fill-opacity", 0.7).attr("d", areaNI);
-
-    // Benefits taper: positive stacks above NI, negative extends below 0
-    const areaBenPos = d3.area()
-      .x((d) => x(d.income))
-      .y0((d) => y((Math.max(0, d.income_tax) + Math.max(0, d.national_insurance)) * 100))
-      .y1((d) => y((Math.max(0, d.income_tax) + Math.max(0, d.national_insurance) + Math.max(0, d.benefits_taper)) * 100))
-      .curve(d3.curveStepAfter);
-    g.append("path").datum(reformData)
-      .attr("fill", MTR_COLORS.benefitsTaper).attr("fill-opacity", 0.7).attr("d", areaBenPos);
-
-    const areaBenNeg = d3.area()
-      .x((d) => x(d.income))
-      .y0(y(0))
-      .y1((d) => y(Math.min(0, d.benefits_taper) * 100))
-      .curve(d3.curveStepAfter);
-    g.append("path").datum(reformData)
-      .attr("fill", MTR_COLORS.benefitsTaper).attr("fill-opacity", 0.7).attr("d", areaBenNeg);
-
-    // Zero line
-    g.append("line")
-      .attr("x1", 0).attr("x2", width)
-      .attr("y1", y(0)).attr("y2", y(0))
-      .attr("stroke", "#94a3b8").attr("stroke-width", 0.5);
-
-    // Reform total line
-    const reformLine = d3.line()
-      .x((d) => x(d.income)).y((d) => y(d.total * 100)).curve(d3.curveStepAfter);
-    g.append("path").datum(reformData)
-      .attr("fill", "none").attr("stroke", MTR_COLORS.reformLine)
-      .attr("stroke-width", 1.5).attr("d", reformLine);
-
-    // Baseline total line (dashed)
-    const baselineLine = d3.line()
-      .x((d) => x(d.income)).y((d) => y(d.total * 100)).curve(d3.curveStepAfter);
-    g.append("path").datum(baselineData)
-      .attr("fill", "none").attr("stroke", MTR_COLORS.baselineLine)
-      .attr("stroke-width", 1.5).attr("stroke-dasharray", "6,3").attr("d", baselineLine);
-
-    // User income marker — use last point at or before income to match curveStepAfter
-    if (draftIncome > 0 && draftIncome <= d3.max(reformData, (d) => d.income)) {
-      const atOrBefore = reformData.filter((d) => d.income <= draftIncome);
-      const closest = atOrBefore.length > 0 ? atOrBefore[atOrBefore.length - 1] : reformData[0];
-      const atOrBeforeBaseline = baselineData.filter((d) => d.income <= draftIncome);
-      const closestBaseline = atOrBeforeBaseline.length > 0 ? atOrBeforeBaseline[atOrBeforeBaseline.length - 1] : baselineData[0];
-
-      g.append("line")
-        .attr("x1", x(draftIncome)).attr("x2", x(draftIncome))
-        .attr("y1", 0).attr("y2", height)
-        .attr("stroke", COLORS.teal).attr("stroke-width", 1.5).attr("stroke-dasharray", "4,2");
-
-      g.append("circle")
-        .attr("cx", x(draftIncome)).attr("cy", y(closest.total * 100))
-        .attr("r", 5).attr("fill", MTR_COLORS.reformLine)
-        .attr("stroke", "#fff").attr("stroke-width", 2);
-
-      g.append("circle")
-        .attr("cx", x(draftIncome)).attr("cy", y(closestBaseline.total * 100))
-        .attr("r", 5).attr("fill", MTR_COLORS.baselineLine)
-        .attr("stroke", "#fff").attr("stroke-width", 2);
-
-      g.append("text")
-        .attr("x", x(draftIncome) + 8).attr("y", 14)
-        .attr("font-size", "11px").attr("font-weight", "600")
-        .attr("fill", COLORS.teal).text("Your income");
-    }
-
-    // Axes
-    g.append("g").attr("class", "axis")
-      .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x).tickFormat((d) => `\u00A3${d / 1000}k`).ticks(8));
-
-    g.append("text")
-      .attr("x", width / 2).attr("y", height + 40)
-      .attr("text-anchor", "middle").attr("font-size", "12px")
-      .attr("fill", "#64748B").text("Employment income");
-
-    g.append("g").attr("class", "axis")
-      .call(d3.axisLeft(y).tickFormat((d) => `${d}%`).ticks(10));
-
-    // Tooltip
-    const tooltip = d3.select(container).append("div").attr("class", "bar-tooltip mtr-tooltip");
-    const bisect = d3.bisector((d) => d.income).left;
-
-    g.append("rect")
-      .attr("width", width).attr("height", height)
-      .attr("fill", "none").attr("pointer-events", "all")
-      .on("mousemove", function (event) {
-        const [mx] = d3.pointer(event);
-        const income = x.invert(mx);
-        const i = Math.min(bisect(reformData, income, 1), reformData.length - 1);
-        const d = reformData[i];
-        const b = baselineData[Math.min(i, baselineData.length - 1)];
-
-        const reformTotal = (d.total * 100).toFixed(0);
-        const baselineTotal = (b.total * 100).toFixed(0);
-
-        const rows = [
-          { label: "Income tax", color: MTR_COLORS.incomeTax, val: d.income_tax },
-          { label: "National insurance", color: MTR_COLORS.ni, val: d.national_insurance },
-          { label: "Benefits taper", color: MTR_COLORS.benefitsTaper, val: d.benefits_taper },
-        ]
-          .filter((r) => r.val > 0.005)
-          .map((r) =>
-            `<div class="tooltip-breakdown-row"><span style="color:${r.color}">\u25CF ${r.label}</span><span style="font-weight:600">${(r.val * 100).toFixed(0)}%</span></div>`
-          )
-          .join("");
-
-        tooltip.style("opacity", 1)
-          .style("left", event.clientX + 15 + "px")
-          .style("top", event.clientY - 10 + "px")
-          .html(
-            `<div class="tooltip-label">\u00A3${d3.format(",.0f")(d.income)} income</div>` +
-            `<div class="tooltip-breakdown">${rows}</div>` +
-            `<div class="tooltip-breakdown-row" style="margin-top:6px;padding-top:6px;border-top:1px solid #e2e8f0"><span style="font-weight:600">Post-Spring Statement</span><span style="font-weight:700">${reformTotal}%</span></div>` +
-            `<div class="tooltip-breakdown-row"><span style="color:${MTR_COLORS.baselineLine}">Pre-Spring Statement</span><span style="font-weight:600;color:${MTR_COLORS.baselineLine}">${baselineTotal}%</span></div>`
-          );
-      })
-      .on("mouseout", () => tooltip.style("opacity", 0));
-  }, [mtrData, draftIncome]);
 
   const netImpact = result?.impact?.household_net_income || 0;
 
@@ -800,41 +599,6 @@ export default function PersonalTab() {
                 in {draftYear}-{String(draftYear + 1).slice(-2)}
               </p>
             </div>
-          )}
-
-          {/* MTR Chart */}
-          {(mtrLoading || mtrData?.reform?.length > 0) && (
-            <section className="narrative-section">
-              <h2>Marginal tax rates</h2>
-              <p>
-                How each additional pound of income is taxed. The coloured areas
-                show the breakdown by component; the dashed line shows the
-                pre-Spring Statement rate.
-              </p>
-              <div className="mtr-legend">
-                <span className="mtr-legend-item">
-                  <span className="mtr-swatch" style={{ background: MTR_COLORS.incomeTax }} />
-                  Income tax
-                </span>
-                <span className="mtr-legend-item">
-                  <span className="mtr-swatch" style={{ background: MTR_COLORS.ni }} />
-                  National insurance
-                </span>
-                <span className="mtr-legend-item">
-                  <span className="mtr-swatch" style={{ background: MTR_COLORS.benefitsTaper }} />
-                  Benefits taper
-                </span>
-                <span className="mtr-legend-item">
-                  <span className="mtr-swatch mtr-swatch-line" style={{ borderColor: MTR_COLORS.reformLine }} />
-                  Overall MTR
-                </span>
-              </div>
-              {mtrLoading ? (
-                <div className="multi-year-loading"><span className="spinner" /> Loading marginal tax rate data...</div>
-              ) : (
-                <div className="impact-bar-chart mtr-chart" ref={mtrChartRef} />
-              )}
-            </section>
           )}
 
           {/* Multi-Year Chart */}
