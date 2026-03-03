@@ -1,233 +1,152 @@
-import { useState, useEffect, useRef } from "react";
-import BaselineUKTab from "./components/BaselineUKTab";
-import Dashboard from "./components/Dashboard";
-import HouseholdCalculator from "./components/HouseholdCalculator";
-import ValidationTab from "./components/ValidationTab";
+import { useState, useEffect } from "react";
+import ForecastTab from "./components/ForecastTab";
+import PopulationTab from "./components/PopulationTab";
+import PersonalTab from "./components/PersonalTab";
 import "./App.css";
 
-const POLICIES = [
-  // Placeholder policies - update with actual Spring Statement 2026 measures
-  { id: "policy_1", name: "Policy 1", category: "cost" },
-  { id: "policy_2", name: "Policy 2", category: "cost" },
-  { id: "policy_3", name: "Policy 3", category: "revenue" },
-];
-
 function App() {
-  const [activeTab, setActiveTab] = useState("budget");
-  const [selectedPolicies, setSelectedPolicies] = useState([
-    "policy_1",
-    "policy_2",
-    "policy_3",
-  ]);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [activeTab, setActiveTab] = useState("forecast");
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const togglePolicy = (policyId) => {
-    setSelectedPolicies(prev =>
-      prev.includes(policyId)
-        ? prev.filter(id => id !== policyId)
-        : [...prev, policyId]
-    );
-  };
+  // Load data on mount
+  useEffect(() => {
+    Promise.all([
+      fetch("/data/economic_forecast.json").then((r) => {
+        if (!r.ok) throw new Error("economic_forecast.json not found");
+        return r.json();
+      }),
+      fetch("/data/distributional_impact.csv").then((r) => {
+        if (!r.ok) throw new Error("distributional_impact.csv not found");
+        return r.text();
+      }),
+      fetch("/data/metrics.csv").then((r) => {
+        if (!r.ok) throw new Error("metrics.csv not found");
+        return r.text();
+      }),
+      fetch("/data/winners_losers.csv")
+        .then((r) => {
+          if (!r.ok) return null;
+          return r.text();
+        })
+        .catch(() => null),
+    ])
+      .then(([forecast, distributional, metrics, winnersLosers]) => {
+        setData({
+          forecast,
+          distributional: parseCSV(distributional),
+          metrics: parseCSV(metrics),
+          winnersLosers: winnersLosers ? parseCSV(winnersLosers) : null,
+        });
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
-  // Initialize from URL
+  // URL state sync — read on mount
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const tabParam = params.get("tab");
-    if (tabParam === "budget") {
-      setActiveTab("budget");
-    } else if (tabParam === "household") {
-      setActiveTab("household");
-    } else if (tabParam === "validation") {
-      setActiveTab("validation");
-    } else if (tabParam === "baseline") {
-      setActiveTab("baseline");
-    } else {
-      setActiveTab("budget");
+    const tab = params.get("tab");
+    if (tab && ["forecast", "population", "personal"].includes(tab)) {
+      setActiveTab(tab);
     }
   }, []);
 
-  // Update URL when tab changes
+  // URL state sync — write on change
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (activeTab === "baseline") {
-      params.set("tab", "baseline");
-    } else if (activeTab === "household") {
-      params.set("tab", "household");
-    } else if (activeTab === "validation") {
-      params.set("tab", "validation");
+    if (activeTab === "forecast") {
+      params.delete("tab");
     } else {
-      params.delete("tab"); // budget is default, no param needed
+      params.set("tab", activeTab);
     }
-    const newUrl = params.toString()
+    const url = params.toString()
       ? `?${params.toString()}`
       : window.location.pathname;
-    window.history.replaceState({}, "", newUrl);
+    window.history.replaceState({}, "", url);
   }, [activeTab]);
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const getDropdownLabel = () => {
-    if (selectedPolicies.length === 0) return "Select policies";
-    if (selectedPolicies.length === POLICIES.length) return `All ${POLICIES.length} policies selected`;
-    if (selectedPolicies.length > 1) return `${selectedPolicies.length} policies selected`;
-    return POLICIES.find(p => p.id === selectedPolicies[0])?.name || "Select policies";
-  };
 
   return (
     <div className="app">
       <header className="title-row">
         <div className="title-row-inner">
           <h1>UK Spring Statement 2026</h1>
-          <div className="policy-dropdown" ref={dropdownRef}>
-            <button
-              className="policy-dropdown-trigger"
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-            >
-              <span>{getDropdownLabel()}</span>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className={`dropdown-arrow ${dropdownOpen ? "open" : ""}`}
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            {dropdownOpen && (
-              <div className="policy-dropdown-menu">
-                {POLICIES.map((policy) => (
-                  <label
-                    key={policy.id}
-                    className={`policy-dropdown-item checkbox ${selectedPolicies.includes(policy.id) ? "selected" : ""}`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={selectedPolicies.includes(policy.id)}
-                      onChange={() => togglePolicy(policy.id)}
-                    />
-                    <span className="checkmark">
-                      {selectedPolicies.includes(policy.id) && (
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                      )}
-                    </span>
-                    <span className="policy-name">{policy.name}</span>
-                  </label>
-                ))}
-              </div>
-            )}
-          </div>
         </div>
       </header>
       <main className="main-content">
-        {/* Tab navigation */}
+        <p className="dashboard-intro">
+          PolicyEngine analysis of the OBR's March 2026 economic forecast
+          revisions and their projected impact on UK household incomes. The
+          Spring Statement contained no new policy measures — all changes result
+          from updated economic assumptions.
+        </p>
+
         <div className="tab-navigation">
-          <button
-            className={`tab-button ${activeTab === "baseline" ? "active" : ""}`}
-            onClick={() => setActiveTab("baseline")}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
+          {[
+            { id: "forecast", label: "Forecast changes" },
+            { id: "population", label: "Population impact" },
+            { id: "personal", label: "Personal calculator" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              className={`tab-button ${activeTab === tab.id ? "active" : ""}`}
+              onClick={() => setActiveTab(tab.id)}
             >
-              <path d="M3 3v18h18" />
-              <path d="M18 17V9" />
-              <path d="M13 17V5" />
-              <path d="M8 17v-3" />
-            </svg>
-            Baseline UK data
-          </button>
-          <button
-            className={`tab-button ${activeTab === "budget" ? "active" : ""}`}
-            onClick={() => setActiveTab("budget")}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <rect x="3" y="3" width="7" height="9" />
-              <rect x="14" y="3" width="7" height="5" />
-              <rect x="14" y="12" width="7" height="9" />
-              <rect x="3" y="16" width="7" height="5" />
-            </svg>
-            Spring Statement 2026
-          </button>
-          <button
-            className={`tab-button ${activeTab === "household" ? "active" : ""}`}
-            onClick={() => setActiveTab("household")}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            Household calculator
-          </button>
-          <button
-            className={`tab-button ${activeTab === "validation" ? "active" : ""}`}
-            onClick={() => setActiveTab("validation")}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M9 11l3 3L22 4" />
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-            </svg>
-            Validation
-          </button>
+              {tab.label}
+            </button>
+          ))}
         </div>
 
-        {activeTab === "baseline" ? (
-          <BaselineUKTab />
-        ) : activeTab === "household" ? (
-          <div className="personal-impact-container">
-            <HouseholdCalculator />
-          </div>
-        ) : activeTab === "validation" ? (
-          <ValidationTab />
-        ) : selectedPolicies.length > 0 ? (
-          <Dashboard selectedPolicies={selectedPolicies} />
-        ) : (
-          <div className="select-policy-prompt">
-            <p>Please select one or more policies from the dropdown above to view the analysis.</p>
-          </div>
+        {error && <p className="loading">Error: {error}</p>}
+        {loading && !error && <p className="loading">Loading data...</p>}
+
+        {!loading && !error && (
+          <>
+            {activeTab === "forecast" && <ForecastTab data={data} />}
+            {activeTab === "population" && <PopulationTab data={data} />}
+            {activeTab === "personal" && <PersonalTab />}
+          </>
         )}
+
+        <footer className="footer">
+          <p>
+            Built by{" "}
+            <a
+              href="https://policyengine.org"
+              target="_blank"
+              rel="noreferrer"
+            >
+              PolicyEngine
+            </a>{" "}
+            using the Enhanced Family Resources Survey and PolicyEngine UK
+            microsimulation model.
+          </p>
+        </footer>
       </main>
     </div>
   );
+}
+
+// Simple CSV parser
+function parseCSV(text) {
+  const lines = text.trim().split("\n");
+  const headers = lines[0].split(",");
+  return lines.slice(1).map((line) => {
+    const values = line.split(",");
+    const obj = {};
+    headers.forEach((h, i) => {
+      const v = values[i];
+      obj[h.trim()] =
+        isNaN(v) || v === undefined || v.trim() === ""
+          ? (v || "").trim()
+          : parseFloat(v);
+    });
+    return obj;
+  });
 }
 
 export default App;

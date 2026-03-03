@@ -1,9 +1,0 @@
-/* MansionTaxMap - extends UK Map styles */
-@import "./UKMap.css";
-
-/* Mansion tax specific overrides */
-.mansion-tax-map .tooltip-subtitle {
-  font-size: 0.75rem;
-  color: #6b7280;
-  margin: -4px 0 8px 0;
-}

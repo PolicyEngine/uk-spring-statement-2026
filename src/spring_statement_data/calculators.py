@@ -1,7 +1,11 @@
-"""Calculators for UK Spring Statement 2026 dashboard metrics (DRAFT).
+"""Calculators for UK Spring Statement 2026 dashboard metrics.
 
-Each calculator generates a specific type of output data.
-Uses native MicroSeries from PolicyEngine - sim.calculate() returns MicroSeries with weights.
+Each calculator generates a specific type of output data.  There is only
+one reform (updated OBR forecasts), so the calculators are simpler than the
+Autumn Budget equivalents.
+
+Uses native MicroSeries from PolicyEngine -- sim.calculate() returns
+MicroSeries with weights.
 """
 
 import microdf as mdf
@@ -9,343 +13,374 @@ import numpy as np
 import pandas as pd
 from policyengine_uk import Microsimulation
 
-from .reforms import (
-    apply_advanced_rate_freeze_reform,
-    apply_basic_rate_uplift_reform,
-    apply_combined_reform,
-    apply_higher_rate_freeze_reform,
-    apply_intermediate_rate_uplift_reform,
-    apply_scp_baby_boost_reform,
-    apply_scp_inflation_reform,
-    apply_top_rate_freeze_reform,
-    disable_scp_baby_boost,
-    disable_scp_combined,
-    disable_scp_inflation,
-)
-
-# Map reform IDs to their apply functions
-REFORM_APPLY_FNS = {
-    "scp_inflation": apply_scp_inflation_reform,
-    "scp_baby_boost": apply_scp_baby_boost_reform,
-    "income_tax_basic_uplift": apply_basic_rate_uplift_reform,
-    "income_tax_intermediate_uplift": apply_intermediate_rate_uplift_reform,
-    "higher_rate_freeze": apply_higher_rate_freeze_reform,
-    "advanced_rate_freeze": apply_advanced_rate_freeze_reform,
-    "top_rate_freeze": apply_top_rate_freeze_reform,
-    "combined": apply_combined_reform,
-}
-
-# Map reform IDs to baseline modifiers (for counterfactual baselines)
-# These are applied to the baseline to create a proper comparison
-BASELINE_MODIFIERS = {
-    "scp_inflation": disable_scp_inflation,  # Set benefit to baseline rate to measure inflation impact
-    "scp_baby_boost": disable_scp_baby_boost,  # Baby boost is in PE baseline, disable to measure impact
-    "combined": disable_scp_combined,  # Combined includes both benefit inflation and baby boost
-}
+from .reforms import SPRING_STATEMENT_PARAMS, get_reform_scenario
 
 
-def get_uk_household_mask(sim: Microsimulation, year: int) -> np.ndarray:
-    """Get boolean mask for UK households (includes all households, no region filter)."""
-    country = sim.calculate("country", year, map_to="household")
-    return np.ones(len(country), dtype=bool)
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
 
 
-def get_uk_person_mask(sim: Microsimulation, year: int) -> np.ndarray:
-    """Get boolean mask for UK persons (includes all persons, no region filter)."""
-    country = sim.calculate("country", year, map_to="person")
-    return np.ones(len(country), dtype=bool)
+def _create_simulations(year: int = None):
+    """Create baseline and reformed Microsimulation instances.
 
-
-class BudgetaryImpactCalculator:
-    """Calculate budgetary impact (cost) of reforms (DRAFT).
-
-    Methodology note:
-    This calculates cost as the total change in household net income for
-    UK households. This approach is appropriate for UK-wide
-    policies because:
-
-    1. These policies affect UK households directly
-    2. The change in household income equals the fiscal cost/revenue impact
-    3. Using gov_balance would require apportioning aggregates
-
-    Uses fresh simulations per year with proper PolicyEngine Reform classes.
+    Returns:
+        (baseline, reformed) tuple.
     """
+    baseline = Microsimulation()
+    scenario = get_reform_scenario()
+    reformed = Microsimulation(scenario=scenario)
+    return baseline, reformed
 
-    def __init__(self, years: list[int] = None):
-        self.years = years or [2026, 2027, 2028, 2029, 2030]
 
-    def calculate(self, reform_id: str, reform_name: str) -> list[dict]:
-        """Calculate budgetary impact for all years (UK households).
-
-        Uses fresh simulations per year with proper Reform classes.
-        sim.calculate() returns MicroSeries with weights - .sum() is weighted.
-
-        Returns cost in £ millions. Positive = cost to government (income gain for households).
-        """
-        results = []
-
-        for year in self.years:
-            baseline = Microsimulation()
-            reformed = Microsimulation()
-
-            # Apply baseline modifier if needed (for counterfactual baselines)
-            if reform_id in BASELINE_MODIFIERS:
-                BASELINE_MODIFIERS[reform_id](baseline)
-
-            if reform_id in REFORM_APPLY_FNS:
-                REFORM_APPLY_FNS[reform_id](reformed)
-
-            is_uk = get_uk_household_mask(baseline, year)
-
-            # sim.calculate() returns MicroSeries with weights
-            baseline_income = baseline.calculate("household_net_income", year)
-            reformed_income = reformed.calculate("household_net_income", year)
-
-            # MicroSeries subtraction preserves weights, .sum() is weighted
-            income_change = reformed_income - baseline_income
-            household_change = income_change[is_uk].sum()
-
-            # Negate because household income gain = cost to government
-            impact = -household_change / 1e6
-
-            results.append({
-                "reform_id": reform_id,
-                "reform_name": reform_name,
-                "year": year,
-                "value": impact,
-            })
-
-        return results
+# ---------------------------------------------------------------------------
+# Distributional impact
+# ---------------------------------------------------------------------------
 
 
 class DistributionalImpactCalculator:
-    """Calculate distributional impact by income decile.
+    """Calculate impact by income decile.
 
-    Uses fresh simulations per year with proper PolicyEngine Reform classes.
-    sim.calculate() returns MicroSeries with weights built in.
+    Groups households by ``household_income_decile`` and calculates the
+    mean absolute change in ``household_net_income`` per decile.
     """
 
-    def calculate(
-        self,
-        reform_id: str,
-        reform_name: str,
-        year: int,
-    ) -> list[dict]:
-        """Calculate distributional impact for a single year (UK households).
+    def calculate(self, year: int) -> list[dict]:
+        """Calculate distributional impact for a single year.
 
-        Uses native MicroSeries from sim.calculate() - no manual weight handling.
+        Returns list of dicts with keys:
+            year, decile, absolute_change, relative_change
         """
-        baseline = Microsimulation()
-        reformed = Microsimulation()
+        baseline, reformed = _create_simulations()
 
-        # Apply baseline modifier if needed (for counterfactual baselines)
-        if reform_id in BASELINE_MODIFIERS:
-            BASELINE_MODIFIERS[reform_id](baseline)
+        baseline_income = baseline.calculate(
+            "household_net_income", year
+        )
+        reformed_income = reformed.calculate(
+            "household_net_income", year
+        )
+        income_decile = baseline.calculate(
+            "household_income_decile", year
+        )
 
-        if reform_id in REFORM_APPLY_FNS:
-            REFORM_APPLY_FNS[reform_id](reformed)
-
-        is_uk = get_uk_household_mask(baseline, year)
-
-        # sim.calculate() returns MicroSeries with weights
-        baseline_income = baseline.calculate("household_net_income", year)
-        reformed_income = reformed.calculate("household_net_income", year)
-        income_decile = baseline.calculate("household_income_decile", year)
-
-        # Filter to UK households - MicroSeries preserves weights when filtered
-        baseline_uk = baseline_income[is_uk]
-        reformed_uk = reformed_income[is_uk]
-        income_change = reformed_uk - baseline_uk
-        decile_uk = income_decile[is_uk]
+        income_change = reformed_income - baseline_income
 
         results = []
-        decile_labels = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th"]
+        decile_labels = [
+            "1st", "2nd", "3rd", "4th", "5th",
+            "6th", "7th", "8th", "9th", "10th",
+        ]
 
         for decile in range(1, 11):
-            decile_mask = np.array(decile_uk) == decile
-            if not decile_mask.any():
+            mask = np.array(income_decile) == decile
+            if not mask.any():
                 continue
 
-            # Use native MicroSeries - .mean() is weighted automatically
-            avg_change = income_change[decile_mask].mean()
-            avg_baseline = baseline_uk[decile_mask].mean()
-            relative_change = (avg_change / avg_baseline) * 100 if avg_baseline > 0 else 0
+            avg_change = float(income_change[mask].mean())
+            avg_baseline = float(baseline_income[mask].mean())
+            relative = (
+                (avg_change / avg_baseline) * 100
+                if avg_baseline > 0
+                else 0
+            )
 
             results.append({
-                "reform_id": reform_id,
-                "reform_name": reform_name,
                 "year": year,
                 "decile": decile_labels[decile - 1],
-                "value": relative_change,
-                "absolute_change": avg_change,
+                "absolute_change": round(avg_change, 2),
+                "relative_change": round(relative, 4),
             })
 
-        # Add overall average (All deciles)
-        overall_avg_change = income_change.mean()
-        overall_avg_baseline = baseline_uk.mean()
-        overall_relative_change = (overall_avg_change / overall_avg_baseline) * 100 if overall_avg_baseline > 0 else 0
-
+        # Overall average
+        overall_change = float(income_change.mean())
+        overall_baseline = float(baseline_income.mean())
+        overall_relative = (
+            (overall_change / overall_baseline) * 100
+            if overall_baseline > 0
+            else 0
+        )
         results.append({
-            "reform_id": reform_id,
-            "reform_name": reform_name,
             "year": year,
             "decile": "All",
-            "value": overall_relative_change,
-            "absolute_change": overall_avg_change,
+            "absolute_change": round(overall_change, 2),
+            "relative_change": round(overall_relative, 4),
         })
 
         return results
 
 
+# ---------------------------------------------------------------------------
+# Summary metrics (poverty, Gini)
+# ---------------------------------------------------------------------------
+
+
 class MetricsCalculator:
-    """Calculate summary metrics including poverty impacts."""
+    """Calculate summary metrics including poverty rates and Gini."""
 
-    def calculate(
-        self,
-        baseline: Microsimulation,
-        reformed: Microsimulation,
-        reform_id: str,
-        reform_name: str,
-        year: int,
-    ) -> list[dict]:
-        """Calculate poverty and other summary metrics (UK households).
+    def calculate(self, year: int) -> list[dict]:
+        """Calculate poverty and inequality metrics.
 
-        Uses native MicroSeries from sim.calculate() - no manual weight handling.
+        Returns list of dicts with keys: year, metric, value
         """
-        is_uk = get_uk_person_mask(baseline, year)
-
-        # Get is_child for filtering to children
-        is_child = baseline.calculate("is_child", year, map_to="person")
-        is_child_uk = np.array(is_child[is_uk])
-
-        def add_metric_set(
-            results: list[dict],
-            metric_prefix: str,
-            baseline_ms,  # MicroSeries
-            reformed_ms,  # MicroSeries
-            child_filter: np.ndarray = None,
-        ) -> None:
-            """Add baseline, reform, and change metrics for a given measure."""
-            if child_filter is not None:
-                # Filter to children
-                baseline_rate = baseline_ms[child_filter].mean() * 100
-                reformed_rate = reformed_ms[child_filter].mean() * 100
-            else:
-                baseline_rate = baseline_ms.mean() * 100
-                reformed_rate = reformed_ms.mean() * 100
-
-            results.append({
-                "reform_id": reform_id,
-                "reform_name": reform_name,
-                "year": year,
-                "metric": f"{metric_prefix}_baseline",
-                "value": baseline_rate,
-            })
-            results.append({
-                "reform_id": reform_id,
-                "reform_name": reform_name,
-                "year": year,
-                "metric": f"{metric_prefix}_reform",
-                "value": reformed_rate,
-            })
-            results.append({
-                "reform_id": reform_id,
-                "reform_name": reform_name,
-                "year": year,
-                "metric": f"{metric_prefix}_change",
-                "value": reformed_rate - baseline_rate,
-            })
+        baseline, reformed = _create_simulations()
 
         results = []
 
+        def _add(metric: str, value: float):
+            results.append({
+                "year": year,
+                "metric": metric,
+                "value": round(value, 6),
+            })
+
+        # Poverty rates (person-level)
         for housing_cost in ["bhc", "ahc"]:
             for poverty_type in ["absolute", "relative"]:
-                # Construct metric prefix: e.g., "abs_bhc_" or "rel_ahc_"
-                prefix = f"{poverty_type[:3]}_{housing_cost}_"
-
-                # Variable names in PolicyEngine UK
                 if poverty_type == "absolute":
-                    poverty_var = f"in_poverty_{housing_cost}"
-                    deep_poverty_var = f"in_deep_poverty_{housing_cost}"
+                    var = f"in_poverty_{housing_cost}"
                 else:
-                    poverty_var = f"in_relative_poverty_{housing_cost}"
-                    deep_poverty_var = None
+                    var = f"in_relative_poverty_{housing_cost}"
 
-                # sim.calculate() returns MicroSeries with weights
-                baseline_poverty = baseline.calculate(poverty_var, year, map_to="person")
-                reformed_poverty = reformed.calculate(poverty_var, year, map_to="person")
+                prefix = f"{poverty_type[:3]}_{housing_cost}"
 
-                # Filter to UK households - MicroSeries preserves weights
-                baseline_uk = baseline_poverty[is_uk]
-                reformed_uk = reformed_poverty[is_uk]
+                b_pov = baseline.calculate(var, year, map_to="person")
+                r_pov = reformed.calculate(var, year, map_to="person")
 
-                # All persons poverty rate
-                add_metric_set(results, f"{prefix}poverty_rate", baseline_uk, reformed_uk)
-                # Child poverty rate
-                add_metric_set(results, f"{prefix}child_poverty_rate", baseline_uk, reformed_uk, is_child_uk)
+                b_rate = float(b_pov.mean()) * 100
+                r_rate = float(r_pov.mean()) * 100
 
-                # Deep poverty (only for absolute poverty measure)
-                if deep_poverty_var:
-                    baseline_deep = baseline.calculate(deep_poverty_var, year, map_to="person")
-                    reformed_deep = reformed.calculate(deep_poverty_var, year, map_to="person")
+                _add(f"{prefix}_poverty_rate_baseline", b_rate)
+                _add(f"{prefix}_poverty_rate_reform", r_rate)
+                _add(f"{prefix}_poverty_rate_change", r_rate - b_rate)
 
-                    baseline_deep_uk = baseline_deep[is_uk]
-                    reformed_deep_uk = reformed_deep[is_uk]
+        # Gini coefficient (household-level equivalised income)
+        b_equiv = baseline.calculate(
+            "equiv_household_net_income", year
+        )
+        r_equiv = reformed.calculate(
+            "equiv_household_net_income", year
+        )
 
-                    add_metric_set(results, f"{prefix}deep_poverty_rate", baseline_deep_uk, reformed_deep_uk)
-                    add_metric_set(results, f"{prefix}child_deep_poverty_rate", baseline_deep_uk, reformed_deep_uk, is_child_uk)
+        b_gini = float(b_equiv.gini())
+        r_gini = float(r_equiv.gini())
+
+        _add("gini_baseline", b_gini)
+        _add("gini_reform", r_gini)
+        _add("gini_change", r_gini - b_gini)
 
         return results
 
 
-class LocalAuthorityCalculator:
-    """Calculate local authority-level impacts.
+# ---------------------------------------------------------------------------
+# Winners and losers
+# ---------------------------------------------------------------------------
 
-    Note: This uses external weights from HuggingFace (not simulation weights),
-    so we need to explicitly create MicroSeries with those weights.
+
+class WinnersLosersCalculator:
+    """Calculate percentage of households gaining/losing by decile.
+
+    A change > 0.50 is a winner, < -0.50 is a loser.
+    """
+
+    THRESHOLD = 0.50
+
+    def calculate(self, year: int) -> list[dict]:
+        """Calculate winners/losers for a single year.
+
+        Returns list of dicts with keys:
+            year, decile, pct_gaining, pct_losing, pct_unchanged
+        """
+        baseline, reformed = _create_simulations()
+
+        baseline_income = baseline.calculate(
+            "household_net_income", year
+        )
+        reformed_income = reformed.calculate(
+            "household_net_income", year
+        )
+        income_decile = baseline.calculate(
+            "household_income_decile", year
+        )
+
+        change = reformed_income - baseline_income
+        weights = np.array(baseline_income.weights)
+        change_arr = np.array(change)
+        decile_arr = np.array(income_decile)
+
+        results = []
+        decile_labels = [
+            "1st", "2nd", "3rd", "4th", "5th",
+            "6th", "7th", "8th", "9th", "10th",
+        ]
+
+        for decile in range(1, 11):
+            mask = decile_arr == decile
+            if not mask.any():
+                continue
+
+            w = weights[mask]
+            c = change_arr[mask]
+            total_w = w.sum()
+
+            gaining = (w * (c > self.THRESHOLD)).sum() / total_w * 100
+            losing = (w * (c < -self.THRESHOLD)).sum() / total_w * 100
+            unchanged = 100.0 - gaining - losing
+
+            results.append({
+                "year": year,
+                "decile": decile_labels[decile - 1],
+                "pct_gaining": round(gaining, 2),
+                "pct_losing": round(losing, 2),
+                "pct_unchanged": round(unchanged, 2),
+            })
+
+        # Overall
+        total_w = weights.sum()
+        gaining = (
+            (weights * (change_arr > self.THRESHOLD)).sum()
+            / total_w * 100
+        )
+        losing = (
+            (weights * (change_arr < -self.THRESHOLD)).sum()
+            / total_w * 100
+        )
+        unchanged = 100.0 - gaining - losing
+
+        results.append({
+            "year": year,
+            "decile": "All",
+            "pct_gaining": round(gaining, 2),
+            "pct_losing": round(losing, 2),
+            "pct_unchanged": round(unchanged, 2),
+        })
+
+        return results
+
+
+# ---------------------------------------------------------------------------
+# Household scatter
+# ---------------------------------------------------------------------------
+
+
+class HouseholdScatterCalculator:
+    """Sample individual household impacts for scatter-plot display.
+
+    Returns baseline income vs net impact, capped at 150k income.
+    Samples approximately 2000 rows.
+    """
+
+    MAX_INCOME = 150_000
+    SAMPLE_SIZE = 2000
+
+    def calculate(self, year: int) -> pd.DataFrame:
+        """Calculate household scatter data.
+
+        Returns DataFrame with columns:
+            baseline_income, net_impact, decile
+        """
+        baseline, reformed = _create_simulations()
+
+        baseline_income = np.array(
+            baseline.calculate("household_net_income", year)
+        )
+        reformed_income = np.array(
+            reformed.calculate("household_net_income", year)
+        )
+        income_decile = np.array(
+            baseline.calculate("household_income_decile", year)
+        )
+
+        change = reformed_income - baseline_income
+
+        # Cap at max income
+        mask = baseline_income <= self.MAX_INCOME
+        baseline_income = baseline_income[mask]
+        change = change[mask]
+        income_decile = income_decile[mask]
+
+        df = pd.DataFrame({
+            "baseline_income": baseline_income,
+            "net_impact": change,
+            "decile": income_decile,
+        })
+
+        # Sample down
+        if len(df) > self.SAMPLE_SIZE:
+            df = df.sample(
+                n=self.SAMPLE_SIZE, random_state=42
+            )
+
+        return df
+
+
+# ---------------------------------------------------------------------------
+# Constituency impacts
+# ---------------------------------------------------------------------------
+
+
+class ConstituencyCalculator:
+    """Calculate average household impact per parliamentary constituency.
+
+    Uses constituency weights from HuggingFace
+    ``policyengine/policyengine-uk-data`` file
+    ``parliamentary_constituency_weights.h5``.
     """
 
     def calculate(
         self,
-        baseline: Microsimulation,
-        reformed: Microsimulation,
-        reform_id: str,
         year: int,
         weights: np.ndarray,
-        local_authority_df: pd.DataFrame,
+        constituency_df: pd.DataFrame,
     ) -> list[dict]:
-        """Calculate average impact for each local authority."""
-        # Get values as arrays (we use external LA weights, not simulation weights)
-        baseline_income = np.array(baseline.calculate("household_net_income", period=year, map_to="household"))
-        reform_income = np.array(reformed.calculate("household_net_income", period=year, map_to="household"))
+        """Calculate average impact for each constituency.
+
+        Args:
+            year: The fiscal year.
+            weights: Array of shape (n_constituencies, n_households).
+            constituency_df: DataFrame with constituency codes/names.
+
+        Returns list of dicts with keys:
+            year, constituency_code, constituency_name,
+            average_gain, relative_change
+        """
+        baseline, reformed = _create_simulations()
+
+        baseline_income = np.array(
+            baseline.calculate("household_net_income", year)
+        )
+        reformed_income = np.array(
+            reformed.calculate("household_net_income", year)
+        )
 
         results = []
 
-        for idx, (_, row) in enumerate(local_authority_df.iterrows()):
-            code = row["code"]
-            name = row["name"]
-
+        for idx, row in constituency_df.iterrows():
             if idx >= weights.shape[0]:
                 continue
 
-            la_weights = weights[idx, :]
+            code = row.get("code", row.get("constituency_code", ""))
+            name = row.get("name", row.get("constituency_name", ""))
 
-            # Use external LA weights with MicroSeries
-            baseline_ms = mdf.MicroSeries(baseline_income, weights=la_weights)
-            reform_ms = mdf.MicroSeries(reform_income, weights=la_weights)
+            w = weights[idx, :]
 
-            avg_baseline = baseline_ms.mean()
-            avg_reform = reform_ms.mean()
+            baseline_ms = mdf.MicroSeries(baseline_income, weights=w)
+            reform_ms = mdf.MicroSeries(reformed_income, weights=w)
+
+            avg_baseline = float(baseline_ms.mean())
+            avg_reform = float(reform_ms.mean())
             avg_gain = avg_reform - avg_baseline
-            relative_change = (avg_gain / avg_baseline) * 100 if avg_baseline > 0 else 0
+            relative = (
+                (avg_gain / avg_baseline) * 100
+                if avg_baseline > 0
+                else 0
+            )
 
             results.append({
-                "reform_id": reform_id,
                 "year": year,
-                "local_authority_code": code,
-                "local_authority_name": name,
-                "average_gain": avg_gain,
-                "relative_change": relative_change,
+                "constituency_code": code,
+                "constituency_name": name,
+                "average_gain": round(avg_gain, 2),
+                "relative_change": round(relative, 4),
             })
 
         return results

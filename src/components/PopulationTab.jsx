@@ -1,0 +1,346 @@
+import { useState, useMemo } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  ReferenceLine,
+} from "recharts";
+
+const YEARS = [2026, 2027, 2028, 2029, 2030];
+
+function MetricsBar({ metrics, year }) {
+  if (!metrics || metrics.length === 0) return null;
+
+  // Filter metrics for the selected year
+  const yearMetrics = metrics.filter(
+    (m) => m.year === year && m.reform_id === "combined",
+  );
+
+  const getMetricValue = (metricName) => {
+    const found = yearMetrics.find((m) => m.metric === metricName);
+    return found ? found.value : null;
+  };
+
+  const avgImpact = getMetricValue("avg_household_impact");
+  const pctGaining = getMetricValue("pct_gaining");
+  const povertyChange = getMetricValue("abs_bhc_poverty_rate_change");
+
+  const cards = [];
+  if (avgImpact !== null) {
+    cards.push({
+      label: "Average household impact",
+      value: `${avgImpact >= 0 ? "+" : ""}${avgImpact.toFixed(0)}/year`,
+      prefix: "\u00a3",
+    });
+  }
+  if (pctGaining !== null) {
+    cards.push({
+      label: "Households gaining",
+      value: `${pctGaining.toFixed(1)}%`,
+    });
+  }
+  if (povertyChange !== null) {
+    cards.push({
+      label: "Poverty rate change",
+      value: `${povertyChange >= 0 ? "+" : ""}${povertyChange.toFixed(2)} pp`,
+    });
+  }
+
+  if (cards.length === 0) return null;
+
+  return (
+    <div className="metrics-bar">
+      {cards.map((card) => (
+        <div key={card.label} className="metric-card">
+          <div className="metric-label">{card.label}</div>
+          <div className="metric-value">
+            {card.prefix || ""}
+            {card.value}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function DistributionalChart({ data, year }) {
+  const chartData = useMemo(() => {
+    if (!data || data.length === 0) return [];
+    return data
+      .filter((d) => d.year === year && d.reform_id === "combined")
+      .map((d) => ({
+        decile: d.decile,
+        impact: d.absolute_change,
+      }))
+      .sort((a, b) => {
+        const order = [
+          "1st",
+          "2nd",
+          "3rd",
+          "4th",
+          "5th",
+          "6th",
+          "7th",
+          "8th",
+          "9th",
+          "10th",
+        ];
+        return order.indexOf(a.decile) - order.indexOf(b.decile);
+      });
+  }, [data, year]);
+
+  if (chartData.length === 0) return null;
+
+  return (
+    <div className="section-card">
+      <h3 className="chart-title">Average annual impact by income decile</h3>
+      <p className="chart-subtitle">
+        Change in household net income (\u00a3/year), {year}-{(year + 1).toString().slice(-2)}
+      </p>
+      <div className="chart-container-tall">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={chartData}
+            margin={{ top: 8, right: 24, left: 16, bottom: 32 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis
+              dataKey="decile"
+              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tickLine={false}
+              label={{
+                value: "Income decile",
+                position: "insideBottom",
+                offset: -16,
+                style: { fill: "#374151", fontSize: 12, fontWeight: 500 },
+              }}
+            />
+            <YAxis
+              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tickFormatter={(v) =>
+                `${v >= 0 ? "" : "-"}\u00a3${Math.abs(v).toFixed(0)}`
+              }
+              tickLine={false}
+              axisLine={false}
+              width={60}
+              allowDecimals={false}
+              tickCount={6}
+              label={{
+                value: "Change in net income (\u00a3/year)",
+                angle: -90,
+                position: "insideLeft",
+                dx: -8,
+                style: {
+                  textAnchor: "middle",
+                  fill: "#374151",
+                  fontSize: 12,
+                  fontWeight: 500,
+                },
+              }}
+            />
+            <ReferenceLine y={0} stroke="#6b7280" strokeWidth={1} />
+            <Tooltip
+              contentStyle={{
+                background: "#fff",
+                border: "1px solid #e5e7eb",
+                borderRadius: 8,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                fontSize: "0.85rem",
+              }}
+              formatter={(value) => [
+                `${value >= 0 ? "+" : ""}\u00a3${value.toFixed(2)}/year`,
+                "Impact",
+              ]}
+              labelFormatter={(label) => `${label} decile`}
+            />
+            <Bar
+              dataKey="impact"
+              fill="#0d9488"
+              radius={[4, 4, 0, 0]}
+              name="Impact"
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <p
+        style={{
+          fontSize: "0.75rem",
+          color: "#9ca3af",
+          marginTop: "12px",
+        }}
+      >
+        Decile 1 = lowest income households, Decile 10 = highest income
+        households. Values show average annual change in household net income.
+      </p>
+    </div>
+  );
+}
+
+function WinnersLosersChart({ data, year }) {
+  if (!data || data.length === 0) return null;
+
+  const chartData = data
+    .filter((d) => d.year === year)
+    .map((d) => ({
+      decile: d.decile,
+      gaining: d.pct_gaining,
+      losing: d.pct_losing ? -Math.abs(d.pct_losing) : 0,
+      unchanged: d.pct_unchanged || 0,
+    }))
+    .sort((a, b) => {
+      const order = [
+        "1st",
+        "2nd",
+        "3rd",
+        "4th",
+        "5th",
+        "6th",
+        "7th",
+        "8th",
+        "9th",
+        "10th",
+      ];
+      return order.indexOf(a.decile) - order.indexOf(b.decile);
+    });
+
+  if (chartData.length === 0) return null;
+
+  return (
+    <div className="section-card">
+      <h3 className="chart-title">Winners and losers by income decile</h3>
+      <p className="chart-subtitle">
+        Percentage of households gaining vs losing, {year}-{(year + 1).toString().slice(-2)}
+      </p>
+      <div className="chart-container-tall">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={chartData}
+            margin={{ top: 8, right: 24, left: 16, bottom: 32 }}
+            stackOffset="sign"
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis
+              dataKey="decile"
+              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tickLine={false}
+              label={{
+                value: "Income decile",
+                position: "insideBottom",
+                offset: -16,
+                style: { fill: "#374151", fontSize: 12, fontWeight: 500 },
+              }}
+            />
+            <YAxis
+              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tickFormatter={(v) => `${v}%`}
+              tickLine={false}
+              axisLine={false}
+              width={48}
+              allowDecimals={false}
+              tickCount={6}
+            />
+            <ReferenceLine y={0} stroke="#6b7280" strokeWidth={1} />
+            <Tooltip
+              contentStyle={{
+                background: "#fff",
+                border: "1px solid #e5e7eb",
+                borderRadius: 8,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                fontSize: "0.85rem",
+              }}
+              formatter={(value, name) => [
+                `${Math.abs(value).toFixed(1)}%`,
+                name === "gaining" ? "Gaining" : "Losing",
+              ]}
+              labelFormatter={(label) => `${label} decile`}
+            />
+            <Bar
+              dataKey="gaining"
+              fill="#059669"
+              stackId="stack"
+              name="gaining"
+              radius={[4, 4, 0, 0]}
+            />
+            <Bar
+              dataKey="losing"
+              fill="#dc2626"
+              stackId="stack"
+              name="losing"
+              radius={[0, 0, 4, 4]}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+}
+
+export default function PopulationTab({ data }) {
+  const [selectedYear, setSelectedYear] = useState(2026);
+
+  const hasDistributional =
+    data?.distributional && data.distributional.length > 0;
+  const hasWinnersLosers =
+    data?.winnersLosers && data.winnersLosers.length > 0;
+  const hasMetrics = data?.metrics && data.metrics.length > 0;
+
+  if (!hasDistributional && !hasWinnersLosers) {
+    return (
+      <div className="data-message">
+        <p>
+          Population impact data not yet generated. Run{" "}
+          <code>uv run spring-statement-data generate</code> to generate
+          microsimulation results.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ animation: "fadeIn 0.3s ease-out" }}>
+      <div className="year-selector">
+        {YEARS.map((year) => (
+          <button
+            key={year}
+            className={selectedYear === year ? "active" : ""}
+            onClick={() => setSelectedYear(year)}
+          >
+            {year}-{(year + 1).toString().slice(-2)}
+          </button>
+        ))}
+      </div>
+
+      {hasMetrics && (
+        <MetricsBar metrics={data.metrics} year={selectedYear} />
+      )}
+
+      <div className="charts-grid">
+        {hasDistributional && (
+          <DistributionalChart
+            data={data.distributional}
+            year={selectedYear}
+          />
+        )}
+        {hasWinnersLosers && (
+          <WinnersLosersChart
+            data={data.winnersLosers}
+            year={selectedYear}
+          />
+        )}
+      </div>
+
+      {!hasWinnersLosers && hasDistributional && (
+        <div className="data-message" style={{ marginTop: "16px" }}>
+          <p>
+            Winners and losers data not yet available. This will be generated
+            in a future data pipeline update.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
