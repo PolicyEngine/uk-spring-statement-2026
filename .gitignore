@@ -1,4 +1,11 @@
 node_modules/
+.next/
+out/
 dist/
 .DS_Store
 *.log
+.vercel
+__pycache__/
+*.egg-info/
+.venv/
+uv.lock

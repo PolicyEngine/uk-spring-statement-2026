@@ -3,12 +3,17 @@ name = "uk-spring-statement-2026"
 version = "0.1.0"
 description = "UK Spring Statement 2026 impact dashboard"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.13,<3.14"
 dependencies = [
-    "policyengine-uk>=2.69.0",  # Required for SCP baby bonus reform
+    "policyengine-uk>=2.69.0",
     "pandas>=2.0.0",
     "numpy>=1.24.0",
     "h5py>=3.8.0",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+    "pydantic>=2.0.0",
+    "huggingface-hub>=0.20.0",
+    "microdf-python>=1.2.1",
 ]
 
 [project.optional-dependencies]
