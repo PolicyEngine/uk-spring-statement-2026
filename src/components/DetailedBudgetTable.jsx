@@ -128,7 +128,7 @@ export default function DetailedBudgetTable({ data, selectedYear, termsMode = "n
       </h3>
       <p className="chart-description">
         Per-program impact of revised OBR forecasts on government revenue and
-        spending.
+        spending. Values in millions of pounds. Positive difference = fiscal improvement (higher tax revenue or lower spending).
       </p>
 
       <table style={tableStyle}>
@@ -146,17 +146,6 @@ export default function DetailedBudgetTable({ data, selectedYear, termsMode = "n
         </tbody>
       </table>
 
-      <p
-        style={{
-          marginTop: "8px",
-          fontSize: "13px",
-          color: "#666",
-          textAlign: "center",
-        }}
-      >
-        Values in millions of pounds. Positive difference = fiscal improvement
-        (higher tax revenue or lower spending).
-      </p>
     </div>
   );
 }
