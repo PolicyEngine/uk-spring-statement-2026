@@ -1,6 +1,7 @@
-"""Data generation pipeline for UK Spring Statement 2026 dashboard (DRAFT).
+"""Data generation pipeline for UK Spring Statement 2026 dashboard.
 
 This module provides the main pipeline for generating all dashboard data.
+Methodology aligned with PolicyEngine API v2.
 """
 
 from pathlib import Path
@@ -14,8 +15,11 @@ from policyengine_uk import Microsimulation
 from .calculators import (
     BASELINE_MODIFIERS,
     BudgetaryImpactCalculator,
-    LocalAuthorityCalculator,
+    DetailedBudgetaryImpactCalculator,
     DistributionalImpactCalculator,
+    InequalityCalculator,
+    IntraDecileCalculator,
+    LocalAuthorityCalculator,
     MetricsCalculator,
 )
 from .reforms import ReformDefinition, get_spring_statement_reforms
@@ -70,8 +74,11 @@ def generate_all_data(
 
     # Initialize calculators
     budgetary_calc = BudgetaryImpactCalculator(years=years)
+    detailed_budgetary_calc = DetailedBudgetaryImpactCalculator()
     distributional_calc = DistributionalImpactCalculator()
     metrics_calc = MetricsCalculator()
+    inequality_calc = InequalityCalculator()
+    intra_decile_calc = IntraDecileCalculator()
     local_authority_calc = LocalAuthorityCalculator()
 
     # Download local authority data from HuggingFace
@@ -94,8 +101,11 @@ def generate_all_data(
 
     # Aggregate results
     all_budgetary = []
+    all_detailed_budgetary = []
     all_distributional = []
     all_metrics = []
+    all_inequality = []
+    all_intra_decile = []
     all_local_authorities = []
 
     for reform in reforms:
@@ -111,7 +121,7 @@ def generate_all_data(
 
         reform.apply_fn(reformed)
 
-        # Calculate budgetary impact
+        # Calculate budgetary impact (creates its own sims per year)
         budgetary = budgetary_calc.calculate(reform.id, reform.name)
         all_budgetary.extend(budgetary)
 
@@ -119,7 +129,13 @@ def generate_all_data(
         for year in years:
             print(f"  Year {year}...")
 
-            # Distributional
+            # Detailed budgetary breakdown
+            detailed = detailed_budgetary_calc.calculate(
+                baseline, reformed, reform.id, reform.name, year
+            )
+            all_detailed_budgetary.extend(detailed)
+
+            # Distributional (creates its own sims)
             distributional = distributional_calc.calculate(
                 reform.id, reform.name, year
             )
@@ -130,6 +146,18 @@ def generate_all_data(
                 baseline, reformed, reform.id, reform.name, year
             )
             all_metrics.extend(metrics)
+
+            # Inequality (Gini, top shares)
+            inequality = inequality_calc.calculate(
+                baseline, reformed, reform.id, reform.name, year
+            )
+            all_inequality.extend(inequality)
+
+            # Intra-decile winners/losers (creates its own sims)
+            intra_decile = intra_decile_calc.calculate(
+                reform.id, reform.name, year
+            )
+            all_intra_decile.extend(intra_decile)
 
             # Local authority impacts
             if weights is not None and local_authority_df is not None:
@@ -143,8 +171,11 @@ def generate_all_data(
     # Create DataFrames
     results = {
         "budgetary_impact": pd.DataFrame(all_budgetary),
+        "detailed_budgetary_impact": pd.DataFrame(all_detailed_budgetary),
         "distributional_impact": pd.DataFrame(all_distributional),
         "metrics": pd.DataFrame(all_metrics),
+        "inequality": pd.DataFrame(all_inequality),
+        "intra_decile": pd.DataFrame(all_intra_decile),
         "local_authorities": pd.DataFrame(all_local_authorities),
     }
 

@@ -4,6 +4,9 @@ import BudgetBarChart from "./BudgetBarChart";
 import PovertyImpactTable from "./PovertyImpactTable";
 import LocalAreaSection from "./LocalAreaSection";
 import OBRComparisonTable from "./OBRComparisonTable";
+import InequalityTable from "./InequalityTable";
+import IntraDecileChart from "./IntraDecileChart";
+import DetailedBudgetTable from "./DetailedBudgetTable";
 import "./Dashboard.css";
 import { POLICY_NAMES, ALL_POLICY_IDS, REVENUE_POLICIES } from "../utils/policyConfig";
 import {
@@ -116,6 +119,12 @@ const TOP_RATE_THRESHOLD_DATA = [
 const SECTIONS = [
   { id: "introduction", label: "Introduction" },
   { id: "income-tax-benefits", label: "Income tax and benefits" },
+  { id: "detailed-budget", label: "Detailed budget" },
+  { id: "living-standards", label: "Living standards" },
+  { id: "winners-losers", label: "Winners and losers" },
+  { id: "inequality", label: "Inequality" },
+  { id: "poverty", label: "Poverty" },
+  { id: "local-authorities", label: "Local authorities" },
 ];
 
 // Common table styles
@@ -564,6 +573,18 @@ export default function Dashboard({ selectedPolicies = [] }) {
       {/* OBR Comparison Table */}
       <OBRComparisonTable />
 
+      {/* Detailed Budgetary Breakdown */}
+      <h3 className="section-title" id="detailed-budget" ref={(el) => (sectionRefs.current["detailed-budget"] = el)} style={{ fontSize: "1.4rem", fontWeight: 600, color: "#374151", borderBottom: "none", marginTop: "48px", paddingTop: "32px", borderTop: "1px solid #e5e7eb", marginBottom: "12px", padding: "32px 0 0 0" }}>Detailed budgetary breakdown</h3>
+      <p className="chart-description">
+        Per-program breakdown of the budgetary impact, showing changes in tax revenue and benefit spending.
+      </p>
+      <DetailedBudgetTable
+        reformId={effectivePolicy}
+        selectedYear={selectedYear}
+        onYearChange={setSelectedYear}
+        availableYears={AVAILABLE_YEARS}
+      />
+
       {/* Living Standards Section */}
       <h3 className="section-title" id="living-standards" ref={(el) => (sectionRefs.current["living-standards"] = el)} style={{ fontSize: "1.4rem", fontWeight: 600, color: "#374151", borderBottom: "none", marginTop: "48px", paddingTop: "32px", borderTop: "1px solid #e5e7eb", marginBottom: "12px", padding: "32px 0 0 0" }}>Living standards</h3>
       <p className="chart-description">
@@ -585,6 +606,30 @@ export default function Dashboard({ selectedPolicies = [] }) {
           fixedYAxisDomain={decileYAxisDomain}
         />
       ) : null}
+
+      {/* Winners and Losers (Intra-Decile) */}
+      <h3 className="section-title" id="winners-losers" ref={(el) => (sectionRefs.current["winners-losers"] = el)} style={{ fontSize: "1.4rem", fontWeight: 600, color: "#374151", borderBottom: "none", marginTop: "48px", paddingTop: "32px", borderTop: "1px solid #e5e7eb", marginBottom: "12px", padding: "32px 0 0 0" }}>Winners and losers</h3>
+      <p className="chart-description">
+        This section shows the proportion of people who gain, lose, or see no change in net income within each income decile.
+      </p>
+      <IntraDecileChart
+        reformId={effectivePolicy}
+        selectedYear={selectedYear}
+        onYearChange={setSelectedYear}
+        availableYears={AVAILABLE_YEARS}
+      />
+
+      {/* Inequality */}
+      <h3 className="section-title" id="inequality" ref={(el) => (sectionRefs.current["inequality"] = el)} style={{ fontSize: "1.4rem", fontWeight: 600, color: "#374151", borderBottom: "none", marginTop: "48px", paddingTop: "32px", borderTop: "1px solid #e5e7eb", marginBottom: "12px", padding: "32px 0 0 0" }}>Inequality</h3>
+      <p className="chart-description">
+        This section shows how income inequality changes under the selected policies.
+      </p>
+      <InequalityTable
+        reformId={effectivePolicy}
+        selectedYear={selectedYear}
+        onYearChange={setSelectedYear}
+        availableYears={AVAILABLE_YEARS}
+      />
 
       {/* Poverty Section */}
       <h3 className="section-title" id="poverty" ref={(el) => (sectionRefs.current["poverty"] = el)} style={{ fontSize: "1.4rem", fontWeight: 600, color: "#374151", borderBottom: "none", marginTop: "48px", paddingTop: "32px", borderTop: "1px solid #e5e7eb", marginBottom: "12px", padding: "32px 0 0 0" }}>Poverty rate</h3>

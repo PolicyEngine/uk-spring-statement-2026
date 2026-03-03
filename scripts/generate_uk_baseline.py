@@ -7,11 +7,12 @@ METHODOLOGY NOTES:
 - Uses RELATIVE poverty (60% of UK median income) for poverty_rate_bhc/ahc
 - Uses ABSOLUTE poverty (2010/11 threshold + CPI) for absolute_poverty_bhc/ahc
 - No region filtering - covers all of UK
+- Uses MicroSeries .mean() for weighted averages (API v2 parity)
 """
 
-import sys
 from pathlib import Path
 
+import microdf as mdf
 import numpy as np
 import pandas as pd
 from policyengine_uk import Microsimulation
@@ -24,6 +25,7 @@ def calculate_uk_baseline(output_dir: Path = None) -> pd.DataFrame:
     """Calculate baseline projections for the whole UK.
 
     Returns DataFrame with poverty rates, income metrics, and population counts.
+    Uses MicroSeries .mean() for all weighted rates (consistent with API v2).
     """
     script_dir = Path(__file__).parent
 
@@ -38,101 +40,70 @@ def calculate_uk_baseline(output_dir: Path = None) -> pd.DataFrame:
     for year in YEARS:
         print(f"Processing {year}...")
 
-        age = sim.calculate("age", year, map_to="person").values
-        weight = sim.calculate("person_weight", year, map_to="person").values
+        weight = sim.calculate("person_weight", year, map_to="person")
+        age = sim.calculate("age", year, map_to="person")
 
-        # Get RELATIVE poverty (60% of UK median)
-        in_pov_rel_bhc = sim.calculate(
-            "in_relative_poverty_bhc", year, map_to="person"
-        ).values
-        in_pov_rel_ahc = sim.calculate(
-            "in_relative_poverty_ahc", year, map_to="person"
-        ).values
+        # Poverty MicroSeries (already have weights from sim.calculate)
+        in_pov_rel_bhc = sim.calculate("in_relative_poverty_bhc", year, map_to="person")
+        in_pov_rel_ahc = sim.calculate("in_relative_poverty_ahc", year, map_to="person")
+        in_pov_abs_bhc = sim.calculate("in_poverty_bhc", year, map_to="person")
+        in_pov_abs_ahc = sim.calculate("in_poverty_ahc", year, map_to="person")
 
-        # Get ABSOLUTE poverty (2010/11 threshold + CPI)
-        in_pov_abs_bhc = sim.calculate(
-            "in_poverty_bhc", year, map_to="person"
-        ).values
-        in_pov_abs_ahc = sim.calculate(
-            "in_poverty_ahc", year, map_to="person"
-        ).values
-
-        # Age groups
-        is_child = age < 18
-        is_working_age = (age >= 16) & (age < 65)
-        is_pensioner = age >= 65
+        # Age group masks
+        age_vals = np.array(age)
+        is_child = age_vals < 18
+        is_working_age = (age_vals >= 16) & (age_vals < 65)
+        is_pensioner = age_vals >= 65
 
         total_pop = weight.sum()
 
-        # Overall relative poverty
-        pov_bhc = (weight[in_pov_rel_bhc].sum() / total_pop) * 100
-        pov_ahc = (weight[in_pov_rel_ahc].sum() / total_pop) * 100
+        # Overall relative poverty — MicroSeries .mean() is weighted
+        pov_bhc = in_pov_rel_bhc.mean() * 100
+        pov_ahc = in_pov_rel_ahc.mean() * 100
 
         # Overall absolute poverty
-        abs_pov_bhc = (weight[in_pov_abs_bhc].sum() / total_pop) * 100
-        abs_pov_ahc = (weight[in_pov_abs_ahc].sum() / total_pop) * 100
+        abs_pov_bhc = in_pov_abs_bhc.mean() * 100
+        abs_pov_ahc = in_pov_abs_ahc.mean() * 100
 
-        # Child poverty (relative)
-        child_mask = is_child
-        total_children = weight[child_mask].sum()
-        child_pov_bhc = (
-            weight[child_mask & in_pov_rel_bhc].sum() / total_children
-        ) * 100
-        child_pov_ahc = (
-            weight[child_mask & in_pov_rel_ahc].sum() / total_children
-        ) * 100
+        # Child poverty (relative) — filter MicroSeries by mask
+        total_children = weight[is_child].sum()
+        child_pov_bhc = in_pov_rel_bhc[is_child].mean() * 100
+        child_pov_ahc = in_pov_rel_ahc[is_child].mean() * 100
 
         # Child absolute poverty
-        child_abs_pov = (
-            weight[child_mask & in_pov_abs_bhc].sum() / total_children
-        ) * 100
+        child_abs_pov = in_pov_abs_bhc[is_child].mean() * 100
 
         # Working age poverty
-        wa_mask = is_working_age
-        total_wa = weight[wa_mask].sum()
-        wa_pov_bhc = (weight[wa_mask & in_pov_rel_bhc].sum() / total_wa) * 100
-        wa_pov_ahc = (weight[wa_mask & in_pov_rel_ahc].sum() / total_wa) * 100
+        total_wa = weight[is_working_age].sum()
+        wa_pov_bhc = in_pov_rel_bhc[is_working_age].mean() * 100
+        wa_pov_ahc = in_pov_rel_ahc[is_working_age].mean() * 100
 
         # Pensioner poverty
-        pens_mask = is_pensioner
-        total_pens = weight[pens_mask].sum()
-        pens_pov_bhc = (
-            weight[pens_mask & in_pov_rel_bhc].sum() / total_pens
-        ) * 100
-        pens_pov_ahc = (
-            weight[pens_mask & in_pov_rel_ahc].sum() / total_pens
-        ) * 100
+        total_pens = weight[is_pensioner].sum()
+        pens_pov_bhc = in_pov_rel_bhc[is_pensioner].mean() * 100
+        pens_pov_ahc = in_pov_rel_ahc[is_pensioner].mean() * 100
 
-        # Household data (no region filter - UK-wide)
-        hh_income = sim.calculate(
-            "hbai_household_net_income", year, map_to="household"
-        ).values
-        hh_weight = sim.calculate(
-            "household_weight", year, map_to="household"
-        ).values
+        # Household data — MicroSeries for income
+        hh_income = sim.calculate("hbai_household_net_income", year, map_to="household")
+        hh_weight = sim.calculate("household_weight", year, map_to="household")
 
         total_hh = hh_weight.sum()
-        mean_income = (hh_income * hh_weight).sum() / total_hh
+        mean_income = hh_income.mean()
 
-        # Median income
-        sorted_idx = np.argsort(hh_income)
-        sorted_inc = hh_income[sorted_idx]
-        sorted_w = hh_weight[sorted_idx]
-        cum_w = np.cumsum(sorted_w)
-        med_idx = np.searchsorted(cum_w, total_hh / 2)
-        median_income = sorted_inc[min(med_idx, len(sorted_inc) - 1)]
+        # Median income — use MicroSeries .median()
+        median_income = hh_income.median()
 
         # Taxpayer stats
-        total_income = sim.calculate(
-            "total_income", year, map_to="person"
-        ).values
-        is_taxpayer = total_income > 12570
+        total_income = sim.calculate("total_income", year, map_to="person")
+        is_taxpayer = np.array(total_income) > 12570
         taxpayer_inc = total_income[is_taxpayer]
-        taxpayer_w = weight[is_taxpayer]
-        total_taxpayers = taxpayer_w.sum()
+        total_taxpayers = weight[is_taxpayer].sum()
 
-        sorted_idx = np.argsort(taxpayer_inc)
-        sorted_ti = taxpayer_inc[sorted_idx]
+        # Taxpayer percentiles — use sorted weighted approach
+        taxpayer_vals = taxpayer_inc.values
+        taxpayer_w = taxpayer_inc.weights
+        sorted_idx = np.argsort(taxpayer_vals)
+        sorted_ti = taxpayer_vals[sorted_idx]
         sorted_tw = taxpayer_w[sorted_idx]
         cum_tw = np.cumsum(sorted_tw)
 
@@ -145,26 +116,16 @@ def calculate_uk_baseline(output_dir: Path = None) -> pd.DataFrame:
         taxpayer_p75 = sorted_ti[min(p75_idx, len(sorted_ti) - 1)]
 
         # Income per head and total
-        total_hh_income = (hh_income * hh_weight).sum()
+        total_hh_income = hh_income.sum()
         mean_income_per_head = total_hh_income / total_pop
         total_income_bn = total_hh_income / 1e9
 
         # Median income per head
-        hh_count_people = sim.calculate(
-            "household_count_people", year, map_to="household"
-        ).values
-        income_per_head = hh_income / np.maximum(hh_count_people, 1)
-
-        people_weights = hh_weight * hh_count_people
-        sorted_idx = np.argsort(income_per_head)
-        sorted_inc_ph = income_per_head[sorted_idx]
-        sorted_pw = people_weights[sorted_idx]
-        cum_pw = np.cumsum(sorted_pw)
-        total_people_w = cum_pw[-1]
-        med_ph_idx = np.searchsorted(cum_pw, total_people_w / 2)
-        median_income_per_head = sorted_inc_ph[
-            min(med_ph_idx, len(sorted_inc_ph) - 1)
-        ]
+        hh_count_people = sim.calculate("household_count_people", year, map_to="household")
+        income_per_head_vals = np.array(hh_income) / np.maximum(np.array(hh_count_people), 1)
+        people_weights = np.array(hh_weight) * np.array(hh_count_people)
+        income_per_head_ms = mdf.MicroSeries(income_per_head_vals, weights=people_weights)
+        median_income_per_head = income_per_head_ms.median()
 
         results.append(
             {
