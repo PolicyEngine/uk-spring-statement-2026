@@ -21,140 +21,24 @@ DEFAULT_YEARS = [2026, 2027, 2028, 2029, 2030]
 
 
 # =============================================================================
+# Load OBR parameters from JSON (single source of truth)
+# =============================================================================
+
+_OBR_JSON_PATH = Path(__file__).parent / "obr_parameters.json"
+with open(_OBR_JSON_PATH) as _f:
+    _OBR_DATA = json.load(_f)
+
+_NOVEMBER_2025 = _OBR_DATA["november_2025"]
+_MARCH_2026 = _OBR_DATA["march_2026"]
+
+
+# =============================================================================
 # Pre-statement parameters: November 2025 OBR EFO values
 # These are applied as a reform to CREATE the baseline (pre-Spring Statement).
 # policyengine-uk's default parameters already have March 2026 values.
 # =============================================================================
 
-PRE_STATEMENT_PARAMS = {
-    "gov.economic_assumptions.yoy_growth.obr.average_earnings": {
-        "2025-01-01": 0.0517,
-        "2026-01-01": 0.0333,
-        "2027-01-01": 0.0225,
-        "2028-01-01": 0.021,
-        "2029-01-01": 0.0221,
-        "2030-01-01": 0.0232,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.consumer_price_index": {
-        "2025-01-01": 0.0345,
-        "2026-01-01": 0.0248,
-        "2027-01-01": 0.0202,
-        "2028-01-01": 0.0204,
-        "2029-01-01": 0.0204,
-        "2030-01-01": 0.02,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.consumer_price_index_ahc": {
-        "2025-01-01": 0.027,
-        "2026-01-01": 0.017,
-        "2027-01-01": 0.019,
-        "2028-01-01": 0.019,
-        "2029-01-01": 0.019,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.cpih": {
-        "2025-01-01": 0.0393,
-        "2026-01-01": 0.0267,
-        "2027-01-01": 0.0215,
-        "2028-01-01": 0.0208,
-        "2029-01-01": 0.0211,
-        "2030-01-01": 0.0213,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.rpi": {
-        "2025-01-01": 0.0433,
-        "2026-01-01": 0.0371,
-        "2027-01-01": 0.0313,
-        "2028-01-01": 0.0287,
-        "2029-01-01": 0.0291,
-        "2030-01-01": 0.0231,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.house_prices": {
-        "2025-01-01": 0.0294,
-        "2026-01-01": 0.0222,
-        "2027-01-01": 0.0279,
-        "2028-01-01": 0.0272,
-        "2029-01-01": 0.0257,
-        "2030-01-01": 0.0242,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.per_capita.gdp": {
-        "2025-01-01": 0.0418,
-        "2026-01-01": 0.0327,
-        "2027-01-01": 0.0326,
-        "2028-01-01": 0.0302,
-        "2029-01-01": 0.0294,
-        "2030-01-01": 0.0306,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.social_rent": {
-        "2025-01-01": 0.035,
-        "2026-01-01": 0.045,
-        "2027-01-01": 0.035,
-        "2028-01-01": 0.03,
-        "2029-01-01": 0.03,
-        "2030-01-01": 0.03,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.mortgage_interest": {
-        "2025-01-01": 0.1098,
-        "2026-01-01": 0.1435,
-        "2027-01-01": 0.1032,
-        "2028-01-01": 0.047,
-        "2029-01-01": 0.0466,
-        "2030-01-01": 0.0553,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.non_labour_income": {
-        "2025-01-01": 0.0519,
-        "2026-01-01": 0.0565,
-        "2027-01-01": 0.0474,
-        "2028-01-01": 0.0364,
-        "2029-01-01": 0.0302,
-        "2030-01-01": 0.0292,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.rent": {
-        "2025-01-01": 0.0546,
-        "2026-01-01": 0.0334,
-        "2027-01-01": 0.0311,
-        "2028-01-01": 0.0243,
-        "2029-01-01": 0.0234,
-        "2030-01-01": 0.0254,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.council_tax.england": {
-        "2025-01-01": 0.0781,
-        "2026-01-01": 0.053,
-        "2027-01-01": 0.0579,
-        "2028-01-01": 0.0565,
-        "2029-01-01": 0.0547,
-        "2030-01-01": 0.0542,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.council_tax.wales": {
-        "2025-01-01": 0.0581,
-        "2026-01-01": 0.0581,
-        "2027-01-01": 0.0581,
-        "2028-01-01": 0.0581,
-        "2029-01-01": 0.0581,
-        "2030-01-01": 0.0581,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.per_capita.mixed_income": {
-        "2025-01-01": 0.0024,
-        "2026-01-01": 0.0362,
-        "2027-01-01": 0.0374,
-        "2028-01-01": 0.0351,
-        "2029-01-01": 0.0358,
-        "2030-01-01": 0.0364,
-    },
-    "gov.economic_assumptions.yoy_growth.obr.per_capita.non_labour_income": {
-        "2025-01-01": 0.0447,
-        "2026-01-01": 0.0527,
-        "2027-01-01": 0.0437,
-        "2028-01-01": 0.0324,
-        "2029-01-01": 0.0258,
-        "2030-01-01": 0.0247,
-    },
-    "gov.economic_assumptions.yoy_growth.ons.household_interest_income": {
-        "2025-01-01": 0.0519,
-        "2026-01-01": 0.0565,
-        "2027-01-01": 0.0474,
-        "2028-01-01": 0.0364,
-        "2029-01-01": 0.0302,
-        "2030-01-01": 0.0292,
-    },
-}
+PRE_STATEMENT_PARAMS = _NOVEMBER_2025
 
 # Legacy alias — the old name pointed to the March 2026 values applied as
 # a reform.  Now policyengine-uk already has March 2026, so the reform is
@@ -164,46 +48,72 @@ SPRING_STATEMENT_PARAMS = PRE_STATEMENT_PARAMS
 
 # =============================================================================
 # Economic forecast data (old vs new OBR values, for the forecast tab)
+#
+# Built dynamically from the JSON.  Each entry maps a friendly key used by
+# the frontend to a parameter path.  Values are converted from raw decimals
+# (e.g. 0.0333) to display percentages (e.g. 3.3) rounded to 1 decimal.
 # =============================================================================
 
-ECONOMIC_FORECAST = {
-    "earnings_growth": {
-        "label": "Earnings growth",
-        "parameter": "gov.economic_assumptions.yoy_growth.obr.average_earnings",
-        "previous": {2026: 3.3, 2027: 2.2, 2028: 2.1, 2029: 2.2, 2030: 2.3},
-        "updated": {2026: 3.4, 2027: 2.4, 2028: 2.1, 2029: 2.2, 2030: 2.4},
-    },
-    "cpi_inflation": {
-        "label": "CPI inflation",
-        "parameter": "gov.economic_assumptions.yoy_growth.obr.consumer_price_index",
-        "previous": {2026: 2.5, 2027: 2.0, 2028: 2.0, 2029: 2.0, 2030: 2.0},
-        "updated": {2026: 2.3, 2027: 2.0, 2028: 2.0, 2029: 2.0, 2030: 2.0},
-    },
-    "rpi_inflation": {
-        "label": "RPI inflation",
-        "parameter": "gov.economic_assumptions.yoy_growth.obr.rpi",
-        "previous": {2026: 3.7, 2027: 3.1, 2028: 2.9, 2029: 2.9, 2030: 2.3},
-        "updated": {2026: 3.1, 2027: 3.0, 2028: 2.8, 2029: 2.9, 2030: 2.3},
-    },
-    "house_prices": {
-        "label": "House prices",
-        "parameter": "gov.economic_assumptions.yoy_growth.obr.house_prices",
-        "previous": {2026: 2.2, 2027: 2.8, 2028: 2.7, 2029: 2.6, 2030: 2.4},
-        "updated": {2026: 2.4, 2027: 2.9, 2028: 2.7, 2029: 2.6, 2030: 2.4},
-    },
-    "per_capita_gdp": {
-        "label": "Per capita GDP growth",
-        "parameter": "gov.economic_assumptions.yoy_growth.obr.per_capita.gdp",
-        "previous": {2026: 3.3, 2027: 3.3, 2028: 3.0, 2029: 2.9, 2030: 3.1},
-        "updated": {2026: 2.9, 2027: 3.2, 2028: 3.1, 2029: 3.0, 2030: 3.1},
-    },
-    "social_rent": {
-        "label": "Social rent",
-        "parameter": "gov.economic_assumptions.yoy_growth.obr.social_rent",
-        "previous": {2026: 4.5, 2027: 3.5, 2028: 3.0, 2029: 3.0, 2030: 3.0},
-        "updated": {2026: 4.4, 2027: 3.3, 2028: 3.0, 2029: 3.0, 2030: 3.0},
-    },
+# Mapping: frontend key -> (label, parameter path)
+_FORECAST_SERIES = {
+    "earnings_growth": (
+        "Earnings growth",
+        "gov.economic_assumptions.yoy_growth.obr.average_earnings",
+    ),
+    "cpi_inflation": (
+        "CPI inflation",
+        "gov.economic_assumptions.yoy_growth.obr.consumer_price_index",
+    ),
+    "rpi_inflation": (
+        "RPI inflation",
+        "gov.economic_assumptions.yoy_growth.obr.rpi",
+    ),
+    "house_prices": (
+        "House prices",
+        "gov.economic_assumptions.yoy_growth.obr.house_prices",
+    ),
+    "per_capita_gdp": (
+        "Per capita GDP growth",
+        "gov.economic_assumptions.yoy_growth.obr.per_capita.gdp",
+    ),
+    "social_rent": (
+        "Social rent",
+        "gov.economic_assumptions.yoy_growth.obr.social_rent",
+    ),
 }
+
+
+def _build_economic_forecast() -> dict:
+    """Build the ECONOMIC_FORECAST dict from the loaded JSON data."""
+    forecast = {}
+    for key, (label, param_path) in _FORECAST_SERIES.items():
+        nov_values = _NOVEMBER_2025.get(param_path)
+        mar_values = _MARCH_2026.get(param_path)
+        if nov_values is None or mar_values is None:
+            # Parameter not available in JSON for both forecasts — skip
+            continue
+        # Convert date-keyed dicts to year-keyed percentage dicts
+        # Only include DEFAULT_YEARS (skip 2025 which is a base year)
+        previous = {}
+        updated = {}
+        for date_str, val in nov_values.items():
+            year = int(date_str[:4])
+            if year in DEFAULT_YEARS:
+                previous[year] = round(val * 100, 1)
+        for date_str, val in mar_values.items():
+            year = int(date_str[:4])
+            if year in DEFAULT_YEARS:
+                updated[year] = round(val * 100, 1)
+        forecast[key] = {
+            "label": label,
+            "parameter": param_path,
+            "previous": previous,
+            "updated": updated,
+        }
+    return forecast
+
+
+ECONOMIC_FORECAST = _build_economic_forecast()
 
 
 def get_pre_statement_scenario() -> Scenario:
@@ -236,7 +146,7 @@ def generate_economic_forecast_json() -> dict:
         entries = []
         for year in sorted(data["previous"].keys()):
             prev = data["previous"][year]
-            upd = data["updated"][year]
+            upd = data["updated"].get(year, prev)
             entries.append(
                 {
                     "year": year,

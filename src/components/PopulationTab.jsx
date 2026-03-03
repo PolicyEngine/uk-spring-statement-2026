@@ -12,6 +12,7 @@ import {
 import IntraDecileChart from "./IntraDecileChart";
 import InequalityTable from "./InequalityTable";
 import DetailedBudgetTable from "./DetailedBudgetTable";
+import HouseholdArchetypes from "./HouseholdArchetypes";
 
 const YEARS = [2026, 2027, 2028, 2029, 2030];
 
@@ -387,6 +388,8 @@ export default function PopulationTab({ data }) {
         data={extraData.detailedBudget}
         selectedYear={selectedYear}
       />
+
+      <HouseholdArchetypes />
     </div>
   );
 }

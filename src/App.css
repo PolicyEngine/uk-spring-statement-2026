@@ -361,6 +361,39 @@
   font-weight: 600;
 }
 
+/* View toggle (Chart / Table) */
+.view-toggle {
+  display: inline-flex;
+  background: var(--pe-gray-100);
+  border-radius: 8px;
+  padding: 3px;
+  margin-bottom: var(--pe-space-lg);
+}
+
+.view-toggle button {
+  padding: 8px 20px;
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--pe-text-muted);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all var(--pe-transition-fast);
+  font-family: var(--pe-font-family);
+}
+
+.view-toggle button:hover {
+  color: var(--pe-text-primary);
+}
+
+.view-toggle button.active {
+  background: var(--pe-surface);
+  color: var(--pe-teal-700);
+  box-shadow: var(--pe-shadow-sm);
+  font-weight: 600;
+}
+
 /* Placeholder card */
 .placeholder-card {
   background: var(--pe-surface);

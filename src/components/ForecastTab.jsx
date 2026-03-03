@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   LineChart,
   Line,
@@ -124,7 +125,19 @@ function ForecastLineChart({ data, title, unit }) {
   );
 }
 
+function ForecastTableCard({ data, title }) {
+  if (!data || data.length === 0) return null;
+
+  return (
+    <div className="section-card">
+      <h3 className="chart-title">{title}</h3>
+      <ForecastTable data={data} />
+    </div>
+  );
+}
+
 export default function ForecastTab({ data }) {
+  const [viewMode, setViewMode] = useState("chart");
   const forecast = data?.forecast;
 
   if (!forecast) {
@@ -167,65 +180,65 @@ export default function ForecastTab({ data }) {
         ))}
       </div>
 
-      {/* Top row charts */}
+      {/* Chart / Table toggle */}
+      <div className="view-toggle">
+        <button
+          className={viewMode === "chart" ? "active" : ""}
+          onClick={() => setViewMode("chart")}
+        >
+          Chart
+        </button>
+        <button
+          className={viewMode === "table" ? "active" : ""}
+          onClick={() => setViewMode("table")}
+        >
+          Table
+        </button>
+      </div>
+
+      {/* Top row */}
       <h2 className="section-heading">Key inflation and earnings forecasts</h2>
       <div className="charts-grid-3">
         {topRow.map(
           (key) =>
-            forecast[key] && (
+            forecast[key] &&
+            (viewMode === "chart" ? (
               <ForecastLineChart
                 key={key}
                 data={forecast[key]}
                 title={SERIES_CONFIG[key].title}
                 unit={SERIES_CONFIG[key].unit}
               />
-            ),
+            ) : (
+              <ForecastTableCard
+                key={key}
+                data={forecast[key]}
+                title={SERIES_CONFIG[key].title}
+              />
+            )),
         )}
       </div>
 
-      {/* Top row tables */}
-      <div className="charts-grid-3">
-        {topRow.map(
-          (key) =>
-            forecast[key] && (
-              <div key={`table-${key}`} className="section-card">
-                <h3 className="chart-title">
-                  {SERIES_CONFIG[key].title} data
-                </h3>
-                <ForecastTable data={forecast[key]} />
-              </div>
-            ),
-        )}
-      </div>
-
-      {/* Bottom row charts */}
+      {/* Bottom row */}
       <h2 className="section-heading">Other economic indicators</h2>
       <div className="charts-grid-3">
         {bottomRow.map(
           (key) =>
-            forecast[key] && (
+            forecast[key] &&
+            (viewMode === "chart" ? (
               <ForecastLineChart
                 key={key}
                 data={forecast[key]}
                 title={SERIES_CONFIG[key].title}
                 unit={SERIES_CONFIG[key].unit}
               />
-            ),
-        )}
-      </div>
-
-      {/* Bottom row tables */}
-      <div className="charts-grid-3">
-        {bottomRow.map(
-          (key) =>
-            forecast[key] && (
-              <div key={`table-${key}`} className="section-card">
-                <h3 className="chart-title">
-                  {SERIES_CONFIG[key].title} data
-                </h3>
-                <ForecastTable data={forecast[key]} />
-              </div>
-            ),
+            ) : (
+              <ForecastTableCard
+                key={key}
+                data={forecast[key]}
+                title={SERIES_CONFIG[key].title}
+              />
+            )),
         )}
       </div>
     </div>
