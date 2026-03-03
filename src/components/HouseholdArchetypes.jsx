@@ -8,7 +8,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
@@ -50,7 +49,7 @@ function ChangeBarChart({ comparison, termsMode }) {
       </h3>
       <p className="chart-subtitle">
         Difference between Spring Statement and pre-Spring Statement forecasts
-        (\u00a3/year)
+        (&pound;/year)
       </p>
       <div className="chart-container-tall">
         <ResponsiveContainer width="100%" height="100%">
@@ -93,89 +92,6 @@ function ChangeBarChart({ comparison, termsMode }) {
               barSize={24}
               radius={[0, 4, 4, 0]}
               name="Change"
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-}
-
-function BaselineReformedChart({ comparison, termsMode }) {
-  const reformedField = `reformed_hnet_${termsMode}`;
-  const chartData = comparison
-    .map((d) => ({
-      group: shorten(d.group),
-      baseline: d.baseline_hnet,
-      reformed: d[reformedField],
-    }))
-    .sort((a, b) => a.baseline - b.baseline);
-
-  return (
-    <div className="section-card">
-      <h3 className="chart-title">
-        Mean household net income by family type
-      </h3>
-      <p className="chart-subtitle">
-        Pre-Spring Statement vs Spring Statement forecast (\u00a3/year)
-      </p>
-      <div className="chart-container-tall">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={chartData}
-            layout="vertical"
-            margin={{ top: 8, right: 40, left: 10, bottom: 8 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-            <XAxis
-              type="number"
-              tickFormatter={(v) =>
-                `\u00a3${(v / 1000).toFixed(0)}k`
-              }
-              tick={{ fontSize: 12, fill: "#6b7280" }}
-            />
-            <YAxis
-              type="category"
-              dataKey="group"
-              width={130}
-              tick={{ fontSize: 12, fill: "#6b7280" }}
-            />
-            <Tooltip
-              contentStyle={{
-                background: "#fff",
-                border: "1px solid #e5e7eb",
-                borderRadius: 8,
-                boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                fontSize: "0.85rem",
-              }}
-              formatter={(value, name) => [
-                formatCurrency(value) + "/year",
-                name === "baseline"
-                  ? "Pre-Spring Statement"
-                  : "Spring Statement",
-              ]}
-            />
-            <Legend
-              formatter={(value) =>
-                value === "baseline"
-                  ? "Pre-Spring Statement"
-                  : "Spring Statement"
-              }
-              wrapperStyle={{ fontSize: "0.8rem" }}
-            />
-            <Bar
-              dataKey="baseline"
-              fill="#9ca3af"
-              barSize={18}
-              name="baseline"
-              radius={[0, 4, 4, 0]}
-            />
-            <Bar
-              dataKey="reformed"
-              fill="#0d9488"
-              barSize={18}
-              name="reformed"
-              radius={[0, 4, 4, 0]}
             />
           </BarChart>
         </ResponsiveContainer>
@@ -236,7 +152,8 @@ function HouseholdSummaryTable({ stats, comparison, termsMode }) {
   );
 }
 
-export default function HouseholdArchetypes({ termsMode = "nominal" }) {
+export default function HouseholdArchetypes() {
+  const [termsMode, setTermsMode] = useState("nominal");
   const [stats, setStats] = useState(null);
   const [comparison, setComparison] = useState(null);
 
@@ -258,7 +175,13 @@ export default function HouseholdArchetypes({ termsMode = "nominal" }) {
 
   return (
     <div style={{ marginTop: "var(--pe-space-xl)" }}>
-      <h2 className="section-heading">Impact by household type</h2>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <h2 className="section-heading">Impact by household type</h2>
+        <div className="year-selector" style={{ marginBottom: 0 }}>
+          <button className={termsMode === "nominal" ? "active" : ""} onClick={() => setTermsMode("nominal")}>Nominal {"\u00a3"}</button>
+          <button className={termsMode === "real" ? "active" : ""} onClick={() => setTermsMode("real")}>Real {"\u00a3"}</button>
+        </div>
+      </div>
       <p
         style={{
           fontSize: "0.9rem",
@@ -273,10 +196,7 @@ export default function HouseholdArchetypes({ termsMode = "nominal" }) {
         projections.
       </p>
 
-      <div className="charts-grid">
-        <BaselineReformedChart comparison={comparison} termsMode={termsMode} />
-        <ChangeBarChart comparison={comparison} termsMode={termsMode} />
-      </div>
+      <ChangeBarChart comparison={comparison} termsMode={termsMode} />
 
       <HouseholdSummaryTable stats={stats} comparison={comparison} termsMode={termsMode} />
     </div>

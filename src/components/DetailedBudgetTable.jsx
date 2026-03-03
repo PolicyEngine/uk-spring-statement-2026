@@ -31,11 +31,8 @@ const SPENDING_PROGRAMS = [
   "pension_credit",
 ];
 
-export default function DetailedBudgetTable({ data, selectedYear, termsMode = "nominal" }) {
+export default function DetailedBudgetTable({ data, selectedYear }) {
   if (!data) return null;
-
-  const reformField = `reform_${termsMode}`;
-  const differenceField = `difference_${termsMode}`;
 
   const filtered = data.filter(
     (row) => parseInt(row.year) === selectedYear,
@@ -82,8 +79,8 @@ export default function DetailedBudgetTable({ data, selectedYear, termsMode = "n
               {PROGRAM_LABELS[row.program] || row.program}
             </td>
             <td>{formatValue(row.baseline)}</td>
-            <td>{formatValue(row[reformField])}</td>
-            <td>{formatValue(row[differenceField])}</td>
+            <td>{formatValue(row.reform)}</td>
+            <td>{formatValue(row.difference)}</td>
           </tr>
         ))}
       </>

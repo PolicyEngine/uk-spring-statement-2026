@@ -25,7 +25,6 @@ from .reforms import (
     DEFAULT_YEARS,
     generate_economic_forecast_json,
     get_pre_statement_scenario,
-    get_real_deflator,
     save_economic_forecast_json,
 )
 
@@ -198,7 +197,6 @@ def _generate_household_archetypes(output_dir: Path, year: int = 2029):
     from policyengine_uk import Microsimulation
     import microdf as mdf
 
-    deflator = get_real_deflator(year)
     scenario = get_pre_statement_scenario()
     baseline = Microsimulation(scenario=scenario)
     reformed = Microsimulation()
@@ -206,13 +204,15 @@ def _generate_household_archetypes(output_dir: Path, year: int = 2029):
     groups = _classify_household(baseline, year)
     baseline_hnet = baseline.calculate("household_net_income", year)
     reform_hnet_raw = reformed.calculate("household_net_income", year)
-    # Nominal: reform at its own price level
+    baseline_hnet_real = baseline.calculate("real_household_net_income", year)
+    reform_hnet_real_raw = reformed.calculate("real_household_net_income", year)
+
+    # Align reform weights to baseline
     reform_hnet_nominal = mdf.MicroSeries(
         reform_hnet_raw.values, weights=baseline_hnet.weights
     )
-    # Real: deflate reform to baseline prices
     reform_hnet_real = mdf.MicroSeries(
-        reform_hnet_raw.values * deflator, weights=baseline_hnet.weights
+        reform_hnet_real_raw.values, weights=baseline_hnet_real.weights
     )
     weights = np.array(baseline_hnet.weights)
 
@@ -227,11 +227,13 @@ def _generate_household_archetypes(output_dir: Path, year: int = 2029):
         b_inc = baseline_hnet[mask]
         r_inc_nom = reform_hnet_nominal[mask]
         r_inc_real = reform_hnet_real[mask]
+        b_inc_real = baseline_hnet_real[mask]
         w = weights[mask]
 
         mean_b = float(b_inc.mean())
         mean_r_nom = float(r_inc_nom.mean())
         mean_r_real = float(r_inc_real.mean())
+        mean_b_real = float(b_inc_real.mean())
         median_b = float(b_inc.median())
         weighted_n = float(w.sum())
 
@@ -247,7 +249,7 @@ def _generate_household_archetypes(output_dir: Path, year: int = 2029):
             "reformed_hnet_nominal": round(mean_r_nom),
             "reformed_hnet_real": round(mean_r_real),
             "change_nominal": round(mean_r_nom - mean_b),
-            "change_real": round(mean_r_real - mean_b),
+            "change_real": round(mean_r_real - mean_b_real),
         })
 
     output_dir.mkdir(parents=True, exist_ok=True)
