@@ -82,7 +82,14 @@ function Dashboard() {
       </header>
       <main className="main-content">
         <p className="dashboard-intro">
-          PolicyEngine analysis of the OBR&apos;s March 2026 economic forecast
+          PolicyEngine analysis of the{" "}
+          <a
+            href="https://obr.uk/economic-and-fiscal-outlooks/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            OBR&apos;s March 2026 economic forecast
+          </a>{" "}
           revisions and their projected impact on UK household incomes. The
           Spring Statement contained no new policy measures — all changes result
           from updated economic assumptions.
