@@ -87,7 +87,7 @@ export default function DetailedBudgetTable({ data, selectedYear, termsMode = "n
     const v = parseFloat(value);
     if (Math.abs(v) < 0.5) return "\u00A30m";
     const sign = v >= 0 ? "" : "-";
-    return `${sign}\u00A3${Math.abs(v).toFixed(0)}m`;
+    return `${sign}\u00A3${Math.abs(v).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}m`;
   };
 
   const renderGroup = (label, programs) => {

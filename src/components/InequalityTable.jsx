@@ -51,8 +51,8 @@ export default function InequalityTable({ data, selectedYear, termsMode = "nomin
   const formatValue = (metric, value) => {
     if (value == null || isNaN(value)) return "\u2014";
     const v = parseFloat(value);
-    if (metric === "gini") return v.toFixed(4);
-    return `${(v * 100).toFixed(1)}%`;
+    if (metric === "gini") return v.toFixed(2);
+    return `${(v * 100).toFixed(2)}%`;
   };
 
   const formatChange = (metric, baseline, reform) => {
@@ -62,11 +62,11 @@ export default function InequalityTable({ data, selectedYear, termsMode = "nomin
     const diff = r - b;
     if (metric === "gini") {
       const sign = diff >= 0 ? "+" : "";
-      return `${sign}${diff.toFixed(4)}`;
+      return `${sign}${diff.toFixed(2)}`;
     }
     const pctDiff = diff * 100;
     const sign = pctDiff >= 0 ? "+" : "";
-    return `${sign}${pctDiff.toFixed(2)}pp`;
+    return `${sign}${pctDiff.toFixed(2)} pp`;
   };
 
   return (

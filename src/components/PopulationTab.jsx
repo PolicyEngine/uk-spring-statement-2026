@@ -11,7 +11,6 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-import IntraDecileChart from "./IntraDecileChart";
 import InequalityTable from "./InequalityTable";
 import DetailedBudgetTable from "./DetailedBudgetTable";
 import HouseholdArchetypes from "./HouseholdArchetypes";
@@ -288,7 +287,6 @@ export default function PopulationTab({ data }) {
   const [termsMode, setTermsMode] = useState("nominal");
   const [extraData, setExtraData] = useState({
     inequality: null,
-    intraDecile: null,
     detailedBudget: null,
   });
 
@@ -298,16 +296,12 @@ export default function PopulationTab({ data }) {
       fetch("/data/inequality.csv")
         .then((r) => (r.ok ? r.text() : null))
         .catch(() => null),
-      fetch("/data/intra_decile.csv")
-        .then((r) => (r.ok ? r.text() : null))
-        .catch(() => null),
       fetch("/data/detailed_budgetary_impact.csv")
         .then((r) => (r.ok ? r.text() : null))
         .catch(() => null),
-    ]).then(([inequality, intraDecile, detailedBudget]) => {
+    ]).then(([inequality, detailedBudget]) => {
       setExtraData({
         inequality: inequality ? parseCSV(inequality) : null,
-        intraDecile: intraDecile ? parseCSV(intraDecile) : null,
         detailedBudget: detailedBudget ? parseCSV(detailedBudget) : null,
       });
     });
@@ -385,12 +379,6 @@ export default function PopulationTab({ data }) {
           />
         )}
       </div>
-
-      <IntraDecileChart
-        data={extraData.intraDecile}
-        selectedYear={selectedYear}
-        termsMode={termsMode}
-      />
 
       <InequalityTable
         data={extraData.inequality}
