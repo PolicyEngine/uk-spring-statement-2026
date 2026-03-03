@@ -129,9 +129,6 @@ def fastapi_app():
         student_loan_plan: str = Field(
             default="NO_STUDENT_LOAN"
         )
-        salary_growth_rate: float = Field(
-            default=0.0, ge=0.0, le=0.10
-        )
         year: int = Field(default=2026, ge=2025, le=2030)
 
     @api.get("/")
@@ -202,7 +199,6 @@ def fastapi_app():
                     tenure_type=data.tenure_type,
                     childcare_expenses=data.childcare_expenses,
                     student_loan_plan=data.student_loan_plan,
-                    salary_growth_rate=data.salary_growth_rate,
                 ),
             )
             return result

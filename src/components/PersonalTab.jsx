@@ -53,8 +53,6 @@ export default function PersonalTab() {
   const [draftStudentLoan, setDraftStudentLoan] = useState("NO_STUDENT_LOAN");
   const [draftHasPostgrad, setDraftHasPostgrad] = useState(false);
   const [draftLoanBalance, setDraftLoanBalance] = useState(40000);
-  const [draftSalaryGrowthRate, setDraftSalaryGrowthRate] = useState(0.03);
-  const [draftInterestRate, setDraftInterestRate] = useState(0.04);
   const [draftYear, setDraftYear] = useState(2029);
   const [studentLoanExpanded, setStudentLoanExpanded] = useState(false);
   const [moreDetailsExpanded, setMoreDetailsExpanded] = useState(false);
@@ -108,7 +106,6 @@ export default function PersonalTab() {
       tenure_type: draftTenureType,
       childcare_expenses: draftChildcare,
       student_loan_plan: effectiveStudentLoanPlan,
-      salary_growth_rate: draftSalaryGrowthRate,
       year: draftYear,
     };
 
@@ -148,8 +145,7 @@ export default function PersonalTab() {
     draftIncome, draftChildren, draftChildrenAges, draftRent, draftIsCouple,
     draftPartnerIncome, draftAdultAge, draftPartnerAge, draftRegion,
     draftTenureType, draftChildcare,
-    draftStudentLoan, draftHasPostgrad, draftLoanBalance,
-    draftSalaryGrowthRate, draftInterestRate, draftYear,
+    draftStudentLoan, draftHasPostgrad, draftLoanBalance, draftYear,
   ]);
 
   // Multi-year bar chart data
@@ -528,36 +524,6 @@ export default function PersonalTab() {
                       min={0} max={500000} step={1000}
                     />
                   </div>
-                </div>
-              </div>
-              <div className="controls-row controls-row-6">
-                <div className="control-item control-span-2">
-                  <div className="label-with-info">
-                    <label>Salary growth</label>
-                    <span className="info-icon-wrapper">
-                      <span className="info-icon">?</span>
-                      <span className="info-tooltip">Used for multi-year projections</span>
-                    </span>
-                  </div>
-                  <select value={draftSalaryGrowthRate} onChange={(e) => setDraftSalaryGrowthRate(parseFloat(e.target.value))}>
-                    {[0, 1, 2, 3, 4, 5, 6, 7].map((pct) => (
-                      <option key={pct} value={pct / 100}>{pct}%</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="control-item control-span-2">
-                  <div className="label-with-info">
-                    <label>Interest rate</label>
-                    <span className="info-icon-wrapper">
-                      <span className="info-icon">?</span>
-                      <span className="info-tooltip">Annual interest rate on student loan</span>
-                    </span>
-                  </div>
-                  <select value={draftInterestRate} onChange={(e) => setDraftInterestRate(parseFloat(e.target.value))}>
-                    {[0, 1, 2, 3, 4, 5, 6, 7].map((pct) => (
-                      <option key={pct} value={pct / 100}>{pct}%</option>
-                    ))}
-                  </select>
                 </div>
               </div>
               {draftStudentLoan !== "NO_STUDENT_LOAN" && draftHasPostgrad && (

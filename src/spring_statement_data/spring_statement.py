@@ -647,12 +647,12 @@ def calculate_multi_year_net_impact(
     childcare_expenses: float = 0,
     student_loan_plan: str = "NO_STUDENT_LOAN",
     self_employment_income: float = 0,
-    salary_growth_rate: float = 0.0,
 ) -> dict:
     """Calculate net household income impact for each year 2026-2030.
 
     Baseline = November 2025 OBR forecasts (pre-statement).
     Reform = March 2026 OBR forecasts (PE UK default).
+    Uses the same income for all years (no salary growth).
     """
     yearly_impact = {}
     yearly_breakdown = {}
@@ -670,19 +670,12 @@ def calculate_multi_year_net_impact(
     ]
 
     def _calculate_year(year):
-        growth_factor = (1 + salary_growth_rate) ** (year - 2026)
-        grown_income = employment_income * growth_factor
-        grown_partner_income = (
-            partner_income * growth_factor if is_couple else partner_income
-        )
-        grown_se_income = self_employment_income * growth_factor
-
         situation = _build_situation(
-            employment_income=grown_income,
+            employment_income=employment_income,
             num_children=num_children,
             monthly_rent=monthly_rent,
             is_couple=is_couple,
-            partner_income=grown_partner_income,
+            partner_income=partner_income,
             year=year,
             adult_age=adult_age,
             partner_age=partner_age,
@@ -692,7 +685,7 @@ def calculate_multi_year_net_impact(
             tenure_type=tenure_type,
             childcare_expenses=childcare_expenses,
             student_loan_plan=student_loan_plan,
-            self_employment_income=grown_se_income,
+            self_employment_income=self_employment_income,
         )
 
         num_people = len(situation["people"])
