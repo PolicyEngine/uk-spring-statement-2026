@@ -61,7 +61,7 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
     );
     if (povertyChange) {
       cards.push({
-        label: "Absolute poverty rate (BHC)",
+        label: "Absolute poverty rate (BHC) change",
         value: `${povertyChange.value >= 0 ? "+" : ""}${povertyChange.value.toFixed(2)} pp`,
       });
     }

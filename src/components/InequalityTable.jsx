@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 const METRIC_LABELS = {
   gini: "Gini coefficient",
   top_10_pct_share: "Top 10% income share",
@@ -9,11 +7,9 @@ const METRIC_LABELS = {
 };
 
 export default function InequalityTable({ data, selectedYear }) {
-  const [termsMode, setTermsMode] = useState("nominal");
-
   if (!data) return null;
 
-  const reformField = `reform_${termsMode}`;
+  const reformField = "reform_nominal";
 
   const filtered = data.filter(
     (row) => parseInt(row.year) === selectedYear,
@@ -44,13 +40,7 @@ export default function InequalityTable({ data, selectedYear }) {
 
   return (
     <div className="section-card" style={{ marginTop: "24px" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <h3 className="chart-title">Inequality impact</h3>
-        <div className="year-selector" style={{ marginBottom: 0 }}>
-          <button className={termsMode === "nominal" ? "active" : ""} onClick={() => setTermsMode("nominal")}>Nominal {"\u00a3"}</button>
-          <button className={termsMode === "real" ? "active" : ""} onClick={() => setTermsMode("real")}>Real {"\u00a3"}</button>
-        </div>
-      </div>
+      <h3 className="chart-title">Inequality impact</h3>
       <p className="chart-description">
         Change in income inequality metrics from revised OBR forecasts. Based on equivalised household net income. The Gini coefficient ranges from 0 (perfect equality) to 1 (perfect inequality).
       </p>

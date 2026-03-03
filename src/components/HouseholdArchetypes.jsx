@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -33,8 +33,8 @@ function formatCurrencyChange(v) {
   return `${sign}\u00a3${Math.abs(v).toLocaleString("en-GB", { maximumFractionDigits: 0 })}`;
 }
 
-function ChangeBarChart({ comparison, termsMode }) {
-  const changeField = `change_${termsMode}`;
+function ChangeBarChart({ comparison }) {
+  const changeField = "change_nominal";
   const chartData = comparison
     .map((d) => ({
       group: shorten(d.group),
@@ -100,9 +100,9 @@ function ChangeBarChart({ comparison, termsMode }) {
   );
 }
 
-function HouseholdSummaryTable({ stats, comparison, termsMode }) {
-  const reformedField = `reformed_hnet_${termsMode}`;
-  const changeField = `change_${termsMode}`;
+function HouseholdSummaryTable({ stats, comparison }) {
+  const reformedField = "reformed_hnet_nominal";
+  const changeField = "change_nominal";
 
   return (
     <div className="section-card">
@@ -153,7 +153,6 @@ function HouseholdSummaryTable({ stats, comparison, termsMode }) {
 }
 
 export default function HouseholdArchetypes() {
-  const [termsMode, setTermsMode] = useState("nominal");
   const [stats, setStats] = useState(null);
   const [comparison, setComparison] = useState(null);
 
@@ -175,13 +174,7 @@ export default function HouseholdArchetypes() {
 
   return (
     <div style={{ marginTop: "var(--pe-space-xl)" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <h2 className="section-heading">Impact by household type</h2>
-        <div className="year-selector" style={{ marginBottom: 0 }}>
-          <button className={termsMode === "nominal" ? "active" : ""} onClick={() => setTermsMode("nominal")}>Nominal {"\u00a3"}</button>
-          <button className={termsMode === "real" ? "active" : ""} onClick={() => setTermsMode("real")}>Real {"\u00a3"}</button>
-        </div>
-      </div>
+      <h2 className="section-heading">Impact by household type</h2>
       <p
         style={{
           fontSize: "0.9rem",
@@ -196,9 +189,9 @@ export default function HouseholdArchetypes() {
         projections.
       </p>
 
-      <ChangeBarChart comparison={comparison} termsMode={termsMode} />
+      <ChangeBarChart comparison={comparison} />
 
-      <HouseholdSummaryTable stats={stats} comparison={comparison} termsMode={termsMode} />
+      <HouseholdSummaryTable stats={stats} comparison={comparison} />
     </div>
   );
 }
