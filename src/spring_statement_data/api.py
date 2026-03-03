@@ -85,12 +85,6 @@ class SpringStatementInput(BaseModel):
     student_loan_plan: str = Field(
         default="NO_STUDENT_LOAN", description="Student loan plan type"
     )
-    salary_growth_rate: float = Field(
-        default=0.0,
-        ge=0.0,
-        le=0.10,
-        description="Annual salary growth rate for multi-year projections",
-    )
     year: int = Field(
         default=2026, ge=2025, le=2030, description="Fiscal year"
     )
@@ -153,7 +147,6 @@ async def spring_statement_multi_year(data: SpringStatementInput):
                 tenure_type=data.tenure_type,
                 childcare_expenses=data.childcare_expenses,
                 student_loan_plan=data.student_loan_plan,
-                salary_growth_rate=data.salary_growth_rate,
             ),
         )
         return result

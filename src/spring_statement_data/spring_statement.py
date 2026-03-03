@@ -14,7 +14,10 @@ Comparison:
 
 from policyengine_uk import Simulation
 
-from .reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
+try:
+    from .reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
+except ImportError:
+    from reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
 
 CPI_YEARS = range(2025, 2031)
 
@@ -644,12 +647,12 @@ def calculate_multi_year_net_impact(
     childcare_expenses: float = 0,
     student_loan_plan: str = "NO_STUDENT_LOAN",
     self_employment_income: float = 0,
-    salary_growth_rate: float = 0.0,
 ) -> dict:
     """Calculate net household income impact for each year 2026-2030.
 
     Baseline = November 2025 OBR forecasts (pre-statement).
     Reform = March 2026 OBR forecasts (PE UK default).
+    Uses the same income for all years (no salary growth).
     """
     yearly_impact = {}
     yearly_breakdown = {}
@@ -666,22 +669,13 @@ def calculate_multi_year_net_impact(
         if not (p.get("region") and p["region"] != region)
     ]
 
-    pre_statement_scenario = get_pre_statement_scenario()
-
     def _calculate_year(year):
-        growth_factor = (1 + salary_growth_rate) ** (year - 2026)
-        grown_income = employment_income * growth_factor
-        grown_partner_income = (
-            partner_income * growth_factor if is_couple else partner_income
-        )
-        grown_se_income = self_employment_income * growth_factor
-
         situation = _build_situation(
-            employment_income=grown_income,
+            employment_income=employment_income,
             num_children=num_children,
             monthly_rent=monthly_rent,
             is_couple=is_couple,
-            partner_income=grown_partner_income,
+            partner_income=partner_income,
             year=year,
             adult_age=adult_age,
             partner_age=partner_age,
@@ -691,7 +685,7 @@ def calculate_multi_year_net_impact(
             tenure_type=tenure_type,
             childcare_expenses=childcare_expenses,
             student_loan_plan=student_loan_plan,
-            self_employment_income=grown_se_income,
+            self_employment_income=self_employment_income,
         )
 
         num_people = len(situation["people"])
@@ -708,10 +702,13 @@ def calculate_multi_year_net_impact(
             except Exception:
                 return 0.0
 
+        # Fresh scenario each iteration to avoid state contamination
+        scenario = get_pre_statement_scenario()
+
         # Baseline = November 2025 (pre-statement)
         baseline_sim = Simulation(
             situation=situation,
-            scenario=pre_statement_scenario,
+            scenario=scenario,
         )
         baseline_net = float(
             baseline_sim.calculate("household_net_income", year)[0]
@@ -741,16 +738,11 @@ def calculate_multi_year_net_impact(
 
         return str(year), impact, breakdown
 
-    from concurrent.futures import ThreadPoolExecutor
-
-    with ThreadPoolExecutor(max_workers=5) as pool:
-        futures = [
-            pool.submit(_calculate_year, yr) for yr in range(2026, 2031)
-        ]
-        for future in futures:
-            year_str, impact, breakdown = future.result()
-            yearly_impact[year_str] = impact
-            yearly_breakdown[year_str] = breakdown
+    # Run sequentially with fresh scenario each iteration
+    for yr in range(2026, 2031):
+        year_str, impact, breakdown = _calculate_year(yr)
+        yearly_impact[year_str] = impact
+        yearly_breakdown[year_str] = breakdown
 
     return {
         "yearly_impact": yearly_impact,
@@ -918,10 +910,10 @@ def calculate_mtr_data(
             if len(employment_income) > 1
             else 1000
         )
-        it_marginal = np.clip(np.gradient(income_tax, delta), 0, 1)
-        ni_marginal = np.clip(np.gradient(ni, delta), 0, 1)
-        ben_marginal = np.clip(-np.gradient(benefits, delta), 0, 1)
-        total_marginal = np.clip(1 - np.gradient(net_income, delta), 0, 1)
+        it_marginal = np.gradient(income_tax, delta)
+        ni_marginal = np.gradient(ni, delta)
+        ben_marginal = -np.gradient(benefits, delta)
+        total_marginal = 1 - np.gradient(net_income, delta)
 
         mtr_data = []
         for j in range(len(employment_income)):

@@ -35,6 +35,10 @@ image = (
         SRC_DIR / "reforms.py",
         remote_path="/root/reforms.py",
     )
+    .add_local_file(
+        SRC_DIR / "obr_parameters.json",
+        remote_path="/root/obr_parameters.json",
+    )
 )
 
 
@@ -83,7 +87,9 @@ def fastapi_app():
         calculate_mtr_data,
     )
 
-    executor = ThreadPoolExecutor(max_workers=3)
+    # Serialize all calculations — PolicyEngine's TaxBenefitSystem is not
+    # thread-safe and concurrent simulations contaminate shared state.
+    executor = ThreadPoolExecutor(max_workers=1)
 
     api = FastAPI(
         title="Spring Statement 2026 Calculator API",
@@ -122,9 +128,6 @@ def fastapi_app():
         )
         student_loan_plan: str = Field(
             default="NO_STUDENT_LOAN"
-        )
-        salary_growth_rate: float = Field(
-            default=0.0, ge=0.0, le=0.10
         )
         year: int = Field(default=2026, ge=2025, le=2030)
 
@@ -196,7 +199,6 @@ def fastapi_app():
                     tenure_type=data.tenure_type,
                     childcare_expenses=data.childcare_expenses,
                     student_loan_plan=data.student_loan_plan,
-                    salary_growth_rate=data.salary_growth_rate,
                 ),
             )
             return result
