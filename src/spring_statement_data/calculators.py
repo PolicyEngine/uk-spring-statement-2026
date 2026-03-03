@@ -29,6 +29,12 @@ UK_PROGRAMS = {
     "ni_employer": {"variable": "employer_national_insurance", "is_tax": True},
 }
 
+# Decile labels for income distribution analysis
+DECILE_LABELS = [
+    "1st", "2nd", "3rd", "4th", "5th",
+    "6th", "7th", "8th", "9th", "10th",
+]
+
 
 def _create_simulations():
     """Create baseline and reformed Microsimulation instances.
@@ -70,10 +76,6 @@ class DistributionalImpactCalculator:
         decile_values = income_decile[valid]
 
         results = []
-        decile_labels = [
-            "1st", "2nd", "3rd", "4th", "5th",
-            "6th", "7th", "8th", "9th", "10th",
-        ]
 
         for decile in range(1, 11):
             mask = np.array(decile_values) == decile
@@ -87,7 +89,7 @@ class DistributionalImpactCalculator:
 
             results.append({
                 "year": year,
-                "decile": decile_labels[decile - 1],
+                "decile": DECILE_LABELS[decile - 1],
                 "absolute_change": round(float(avg_change), 2),
                 "relative_change": round(float(relative), 4),
             })
@@ -263,10 +265,6 @@ class IntraDecileCalculator:
         )
 
         results = []
-        decile_labels = [
-            "1st", "2nd", "3rd", "4th", "5th",
-            "6th", "7th", "8th", "9th", "10th",
-        ]
         all_decile_shares = []
 
         for decile in range(1, 11):
@@ -282,7 +280,7 @@ class IntraDecileCalculator:
 
                 results.append({
                     "year": year,
-                    "decile": decile_labels[decile - 1],
+                    "decile": DECILE_LABELS[decile - 1],
                     "outcome": label,
                     "share": float(share),
                 })
@@ -351,10 +349,6 @@ class WinnersLosersCalculator:
         decile_arr = np.array(income_decile)
 
         results = []
-        decile_labels = [
-            "1st", "2nd", "3rd", "4th", "5th",
-            "6th", "7th", "8th", "9th", "10th",
-        ]
 
         for decile in range(1, 11):
             mask = decile_arr == decile
@@ -371,7 +365,7 @@ class WinnersLosersCalculator:
 
             results.append({
                 "year": year,
-                "decile": decile_labels[decile - 1],
+                "decile": DECILE_LABELS[decile - 1],
                 "pct_gaining": round(gaining, 2),
                 "pct_losing": round(losing, 2),
                 "pct_unchanged": round(unchanged, 2),

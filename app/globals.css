@@ -99,10 +99,6 @@ code {
   font-family: var(--pe-font-mono);
 }
 
-#root {
-  min-height: 100vh;
-}
-
 /* Selection highlight */
 ::selection {
   background: var(--pe-teal-200);

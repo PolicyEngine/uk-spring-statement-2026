@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import {
   LineChart,
@@ -20,28 +22,10 @@ const SERIES_CONFIG = {
   social_rent: { title: "Social rent growth", unit: "%" },
 };
 
-const HERO_CARDS = [
-  {
-    label: "CPI 2026",
-    previous: 2.5,
-    updated: 2.3,
-    change: -0.2,
-    unit: "pp",
-  },
-  {
-    label: "RPI 2026",
-    previous: 3.7,
-    updated: 3.1,
-    change: -0.6,
-    unit: "pp",
-  },
-  {
-    label: "Earnings 2026",
-    previous: 3.3,
-    updated: 3.4,
-    change: 0.1,
-    unit: "pp",
-  },
+const HERO_SERIES = [
+  { key: "cpi_inflation", label: "CPI", targetYear: 2026 },
+  { key: "rpi_inflation", label: "RPI", targetYear: 2026 },
+  { key: "earnings_growth", label: "Earnings", targetYear: 2026 },
 ];
 
 const COLORS = {
@@ -136,6 +120,23 @@ function ForecastTableCard({ data, title }) {
   );
 }
 
+function buildHeroCards(forecast) {
+  return HERO_SERIES.map(({ key, label, targetYear }) => {
+    const series = forecast[key];
+    if (!series) return null;
+    const row = series.find((r) => r.year === targetYear);
+    if (!row) return null;
+    const change = row.updated - row.previous;
+    return {
+      label: `${label} ${targetYear}`,
+      previous: row.previous,
+      updated: row.updated,
+      change,
+      unit: "pp",
+    };
+  }).filter(Boolean);
+}
+
 export default function ForecastTab({ data }) {
   const [viewMode, setViewMode] = useState("chart");
   const forecast = data?.forecast;
@@ -151,6 +152,7 @@ export default function ForecastTab({ data }) {
     );
   }
 
+  const heroCards = buildHeroCards(forecast);
   const topRow = ["earnings_growth", "cpi_inflation", "rpi_inflation"];
   const bottomRow = ["house_prices", "per_capita_gdp", "social_rent"];
 
@@ -158,7 +160,7 @@ export default function ForecastTab({ data }) {
     <div style={{ animation: "fadeIn 0.3s ease-out" }}>
       {/* Hero numbers */}
       <div className="hero-numbers">
-        {HERO_CARDS.map((card) => (
+        {heroCards.map((card) => (
           <div key={card.label} className="hero-card">
             <div className="hero-label">{card.label}</div>
             <div className="hero-value">

@@ -1,3 +1,5 @@
+"use client";
+
 const tableStyle = {
   margin: "12px auto 0 auto",
   width: "auto",

@@ -1,11 +1,24 @@
-import { useState, useEffect } from "react";
-import ForecastTab from "./components/ForecastTab";
-import PopulationTab from "./components/PopulationTab";
-import PersonalTab from "./components/PersonalTab";
+"use client";
+
+import { useState, useEffect, useCallback, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import ForecastTab from "../src/components/ForecastTab";
+import PopulationTab from "../src/components/PopulationTab";
+import PersonalTab from "../src/components/PersonalTab";
+import parseCSV from "../lib/parseCSV";
 import "./App.css";
 
-function App() {
-  const [activeTab, setActiveTab] = useState("forecast");
+const VALID_TABS = ["forecast", "population", "personal"];
+
+function Dashboard() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const tabParam = searchParams.get("tab");
+  const initialTab =
+    tabParam && VALID_TABS.includes(tabParam) ? tabParam : "forecast";
+
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,28 +60,18 @@ function App() {
       });
   }, []);
 
-  // URL state sync — read on mount
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tab = params.get("tab");
-    if (tab && ["forecast", "population", "personal"].includes(tab)) {
+  // URL state sync — write on tab change
+  const handleTabChange = useCallback(
+    (tab) => {
       setActiveTab(tab);
-    }
-  }, []);
-
-  // URL state sync — write on change
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (activeTab === "forecast") {
-      params.delete("tab");
-    } else {
-      params.set("tab", activeTab);
-    }
-    const url = params.toString()
-      ? `?${params.toString()}`
-      : window.location.pathname;
-    window.history.replaceState({}, "", url);
-  }, [activeTab]);
+      if (tab === "forecast") {
+        router.replace("/", { scroll: false });
+      } else {
+        router.replace(`/?tab=${tab}`, { scroll: false });
+      }
+    },
+    [router],
+  );
 
   return (
     <div className="app">
@@ -79,7 +82,7 @@ function App() {
       </header>
       <main className="main-content">
         <p className="dashboard-intro">
-          PolicyEngine analysis of the OBR's March 2026 economic forecast
+          PolicyEngine analysis of the OBR&apos;s March 2026 economic forecast
           revisions and their projected impact on UK household incomes. The
           Spring Statement contained no new policy measures — all changes result
           from updated economic assumptions.
@@ -94,7 +97,7 @@ function App() {
             <button
               key={tab.id}
               className={`tab-button ${activeTab === tab.id ? "active" : ""}`}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabChange(tab.id)}
             >
               {tab.label}
             </button>
@@ -131,22 +134,10 @@ function App() {
   );
 }
 
-// Simple CSV parser
-function parseCSV(text) {
-  const lines = text.trim().split("\n");
-  const headers = lines[0].split(",");
-  return lines.slice(1).map((line) => {
-    const values = line.split(",");
-    const obj = {};
-    headers.forEach((h, i) => {
-      const v = values[i];
-      obj[h.trim()] =
-        isNaN(v) || v === undefined || v.trim() === ""
-          ? (v || "").trim()
-          : parseFloat(v);
-    });
-    return obj;
-  });
+export default function Page() {
+  return (
+    <Suspense fallback={<p className="loading">Loading...</p>}>
+      <Dashboard />
+    </Suspense>
+  );
 }
-
-export default App;

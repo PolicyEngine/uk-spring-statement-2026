@@ -1,9 +1,11 @@
+"use client";
+
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import * as d3 from "d3";
 import "./PersonalTab.css";
 
 const API_URL =
-  import.meta.env.VITE_API_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
   "https://policyengine--spring-statement-calculator-fastapi-app.modal.run";
 
 // ---------------------------------------------------------------------------

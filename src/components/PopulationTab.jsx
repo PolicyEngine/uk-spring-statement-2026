@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useMemo, useEffect } from "react";
 import {
   BarChart,
@@ -13,6 +15,7 @@ import IntraDecileChart from "./IntraDecileChart";
 import InequalityTable from "./InequalityTable";
 import DetailedBudgetTable from "./DetailedBudgetTable";
 import HouseholdArchetypes from "./HouseholdArchetypes";
+import parseCSV from "../../lib/parseCSV";
 
 const YEARS = [2026, 2027, 2028, 2029, 2030];
 
@@ -20,23 +23,6 @@ const DECILE_ORDER = [
   "1st", "2nd", "3rd", "4th", "5th",
   "6th", "7th", "8th", "9th", "10th",
 ];
-
-function parseCSV(text) {
-  const lines = text.trim().split("\n");
-  const headers = lines[0].split(",");
-  return lines.slice(1).map((line) => {
-    const values = line.split(",");
-    const obj = {};
-    headers.forEach((h, i) => {
-      const v = values[i];
-      obj[h.trim()] =
-        isNaN(v) || v === undefined || v.trim() === ""
-          ? (v || "").trim()
-          : parseFloat(v);
-    });
-    return obj;
-  });
-}
 
 function MetricsBar({ metrics, winnersLosers, distributional, year }) {
   const cards = [];
@@ -202,22 +188,23 @@ function DistributionalChart({ data, year }) {
 }
 
 function WinnersLosersChart({ data, year }) {
-  if (!data || data.length === 0) return null;
-
-  const chartData = data
-    .filter(
-      (d) => d.year === year && d.decile !== "All" && d.decile !== "Overall",
-    )
-    .map((d) => ({
-      decile: d.decile,
-      gaining: d.pct_gaining,
-      losing: d.pct_losing ? -Math.abs(d.pct_losing) : 0,
-      unchanged: d.pct_unchanged || 0,
-    }))
-    .sort(
-      (a, b) =>
-        DECILE_ORDER.indexOf(a.decile) - DECILE_ORDER.indexOf(b.decile),
-    );
+  const chartData = useMemo(() => {
+    if (!data || data.length === 0) return [];
+    return data
+      .filter(
+        (d) => d.year === year && d.decile !== "All" && d.decile !== "Overall",
+      )
+      .map((d) => ({
+        decile: d.decile,
+        gaining: d.pct_gaining,
+        losing: d.pct_losing ? -Math.abs(d.pct_losing) : 0,
+        unchanged: d.pct_unchanged || 0,
+      }))
+      .sort(
+        (a, b) =>
+          DECILE_ORDER.indexOf(a.decile) - DECILE_ORDER.indexOf(b.decile),
+      );
+  }, [data, year]);
 
   if (chartData.length === 0) return null;
 

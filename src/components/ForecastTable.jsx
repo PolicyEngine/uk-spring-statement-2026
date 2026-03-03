@@ -1,15 +1,14 @@
+"use client";
+
 /**
  * Reusable forecast data table.
  * Shows Year, Previous, Updated, Change columns with color-coded change values.
  */
-export default function ForecastTable({ data, format = "percent" }) {
+export default function ForecastTable({ data }) {
   if (!data || data.length === 0) return null;
 
   const formatValue = (value) => {
     if (value === null || value === undefined) return "—";
-    if (format === "currency") {
-      return `${value >= 0 ? "" : "-"}${Math.abs(value).toFixed(1)}%`;
-    }
     return `${value.toFixed(1)}%`;
   };
 

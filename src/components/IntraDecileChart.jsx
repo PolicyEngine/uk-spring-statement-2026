@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+"use client";
+
+import { useMemo } from "react";
 import {
   BarChart,
   Bar,
