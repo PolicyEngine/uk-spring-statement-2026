@@ -105,7 +105,7 @@ function HouseholdSummaryTable({ stats, comparison }) {
 
   return (
     <div className="section-card">
-      <h3 className="chart-title">Household income summary</h3>
+      <h3 className="chart-title">Impact on household income by family type</h3>
       <p className="chart-subtitle">
         Median and mean household net income by family type, comparing pre- and post-Spring Statement forecasts
       </p>
@@ -115,7 +115,7 @@ function HouseholdSummaryTable({ stats, comparison }) {
             <tr>
               <th>Household type</th>
               <th>Median income</th>
-              <th>Population</th>
+              <th>Households (m)</th>
               <th>Mean income (pre)</th>
               <th>Mean income (post)</th>
               <th>Change</th>
@@ -137,7 +137,7 @@ function HouseholdSummaryTable({ stats, comparison }) {
                   <td>{row.group}</td>
                   <td>{formatCurrency(row.median_hnet)}</td>
                   <td>
-                    {Math.round(row.weighted_n).toLocaleString("en-GB")}
+                    {(row.weighted_n / 1e6).toFixed(2)}m
                   </td>
                   <td>{formatCurrency(comp.baseline_hnet)}</td>
                   <td>{formatCurrency(comp[reformedField])}</td>
