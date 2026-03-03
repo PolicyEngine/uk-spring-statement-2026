@@ -1,41 +1,5 @@
 "use client";
 
-const tableStyle = {
-  margin: "12px auto 0 auto",
-  width: "auto",
-  borderCollapse: "collapse",
-  fontSize: "14px",
-};
-const thStyle = {
-  textAlign: "left",
-  padding: "10px 16px",
-  borderBottom: "2px solid #e5e7eb",
-  backgroundColor: "#f3f4f6",
-};
-const thRightStyle = {
-  textAlign: "right",
-  padding: "10px 16px",
-  borderBottom: "2px solid #e5e7eb",
-  backgroundColor: "#f3f4f6",
-};
-const tdStyle = {
-  padding: "10px 16px",
-  borderBottom: "1px solid #e5e7eb",
-};
-const tdRightStyle = {
-  textAlign: "right",
-  padding: "10px 16px",
-  borderBottom: "1px solid #e5e7eb",
-};
-const groupHeaderStyle = {
-  padding: "10px 16px",
-  borderBottom: "1px solid #e5e7eb",
-  backgroundColor: "#f9fafb",
-  fontWeight: 600,
-  fontSize: "13px",
-  color: "#374151",
-};
-
 const PROGRAM_LABELS = {
   income_tax: "Income Tax",
   national_insurance: "National Insurance (employee)",
@@ -97,18 +61,29 @@ export default function DetailedBudgetTable({ data, selectedYear, termsMode = "n
     return (
       <>
         <tr>
-          <td style={groupHeaderStyle} colSpan={4}>
+          <td
+            colSpan={4}
+            style={{
+              fontWeight: 600,
+              fontSize: "0.8rem",
+              color: "var(--pe-text-secondary)",
+              textTransform: "uppercase",
+              letterSpacing: "0.03em",
+              padding: "10px 12px",
+              borderBottom: "1px solid var(--pe-gray-100)",
+            }}
+          >
             {label}
           </td>
         </tr>
         {rows.map((row) => (
           <tr key={row.program}>
-            <td style={{ ...tdStyle, paddingLeft: "28px" }}>
+            <td style={{ paddingLeft: "24px" }}>
               {PROGRAM_LABELS[row.program] || row.program}
             </td>
-            <td style={tdRightStyle}>{formatValue(row.baseline)}</td>
-            <td style={tdRightStyle}>{formatValue(row[reformField])}</td>
-            <td style={tdRightStyle}>{formatValue(row[differenceField])}</td>
+            <td>{formatValue(row.baseline)}</td>
+            <td>{formatValue(row[reformField])}</td>
+            <td>{formatValue(row[differenceField])}</td>
           </tr>
         ))}
       </>
@@ -117,32 +92,28 @@ export default function DetailedBudgetTable({ data, selectedYear, termsMode = "n
 
   return (
     <div className="section-card" style={{ marginTop: "24px" }}>
-      <h3
-        className="chart-title"
-        style={{ fontSize: "1.1rem", fontWeight: 600 }}
-      >
-        Detailed budgetary breakdown
-      </h3>
+      <h3 className="chart-title">Detailed budgetary breakdown</h3>
       <p className="chart-description">
         Per-program impact of revised OBR forecasts on government revenue and
         spending. Values in millions of pounds. Positive difference = fiscal improvement (higher tax revenue or lower spending).
       </p>
 
-      <table style={tableStyle}>
-        <thead>
-          <tr>
-            <th style={thStyle}>Program</th>
-            <th style={thRightStyle}>Nov 2025 ({"\u00A3"}m)</th>
-            <th style={thRightStyle}>Mar 2026 ({"\u00A3"}m)</th>
-            <th style={thRightStyle}>Difference ({"\u00A3"}m)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {renderGroup("Tax revenue", REVENUE_PROGRAMS)}
-          {renderGroup("Benefit spending", SPENDING_PROGRAMS)}
-        </tbody>
-      </table>
-
+      <div className="forecast-table-wrapper">
+        <table className="forecast-table">
+          <thead>
+            <tr>
+              <th>Program</th>
+              <th>Nov 2025 ({"\u00A3"}m)</th>
+              <th>Mar 2026 ({"\u00A3"}m)</th>
+              <th>Difference ({"\u00A3"}m)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {renderGroup("Tax revenue", REVENUE_PROGRAMS)}
+            {renderGroup("Benefit spending", SPENDING_PROGRAMS)}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

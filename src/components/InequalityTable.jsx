@@ -1,33 +1,5 @@
 "use client";
 
-const tableStyle = {
-  margin: "12px auto 0 auto",
-  width: "auto",
-  borderCollapse: "collapse",
-  fontSize: "14px",
-};
-const thStyle = {
-  textAlign: "left",
-  padding: "10px 16px",
-  borderBottom: "2px solid #e5e7eb",
-  backgroundColor: "#f3f4f6",
-};
-const thRightStyle = {
-  textAlign: "right",
-  padding: "10px 16px",
-  borderBottom: "2px solid #e5e7eb",
-  backgroundColor: "#f3f4f6",
-};
-const tdStyle = {
-  padding: "10px 16px",
-  borderBottom: "1px solid #e5e7eb",
-};
-const tdRightStyle = {
-  textAlign: "right",
-  padding: "10px 16px",
-  borderBottom: "1px solid #e5e7eb",
-};
-
 const METRIC_LABELS = {
   gini: "Gini coefficient",
   top_10_pct_share: "Top 10% income share",
@@ -68,47 +40,37 @@ export default function InequalityTable({ data, selectedYear, termsMode = "nomin
 
   return (
     <div className="section-card" style={{ marginTop: "24px" }}>
-      <h3
-        className="chart-title"
-        style={{ fontSize: "1.1rem", fontWeight: 600 }}
-      >
-        Inequality impact
-      </h3>
+      <h3 className="chart-title">Inequality impact</h3>
       <p className="chart-description">
         Change in income inequality metrics from revised OBR forecasts. Based on equivalised household net income. The Gini coefficient ranges from 0 (perfect equality) to 1 (perfect inequality).
       </p>
 
-      <table style={tableStyle}>
-        <thead>
-          <tr>
-            <th style={thStyle}>Metric</th>
-            <th style={thRightStyle}>Nov 2025</th>
-            <th style={thRightStyle}>Mar 2026</th>
-            <th style={thRightStyle}>Change</th>
-          </tr>
-        </thead>
-        <tbody>
-          {["gini", "top_10_pct_share", "top_1_pct_share"].map((metric) => {
-            const row = filtered.find((r) => r.metric === metric);
-            if (!row) return null;
-            return (
-              <tr key={metric}>
-                <td style={tdStyle}>{METRIC_LABELS[metric]}</td>
-                <td style={tdRightStyle}>
-                  {formatValue(metric, row.baseline)}
-                </td>
-                <td style={tdRightStyle}>
-                  {formatValue(metric, row[reformField])}
-                </td>
-                <td style={tdRightStyle}>
-                  {formatChange(metric, row.baseline, row[reformField])}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-
+      <div className="forecast-table-wrapper">
+        <table className="forecast-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Nov 2025</th>
+              <th>Mar 2026</th>
+              <th>Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            {["gini", "top_10_pct_share", "top_1_pct_share"].map((metric) => {
+              const row = filtered.find((r) => r.metric === metric);
+              if (!row) return null;
+              return (
+                <tr key={metric}>
+                  <td>{METRIC_LABELS[metric]}</td>
+                  <td>{formatValue(metric, row.baseline)}</td>
+                  <td>{formatValue(metric, row[reformField])}</td>
+                  <td>{formatChange(metric, row.baseline, row[reformField])}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
