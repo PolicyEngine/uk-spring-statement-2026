@@ -70,7 +70,7 @@ export default function InequalityTable({ data, selectedYear, termsMode = "nomin
   };
 
   return (
-    <div style={{ marginTop: "24px" }}>
+    <div className="section-card" style={{ marginTop: "24px" }}>
       <h3
         className="chart-title"
         style={{ fontSize: "1.1rem", fontWeight: 600 }}

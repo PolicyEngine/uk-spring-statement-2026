@@ -77,7 +77,7 @@ function Dashboard() {
     <div className="app">
       <header className="title-row">
         <div className="title-row-inner">
-          <h1>Spring Statement 2026</h1>
+          <h1>Spring Statement 2026 analysis</h1>
         </div>
       </header>
       <main className="main-content">
