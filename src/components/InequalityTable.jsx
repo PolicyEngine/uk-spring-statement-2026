@@ -50,8 +50,8 @@ export default function InequalityTable({ data, selectedYear }) {
           <thead>
             <tr>
               <th>Metric</th>
-              <th>Nov 2025</th>
-              <th>Mar 2026</th>
+              <th>Pre-Spring Statement</th>
+              <th>Spring Statement</th>
               <th>Change</th>
             </tr>
           </thead>
