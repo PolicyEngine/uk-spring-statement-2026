@@ -8,9 +8,9 @@
     },
     {
       "year": 2027,
-      "previous": 2.3,
+      "previous": 2.2,
       "updated": 2.4,
-      "change": 0.1
+      "change": 0.2
     },
     {
       "year": 2028,
@@ -23,6 +23,12 @@
       "previous": 2.2,
       "updated": 2.2,
       "change": 0.0
+    },
+    {
+      "year": 2030,
+      "previous": 2.3,
+      "updated": 2.4,
+      "change": 0.1
     }
   ],
   "cpi_inflation": [
@@ -46,6 +52,12 @@
     },
     {
       "year": 2029,
+      "previous": 2.0,
+      "updated": 2.0,
+      "change": 0.0
+    },
+    {
+      "year": 2030,
       "previous": 2.0,
       "updated": 2.0,
       "change": 0.0
@@ -75,6 +87,12 @@
       "previous": 2.9,
       "updated": 2.9,
       "change": 0.0
+    },
+    {
+      "year": 2030,
+      "previous": 2.3,
+      "updated": 2.3,
+      "change": 0.0
     }
   ],
   "house_prices": [
@@ -100,6 +118,12 @@
       "year": 2029,
       "previous": 2.6,
       "updated": 2.6,
+      "change": 0.0
+    },
+    {
+      "year": 2030,
+      "previous": 2.4,
+      "updated": 2.4,
       "change": 0.0
     }
   ],
@@ -127,6 +151,12 @@
       "previous": 2.9,
       "updated": 3.0,
       "change": 0.1
+    },
+    {
+      "year": 2030,
+      "previous": 3.1,
+      "updated": 3.1,
+      "change": 0.0
     }
   ],
   "social_rent": [
@@ -150,6 +180,12 @@
     },
     {
       "year": 2029,
+      "previous": 3.0,
+      "updated": 3.0,
+      "change": 0.0
+    },
+    {
+      "year": 2030,
       "previous": 3.0,
       "updated": 3.0,
       "change": 0.0

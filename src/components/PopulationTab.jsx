@@ -12,42 +12,64 @@ import {
 
 const YEARS = [2026, 2027, 2028, 2029, 2030];
 
-function MetricsBar({ metrics, year }) {
-  if (!metrics || metrics.length === 0) return null;
+const DECILE_ORDER = [
+  "1st",
+  "2nd",
+  "3rd",
+  "4th",
+  "5th",
+  "6th",
+  "7th",
+  "8th",
+  "9th",
+  "10th",
+];
 
-  // Filter metrics for the selected year
-  const yearMetrics = metrics.filter(
-    (m) => m.year === year && m.reform_id === "combined",
-  );
-
-  const getMetricValue = (metricName) => {
-    const found = yearMetrics.find((m) => m.metric === metricName);
-    return found ? found.value : null;
-  };
-
-  const avgImpact = getMetricValue("avg_household_impact");
-  const pctGaining = getMetricValue("pct_gaining");
-  const povertyChange = getMetricValue("abs_bhc_poverty_rate_change");
-
+function MetricsBar({ metrics, winnersLosers, distributional, year }) {
   const cards = [];
-  if (avgImpact !== null) {
-    cards.push({
-      label: "Average household impact",
-      value: `${avgImpact >= 0 ? "+" : ""}${avgImpact.toFixed(0)}/year`,
-      prefix: "\u00a3",
-    });
+
+  // Average household impact from distributional data ("All" row)
+  if (distributional && distributional.length > 0) {
+    const allRow = distributional.find(
+      (d) => d.year === year && d.decile === "All",
+    );
+    if (allRow) {
+      cards.push({
+        label: "Average household impact",
+        value: `${allRow.absolute_change >= 0 ? "+" : ""}\u00a3${allRow.absolute_change.toFixed(0)}/year`,
+      });
+    }
   }
-  if (pctGaining !== null) {
-    cards.push({
-      label: "Households gaining",
-      value: `${pctGaining.toFixed(1)}%`,
-    });
+
+  // Percentage gaining from winners/losers data ("All" row)
+  if (winnersLosers && winnersLosers.length > 0) {
+    const allRow = winnersLosers.find(
+      (d) => d.year === year && d.decile === "All",
+    );
+    if (allRow) {
+      cards.push({
+        label: "Households gaining",
+        value: `${allRow.pct_gaining.toFixed(1)}%`,
+      });
+      cards.push({
+        label: "Households losing",
+        value: `${allRow.pct_losing.toFixed(1)}%`,
+      });
+    }
   }
-  if (povertyChange !== null) {
-    cards.push({
-      label: "Poverty rate change",
-      value: `${povertyChange >= 0 ? "+" : ""}${povertyChange.toFixed(2)} pp`,
-    });
+
+  // Poverty rate change from metrics
+  if (metrics && metrics.length > 0) {
+    const yearMetrics = metrics.filter((m) => m.year === year);
+    const povertyChange = yearMetrics.find(
+      (m) => m.metric === "abs_bhc_poverty_rate_change",
+    );
+    if (povertyChange) {
+      cards.push({
+        label: "Poverty rate change",
+        value: `${povertyChange.value >= 0 ? "+" : ""}${povertyChange.value.toFixed(2)} pp`,
+      });
+    }
   }
 
   if (cards.length === 0) return null;
@@ -57,10 +79,7 @@ function MetricsBar({ metrics, year }) {
       {cards.map((card) => (
         <div key={card.label} className="metric-card">
           <div className="metric-label">{card.label}</div>
-          <div className="metric-value">
-            {card.prefix || ""}
-            {card.value}
-          </div>
+          <div className="metric-value">{card.value}</div>
         </div>
       ))}
     </div>
@@ -71,26 +90,17 @@ function DistributionalChart({ data, year }) {
   const chartData = useMemo(() => {
     if (!data || data.length === 0) return [];
     return data
-      .filter((d) => d.year === year && d.reform_id === "combined")
+      .filter(
+        (d) => d.year === year && d.decile !== "All" && d.decile !== "Overall",
+      )
       .map((d) => ({
         decile: d.decile,
         impact: d.absolute_change,
       }))
-      .sort((a, b) => {
-        const order = [
-          "1st",
-          "2nd",
-          "3rd",
-          "4th",
-          "5th",
-          "6th",
-          "7th",
-          "8th",
-          "9th",
-          "10th",
-        ];
-        return order.indexOf(a.decile) - order.indexOf(b.decile);
-      });
+      .sort(
+        (a, b) =>
+          DECILE_ORDER.indexOf(a.decile) - DECILE_ORDER.indexOf(b.decile),
+      );
   }, [data, year]);
 
   if (chartData.length === 0) return null;
@@ -99,7 +109,8 @@ function DistributionalChart({ data, year }) {
     <div className="section-card">
       <h3 className="chart-title">Average annual impact by income decile</h3>
       <p className="chart-subtitle">
-        Change in household net income (\u00a3/year), {year}-{(year + 1).toString().slice(-2)}
+        Change in household net income (\u00a3/year), {year}-
+        {(year + 1).toString().slice(-2)}
       </p>
       <div className="chart-container-tall">
         <ResponsiveContainer width="100%" height="100%">
@@ -126,7 +137,7 @@ function DistributionalChart({ data, year }) {
               }
               tickLine={false}
               axisLine={false}
-              width={60}
+              width={70}
               allowDecimals={false}
               tickCount={6}
               label={{
@@ -184,28 +195,19 @@ function WinnersLosersChart({ data, year }) {
   if (!data || data.length === 0) return null;
 
   const chartData = data
-    .filter((d) => d.year === year)
+    .filter(
+      (d) => d.year === year && d.decile !== "All" && d.decile !== "Overall",
+    )
     .map((d) => ({
       decile: d.decile,
       gaining: d.pct_gaining,
       losing: d.pct_losing ? -Math.abs(d.pct_losing) : 0,
       unchanged: d.pct_unchanged || 0,
     }))
-    .sort((a, b) => {
-      const order = [
-        "1st",
-        "2nd",
-        "3rd",
-        "4th",
-        "5th",
-        "6th",
-        "7th",
-        "8th",
-        "9th",
-        "10th",
-      ];
-      return order.indexOf(a.decile) - order.indexOf(b.decile);
-    });
+    .sort(
+      (a, b) =>
+        DECILE_ORDER.indexOf(a.decile) - DECILE_ORDER.indexOf(b.decile),
+    );
 
   if (chartData.length === 0) return null;
 
@@ -213,7 +215,8 @@ function WinnersLosersChart({ data, year }) {
     <div className="section-card">
       <h3 className="chart-title">Winners and losers by income decile</h3>
       <p className="chart-subtitle">
-        Percentage of households gaining vs losing, {year}-{(year + 1).toString().slice(-2)}
+        Percentage of households gaining vs losing, {year}-
+        {(year + 1).toString().slice(-2)}
       </p>
       <div className="chart-container-tall">
         <ResponsiveContainer width="100%" height="100%">
@@ -314,9 +317,12 @@ export default function PopulationTab({ data }) {
         ))}
       </div>
 
-      {hasMetrics && (
-        <MetricsBar metrics={data.metrics} year={selectedYear} />
-      )}
+      <MetricsBar
+        metrics={data.metrics}
+        winnersLosers={data.winnersLosers}
+        distributional={data.distributional}
+        year={selectedYear}
+      />
 
       <div className="charts-grid">
         {hasDistributional && (
@@ -336,8 +342,8 @@ export default function PopulationTab({ data }) {
       {!hasWinnersLosers && hasDistributional && (
         <div className="data-message" style={{ marginTop: "16px" }}>
           <p>
-            Winners and losers data not yet available. This will be generated
-            in a future data pipeline update.
+            Winners and losers data not yet available. This will be generated in
+            a future data pipeline update.
           </p>
         </div>
       )}
