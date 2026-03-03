@@ -2,8 +2,9 @@
 
 import { useState, useMemo, useEffect } from "react";
 import {
-  BarChart,
+  ComposedChart,
   Bar,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,9 +12,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-import IntraDecileChart from "./IntraDecileChart";
 import InequalityTable from "./InequalityTable";
-import DetailedBudgetTable from "./DetailedBudgetTable";
 import HouseholdArchetypes from "./HouseholdArchetypes";
 import parseCSV from "../../lib/parseCSV";
 
@@ -32,9 +31,10 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
       (d) => d.year === year && d.decile === "All",
     );
     if (allRow) {
+      const absChange = allRow.absolute_change_nominal;
       cards.push({
         label: "Average household impact",
-        value: `${allRow.absolute_change >= 0 ? "+" : ""}\u00a3${allRow.absolute_change.toFixed(0)}/year`,
+        value: `${absChange >= 0 ? "+" : ""}\u00a3${absChange.toFixed(0)}/year`,
       });
     }
   }
@@ -62,7 +62,7 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
     );
     if (povertyChange) {
       cards.push({
-        label: "Poverty rate change",
+        label: "Absolute poverty rate (BHC) change",
         value: `${povertyChange.value >= 0 ? "+" : ""}${povertyChange.value.toFixed(2)} pp`,
       });
     }
@@ -82,111 +82,6 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
   );
 }
 
-function DistributionalChart({ data, year }) {
-  const chartData = useMemo(() => {
-    if (!data || data.length === 0) return [];
-    return data
-      .filter(
-        (d) => d.year === year && d.decile !== "All" && d.decile !== "Overall",
-      )
-      .map((d) => ({
-        decile: d.decile,
-        impact: d.absolute_change,
-      }))
-      .sort(
-        (a, b) =>
-          DECILE_ORDER.indexOf(a.decile) - DECILE_ORDER.indexOf(b.decile),
-      );
-  }, [data, year]);
-
-  if (chartData.length === 0) return null;
-
-  return (
-    <div className="section-card">
-      <h3 className="chart-title">Average annual impact by income decile</h3>
-      <p className="chart-subtitle">
-        Change in household net income ({"\u00a3"}/year), {year}-
-        {(year + 1).toString().slice(-2)}
-      </p>
-      <div className="chart-container-tall">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={chartData}
-            margin={{ top: 8, right: 24, left: 16, bottom: 32 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-            <XAxis
-              dataKey="decile"
-              tick={{ fontSize: 12, fill: "#6b7280" }}
-              tickLine={false}
-              label={{
-                value: "Income decile",
-                position: "insideBottom",
-                offset: -16,
-                style: { fill: "#374151", fontSize: 12, fontWeight: 500 },
-              }}
-            />
-            <YAxis
-              tick={{ fontSize: 12, fill: "#6b7280" }}
-              tickFormatter={(v) =>
-                `${v >= 0 ? "" : "-"}\u00a3${Math.abs(v).toFixed(0)}`
-              }
-              tickLine={false}
-              axisLine={false}
-              width={70}
-              allowDecimals={false}
-              tickCount={6}
-              label={{
-                value: "Change in net income (\u00a3/year)",
-                angle: -90,
-                position: "insideLeft",
-                dx: -8,
-                style: {
-                  textAnchor: "middle",
-                  fill: "#374151",
-                  fontSize: 12,
-                  fontWeight: 500,
-                },
-              }}
-            />
-            <ReferenceLine y={0} stroke="#6b7280" strokeWidth={1} />
-            <Tooltip
-              contentStyle={{
-                background: "#fff",
-                border: "1px solid #e5e7eb",
-                borderRadius: 8,
-                boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                fontSize: "0.85rem",
-              }}
-              formatter={(value) => [
-                `${value >= 0 ? "+" : ""}\u00a3${value.toFixed(2)}/year`,
-                "Impact",
-              ]}
-              labelFormatter={(label) => `${label} decile`}
-            />
-            <Bar
-              dataKey="impact"
-              fill="#0d9488"
-              radius={[4, 4, 0, 0]}
-              name="Impact"
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-      <p
-        style={{
-          fontSize: "0.75rem",
-          color: "#9ca3af",
-          marginTop: "12px",
-        }}
-      >
-        Decile 1 = lowest income households, Decile 10 = highest income
-        households. Values show average annual change in household net income.
-      </p>
-    </div>
-  );
-}
-
 function WinnersLosersChart({ data, year }) {
   const chartData = useMemo(() => {
     if (!data || data.length === 0) return [];
@@ -194,12 +89,16 @@ function WinnersLosersChart({ data, year }) {
       .filter(
         (d) => d.year === year && d.decile !== "All" && d.decile !== "Overall",
       )
-      .map((d) => ({
-        decile: d.decile,
-        gaining: d.pct_gaining,
-        losing: d.pct_losing ? -Math.abs(d.pct_losing) : 0,
-        unchanged: d.pct_unchanged || 0,
-      }))
+      .map((d) => {
+        const gaining = d.pct_gaining;
+        const losing = d.pct_losing ? -Math.abs(d.pct_losing) : 0;
+        return {
+          decile: d.decile,
+          gaining,
+          losing,
+          net: gaining + losing,
+        };
+      })
       .sort(
         (a, b) =>
           DECILE_ORDER.indexOf(a.decile) - DECILE_ORDER.indexOf(b.decile),
@@ -212,12 +111,12 @@ function WinnersLosersChart({ data, year }) {
     <div className="section-card">
       <h3 className="chart-title">Winners and losers by income decile</h3>
       <p className="chart-subtitle">
-        Percentage of households gaining vs losing, {year}-
+        Share of households seeing a net gain or loss in income under revised OBR forecasts, by income decile, {year}-
         {(year + 1).toString().slice(-2)}
       </p>
       <div className="chart-container-tall">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart
+          <ComposedChart
             data={chartData}
             margin={{ top: 8, right: 24, left: 16, bottom: 32 }}
             stackOffset="sign"
@@ -241,7 +140,8 @@ function WinnersLosersChart({ data, year }) {
               axisLine={false}
               width={48}
               allowDecimals={false}
-              tickCount={6}
+              domain={[-80, 80]}
+              ticks={[-80, -60, -40, -20, 0, 20, 40, 60, 80]}
             />
             <ReferenceLine y={0} stroke="#6b7280" strokeWidth={1} />
             <Tooltip
@@ -252,27 +152,39 @@ function WinnersLosersChart({ data, year }) {
                 boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
                 fontSize: "0.85rem",
               }}
-              formatter={(value, name) => [
-                `${Math.abs(value).toFixed(1)}%`,
-                name === "gaining" ? "Gaining" : "Losing",
-              ]}
+              formatter={(value, name) => {
+                if (name === "net") return [`${value >= 0 ? "+" : ""}${value.toFixed(1)}%`, "Net"];
+                return [
+                  `${Math.abs(value).toFixed(1)}%`,
+                  name === "gaining" ? "Gaining" : "Losing",
+                ];
+              }}
               labelFormatter={(label) => `${label} decile`}
             />
             <Bar
               dataKey="gaining"
-              fill="#059669"
+              fill="#2d6396"
               stackId="stack"
               name="gaining"
               radius={[4, 4, 0, 0]}
             />
             <Bar
               dataKey="losing"
-              fill="#dc2626"
+              fill="#0d9488"
               stackId="stack"
               name="losing"
-              radius={[0, 0, 4, 4]}
+              radius={[4, 4, 0, 0]}
             />
-          </BarChart>
+            <Line
+              dataKey="net"
+              type="monotone"
+              stroke="#1f2937"
+              strokeWidth={2}
+              dot={{ r: 4, fill: "#1f2937", stroke: "#1f2937" }}
+              name="net"
+              isAnimationActive={false}
+            />
+          </ComposedChart>
         </ResponsiveContainer>
       </div>
     </div>
@@ -281,39 +193,21 @@ function WinnersLosersChart({ data, year }) {
 
 export default function PopulationTab({ data }) {
   const [selectedYear, setSelectedYear] = useState(2026);
-  const [extraData, setExtraData] = useState({
-    inequality: null,
-    intraDecile: null,
-    detailedBudget: null,
-  });
+  const [inequalityData, setInequalityData] = useState(null);
 
-  // Load extra CSV files for new components
   useEffect(() => {
-    Promise.all([
-      fetch("/data/inequality.csv")
-        .then((r) => (r.ok ? r.text() : null))
-        .catch(() => null),
-      fetch("/data/intra_decile.csv")
-        .then((r) => (r.ok ? r.text() : null))
-        .catch(() => null),
-      fetch("/data/detailed_budgetary_impact.csv")
-        .then((r) => (r.ok ? r.text() : null))
-        .catch(() => null),
-    ]).then(([inequality, intraDecile, detailedBudget]) => {
-      setExtraData({
-        inequality: inequality ? parseCSV(inequality) : null,
-        intraDecile: intraDecile ? parseCSV(intraDecile) : null,
-        detailedBudget: detailedBudget ? parseCSV(detailedBudget) : null,
-      });
-    });
+    fetch("/data/inequality.csv")
+      .then((r) => (r.ok ? r.text() : null))
+      .then((text) => {
+        if (text) setInequalityData(parseCSV(text));
+      })
+      .catch(() => null);
   }, []);
 
-  const hasDistributional =
-    data?.distributional && data.distributional.length > 0;
   const hasWinnersLosers =
     data?.winnersLosers && data.winnersLosers.length > 0;
 
-  if (!hasDistributional && !hasWinnersLosers) {
+  if (!hasWinnersLosers) {
     return (
       <div className="data-message">
         <p>
@@ -327,7 +221,7 @@ export default function PopulationTab({ data }) {
 
   return (
     <div style={{ animation: "fadeIn 0.3s ease-out" }}>
-      <div className="year-selector">
+      <div className="year-selector" style={{ marginBottom: "var(--pe-space-lg)" }}>
         {YEARS.map((year) => (
           <button
             key={year}
@@ -346,13 +240,9 @@ export default function PopulationTab({ data }) {
         year={selectedYear}
       />
 
-      <div className="charts-grid">
-        {hasDistributional && (
-          <DistributionalChart
-            data={data.distributional}
-            year={selectedYear}
-          />
-        )}
+      <HouseholdArchetypes selectedYear={selectedYear} />
+
+      <div style={{ marginTop: "var(--pe-space-xl)" }}>
         {hasWinnersLosers && (
           <WinnersLosersChart
             data={data.winnersLosers}
@@ -361,22 +251,10 @@ export default function PopulationTab({ data }) {
         )}
       </div>
 
-      <IntraDecileChart
-        data={extraData.intraDecile}
-        selectedYear={selectedYear}
-      />
-
       <InequalityTable
-        data={extraData.inequality}
+        data={inequalityData}
         selectedYear={selectedYear}
       />
-
-      <DetailedBudgetTable
-        data={extraData.detailedBudget}
-        selectedYear={selectedYear}
-      />
-
-      <HouseholdArchetypes />
     </div>
   );
 }

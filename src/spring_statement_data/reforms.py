@@ -135,6 +135,35 @@ def get_pre_statement_scenario() -> Scenario:
 get_reform_scenario = get_pre_statement_scenario
 
 
+# =============================================================================
+# Real-terms deflator: convert reform (March 2026) nominal £ to baseline
+# (November 2025) price levels.
+#
+# For year Y the cumulative price index from 2025 base is:
+#   P(Y) = product of (1 + cpi[t]) for t in 2025..Y
+# The deflator to express reform income in baseline prices is:
+#   deflator(Y) = P_baseline(Y) / P_reform(Y)
+# =============================================================================
+
+_CPI_PATH = "gov.economic_assumptions.yoy_growth.obr.consumer_price_index"
+_NOV_CPI = {int(k[:4]): v for k, v in _NOVEMBER_2025[_CPI_PATH].items()}
+_MAR_CPI = {int(k[:4]): v for k, v in _MARCH_2026[_CPI_PATH].items()}
+
+
+def get_real_deflator(year: int) -> float:
+    """Return the deflator to convert reform nominal £ to baseline prices.
+
+    Multiplying reform income by this deflator expresses it in the same
+    price level as the baseline, enabling a real-terms comparison.
+    """
+    baseline_cumulative = 1.0
+    reform_cumulative = 1.0
+    for y in range(2025, year + 1):
+        baseline_cumulative *= 1 + _NOV_CPI.get(y, 0)
+        reform_cumulative *= 1 + _MAR_CPI.get(y, 0)
+    return baseline_cumulative / reform_cumulative
+
+
 def generate_economic_forecast_json() -> dict:
     """Generate the JSON data structure for the economic forecast tab.
 

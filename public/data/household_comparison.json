@@ -1,38 +1,272 @@
 [
   {
+    "year": 2026,
     "group": "Single adult, no children",
-    "baseline_hnet": 29438,
-    "reformed_hnet": 29430,
-    "change": -8
+    "baseline_hnet": 27647,
+    "reformed_hnet_nominal": 27648,
+    "reformed_hnet_real": 27648,
+    "change_nominal": 0,
+    "change_real": 0
   },
   {
+    "year": 2026,
     "group": "Couple, no children",
-    "baseline_hnet": 64188,
-    "reformed_hnet": 64180,
-    "change": -8
+    "baseline_hnet": 70150,
+    "reformed_hnet_nominal": 70082,
+    "reformed_hnet_real": 70082,
+    "change_nominal": -68,
+    "change_real": -68
   },
   {
+    "year": 2026,
     "group": "Single parent",
-    "baseline_hnet": 39886,
-    "reformed_hnet": 39855,
-    "change": -31
+    "baseline_hnet": 37993,
+    "reformed_hnet_nominal": 37987,
+    "reformed_hnet_real": 37987,
+    "change_nominal": -6,
+    "change_real": -6
   },
   {
+    "year": 2026,
     "group": "Couple with children",
-    "baseline_hnet": 74966,
-    "reformed_hnet": 74932,
-    "change": -34
+    "baseline_hnet": 75762,
+    "reformed_hnet_nominal": 75784,
+    "reformed_hnet_real": 75784,
+    "change_nominal": 22,
+    "change_real": 22
   },
   {
+    "year": 2026,
     "group": "Single pensioner",
-    "baseline_hnet": 27033,
-    "reformed_hnet": 27027,
-    "change": -6
+    "baseline_hnet": 25853,
+    "reformed_hnet_nominal": 25856,
+    "reformed_hnet_real": 25856,
+    "change_nominal": 3,
+    "change_real": 3
   },
   {
+    "year": 2026,
     "group": "Pensioner couple",
-    "baseline_hnet": 54118,
-    "reformed_hnet": 54121,
-    "change": 3
+    "baseline_hnet": 52677,
+    "reformed_hnet_nominal": 52686,
+    "reformed_hnet_real": 52686,
+    "change_nominal": 9,
+    "change_real": 9
+  },
+  {
+    "year": 2027,
+    "group": "Single adult, no children",
+    "baseline_hnet": 28050,
+    "reformed_hnet_nominal": 28043,
+    "reformed_hnet_real": 27493,
+    "change_nominal": -7,
+    "change_real": -1
+  },
+  {
+    "year": 2027,
+    "group": "Couple, no children",
+    "baseline_hnet": 71313,
+    "reformed_hnet_nominal": 71388,
+    "reformed_hnet_real": 69989,
+    "change_nominal": 75,
+    "change_real": 87
+  },
+  {
+    "year": 2027,
+    "group": "Single parent",
+    "baseline_hnet": 38534,
+    "reformed_hnet_nominal": 38502,
+    "reformed_hnet_real": 37747,
+    "change_nominal": -32,
+    "change_real": -24
+  },
+  {
+    "year": 2027,
+    "group": "Couple with children",
+    "baseline_hnet": 76982,
+    "reformed_hnet_nominal": 76972,
+    "reformed_hnet_real": 75463,
+    "change_nominal": -9,
+    "change_real": 6
+  },
+  {
+    "year": 2027,
+    "group": "Single pensioner",
+    "baseline_hnet": 26280,
+    "reformed_hnet_nominal": 26281,
+    "reformed_hnet_real": 25765,
+    "change_nominal": 1,
+    "change_real": 6
+  },
+  {
+    "year": 2027,
+    "group": "Pensioner couple",
+    "baseline_hnet": 53563,
+    "reformed_hnet_nominal": 53577,
+    "reformed_hnet_real": 52527,
+    "change_nominal": 14,
+    "change_real": 24
+  },
+  {
+    "year": 2028,
+    "group": "Single adult, no children",
+    "baseline_hnet": 28510,
+    "reformed_hnet_nominal": 28501,
+    "reformed_hnet_real": 27394,
+    "change_nominal": -9,
+    "change_real": 8
+  },
+  {
+    "year": 2028,
+    "group": "Couple, no children",
+    "baseline_hnet": 72625,
+    "reformed_hnet_nominal": 72620,
+    "reformed_hnet_real": 69800,
+    "change_nominal": -5,
+    "change_real": 36
+  },
+  {
+    "year": 2028,
+    "group": "Single parent",
+    "baseline_hnet": 39125,
+    "reformed_hnet_nominal": 39090,
+    "reformed_hnet_real": 37572,
+    "change_nominal": -35,
+    "change_real": -12
+  },
+  {
+    "year": 2028,
+    "group": "Couple with children",
+    "baseline_hnet": 78200,
+    "reformed_hnet_nominal": 78203,
+    "reformed_hnet_real": 75167,
+    "change_nominal": 3,
+    "change_real": 48
+  },
+  {
+    "year": 2028,
+    "group": "Single pensioner",
+    "baseline_hnet": 26665,
+    "reformed_hnet_nominal": 26665,
+    "reformed_hnet_real": 25629,
+    "change_nominal": 0,
+    "change_real": 15
+  },
+  {
+    "year": 2028,
+    "group": "Pensioner couple",
+    "baseline_hnet": 54396,
+    "reformed_hnet_nominal": 54408,
+    "reformed_hnet_real": 52296,
+    "change_nominal": 13,
+    "change_real": 43
+  },
+  {
+    "year": 2029,
+    "group": "Single adult, no children",
+    "baseline_hnet": 28974,
+    "reformed_hnet_nominal": 28961,
+    "reformed_hnet_real": 27291,
+    "change_nominal": -12,
+    "change_real": 15
+  },
+  {
+    "year": 2029,
+    "group": "Couple, no children",
+    "baseline_hnet": 73700,
+    "reformed_hnet_nominal": 73682,
+    "reformed_hnet_real": 69433,
+    "change_nominal": -18,
+    "change_real": 52
+  },
+  {
+    "year": 2029,
+    "group": "Single parent",
+    "baseline_hnet": 39720,
+    "reformed_hnet_nominal": 39678,
+    "reformed_hnet_real": 37389,
+    "change_nominal": -42,
+    "change_real": -3
+  },
+  {
+    "year": 2029,
+    "group": "Couple with children",
+    "baseline_hnet": 79390,
+    "reformed_hnet_nominal": 79340,
+    "reformed_hnet_real": 74764,
+    "change_nominal": -50,
+    "change_real": 27
+  },
+  {
+    "year": 2029,
+    "group": "Single pensioner",
+    "baseline_hnet": 27058,
+    "reformed_hnet_nominal": 27057,
+    "reformed_hnet_real": 25496,
+    "change_nominal": -1,
+    "change_real": 24
+  },
+  {
+    "year": 2029,
+    "group": "Pensioner couple",
+    "baseline_hnet": 55211,
+    "reformed_hnet_nominal": 55223,
+    "reformed_hnet_real": 52038,
+    "change_nominal": 11,
+    "change_real": 62
+  },
+  {
+    "year": 2030,
+    "group": "Single adult, no children",
+    "baseline_hnet": 29479,
+    "reformed_hnet_nominal": 29459,
+    "reformed_hnet_real": 27216,
+    "change_nominal": -20,
+    "change_real": 9
+  },
+  {
+    "year": 2030,
+    "group": "Couple, no children",
+    "baseline_hnet": 75192,
+    "reformed_hnet_nominal": 75099,
+    "reformed_hnet_real": 69380,
+    "change_nominal": -93,
+    "change_real": -18
+  },
+  {
+    "year": 2030,
+    "group": "Single parent",
+    "baseline_hnet": 40215,
+    "reformed_hnet_nominal": 40153,
+    "reformed_hnet_real": 37095,
+    "change_nominal": -63,
+    "change_real": -21
+  },
+  {
+    "year": 2030,
+    "group": "Couple with children",
+    "baseline_hnet": 80721,
+    "reformed_hnet_nominal": 80694,
+    "reformed_hnet_real": 74550,
+    "change_nominal": -26,
+    "change_real": 49
+  },
+  {
+    "year": 2030,
+    "group": "Single pensioner",
+    "baseline_hnet": 27396,
+    "reformed_hnet_nominal": 27392,
+    "reformed_hnet_real": 25306,
+    "change_nominal": -4,
+    "change_real": 21
+  },
+  {
+    "year": 2030,
+    "group": "Pensioner couple",
+    "baseline_hnet": 56021,
+    "reformed_hnet_nominal": 56032,
+    "reformed_hnet_real": 51765,
+    "change_nominal": 11,
+    "change_real": 61
   }
 ]

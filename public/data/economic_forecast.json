@@ -127,38 +127,6 @@
       "change": 0.0
     }
   ],
-  "per_capita_gdp": [
-    {
-      "year": 2026,
-      "previous": 3.3,
-      "updated": 2.9,
-      "change": -0.4
-    },
-    {
-      "year": 2027,
-      "previous": 3.3,
-      "updated": 3.2,
-      "change": -0.1
-    },
-    {
-      "year": 2028,
-      "previous": 3.0,
-      "updated": 3.1,
-      "change": 0.1
-    },
-    {
-      "year": 2029,
-      "previous": 2.9,
-      "updated": 3.0,
-      "change": 0.1
-    },
-    {
-      "year": 2030,
-      "previous": 3.1,
-      "updated": 3.1,
-      "change": 0.0
-    }
-  ],
   "social_rent": [
     {
       "year": 2026,

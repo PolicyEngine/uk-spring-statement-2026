@@ -17,8 +17,8 @@ const STUDENT_LOAN_PLANS = [
 ];
 
 const COLORS = {
-  positive: "#059669",
-  negative: "#dc2626",
+  positive: "#22C55E",
+  negative: "#EF4444",
   teal: "#319795",
   tealDark: "#2c7a7b",
   text: "#1e293b",
