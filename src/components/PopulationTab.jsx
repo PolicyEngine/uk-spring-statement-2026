@@ -242,12 +242,14 @@ export default function PopulationTab({ data }) {
 
       <HouseholdArchetypes selectedYear={selectedYear} />
 
-      {hasWinnersLosers && (
-        <WinnersLosersChart
-          data={data.winnersLosers}
-          year={selectedYear}
-        />
-      )}
+      <div style={{ marginTop: "var(--pe-space-xl)" }}>
+        {hasWinnersLosers && (
+          <WinnersLosersChart
+            data={data.winnersLosers}
+            year={selectedYear}
+          />
+        )}
+      </div>
 
       <InequalityTable
         data={inequalityData}
