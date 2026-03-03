@@ -189,9 +189,9 @@ export default function HouseholdArchetypes() {
         projections.
       </p>
 
-      <ChangeBarChart comparison={comparison} />
-
       <HouseholdSummaryTable stats={stats} comparison={comparison} />
+
+      <ChangeBarChart comparison={comparison} />
     </div>
   );
 }

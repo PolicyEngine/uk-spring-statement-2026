@@ -223,6 +223,8 @@ export default function PopulationTab({ data }) {
         year={selectedYear}
       />
 
+      <HouseholdArchetypes />
+
       {hasWinnersLosers && (
         <WinnersLosersChart
           data={data.winnersLosers}
@@ -234,8 +236,6 @@ export default function PopulationTab({ data }) {
         data={inequalityData}
         selectedYear={selectedYear}
       />
-
-      <HouseholdArchetypes />
     </div>
   );
 }
