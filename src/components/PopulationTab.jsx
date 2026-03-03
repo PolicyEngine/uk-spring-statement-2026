@@ -243,8 +243,8 @@ function WinnersLosersChart({ data, year, termsMode }) {
               axisLine={false}
               width={48}
               allowDecimals={false}
-              domain={[-60, 60]}
-              ticks={[-60, -40, -20, 0, 20, 40, 60]}
+              domain={[-80, 80]}
+              ticks={[-80, -60, -40, -20, 0, 20, 40, 60, 80]}
             />
             <ReferenceLine y={0} stroke="#6b7280" strokeWidth={1} />
             <Tooltip
