@@ -45,10 +45,10 @@ function ChangeBarChart({ comparison }) {
   return (
     <div className="section-card">
       <h3 className="chart-title">
-        Change in mean household net income by family type
+        Change in mean household net income by household type
       </h3>
       <p className="chart-subtitle">
-        Change in mean household net income by family type, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
+        Change in mean household net income by household type, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
       </p>
       <div className="chart-container-tall">
         <ResponsiveContainer width="100%" height="100%">
@@ -105,9 +105,9 @@ function HouseholdSummaryTable({ stats, comparison }) {
 
   return (
     <div className="section-card">
-      <h3 className="chart-title">Impact on household income by family type</h3>
+      <h3 className="chart-title">Impact on household income by household type</h3>
       <p className="chart-subtitle">
-        Median and mean household net income by family type, comparing pre- and post-Spring Statement forecasts
+        Median and mean household net income by household type, comparing pre- and post-Spring Statement forecasts
       </p>
       <div className="forecast-table-wrapper">
         <table className="forecast-table">

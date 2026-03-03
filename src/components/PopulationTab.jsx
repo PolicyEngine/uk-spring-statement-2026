@@ -163,14 +163,14 @@ function WinnersLosersChart({ data, year }) {
             />
             <Bar
               dataKey="gaining"
-              fill="#e4782d"
+              fill="#2d6396"
               stackId="stack"
               name="gaining"
               radius={[4, 4, 0, 0]}
             />
             <Bar
               dataKey="losing"
-              fill="#4B5563"
+              fill="#0d9488"
               stackId="stack"
               name="losing"
               radius={[4, 4, 0, 0]}
