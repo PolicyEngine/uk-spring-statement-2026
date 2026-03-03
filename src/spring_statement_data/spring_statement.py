@@ -1,55 +1,30 @@
 """Spring Statement Personal Calculator.
 
-Compares how Spring Statement policy changes affect a sample household's
-taxes and benefits using PolicyEngine UK. Runs a baseline (Autumn Budget)
-and a reform (Spring Statement) simulation, then returns per-program diffs.
+Compares how OBR forecast revisions (March 2026 vs November 2025)
+affect a sample household's taxes and benefits using PolicyEngine UK.
+
+Since policyengine-uk already has March 2026 values as the default,
+the baseline is created by applying November 2025 values as a reform.
+
+Comparison:
+  - Baseline = pre-statement (November 2025 OBR forecasts)
+  - Reform = no reform (March 2026 OBR forecasts, policyengine-uk default)
+  - Impact = March 2026 minus November 2025
 """
 
-from functools import lru_cache
+from policyengine_uk import Simulation
 
-from policyengine_uk import Simulation, Scenario
-
-from .reforms import SPRING_STATEMENT_PARAMS
+from .reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
 
 CPI_YEARS = range(2025, 2031)
 
 # The source parameter that feeds the uprating pipeline.
 CPI_PARAMETER = "gov.economic_assumptions.yoy_growth.obr.consumer_price_index"
 
-# Extract Spring CPI values from the main params dict
-SPRING_CPI = {
-    int(k[:4]): v
-    for k, v in SPRING_STATEMENT_PARAMS[CPI_PARAMETER].items()
+# November 2025 CPI values (pre-statement baseline)
+PRE_STATEMENT_CPI = {
+    int(k[:4]): v for k, v in PRE_STATEMENT_PARAMS[CPI_PARAMETER].items()
 }
-
-
-@lru_cache(maxsize=4)
-def _get_scenario(param_key: tuple) -> Scenario:
-    """Cache Scenario objects -- expensive to create, identical across requests."""
-    param_dict = dict(param_key)
-    parameter_changes = {}
-    for full_param, values in param_dict:
-        parameter_changes[full_param] = dict(values)
-    return Scenario(parameter_changes=parameter_changes)
-
-
-def _get_reform_scenario(spring_cpi: dict = None) -> Scenario:
-    """Get a reform Scenario using the full Spring Statement params.
-
-    If custom ``spring_cpi`` values are provided, only CPI is overridden
-    (for backwards compatibility). Otherwise the full SPRING_STATEMENT_PARAMS
-    are used.
-    """
-    if spring_cpi is not None:
-        parameter_changes = {
-            CPI_PARAMETER: {
-                f"{yr}-01-01": rate for yr, rate in spring_cpi.items()
-            }
-        }
-    else:
-        parameter_changes = SPRING_STATEMENT_PARAMS
-
-    return Scenario(parameter_changes=parameter_changes)
 
 
 # ---------------------------------------------------------------------------
@@ -85,9 +60,21 @@ PROGRAM_STRUCTURE = [
         "is_tax": True,
         "group": "direct_taxes",
         "children": [
-            {"id": "earned_income_tax", "label": "Earned Income", "entity": PERSON_VARS},
-            {"id": "savings_income_tax", "label": "Savings Income", "entity": PERSON_VARS},
-            {"id": "dividend_income_tax", "label": "Dividend Income", "entity": PERSON_VARS},
+            {
+                "id": "earned_income_tax",
+                "label": "Earned Income",
+                "entity": PERSON_VARS,
+            },
+            {
+                "id": "savings_income_tax",
+                "label": "Savings Income",
+                "entity": PERSON_VARS,
+            },
+            {
+                "id": "dividend_income_tax",
+                "label": "Dividend Income",
+                "entity": PERSON_VARS,
+            },
         ],
     },
     {
@@ -97,9 +84,21 @@ PROGRAM_STRUCTURE = [
         "is_tax": True,
         "group": "direct_taxes",
         "children": [
-            {"id": "ni_class_1_employee", "label": "Class 1 (Employee)", "entity": PERSON_VARS},
-            {"id": "ni_class_2", "label": "Class 2 (Self-Employed)", "entity": PERSON_VARS},
-            {"id": "ni_class_4", "label": "Class 4 (Self-Employed)", "entity": PERSON_VARS},
+            {
+                "id": "ni_class_1_employee",
+                "label": "Class 1 (Employee)",
+                "entity": PERSON_VARS,
+            },
+            {
+                "id": "ni_class_2",
+                "label": "Class 2 (Self-Employed)",
+                "entity": PERSON_VARS,
+            },
+            {
+                "id": "ni_class_4",
+                "label": "Class 4 (Self-Employed)",
+                "entity": PERSON_VARS,
+            },
         ],
     },
     {
@@ -168,12 +167,36 @@ PROGRAM_STRUCTURE = [
         "is_tax": False,
         "group": "core_benefits",
         "children": [
-            {"id": "uc_standard_allowance", "label": "Standard Allowance", "entity": BENUNIT_VARS},
-            {"id": "uc_child_element", "label": "Child Element", "entity": BENUNIT_VARS},
-            {"id": "uc_housing_costs_element", "label": "Housing Element", "entity": BENUNIT_VARS},
-            {"id": "uc_childcare_element", "label": "Childcare Element", "entity": BENUNIT_VARS},
-            {"id": "uc_disability_element", "label": "Disability Element", "entity": BENUNIT_VARS},
-            {"id": "uc_carer_element", "label": "Carer Element", "entity": BENUNIT_VARS},
+            {
+                "id": "uc_standard_allowance",
+                "label": "Standard Allowance",
+                "entity": BENUNIT_VARS,
+            },
+            {
+                "id": "uc_child_element",
+                "label": "Child Element",
+                "entity": BENUNIT_VARS,
+            },
+            {
+                "id": "uc_housing_costs_element",
+                "label": "Housing Element",
+                "entity": BENUNIT_VARS,
+            },
+            {
+                "id": "uc_childcare_element",
+                "label": "Childcare Element",
+                "entity": BENUNIT_VARS,
+            },
+            {
+                "id": "uc_disability_element",
+                "label": "Disability Element",
+                "entity": BENUNIT_VARS,
+            },
+            {
+                "id": "uc_carer_element",
+                "label": "Carer Element",
+                "entity": BENUNIT_VARS,
+            },
         ],
     },
     {
@@ -183,7 +206,11 @@ PROGRAM_STRUCTURE = [
         "is_tax": False,
         "group": "core_benefits",
         "children": [
-            {"id": "child_benefit_less_tax_charge", "label": "After High-Income Tax Charge", "entity": BENUNIT_VARS},
+            {
+                "id": "child_benefit_less_tax_charge",
+                "label": "After High-Income Tax Charge",
+                "entity": BENUNIT_VARS,
+            },
         ],
     },
     # -- PENSION & RETIREMENT --
@@ -201,8 +228,16 @@ PROGRAM_STRUCTURE = [
         "is_tax": False,
         "group": "pension_retirement",
         "children": [
-            {"id": "guarantee_credit", "label": "Guarantee Credit", "entity": BENUNIT_VARS},
-            {"id": "savings_credit", "label": "Savings Credit", "entity": BENUNIT_VARS},
+            {
+                "id": "guarantee_credit",
+                "label": "Guarantee Credit",
+                "entity": BENUNIT_VARS,
+            },
+            {
+                "id": "savings_credit",
+                "label": "Savings Credit",
+                "entity": BENUNIT_VARS,
+            },
         ],
     },
     {
@@ -353,9 +388,14 @@ def _all_variable_ids():
 ALL_VARIABLE_IDS = _all_variable_ids()
 
 
-def _get_autumn_cpi(sim: Simulation) -> dict:
-    """Read baseline CPI YoY growth values from PE UK's parameter tree."""
-    param = sim.tax_benefit_system.parameters.gov.economic_assumptions.yoy_growth.obr.consumer_price_index
+def _get_march_2026_cpi(sim: Simulation) -> dict:
+    """Read March 2026 CPI YoY growth values from PE UK's parameter tree.
+
+    These are the default policyengine-uk values (the reform / post-statement).
+    """
+    param = (
+        sim.tax_benefit_system.parameters.gov.economic_assumptions.yoy_growth.obr.consumer_price_index
+    )
     return {year: float(param(f"{year}-01-01")) for year in CPI_YEARS}
 
 
@@ -385,7 +425,9 @@ def _build_situation(
     }
 
     if self_employment_income > 0:
-        people["adult"]["self_employment_income"] = {year: self_employment_income}
+        people["adult"]["self_employment_income"] = {
+            year: self_employment_income
+        }
     members = ["adult"]
 
     if student_loan_plan != "NO_STUDENT_LOAN":
@@ -427,7 +469,9 @@ def _build_situation(
     }
 
     if monthly_rent > 0:
-        situation["households"]["household"]["rent"] = {year: monthly_rent * 12}
+        situation["households"]["household"]["rent"] = {
+            year: monthly_rent * 12
+        }
 
     if num_children > 0 or monthly_rent > 0:
         situation["benunits"]["benunit"]["would_claim_uc"] = {year: True}
@@ -438,7 +482,9 @@ def _build_situation(
             (m for m in members if m.startswith("child_")), None
         )
         if first_child:
-            people[first_child]["childcare_expenses"] = {year: childcare_expenses * 12}
+            people[first_child]["childcare_expenses"] = {
+                year: childcare_expenses * 12
+            }
 
     return situation
 
@@ -477,7 +523,9 @@ def _extract_results(sim: Simulation, situation: dict, year: int) -> dict:
         except Exception:
             results[var_id] = 0.0
 
-    results["household_net_income"] = round(_household_val("household_net_income"), 2)
+    results["household_net_income"] = round(
+        _household_val("household_net_income"), 2
+    )
 
     return results
 
@@ -498,13 +546,12 @@ def calculate_household_impact(
     childcare_expenses: float = 0,
     student_loan_plan: str = "NO_STUDENT_LOAN",
     self_employment_income: float = 0,
-    spring_cpi: dict = None,
 ) -> dict:
-    """Calculate the impact of Spring Statement policy changes on a household.
+    """Calculate the impact of OBR forecast revisions on a household.
 
     Runs two PolicyEngine simulations:
-    - Baseline: current law (Autumn Budget)
-    - Reform: Spring Statement policy changes
+    - Baseline: November 2025 OBR forecasts (pre-statement)
+    - Reform: March 2026 OBR forecasts (post-statement, PE UK default)
 
     Returns per-program values and diffs, with hierarchical breakdown.
     """
@@ -526,17 +573,19 @@ def calculate_household_impact(
         self_employment_income=self_employment_income,
     )
 
-    # Baseline simulation -- PolicyEngine defaults reflect Autumn Budget parameters
-    baseline_sim = Simulation(situation=situation)
+    # Baseline = November 2025 forecasts (pre-statement)
+    pre_statement_scenario = get_pre_statement_scenario()
+    baseline_sim = Simulation(
+        situation=situation, scenario=pre_statement_scenario
+    )
     baseline = _extract_results(baseline_sim, situation, year)
 
-    # Read baseline CPI values from PE UK's parameter tree (instead of hardcoding)
-    autumn_cpi = _get_autumn_cpi(baseline_sim)
-
-    # Reform simulation -- override forecast values with Spring Statement values.
-    scenario = _get_reform_scenario(spring_cpi)
-    reform_sim = Simulation(situation=situation, scenario=scenario)
+    # Reform = March 2026 forecasts (policyengine-uk default)
+    reform_sim = Simulation(situation=situation)
     reform = _extract_results(reform_sim, situation, year)
+
+    # Read March 2026 CPI values from reform sim's parameter tree
+    march_2026_cpi = _get_march_2026_cpi(reform_sim)
 
     # Compute impact for all variables
     impact = {}
@@ -574,8 +623,8 @@ def calculate_household_impact(
         "program_structure": active_structure,
         "program_groups": PROGRAM_GROUPS,
         "cpi_values": {
-            "autumn": autumn_cpi,
-            "spring": spring_cpi if spring_cpi is not None else SPRING_CPI,
+            "november_2025": PRE_STATEMENT_CPI,
+            "march_2026": march_2026_cpi,
         },
     }
 
@@ -595,13 +644,12 @@ def calculate_multi_year_net_impact(
     childcare_expenses: float = 0,
     student_loan_plan: str = "NO_STUDENT_LOAN",
     self_employment_income: float = 0,
-    spring_cpi: dict = None,
     salary_growth_rate: float = 0.0,
 ) -> dict:
     """Calculate net household income impact for each year 2026-2030.
 
-    Much lighter than calling calculate_household_impact() 5x because it only
-    extracts household_net_income rather than all 35+ program variables.
+    Baseline = November 2025 OBR forecasts (pre-statement).
+    Reform = March 2026 OBR forecasts (PE UK default).
     """
     yearly_impact = {}
     yearly_breakdown = {}
@@ -618,12 +666,14 @@ def calculate_multi_year_net_impact(
         if not (p.get("region") and p["region"] != region)
     ]
 
-    scenario = _get_reform_scenario(spring_cpi)
+    pre_statement_scenario = get_pre_statement_scenario()
 
     def _calculate_year(year):
         growth_factor = (1 + salary_growth_rate) ** (year - 2026)
         grown_income = employment_income * growth_factor
-        grown_partner_income = partner_income * growth_factor if is_couple else partner_income
+        grown_partner_income = (
+            partner_income * growth_factor if is_couple else partner_income
+        )
         grown_se_income = self_employment_income * growth_factor
 
         situation = _build_situation(
@@ -650,17 +700,28 @@ def calculate_multi_year_net_impact(
             try:
                 if entity == PERSON_VARS:
                     raw = sim.calculate(var_id, year)
-                    return float(raw.sum()) if num_people > 1 else float(raw[0])
+                    return (
+                        float(raw.sum()) if num_people > 1 else float(raw[0])
+                    )
                 else:
                     return float(sim.calculate(var_id, year)[0])
             except Exception:
                 return 0.0
 
-        baseline_sim = Simulation(situation=situation)
-        baseline_net = float(baseline_sim.calculate("household_net_income", year)[0])
+        # Baseline = November 2025 (pre-statement)
+        baseline_sim = Simulation(
+            situation=situation,
+            scenario=pre_statement_scenario,
+        )
+        baseline_net = float(
+            baseline_sim.calculate("household_net_income", year)[0]
+        )
 
-        reform_sim = Simulation(situation=situation, scenario=scenario)
-        reform_net = float(reform_sim.calculate("household_net_income", year)[0])
+        # Reform = March 2026 (PE UK default)
+        reform_sim = Simulation(situation=situation)
+        reform_net = float(
+            reform_sim.calculate("household_net_income", year)[0]
+        )
 
         impact = round(reform_net - baseline_net, 2)
 
@@ -671,22 +732,30 @@ def calculate_multi_year_net_impact(
             diff = r_val - b_val
             if abs(diff) > 0.005:
                 household_impact = -diff if prog["is_tax"] else diff
-                breakdown.append({
-                    "label": prog["label"],
-                    "impact": round(household_impact, 2),
-                })
+                breakdown.append(
+                    {
+                        "label": prog["label"],
+                        "impact": round(household_impact, 2),
+                    }
+                )
 
         return str(year), impact, breakdown
 
     from concurrent.futures import ThreadPoolExecutor
+
     with ThreadPoolExecutor(max_workers=5) as pool:
-        futures = [pool.submit(_calculate_year, yr) for yr in range(2026, 2031)]
+        futures = [
+            pool.submit(_calculate_year, yr) for yr in range(2026, 2031)
+        ]
         for future in futures:
             year_str, impact, breakdown = future.result()
             yearly_impact[year_str] = impact
             yearly_breakdown[year_str] = breakdown
 
-    return {"yearly_impact": yearly_impact, "yearly_breakdown": yearly_breakdown}
+    return {
+        "yearly_impact": yearly_impact,
+        "yearly_breakdown": yearly_breakdown,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -721,17 +790,16 @@ def calculate_mtr_data(
     childcare_expenses: float = 0,
     student_loan_plan: str = "NO_STUDENT_LOAN",
     self_employment_income: float = 0,
-    spring_cpi: dict = None,
 ) -> dict:
-    """Calculate marginal tax rates across an income range for baseline and reform.
+    """Calculate marginal tax rates across an income range.
 
-    Uses PolicyEngine's axes feature to evaluate all income points in a single
-    vectorised simulation per scenario (2 sims total instead of N x 2).
+    Baseline = November 2025 forecasts, Reform = March 2026 (default).
+    Uses PolicyEngine's axes feature for vectorised evaluation.
     """
     import numpy as np
 
     num_points = 50
-    scenario = _get_reform_scenario(spring_cpi)
+    pre_statement_scenario = get_pre_statement_scenario()
 
     # Build the situation with axes (varies employment_income for the adult)
     people = {
@@ -743,7 +811,9 @@ def calculate_mtr_data(
     members = ["adult"]
 
     if self_employment_income > 0:
-        people["adult"]["self_employment_income"] = {year: self_employment_income}
+        people["adult"]["self_employment_income"] = {
+            year: self_employment_income
+        }
 
     if student_loan_plan != "NO_STUDENT_LOAN":
         people["adult"]["student_loan_plan"] = {year: student_loan_plan}
@@ -761,7 +831,9 @@ def calculate_mtr_data(
         children_ages_list = list(children_ages)
     for i in range(num_children):
         cid = f"child_{i + 1}"
-        age = children_ages_list[i] if i < len(children_ages_list) else 5 + i * 2
+        age = (
+            children_ages_list[i] if i < len(children_ages_list) else 5 + i * 2
+        )
         people[cid] = {"age": {year: age}}
         members.append(cid)
 
@@ -790,26 +862,47 @@ def calculate_mtr_data(
     }
 
     if monthly_rent > 0:
-        situation["households"]["household"]["rent"] = {year: monthly_rent * 12}
+        situation["households"]["household"]["rent"] = {
+            year: monthly_rent * 12
+        }
     if num_children > 0 or monthly_rent > 0:
         situation["benunits"]["benunit"]["would_claim_uc"] = {year: True}
     if childcare_expenses > 0:
-        first_child = next((m for m in members if m.startswith("child_")), None)
+        first_child = next(
+            (m for m in members if m.startswith("child_")), None
+        )
         if first_child:
-            people[first_child]["childcare_expenses"] = {year: childcare_expenses * 12}
+            people[first_child]["childcare_expenses"] = {
+                year: childcare_expenses * 12
+            }
 
     num_people = len(people)
 
     def _run_scenario(use_reform: bool) -> list[dict]:
         if use_reform:
-            sim = Simulation(situation=situation, scenario=scenario)
-        else:
+            # Reform = March 2026 (PE UK default, no scenario)
             sim = Simulation(situation=situation)
+        else:
+            # Baseline = November 2025 (pre-statement)
+            sim = Simulation(
+                situation=situation,
+                scenario=pre_statement_scenario,
+            )
 
         # Person-level vars: reshape to (num_points, num_people) and sum
-        income_tax = sim.calculate("income_tax", year).reshape(-1, num_people).sum(axis=1)
-        ni = sim.calculate("national_insurance", year).reshape(-1, num_people).sum(axis=1)
-        employment_income = sim.calculate("employment_income", year).reshape(-1, num_people)[:, 0]
+        income_tax = (
+            sim.calculate("income_tax", year)
+            .reshape(-1, num_people)
+            .sum(axis=1)
+        )
+        ni = (
+            sim.calculate("national_insurance", year)
+            .reshape(-1, num_people)
+            .sum(axis=1)
+        )
+        employment_income = sim.calculate("employment_income", year).reshape(
+            -1, num_people
+        )[:, 0]
 
         # Benunit / household level vars: one value per point
         uc = sim.calculate("universal_credit", year)
@@ -820,7 +913,11 @@ def calculate_mtr_data(
         net_income = sim.calculate("household_net_income", year)
 
         # Compute marginal rates via np.gradient
-        delta = float(employment_income[1] - employment_income[0]) if len(employment_income) > 1 else 1000
+        delta = (
+            float(employment_income[1] - employment_income[0])
+            if len(employment_income) > 1
+            else 1000
+        )
         it_marginal = np.clip(np.gradient(income_tax, delta), 0, 1)
         ni_marginal = np.clip(np.gradient(ni, delta), 0, 1)
         ben_marginal = np.clip(-np.gradient(benefits, delta), 0, 1)
@@ -828,13 +925,15 @@ def calculate_mtr_data(
 
         mtr_data = []
         for j in range(len(employment_income)):
-            mtr_data.append({
-                "income": round(float(employment_income[j])),
-                "income_tax": round(float(it_marginal[j]), 4),
-                "national_insurance": round(float(ni_marginal[j]), 4),
-                "benefits_taper": round(float(ben_marginal[j]), 4),
-                "total": round(float(total_marginal[j]), 4),
-            })
+            mtr_data.append(
+                {
+                    "income": round(float(employment_income[j])),
+                    "income_tax": round(float(it_marginal[j]), 4),
+                    "national_insurance": round(float(ni_marginal[j]), 4),
+                    "benefits_taper": round(float(ben_marginal[j]), 4),
+                    "total": round(float(total_marginal[j]), 4),
+                }
+            )
 
         return mtr_data
 

@@ -24,7 +24,6 @@ from .reforms import (
     save_economic_forecast_json,
 )
 
-
 # HuggingFace repo for data files
 HF_REPO = "policyengine/policyengine-uk-data"
 
@@ -98,9 +97,7 @@ def generate_all_data(
             keys = sorted(f.keys())
             constituency_weights = f[keys[-1]][...]
         constituency_df = pd.read_csv(csv_path)
-        print(
-            f"Loaded {len(constituency_df)} constituencies"
-        )
+        print(f"Loaded {len(constituency_df)} constituencies")
     except Exception as e:
         print(f"Warning: Could not load constituency data: {e}")
 
@@ -144,9 +141,9 @@ def generate_all_data(
         "distributional_impact": pd.DataFrame(all_distributional),
         "metrics": pd.DataFrame(all_metrics),
         "winners_losers": pd.DataFrame(all_winners_losers),
-        "household_scatter": scatter_df
-        if scatter_df is not None
-        else pd.DataFrame(),
+        "household_scatter": (
+            scatter_df if scatter_df is not None else pd.DataFrame()
+        ),
         "constituency": pd.DataFrame(all_constituency),
     }
 

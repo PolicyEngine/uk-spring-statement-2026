@@ -55,7 +55,10 @@ class SpringStatementInput(BaseModel):
         default=False, description="Whether the household is a couple"
     )
     partner_income: float = Field(
-        default=0, ge=0, le=200000, description="Partner annual employment income (GBP)"
+        default=0,
+        ge=0,
+        le=200000,
+        description="Partner annual employment income (GBP)",
     )
     adult_age: int = Field(
         default=30, ge=16, le=100, description="Age of primary adult"
@@ -66,9 +69,7 @@ class SpringStatementInput(BaseModel):
     children_ages: Optional[list[int]] = Field(
         default=None, description="Ages of children (list of ints)"
     )
-    region: str = Field(
-        default="LONDON", description="UK region"
-    )
+    region: str = Field(default="LONDON", description="UK region")
     council_tax_band: str = Field(
         default="D", description="Council tax band (A-H)"
     )
@@ -76,13 +77,19 @@ class SpringStatementInput(BaseModel):
         default="RENT_PRIVATELY", description="Housing tenure type"
     )
     childcare_expenses: float = Field(
-        default=0, ge=0, le=5000, description="Monthly childcare expenses (GBP)"
+        default=0,
+        ge=0,
+        le=5000,
+        description="Monthly childcare expenses (GBP)",
     )
     student_loan_plan: str = Field(
         default="NO_STUDENT_LOAN", description="Student loan plan type"
     )
     salary_growth_rate: float = Field(
-        default=0.0, ge=0.0, le=0.10, description="Annual salary growth rate for multi-year projections"
+        default=0.0,
+        ge=0.0,
+        le=0.10,
+        description="Annual salary growth rate for multi-year projections",
     )
     year: int = Field(
         default=2026, ge=2025, le=2030, description="Fiscal year"

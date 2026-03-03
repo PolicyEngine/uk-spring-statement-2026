@@ -13,8 +13,7 @@ import numpy as np
 import pandas as pd
 from policyengine_uk import Microsimulation
 
-from .reforms import SPRING_STATEMENT_PARAMS, get_reform_scenario
-
+from .reforms import get_pre_statement_scenario
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -24,12 +23,15 @@ from .reforms import SPRING_STATEMENT_PARAMS, get_reform_scenario
 def _create_simulations(year: int = None):
     """Create baseline and reformed Microsimulation instances.
 
+    Baseline = November 2025 OBR forecasts (pre-Spring Statement).
+    Reformed = March 2026 OBR forecasts (policyengine-uk default).
+
     Returns:
         (baseline, reformed) tuple.
     """
-    baseline = Microsimulation()
-    scenario = get_reform_scenario()
-    reformed = Microsimulation(scenario=scenario)
+    scenario = get_pre_statement_scenario()
+    baseline = Microsimulation(scenario=scenario)
+    reformed = Microsimulation()
     return baseline, reformed
 
 
@@ -53,22 +55,24 @@ class DistributionalImpactCalculator:
         """
         baseline, reformed = _create_simulations()
 
-        baseline_income = baseline.calculate(
-            "household_net_income", year
-        )
-        reformed_income = reformed.calculate(
-            "household_net_income", year
-        )
-        income_decile = baseline.calculate(
-            "household_income_decile", year
-        )
+        baseline_income = baseline.calculate("household_net_income", year)
+        reformed_income = reformed.calculate("household_net_income", year)
+        income_decile = baseline.calculate("household_income_decile", year)
 
         income_change = reformed_income - baseline_income
 
         results = []
         decile_labels = [
-            "1st", "2nd", "3rd", "4th", "5th",
-            "6th", "7th", "8th", "9th", "10th",
+            "1st",
+            "2nd",
+            "3rd",
+            "4th",
+            "5th",
+            "6th",
+            "7th",
+            "8th",
+            "9th",
+            "10th",
         ]
 
         for decile in range(1, 11):
@@ -79,17 +83,17 @@ class DistributionalImpactCalculator:
             avg_change = float(income_change[mask].mean())
             avg_baseline = float(baseline_income[mask].mean())
             relative = (
-                (avg_change / avg_baseline) * 100
-                if avg_baseline > 0
-                else 0
+                (avg_change / avg_baseline) * 100 if avg_baseline > 0 else 0
             )
 
-            results.append({
-                "year": year,
-                "decile": decile_labels[decile - 1],
-                "absolute_change": round(avg_change, 2),
-                "relative_change": round(relative, 4),
-            })
+            results.append(
+                {
+                    "year": year,
+                    "decile": decile_labels[decile - 1],
+                    "absolute_change": round(avg_change, 2),
+                    "relative_change": round(relative, 4),
+                }
+            )
 
         # Overall average
         overall_change = float(income_change.mean())
@@ -99,12 +103,14 @@ class DistributionalImpactCalculator:
             if overall_baseline > 0
             else 0
         )
-        results.append({
-            "year": year,
-            "decile": "All",
-            "absolute_change": round(overall_change, 2),
-            "relative_change": round(overall_relative, 4),
-        })
+        results.append(
+            {
+                "year": year,
+                "decile": "All",
+                "absolute_change": round(overall_change, 2),
+                "relative_change": round(overall_relative, 4),
+            }
+        )
 
         return results
 
@@ -127,11 +133,13 @@ class MetricsCalculator:
         results = []
 
         def _add(metric: str, value: float):
-            results.append({
-                "year": year,
-                "metric": metric,
-                "value": round(value, 6),
-            })
+            results.append(
+                {
+                    "year": year,
+                    "metric": metric,
+                    "value": round(value, 6),
+                }
+            )
 
         # Poverty rates (person-level)
         for housing_cost in ["bhc", "ahc"]:
@@ -154,12 +162,8 @@ class MetricsCalculator:
                 _add(f"{prefix}_poverty_rate_change", r_rate - b_rate)
 
         # Gini coefficient (household-level equivalised income)
-        b_equiv = baseline.calculate(
-            "equiv_household_net_income", year
-        )
-        r_equiv = reformed.calculate(
-            "equiv_household_net_income", year
-        )
+        b_equiv = baseline.calculate("equiv_household_net_income", year)
+        r_equiv = reformed.calculate("equiv_household_net_income", year)
 
         b_gini = float(b_equiv.gini())
         r_gini = float(r_equiv.gini())
@@ -192,15 +196,9 @@ class WinnersLosersCalculator:
         """
         baseline, reformed = _create_simulations()
 
-        baseline_income = baseline.calculate(
-            "household_net_income", year
-        )
-        reformed_income = reformed.calculate(
-            "household_net_income", year
-        )
-        income_decile = baseline.calculate(
-            "household_income_decile", year
-        )
+        baseline_income = baseline.calculate("household_net_income", year)
+        reformed_income = reformed.calculate("household_net_income", year)
+        income_decile = baseline.calculate("household_income_decile", year)
 
         change = reformed_income - baseline_income
         weights = np.array(baseline_income.weights)
@@ -209,8 +207,16 @@ class WinnersLosersCalculator:
 
         results = []
         decile_labels = [
-            "1st", "2nd", "3rd", "4th", "5th",
-            "6th", "7th", "8th", "9th", "10th",
+            "1st",
+            "2nd",
+            "3rd",
+            "4th",
+            "5th",
+            "6th",
+            "7th",
+            "8th",
+            "9th",
+            "10th",
         ]
 
         for decile in range(1, 11):
@@ -226,33 +232,35 @@ class WinnersLosersCalculator:
             losing = (w * (c < -self.THRESHOLD)).sum() / total_w * 100
             unchanged = 100.0 - gaining - losing
 
-            results.append({
-                "year": year,
-                "decile": decile_labels[decile - 1],
-                "pct_gaining": round(gaining, 2),
-                "pct_losing": round(losing, 2),
-                "pct_unchanged": round(unchanged, 2),
-            })
+            results.append(
+                {
+                    "year": year,
+                    "decile": decile_labels[decile - 1],
+                    "pct_gaining": round(gaining, 2),
+                    "pct_losing": round(losing, 2),
+                    "pct_unchanged": round(unchanged, 2),
+                }
+            )
 
         # Overall
         total_w = weights.sum()
         gaining = (
-            (weights * (change_arr > self.THRESHOLD)).sum()
-            / total_w * 100
+            (weights * (change_arr > self.THRESHOLD)).sum() / total_w * 100
         )
         losing = (
-            (weights * (change_arr < -self.THRESHOLD)).sum()
-            / total_w * 100
+            (weights * (change_arr < -self.THRESHOLD)).sum() / total_w * 100
         )
         unchanged = 100.0 - gaining - losing
 
-        results.append({
-            "year": year,
-            "decile": "All",
-            "pct_gaining": round(gaining, 2),
-            "pct_losing": round(losing, 2),
-            "pct_unchanged": round(unchanged, 2),
-        })
+        results.append(
+            {
+                "year": year,
+                "decile": "All",
+                "pct_gaining": round(gaining, 2),
+                "pct_losing": round(losing, 2),
+                "pct_unchanged": round(unchanged, 2),
+            }
+        )
 
         return results
 
@@ -298,17 +306,17 @@ class HouseholdScatterCalculator:
         change = change[mask]
         income_decile = income_decile[mask]
 
-        df = pd.DataFrame({
-            "baseline_income": baseline_income,
-            "net_impact": change,
-            "decile": income_decile,
-        })
+        df = pd.DataFrame(
+            {
+                "baseline_income": baseline_income,
+                "net_impact": change,
+                "decile": income_decile,
+            }
+        )
 
         # Sample down
         if len(df) > self.SAMPLE_SIZE:
-            df = df.sample(
-                n=self.SAMPLE_SIZE, random_state=42
-            )
+            df = df.sample(n=self.SAMPLE_SIZE, random_state=42)
 
         return df
 
@@ -370,17 +378,17 @@ class ConstituencyCalculator:
             avg_reform = float(reform_ms.mean())
             avg_gain = avg_reform - avg_baseline
             relative = (
-                (avg_gain / avg_baseline) * 100
-                if avg_baseline > 0
-                else 0
+                (avg_gain / avg_baseline) * 100 if avg_baseline > 0 else 0
             )
 
-            results.append({
-                "year": year,
-                "constituency_code": code,
-                "constituency_name": name,
-                "average_gain": round(avg_gain, 2),
-                "relative_change": round(relative, 4),
-            })
+            results.append(
+                {
+                    "year": year,
+                    "constituency_code": code,
+                    "constituency_name": name,
+                    "average_gain": round(avg_gain, 2),
+                    "relative_change": round(relative, 4),
+                }
+            )
 
         return results
