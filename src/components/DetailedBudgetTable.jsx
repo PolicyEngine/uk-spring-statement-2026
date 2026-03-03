@@ -5,9 +5,6 @@ const tableStyle = {
   width: "auto",
   borderCollapse: "collapse",
   fontSize: "14px",
-  backgroundColor: "#fafafa",
-  borderRadius: "6px",
-  overflow: "hidden",
 };
 const thStyle = {
   textAlign: "left",
