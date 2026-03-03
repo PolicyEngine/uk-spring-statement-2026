@@ -41,7 +41,6 @@ def calculate_uk_baseline(output_dir: Path = None) -> pd.DataFrame:
         print(f"Processing {year}...")
 
         weight = sim.calculate("person_weight", year, map_to="person")
-        age = sim.calculate("age", year, map_to="person")
 
         # Poverty MicroSeries (already have weights from sim.calculate)
         in_pov_rel_bhc = sim.calculate("in_relative_poverty_bhc", year, map_to="person")
@@ -49,11 +48,10 @@ def calculate_uk_baseline(output_dir: Path = None) -> pd.DataFrame:
         in_pov_abs_bhc = sim.calculate("in_poverty_bhc", year, map_to="person")
         in_pov_abs_ahc = sim.calculate("in_poverty_ahc", year, map_to="person")
 
-        # Age group masks
-        age_vals = np.array(age)
-        is_child = age_vals < 18
-        is_working_age = (age_vals >= 16) & (age_vals < 65)
-        is_pensioner = age_vals >= 65
+        # Age group masks — use PE-UK variables (parameterised state pension age)
+        is_child = np.array(sim.calculate("is_child", year, map_to="person"))
+        is_working_age = np.array(sim.calculate("is_WA_adult", year, map_to="person"))
+        is_pensioner = np.array(sim.calculate("is_SP_age", year, map_to="person"))
 
         total_pop = weight.sum()
 
