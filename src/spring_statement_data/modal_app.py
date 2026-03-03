@@ -19,12 +19,13 @@ SRC_DIR = Path(__file__).parent
 
 image = (
     modal.Image.debian_slim(python_version="3.13")
+    .apt_install("git")
     .pip_install(
         "fastapi",
         "pydantic",
         "numpy",
         "pandas",
-        "policyengine-uk @ git+https://github.com/PolicyEngine/policyengine-uk.git",
+        "policyengine-uk @ git+https://github.com/PolicyEngine/policyengine-uk.git@8b21661ca2a480161e46ae97d30bc99478f6e085",
     )
     .add_local_file(
         SRC_DIR / "spring_statement.py",
