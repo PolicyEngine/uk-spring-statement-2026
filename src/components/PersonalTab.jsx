@@ -57,8 +57,6 @@ export default function PersonalTab() {
   const [draftPartnerAge, setDraftPartnerAge] = useState(30);
   const [draftRegion, setDraftRegion] = useState("LONDON");
   const [draftTenureType, setDraftTenureType] = useState("RENT_PRIVATELY");
-  const [draftSelfEmploymentIncome, setDraftSelfEmploymentIncome] = useState(0);
-  const [draftPartnerSelfEmploymentIncome, setDraftPartnerSelfEmploymentIncome] = useState(0);
   const [draftChildcare, setDraftChildcare] = useState(0);
   const [draftStudentLoan, setDraftStudentLoan] = useState("NO_STUDENT_LOAN");
   const [draftHasPostgrad, setDraftHasPostgrad] = useState(false);
@@ -100,6 +98,7 @@ export default function PersonalTab() {
   const handleCalculate = useCallback(async () => {
     setLoading(true);
     setError(null);
+    setResult(null);
     setMultiYearData(null);
     setMultiYearLoading(true);
     setMtrData(null);
@@ -112,8 +111,7 @@ export default function PersonalTab() {
 
     const requestBody = {
       employment_income: draftIncome,
-      self_employment_income: draftSelfEmploymentIncome,
-      partner_self_employment_income: draftPartnerSelfEmploymentIncome,
+      self_employment_income: 0,
       num_children: draftChildren,
       children_ages: draftChildrenAges.length > 0 ? draftChildrenAges : null,
       monthly_rent: draftRent,
@@ -125,10 +123,7 @@ export default function PersonalTab() {
       tenure_type: draftTenureType,
       childcare_expenses: draftChildcare,
       student_loan_plan: effectiveStudentLoanPlan,
-      has_postgrad_loan: draftHasPostgrad,
       salary_growth_rate: draftSalaryGrowthRate,
-      loan_balance: draftLoanBalance,
-      interest_rate: draftInterestRate,
       year: draftYear,
     };
 
@@ -179,10 +174,9 @@ export default function PersonalTab() {
   }, [
     draftIncome, draftChildren, draftChildrenAges, draftRent, draftIsCouple,
     draftPartnerIncome, draftAdultAge, draftPartnerAge, draftRegion,
-    draftTenureType, draftSelfEmploymentIncome, draftChildcare,
+    draftTenureType, draftChildcare,
     draftStudentLoan, draftHasPostgrad, draftLoanBalance,
     draftSalaryGrowthRate, draftInterestRate, draftYear,
-    draftPartnerSelfEmploymentIncome,
   ]);
 
   // Multi-year bar chart data
@@ -323,33 +317,56 @@ export default function PersonalTab() {
       .domain([0, d3.max(reformData, (d) => d.income)])
       .range([0, width]);
 
-    const y = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+    const allTotals = [...reformData, ...baselineData].map((d) => d.total * 100);
+    const yMin = Math.min(0, d3.min(allTotals));
+    const yMax = Math.max(100, d3.max(allTotals));
+    const y = d3.scaleLinear().domain([yMin, yMax]).range([height, 0]);
 
     g.append("g").attr("class", "grid")
       .call(d3.axisLeft(y).tickSize(-width).tickFormat("").ticks(10));
 
-    // Stacked areas
+    // Stacked areas — positive components stack up from 0, negative stack down
+    // Benefits taper can be negative (earning more triggers extra benefits)
+
+    // Positive stack: income_tax, then NI on top
     const areaIT = d3.area()
-      .x((d) => x(d.income)).y0(y(0)).y1((d) => y(d.income_tax * 100))
+      .x((d) => x(d.income))
+      .y0(y(0))
+      .y1((d) => y(Math.max(0, d.income_tax) * 100))
       .curve(d3.curveStepAfter);
     g.append("path").datum(reformData)
       .attr("fill", MTR_COLORS.incomeTax).attr("fill-opacity", 0.7).attr("d", areaIT);
 
     const areaNI = d3.area()
       .x((d) => x(d.income))
-      .y0((d) => y(d.income_tax * 100))
-      .y1((d) => y((d.income_tax + d.national_insurance) * 100))
+      .y0((d) => y(Math.max(0, d.income_tax) * 100))
+      .y1((d) => y((Math.max(0, d.income_tax) + Math.max(0, d.national_insurance)) * 100))
       .curve(d3.curveStepAfter);
     g.append("path").datum(reformData)
       .attr("fill", MTR_COLORS.ni).attr("fill-opacity", 0.7).attr("d", areaNI);
 
-    const areaBen = d3.area()
+    // Benefits taper: positive stacks above NI, negative extends below 0
+    const areaBenPos = d3.area()
       .x((d) => x(d.income))
-      .y0((d) => y((d.income_tax + d.national_insurance) * 100))
-      .y1((d) => y((d.income_tax + d.national_insurance + d.benefits_taper) * 100))
+      .y0((d) => y((Math.max(0, d.income_tax) + Math.max(0, d.national_insurance)) * 100))
+      .y1((d) => y((Math.max(0, d.income_tax) + Math.max(0, d.national_insurance) + Math.max(0, d.benefits_taper)) * 100))
       .curve(d3.curveStepAfter);
     g.append("path").datum(reformData)
-      .attr("fill", MTR_COLORS.benefitsTaper).attr("fill-opacity", 0.7).attr("d", areaBen);
+      .attr("fill", MTR_COLORS.benefitsTaper).attr("fill-opacity", 0.7).attr("d", areaBenPos);
+
+    const areaBenNeg = d3.area()
+      .x((d) => x(d.income))
+      .y0(y(0))
+      .y1((d) => y(Math.min(0, d.benefits_taper) * 100))
+      .curve(d3.curveStepAfter);
+    g.append("path").datum(reformData)
+      .attr("fill", MTR_COLORS.benefitsTaper).attr("fill-opacity", 0.7).attr("d", areaBenNeg);
+
+    // Zero line
+    g.append("line")
+      .attr("x1", 0).attr("x2", width)
+      .attr("y1", y(0)).attr("y2", y(0))
+      .attr("stroke", "#94a3b8").attr("stroke-width", 0.5);
 
     // Reform total line
     const reformLine = d3.line()
@@ -365,14 +382,12 @@ export default function PersonalTab() {
       .attr("fill", "none").attr("stroke", MTR_COLORS.baselineLine)
       .attr("stroke-width", 1.5).attr("stroke-dasharray", "6,3").attr("d", baselineLine);
 
-    // User income marker
+    // User income marker — use last point at or before income to match curveStepAfter
     if (draftIncome > 0 && draftIncome <= d3.max(reformData, (d) => d.income)) {
-      const closest = reformData.reduce((prev, curr) =>
-        Math.abs(curr.income - draftIncome) < Math.abs(prev.income - draftIncome) ? curr : prev
-      );
-      const closestBaseline = baselineData.reduce((prev, curr) =>
-        Math.abs(curr.income - draftIncome) < Math.abs(prev.income - draftIncome) ? curr : prev
-      );
+      const atOrBefore = reformData.filter((d) => d.income <= draftIncome);
+      const closest = atOrBefore.length > 0 ? atOrBefore[atOrBefore.length - 1] : reformData[0];
+      const atOrBeforeBaseline = baselineData.filter((d) => d.income <= draftIncome);
+      const closestBaseline = atOrBeforeBaseline.length > 0 ? atOrBeforeBaseline[atOrBeforeBaseline.length - 1] : baselineData[0];
 
       g.append("line")
         .attr("x1", x(draftIncome)).attr("x2", x(draftIncome))
@@ -496,18 +511,6 @@ export default function PersonalTab() {
               </div>
             </div>
             <div className="control-item control-span-2">
-              <label>Self-employment income</label>
-              <div className="salary-input-wrapper">
-                <span className="currency-symbol">&pound;</span>
-                <input
-                  type="number"
-                  value={draftSelfEmploymentIncome}
-                  onChange={(e) => setDraftSelfEmploymentIncome(parseFloat(e.target.value) || 0)}
-                  min={0} step={1000}
-                />
-              </div>
-            </div>
-            <div className="control-item control-span-2">
               <label>Your age</label>
               <input
                 type="number"
@@ -555,18 +558,6 @@ export default function PersonalTab() {
                     onChange={(e) => setDraftPartnerAge(parseInt(e.target.value) || 30)}
                     min={16} max={100} className="age-input"
                   />
-                </div>
-                <div className="control-item control-span-2">
-                  <label>Partner&apos;s self-employment</label>
-                  <div className="salary-input-wrapper">
-                    <span className="currency-symbol">&pound;</span>
-                    <input
-                      type="number"
-                      value={draftPartnerSelfEmploymentIncome}
-                      onChange={(e) => setDraftPartnerSelfEmploymentIncome(parseFloat(e.target.value) || 0)}
-                      min={0} step={1000}
-                    />
-                  </div>
                 </div>
               </>
             )}

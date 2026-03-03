@@ -14,7 +14,10 @@ Comparison:
 
 from policyengine_uk import Simulation
 
-from .reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
+try:
+    from .reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
+except ImportError:
+    from reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
 
 CPI_YEARS = range(2025, 2031)
 
@@ -918,10 +921,10 @@ def calculate_mtr_data(
             if len(employment_income) > 1
             else 1000
         )
-        it_marginal = np.clip(np.gradient(income_tax, delta), 0, 1)
-        ni_marginal = np.clip(np.gradient(ni, delta), 0, 1)
-        ben_marginal = np.clip(-np.gradient(benefits, delta), 0, 1)
-        total_marginal = np.clip(1 - np.gradient(net_income, delta), 0, 1)
+        it_marginal = np.gradient(income_tax, delta)
+        ni_marginal = np.gradient(ni, delta)
+        ben_marginal = -np.gradient(benefits, delta)
+        total_marginal = 1 - np.gradient(net_income, delta)
 
         mtr_data = []
         for j in range(len(employment_income)):

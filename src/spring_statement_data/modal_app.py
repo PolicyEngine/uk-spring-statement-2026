@@ -35,6 +35,10 @@ image = (
         SRC_DIR / "reforms.py",
         remote_path="/root/reforms.py",
     )
+    .add_local_file(
+        SRC_DIR / "obr_parameters.json",
+        remote_path="/root/obr_parameters.json",
+    )
 )
 
 
