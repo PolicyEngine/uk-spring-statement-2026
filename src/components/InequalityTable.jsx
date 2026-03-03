@@ -41,8 +41,8 @@ export default function InequalityTable({ data, selectedYear }) {
   return (
     <div className="section-card" style={{ marginTop: "24px" }}>
       <h3 className="chart-title">Inequality impact</h3>
-      <p className="chart-description">
-        Change in income inequality metrics from revised OBR forecasts. Based on equivalised household net income. The Gini coefficient ranges from 0 (perfect equality) to 1 (perfect inequality).
+      <p className="chart-subtitle">
+        Change in Gini coefficient and top income shares under revised OBR forecasts, based on equivalised household net income
       </p>
 
       <div className="forecast-table-wrapper">

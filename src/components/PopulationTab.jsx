@@ -111,7 +111,7 @@ function WinnersLosersChart({ data, year }) {
     <div className="section-card">
       <h3 className="chart-title">Winners and losers by income decile</h3>
       <p className="chart-subtitle">
-        Percentage of households gaining vs losing, {year}-
+        Share of households seeing a net gain or loss in income under revised OBR forecasts, by income decile, {year}-
         {(year + 1).toString().slice(-2)}
       </p>
       <div className="chart-container-tall">

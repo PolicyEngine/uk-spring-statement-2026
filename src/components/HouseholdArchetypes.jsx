@@ -48,8 +48,7 @@ function ChangeBarChart({ comparison }) {
         Change in mean household net income by family type
       </h3>
       <p className="chart-subtitle">
-        Difference between Spring Statement and pre-Spring Statement forecasts
-        (&pound;/year)
+        Change in mean household net income by family type, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
       </p>
       <div className="chart-container-tall">
         <ResponsiveContainer width="100%" height="100%">
@@ -182,20 +181,6 @@ export default function HouseholdArchetypes({ selectedYear }) {
 
   return (
     <div style={{ marginTop: "var(--pe-space-xl)" }}>
-      <h2 className="section-heading">Impact by household type</h2>
-      <p
-        style={{
-          fontSize: "0.9rem",
-          color: "var(--pe-text-secondary)",
-          lineHeight: 1.6,
-          marginBottom: "var(--pe-space-lg)",
-        }}
-      >
-        Using PolicyEngine&rsquo;s microsimulation model, we calculated average
-        household net income for six household groups under pre-Spring Statement
-        and Spring Statement 2026 forecasts.
-      </p>
-
       <HouseholdSummaryTable stats={stats} comparison={comparison} />
 
       <div style={{ marginTop: "var(--pe-space-xl)" }}>
