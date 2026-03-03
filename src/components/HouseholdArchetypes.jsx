@@ -107,6 +107,9 @@ function HouseholdSummaryTable({ stats, comparison }) {
   return (
     <div className="section-card">
       <h3 className="chart-title">Household income summary</h3>
+      <p className="chart-description">
+        Median and mean household net income by family type, comparing pre- and post-Spring Statement forecasts.
+      </p>
       <div className="forecast-table-wrapper">
         <table className="forecast-table">
           <thead>
@@ -191,7 +194,9 @@ export default function HouseholdArchetypes() {
 
       <HouseholdSummaryTable stats={stats} comparison={comparison} />
 
-      <ChangeBarChart comparison={comparison} />
+      <div style={{ marginTop: "var(--pe-space-xl)" }}>
+        <ChangeBarChart comparison={comparison} />
+      </div>
     </div>
   );
 }
