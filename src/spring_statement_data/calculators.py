@@ -265,14 +265,7 @@ class MetricsCalculator:
         year: int,
     ) -> list[dict]:
         """Calculate poverty and other summary metrics."""
-        is_uk = np.ones(
-            len(baseline.calculate("person_weight", year, map_to="person")),
-            dtype=bool,
-        )
-
-        # Get is_child for filtering to children
-        is_child = baseline.calculate("is_child", year, map_to="person")
-        is_child_uk = np.array(is_child[is_uk])
+        is_child = np.array(baseline.calculate("is_child", year, map_to="person"))
 
         def add_metric_set(
             results: list[dict],
@@ -332,21 +325,15 @@ class MetricsCalculator:
                 baseline_poverty = baseline.calculate(poverty_var, year, map_to="person")
                 reformed_poverty = reformed.calculate(poverty_var, year, map_to="person")
 
-                baseline_uk = baseline_poverty[is_uk]
-                reformed_uk = reformed_poverty[is_uk]
-
-                add_metric_set(results, f"{prefix}poverty_rate", baseline_uk, reformed_uk)
-                add_metric_set(results, f"{prefix}child_poverty_rate", baseline_uk, reformed_uk, is_child_uk)
+                add_metric_set(results, f"{prefix}poverty_rate", baseline_poverty, reformed_poverty)
+                add_metric_set(results, f"{prefix}child_poverty_rate", baseline_poverty, reformed_poverty, is_child)
 
                 if deep_poverty_var:
                     baseline_deep = baseline.calculate(deep_poverty_var, year, map_to="person")
                     reformed_deep = reformed.calculate(deep_poverty_var, year, map_to="person")
 
-                    baseline_deep_uk = baseline_deep[is_uk]
-                    reformed_deep_uk = reformed_deep[is_uk]
-
-                    add_metric_set(results, f"{prefix}deep_poverty_rate", baseline_deep_uk, reformed_deep_uk)
-                    add_metric_set(results, f"{prefix}child_deep_poverty_rate", baseline_deep_uk, reformed_deep_uk, is_child_uk)
+                    add_metric_set(results, f"{prefix}deep_poverty_rate", baseline_deep, reformed_deep)
+                    add_metric_set(results, f"{prefix}child_deep_poverty_rate", baseline_deep, reformed_deep, is_child)
 
         return results
 
