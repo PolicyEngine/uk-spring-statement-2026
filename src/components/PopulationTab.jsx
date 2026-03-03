@@ -24,7 +24,7 @@ const DECILE_ORDER = [
   "6th", "7th", "8th", "9th", "10th",
 ];
 
-function MetricsBar({ metrics, winnersLosers, distributional, year }) {
+function MetricsBar({ metrics, winnersLosers, distributional, year, termsMode }) {
   const cards = [];
 
   if (distributional && distributional.length > 0) {
@@ -32,9 +32,10 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
       (d) => d.year === year && d.decile === "All",
     );
     if (allRow) {
+      const absChange = allRow[`absolute_change_${termsMode}`];
       cards.push({
         label: "Average household impact",
-        value: `${allRow.absolute_change >= 0 ? "+" : ""}\u00a3${allRow.absolute_change.toFixed(0)}/year`,
+        value: `${absChange >= 0 ? "+" : ""}\u00a3${absChange.toFixed(0)}/year`,
       });
     }
   }
@@ -46,11 +47,11 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
     if (allRow) {
       cards.push({
         label: "Households gaining",
-        value: `${allRow.pct_gaining.toFixed(1)}%`,
+        value: `${allRow[`pct_gaining_${termsMode}`].toFixed(1)}%`,
       });
       cards.push({
         label: "Households losing",
-        value: `${allRow.pct_losing.toFixed(1)}%`,
+        value: `${allRow[`pct_losing_${termsMode}`].toFixed(1)}%`,
       });
     }
   }
@@ -82,7 +83,7 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
   );
 }
 
-function DistributionalChart({ data, year }) {
+function DistributionalChart({ data, year, termsMode }) {
   const chartData = useMemo(() => {
     if (!data || data.length === 0) return [];
     return data
@@ -91,21 +92,23 @@ function DistributionalChart({ data, year }) {
       )
       .map((d) => ({
         decile: d.decile,
-        impact: d.absolute_change,
+        impact: d[`absolute_change_${termsMode}`],
       }))
       .sort(
         (a, b) =>
           DECILE_ORDER.indexOf(a.decile) - DECILE_ORDER.indexOf(b.decile),
       );
-  }, [data, year]);
+  }, [data, year, termsMode]);
 
   if (chartData.length === 0) return null;
+
+  const termsLabel = termsMode === "real" ? " (real terms)" : "";
 
   return (
     <div className="section-card">
       <h3 className="chart-title">Average annual impact by income decile</h3>
       <p className="chart-subtitle">
-        Change in household net income ({"\u00a3"}/year), {year}-
+        Change in household net income{termsLabel} ({"\u00a3"}/year), {year}-
         {(year + 1).toString().slice(-2)}
       </p>
       <div className="chart-container-tall">
@@ -187,7 +190,7 @@ function DistributionalChart({ data, year }) {
   );
 }
 
-function WinnersLosersChart({ data, year }) {
+function WinnersLosersChart({ data, year, termsMode }) {
   const chartData = useMemo(() => {
     if (!data || data.length === 0) return [];
     return data
@@ -196,15 +199,15 @@ function WinnersLosersChart({ data, year }) {
       )
       .map((d) => ({
         decile: d.decile,
-        gaining: d.pct_gaining,
-        losing: d.pct_losing ? -Math.abs(d.pct_losing) : 0,
-        unchanged: d.pct_unchanged || 0,
+        gaining: d[`pct_gaining_${termsMode}`],
+        losing: d[`pct_losing_${termsMode}`] ? -Math.abs(d[`pct_losing_${termsMode}`]) : 0,
+        unchanged: d[`pct_unchanged_${termsMode}`] || 0,
       }))
       .sort(
         (a, b) =>
           DECILE_ORDER.indexOf(a.decile) - DECILE_ORDER.indexOf(b.decile),
       );
-  }, [data, year]);
+  }, [data, year, termsMode]);
 
   if (chartData.length === 0) return null;
 
@@ -282,6 +285,7 @@ function WinnersLosersChart({ data, year }) {
 
 export default function PopulationTab({ data }) {
   const [selectedYear, setSelectedYear] = useState(2026);
+  const [termsMode, setTermsMode] = useState("nominal");
   const [extraData, setExtraData] = useState({
     inequality: null,
     intraDecile: null,
@@ -328,16 +332,33 @@ export default function PopulationTab({ data }) {
 
   return (
     <div style={{ animation: "fadeIn 0.3s ease-out" }}>
-      <div className="year-selector">
-        {YEARS.map((year) => (
+      <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap", marginBottom: "var(--pe-space-lg)" }}>
+        <div className="year-selector" style={{ marginBottom: 0 }}>
+          {YEARS.map((year) => (
+            <button
+              key={year}
+              className={selectedYear === year ? "active" : ""}
+              onClick={() => setSelectedYear(year)}
+            >
+              {year}-{(year + 1).toString().slice(-2)}
+            </button>
+          ))}
+        </div>
+
+        <div className="year-selector" style={{ marginBottom: 0 }}>
           <button
-            key={year}
-            className={selectedYear === year ? "active" : ""}
-            onClick={() => setSelectedYear(year)}
+            className={termsMode === "nominal" ? "active" : ""}
+            onClick={() => setTermsMode("nominal")}
           >
-            {year}-{(year + 1).toString().slice(-2)}
+            Nominal {"\u00a3"}
           </button>
-        ))}
+          <button
+            className={termsMode === "real" ? "active" : ""}
+            onClick={() => setTermsMode("real")}
+          >
+            Real {"\u00a3"}
+          </button>
+        </div>
       </div>
 
       <MetricsBar
@@ -345,6 +366,7 @@ export default function PopulationTab({ data }) {
         winnersLosers={data.winnersLosers}
         distributional={data.distributional}
         year={selectedYear}
+        termsMode={termsMode}
       />
 
       <div className="charts-grid">
@@ -352,27 +374,37 @@ export default function PopulationTab({ data }) {
           <DistributionalChart
             data={data.distributional}
             year={selectedYear}
+            termsMode={termsMode}
           />
         )}
         {hasWinnersLosers && (
           <WinnersLosersChart
             data={data.winnersLosers}
             year={selectedYear}
+            termsMode={termsMode}
           />
         )}
       </div>
 
+      <IntraDecileChart
+        data={extraData.intraDecile}
+        selectedYear={selectedYear}
+        termsMode={termsMode}
+      />
+
       <InequalityTable
         data={extraData.inequality}
         selectedYear={selectedYear}
+        termsMode={termsMode}
       />
 
       <DetailedBudgetTable
         data={extraData.detailedBudget}
         selectedYear={selectedYear}
+        termsMode={termsMode}
       />
 
-      <HouseholdArchetypes />
+      <HouseholdArchetypes termsMode={termsMode} />
     </div>
   );
 }

@@ -28,8 +28,10 @@ const OUTCOME_ORDER = [
   "Gain more than 5%",
 ];
 
-export default function IntraDecileChart({ data, selectedYear }) {
+export default function IntraDecileChart({ data, selectedYear, termsMode = "nominal" }) {
   if (!data) return null;
+
+  const shareField = `share_${termsMode}`;
 
   const filtered = data.filter(
     (row) =>
@@ -49,7 +51,7 @@ export default function IntraDecileChart({ data, selectedYear }) {
       const row = filtered.find(
         (r) => r.decile === decile && r.outcome === outcome,
       );
-      point[outcome] = row ? parseFloat(row.share) * 100 : 0;
+      point[outcome] = row ? parseFloat(row[shareField]) * 100 : 0;
     });
     return point;
   });

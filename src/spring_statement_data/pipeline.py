@@ -194,7 +194,7 @@ def _classify_household(sim, year):
 
 
 def _generate_household_archetypes(output_dir: Path, year: int = 2029):
-    """Generate household_stats.json and household_comparison.json (real terms)."""
+    """Generate household_stats.json and household_comparison.json (nominal + real)."""
     from policyengine_uk import Microsimulation
     import microdf as mdf
 
@@ -206,8 +206,12 @@ def _generate_household_archetypes(output_dir: Path, year: int = 2029):
     groups = _classify_household(baseline, year)
     baseline_hnet = baseline.calculate("household_net_income", year)
     reform_hnet_raw = reformed.calculate("household_net_income", year)
-    # Deflate reform to baseline prices
-    reform_hnet = mdf.MicroSeries(
+    # Nominal: reform at its own price level
+    reform_hnet_nominal = mdf.MicroSeries(
+        reform_hnet_raw.values, weights=baseline_hnet.weights
+    )
+    # Real: deflate reform to baseline prices
+    reform_hnet_real = mdf.MicroSeries(
         reform_hnet_raw.values * deflator, weights=baseline_hnet.weights
     )
     weights = np.array(baseline_hnet.weights)
@@ -221,11 +225,13 @@ def _generate_household_archetypes(output_dir: Path, year: int = 2029):
             continue
 
         b_inc = baseline_hnet[mask]
-        r_inc = reform_hnet[mask]
+        r_inc_nom = reform_hnet_nominal[mask]
+        r_inc_real = reform_hnet_real[mask]
         w = weights[mask]
 
         mean_b = float(b_inc.mean())
-        mean_r = float(r_inc.mean())
+        mean_r_nom = float(r_inc_nom.mean())
+        mean_r_real = float(r_inc_real.mean())
         median_b = float(b_inc.median())
         weighted_n = float(w.sum())
 
@@ -238,8 +244,10 @@ def _generate_household_archetypes(output_dir: Path, year: int = 2029):
         comparison.append({
             "group": group,
             "baseline_hnet": round(mean_b),
-            "reformed_hnet": round(mean_r),
-            "change": round(mean_r - mean_b),
+            "reformed_hnet_nominal": round(mean_r_nom),
+            "reformed_hnet_real": round(mean_r_real),
+            "change_nominal": round(mean_r_nom - mean_b),
+            "change_real": round(mean_r_real - mean_b),
         })
 
     output_dir.mkdir(parents=True, exist_ok=True)

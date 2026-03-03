@@ -34,11 +34,12 @@ function formatCurrencyChange(v) {
   return `${sign}\u00a3${Math.abs(v).toLocaleString("en-GB", { maximumFractionDigits: 0 })}`;
 }
 
-function ChangeBarChart({ comparison }) {
+function ChangeBarChart({ comparison, termsMode }) {
+  const changeField = `change_${termsMode}`;
   const chartData = comparison
     .map((d) => ({
       group: shorten(d.group),
-      change: d.change,
+      change: d[changeField],
     }))
     .sort((a, b) => a.change - b.change);
 
@@ -100,12 +101,13 @@ function ChangeBarChart({ comparison }) {
   );
 }
 
-function BaselineReformedChart({ comparison }) {
+function BaselineReformedChart({ comparison, termsMode }) {
+  const reformedField = `reformed_hnet_${termsMode}`;
   const chartData = comparison
     .map((d) => ({
       group: shorten(d.group),
       baseline: d.baseline_hnet,
-      reformed: d.reformed_hnet,
+      reformed: d[reformedField],
     }))
     .sort((a, b) => a.baseline - b.baseline);
 
@@ -182,7 +184,10 @@ function BaselineReformedChart({ comparison }) {
   );
 }
 
-function HouseholdSummaryTable({ stats, comparison }) {
+function HouseholdSummaryTable({ stats, comparison, termsMode }) {
+  const reformedField = `reformed_hnet_${termsMode}`;
+  const changeField = `change_${termsMode}`;
+
   return (
     <div className="section-card">
       <h3 className="chart-title">Household income summary</h3>
@@ -202,10 +207,11 @@ function HouseholdSummaryTable({ stats, comparison }) {
             {stats.map((row) => {
               const comp =
                 comparison.find((c) => c.group === row.group) || {};
+              const change = comp[changeField];
               const changeClass =
-                comp.change > 0
+                change > 0
                   ? "change-positive"
-                  : comp.change < 0
+                  : change < 0
                     ? "change-negative"
                     : "change-zero";
               return (
@@ -216,9 +222,9 @@ function HouseholdSummaryTable({ stats, comparison }) {
                     {Math.round(row.weighted_n).toLocaleString("en-GB")}
                   </td>
                   <td>{formatCurrency(comp.baseline_hnet)}</td>
-                  <td>{formatCurrency(comp.reformed_hnet)}</td>
+                  <td>{formatCurrency(comp[reformedField])}</td>
                   <td className={changeClass}>
-                    {formatCurrencyChange(comp.change)}/yr
+                    {formatCurrencyChange(change)}/yr
                   </td>
                 </tr>
               );
@@ -230,7 +236,7 @@ function HouseholdSummaryTable({ stats, comparison }) {
   );
 }
 
-export default function HouseholdArchetypes() {
+export default function HouseholdArchetypes({ termsMode = "nominal" }) {
   const [stats, setStats] = useState(null);
   const [comparison, setComparison] = useState(null);
 
@@ -268,11 +274,11 @@ export default function HouseholdArchetypes() {
       </p>
 
       <div className="charts-grid">
-        <BaselineReformedChart comparison={comparison} />
-        <ChangeBarChart comparison={comparison} />
+        <BaselineReformedChart comparison={comparison} termsMode={termsMode} />
+        <ChangeBarChart comparison={comparison} termsMode={termsMode} />
       </div>
 
-      <HouseholdSummaryTable stats={stats} comparison={comparison} />
+      <HouseholdSummaryTable stats={stats} comparison={comparison} termsMode={termsMode} />
     </div>
   );
 }

@@ -37,8 +37,10 @@ const METRIC_LABELS = {
   top_1_pct_share: "Top 1% income share",
 };
 
-export default function InequalityTable({ data, selectedYear }) {
+export default function InequalityTable({ data, selectedYear, termsMode = "nominal" }) {
   if (!data) return null;
+
+  const reformField = `reform_${termsMode}`;
 
   const filtered = data.filter(
     (row) => parseInt(row.year) === selectedYear,
@@ -99,10 +101,10 @@ export default function InequalityTable({ data, selectedYear }) {
                   {formatValue(metric, row.baseline)}
                 </td>
                 <td style={tdRightStyle}>
-                  {formatValue(metric, row.reform)}
+                  {formatValue(metric, row[reformField])}
                 </td>
                 <td style={tdRightStyle}>
-                  {formatChange(metric, row.baseline, row.reform)}
+                  {formatChange(metric, row.baseline, row[reformField])}
                 </td>
               </tr>
             );
