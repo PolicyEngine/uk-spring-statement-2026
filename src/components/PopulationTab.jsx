@@ -240,7 +240,7 @@ export default function PopulationTab({ data }) {
         year={selectedYear}
       />
 
-      <HouseholdArchetypes />
+      <HouseholdArchetypes selectedYear={selectedYear} />
 
       {hasWinnersLosers && (
         <WinnersLosersChart

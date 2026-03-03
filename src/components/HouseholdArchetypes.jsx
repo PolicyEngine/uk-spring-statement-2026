@@ -155,9 +155,9 @@ function HouseholdSummaryTable({ stats, comparison }) {
   );
 }
 
-export default function HouseholdArchetypes() {
-  const [stats, setStats] = useState(null);
-  const [comparison, setComparison] = useState(null);
+export default function HouseholdArchetypes({ selectedYear }) {
+  const [allStats, setAllStats] = useState(null);
+  const [allComparison, setAllComparison] = useState(null);
 
   useEffect(() => {
     Promise.all([
@@ -168,12 +168,17 @@ export default function HouseholdArchetypes() {
         .then((r) => (r.ok ? r.json() : null))
         .catch(() => null),
     ]).then(([statsData, compData]) => {
-      setStats(statsData);
-      setComparison(compData);
+      setAllStats(statsData);
+      setAllComparison(compData);
     });
   }, []);
 
-  if (!stats || !comparison) return null;
+  if (!allStats || !allComparison) return null;
+
+  const stats = allStats.filter((d) => d.year === selectedYear);
+  const comparison = allComparison.filter((d) => d.year === selectedYear);
+
+  if (stats.length === 0 || comparison.length === 0) return null;
 
   return (
     <div style={{ marginTop: "var(--pe-space-xl)" }}>
@@ -186,10 +191,9 @@ export default function HouseholdArchetypes() {
           marginBottom: "var(--pe-space-lg)",
         }}
       >
-        Using PolicyEngine's microsimulation model, we calculated average
+        Using PolicyEngine&rsquo;s microsimulation model, we calculated average
         household net income for six household groups under pre-Spring Statement
-        and Spring Statement 2026 forecasts. These figures represent 2029
-        projections.
+        and Spring Statement 2026 forecasts.
       </p>
 
       <HouseholdSummaryTable stats={stats} comparison={comparison} />

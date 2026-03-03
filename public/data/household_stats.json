@@ -1,38 +1,212 @@
 [
   {
+    "year": 2026,
+    "group": "Single adult, no children",
+    "mean_hnet": 27647,
+    "median_hnet": 23876,
+    "weighted_n": 5487196
+  },
+  {
+    "year": 2026,
+    "group": "Couple, no children",
+    "mean_hnet": 70150,
+    "median_hnet": 59006,
+    "weighted_n": 8763130
+  },
+  {
+    "year": 2026,
+    "group": "Single parent",
+    "mean_hnet": 37993,
+    "median_hnet": 35597,
+    "weighted_n": 2034406
+  },
+  {
+    "year": 2026,
+    "group": "Couple with children",
+    "mean_hnet": 75762,
+    "median_hnet": 64338,
+    "weighted_n": 6704035
+  },
+  {
+    "year": 2026,
+    "group": "Single pensioner",
+    "mean_hnet": 25853,
+    "median_hnet": 22400,
+    "weighted_n": 3891606
+  },
+  {
+    "year": 2026,
+    "group": "Pensioner couple",
+    "mean_hnet": 52677,
+    "median_hnet": 47523,
+    "weighted_n": 4773454
+  },
+  {
+    "year": 2027,
+    "group": "Single adult, no children",
+    "mean_hnet": 28050,
+    "median_hnet": 24238,
+    "weighted_n": 5507498
+  },
+  {
+    "year": 2027,
+    "group": "Couple, no children",
+    "mean_hnet": 71313,
+    "median_hnet": 59824,
+    "weighted_n": 8795553
+  },
+  {
+    "year": 2027,
+    "group": "Single parent",
+    "mean_hnet": 38534,
+    "median_hnet": 36165,
+    "weighted_n": 2041933
+  },
+  {
+    "year": 2027,
+    "group": "Couple with children",
+    "mean_hnet": 76982,
+    "median_hnet": 65498,
+    "weighted_n": 6728840
+  },
+  {
+    "year": 2027,
+    "group": "Single pensioner",
+    "mean_hnet": 26280,
+    "median_hnet": 22718,
+    "weighted_n": 3906005
+  },
+  {
+    "year": 2027,
+    "group": "Pensioner couple",
+    "mean_hnet": 53563,
+    "median_hnet": 48505,
+    "weighted_n": 4791116
+  },
+  {
+    "year": 2028,
+    "group": "Single adult, no children",
+    "mean_hnet": 28510,
+    "median_hnet": 24532,
+    "weighted_n": 5529528
+  },
+  {
+    "year": 2028,
+    "group": "Couple, no children",
+    "mean_hnet": 72625,
+    "median_hnet": 60898,
+    "weighted_n": 8830735
+  },
+  {
+    "year": 2028,
+    "group": "Single parent",
+    "mean_hnet": 39125,
+    "median_hnet": 36492,
+    "weighted_n": 2050101
+  },
+  {
+    "year": 2028,
+    "group": "Couple with children",
+    "mean_hnet": 78200,
+    "median_hnet": 66446,
+    "weighted_n": 6755755
+  },
+  {
+    "year": 2028,
+    "group": "Single pensioner",
+    "mean_hnet": 26665,
+    "median_hnet": 22976,
+    "weighted_n": 3921629
+  },
+  {
+    "year": 2028,
+    "group": "Pensioner couple",
+    "mean_hnet": 54396,
+    "median_hnet": 49344,
+    "weighted_n": 4810280
+  },
+  {
+    "year": 2029,
     "group": "Single adult, no children",
     "mean_hnet": 28974,
     "median_hnet": 24878,
     "weighted_n": 5553858
   },
   {
+    "year": 2029,
     "group": "Couple, no children",
     "mean_hnet": 73700,
     "median_hnet": 61662,
     "weighted_n": 8869591
   },
   {
+    "year": 2029,
     "group": "Single parent",
     "mean_hnet": 39720,
     "median_hnet": 37036,
     "weighted_n": 2059121
   },
   {
+    "year": 2029,
     "group": "Couple with children",
     "mean_hnet": 79390,
     "median_hnet": 67388,
     "weighted_n": 6785480
   },
   {
+    "year": 2029,
     "group": "Single pensioner",
     "mean_hnet": 27058,
     "median_hnet": 23223,
     "weighted_n": 3938884
   },
   {
+    "year": 2029,
     "group": "Pensioner couple",
     "mean_hnet": 55211,
     "median_hnet": 50027,
     "weighted_n": 4831445
+  },
+  {
+    "year": 2030,
+    "group": "Single adult, no children",
+    "mean_hnet": 29479,
+    "median_hnet": 25242,
+    "weighted_n": 5578851
+  },
+  {
+    "year": 2030,
+    "group": "Couple, no children",
+    "mean_hnet": 75192,
+    "median_hnet": 62714,
+    "weighted_n": 8909504
+  },
+  {
+    "year": 2030,
+    "group": "Single parent",
+    "mean_hnet": 40215,
+    "median_hnet": 37382,
+    "weighted_n": 2068387
+  },
+  {
+    "year": 2030,
+    "group": "Couple with children",
+    "mean_hnet": 80721,
+    "median_hnet": 68462,
+    "weighted_n": 6816015
+  },
+  {
+    "year": 2030,
+    "group": "Single pensioner",
+    "mean_hnet": 27396,
+    "median_hnet": 23490,
+    "weighted_n": 3956609
+  },
+  {
+    "year": 2030,
+    "group": "Pensioner couple",
+    "mean_hnet": 56021,
+    "median_hnet": 50725,
+    "weighted_n": 4853187
   }
 ]
