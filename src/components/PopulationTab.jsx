@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -9,26 +9,37 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
+import IntraDecileChart from "./IntraDecileChart";
+import InequalityTable from "./InequalityTable";
+import DetailedBudgetTable from "./DetailedBudgetTable";
 
 const YEARS = [2026, 2027, 2028, 2029, 2030];
 
 const DECILE_ORDER = [
-  "1st",
-  "2nd",
-  "3rd",
-  "4th",
-  "5th",
-  "6th",
-  "7th",
-  "8th",
-  "9th",
-  "10th",
+  "1st", "2nd", "3rd", "4th", "5th",
+  "6th", "7th", "8th", "9th", "10th",
 ];
+
+function parseCSV(text) {
+  const lines = text.trim().split("\n");
+  const headers = lines[0].split(",");
+  return lines.slice(1).map((line) => {
+    const values = line.split(",");
+    const obj = {};
+    headers.forEach((h, i) => {
+      const v = values[i];
+      obj[h.trim()] =
+        isNaN(v) || v === undefined || v.trim() === ""
+          ? (v || "").trim()
+          : parseFloat(v);
+    });
+    return obj;
+  });
+}
 
 function MetricsBar({ metrics, winnersLosers, distributional, year }) {
   const cards = [];
 
-  // Average household impact from distributional data ("All" row)
   if (distributional && distributional.length > 0) {
     const allRow = distributional.find(
       (d) => d.year === year && d.decile === "All",
@@ -41,7 +52,6 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
     }
   }
 
-  // Percentage gaining from winners/losers data ("All" row)
   if (winnersLosers && winnersLosers.length > 0) {
     const allRow = winnersLosers.find(
       (d) => d.year === year && d.decile === "All",
@@ -58,7 +68,6 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
     }
   }
 
-  // Poverty rate change from metrics
   if (metrics && metrics.length > 0) {
     const yearMetrics = metrics.filter((m) => m.year === year);
     const povertyChange = yearMetrics.find(
@@ -109,7 +118,7 @@ function DistributionalChart({ data, year }) {
     <div className="section-card">
       <h3 className="chart-title">Average annual impact by income decile</h3>
       <p className="chart-subtitle">
-        Change in household net income (\u00a3/year), {year}-
+        Change in household net income ({"\u00a3"}/year), {year}-
         {(year + 1).toString().slice(-2)}
       </p>
       <div className="chart-container-tall">
@@ -284,12 +293,37 @@ function WinnersLosersChart({ data, year }) {
 
 export default function PopulationTab({ data }) {
   const [selectedYear, setSelectedYear] = useState(2026);
+  const [extraData, setExtraData] = useState({
+    inequality: null,
+    intraDecile: null,
+    detailedBudget: null,
+  });
+
+  // Load extra CSV files for new components
+  useEffect(() => {
+    Promise.all([
+      fetch("/data/inequality.csv")
+        .then((r) => (r.ok ? r.text() : null))
+        .catch(() => null),
+      fetch("/data/intra_decile.csv")
+        .then((r) => (r.ok ? r.text() : null))
+        .catch(() => null),
+      fetch("/data/detailed_budgetary_impact.csv")
+        .then((r) => (r.ok ? r.text() : null))
+        .catch(() => null),
+    ]).then(([inequality, intraDecile, detailedBudget]) => {
+      setExtraData({
+        inequality: inequality ? parseCSV(inequality) : null,
+        intraDecile: intraDecile ? parseCSV(intraDecile) : null,
+        detailedBudget: detailedBudget ? parseCSV(detailedBudget) : null,
+      });
+    });
+  }, []);
 
   const hasDistributional =
     data?.distributional && data.distributional.length > 0;
   const hasWinnersLosers =
     data?.winnersLosers && data.winnersLosers.length > 0;
-  const hasMetrics = data?.metrics && data.metrics.length > 0;
 
   if (!hasDistributional && !hasWinnersLosers) {
     return (
@@ -339,14 +373,20 @@ export default function PopulationTab({ data }) {
         )}
       </div>
 
-      {!hasWinnersLosers && hasDistributional && (
-        <div className="data-message" style={{ marginTop: "16px" }}>
-          <p>
-            Winners and losers data not yet available. This will be generated in
-            a future data pipeline update.
-          </p>
-        </div>
-      )}
+      <IntraDecileChart
+        data={extraData.intraDecile}
+        selectedYear={selectedYear}
+      />
+
+      <InequalityTable
+        data={extraData.inequality}
+        selectedYear={selectedYear}
+      />
+
+      <DetailedBudgetTable
+        data={extraData.detailedBudget}
+        selectedYear={selectedYear}
+      />
     </div>
   );
 }

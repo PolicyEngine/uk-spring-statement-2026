@@ -13,8 +13,11 @@ from huggingface_hub import hf_hub_download
 
 from .calculators import (
     ConstituencyCalculator,
+    DetailedBudgetaryImpactCalculator,
     DistributionalImpactCalculator,
     HouseholdScatterCalculator,
+    InequalityCalculator,
+    IntraDecileCalculator,
     MetricsCalculator,
     WinnersLosersCalculator,
 )
@@ -32,11 +35,7 @@ DEFAULT_OUTPUT_DIR = Path("public/data")
 
 
 def _get_constituency_files() -> tuple[str, str]:
-    """Download parliamentary constituency files from HuggingFace.
-
-    Returns:
-        Tuple of (weights_path, csv_path).
-    """
+    """Download parliamentary constituency files from HuggingFace."""
     weights_path = hf_hub_download(
         HF_REPO, "parliamentary_constituency_weights.h5"
     )
@@ -57,34 +56,24 @@ def generate_all_data(
     output_dir: Path = None,
     years: list[int] = None,
 ) -> dict[str, pd.DataFrame]:
-    """Generate all dashboard data.
-
-    1. Creates baseline and reformed Microsimulations.
-    2. Runs all calculators for each year in DEFAULT_YEARS.
-    3. Generates economic_forecast.json.
-    4. Saves all output to ``public/data/``.
-
-    Args:
-        output_dir: Directory for output files.
-        years: Years to analyse.
-
-    Returns:
-        Dict mapping output name to DataFrame.
-    """
+    """Generate all dashboard data."""
     output_dir = output_dir or DEFAULT_OUTPUT_DIR
     years = years or DEFAULT_YEARS
 
-    # ── Economic forecast JSON ──────────────────────────────────────────
+    # Economic forecast JSON
     save_economic_forecast_json(output_dir / "economic_forecast.json")
 
-    # ── Calculators ─────────────────────────────────────────────────────
+    # Calculators
     distributional_calc = DistributionalImpactCalculator()
     metrics_calc = MetricsCalculator()
     winners_losers_calc = WinnersLosersCalculator()
     scatter_calc = HouseholdScatterCalculator()
     constituency_calc = ConstituencyCalculator()
+    inequality_calc = InequalityCalculator()
+    intra_decile_calc = IntraDecileCalculator()
+    detailed_budget_calc = DetailedBudgetaryImpactCalculator()
 
-    # ── Download constituency data ──────────────────────────────────────
+    # Download constituency data
     constituency_weights = None
     constituency_df = None
 
@@ -93,7 +82,6 @@ def generate_all_data(
         print("Downloaded constituency files from HuggingFace")
 
         with h5py.File(weights_path, "r") as f:
-            # Use the latest available key
             keys = sorted(f.keys())
             constituency_weights = f[keys[-1]][...]
         constituency_df = pd.read_csv(csv_path)
@@ -101,33 +89,40 @@ def generate_all_data(
     except Exception as e:
         print(f"Warning: Could not load constituency data: {e}")
 
-    # ── Aggregate results ───────────────────────────────────────────────
+    # Aggregate results
     all_distributional = []
     all_metrics = []
     all_winners_losers = []
     all_constituency = []
+    all_inequality = []
+    all_intra_decile = []
+    all_detailed_budget = []
     scatter_df = None
 
     for year in years:
         print(f"\nYear {year}...")
 
-        # Distributional impact
         distributional = distributional_calc.calculate(year)
         all_distributional.extend(distributional)
 
-        # Summary metrics
         metrics = metrics_calc.calculate(year)
         all_metrics.extend(metrics)
 
-        # Winners and losers
         winners_losers = winners_losers_calc.calculate(year)
         all_winners_losers.extend(winners_losers)
 
-        # Household scatter (only for first year to keep file small)
+        inequality = inequality_calc.calculate(year)
+        all_inequality.extend(inequality)
+
+        intra_decile = intra_decile_calc.calculate(year)
+        all_intra_decile.extend(intra_decile)
+
+        detailed_budget = detailed_budget_calc.calculate(year)
+        all_detailed_budget.extend(detailed_budget)
+
         if scatter_df is None:
             scatter_df = scatter_calc.calculate(year)
 
-        # Constituency impacts
         if constituency_weights is not None and constituency_df is not None:
             constituency = constituency_calc.calculate(
                 year, constituency_weights, constituency_df
@@ -136,18 +131,21 @@ def generate_all_data(
 
         print(f"  Done: {year}")
 
-    # ── Build DataFrames ────────────────────────────────────────────────
+    # Build DataFrames
     results = {
         "distributional_impact": pd.DataFrame(all_distributional),
         "metrics": pd.DataFrame(all_metrics),
         "winners_losers": pd.DataFrame(all_winners_losers),
+        "inequality": pd.DataFrame(all_inequality),
+        "intra_decile": pd.DataFrame(all_intra_decile),
+        "detailed_budgetary_impact": pd.DataFrame(all_detailed_budget),
         "household_scatter": (
             scatter_df if scatter_df is not None else pd.DataFrame()
         ),
         "constituency": pd.DataFrame(all_constituency),
     }
 
-    # ── Save to CSV ─────────────────────────────────────────────────────
+    # Save to CSV
     for name, df in results.items():
         if len(df) > 0:
             _save_csv(df, output_dir / f"{name}.csv")
