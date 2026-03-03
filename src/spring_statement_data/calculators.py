@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 from policyengine_uk import Microsimulation
 
-from .reforms import get_pre_statement_scenario
+from .reforms import get_pre_statement_scenario, get_real_deflator
 
 # Programs for detailed budgetary breakdown (API v2 UKPrograms.PROGRAMS)
 UK_PROGRAMS = {
@@ -59,14 +59,16 @@ class DistributionalImpactCalculator:
 
     def calculate(self, year: int) -> list[dict]:
         baseline, reformed = _create_simulations()
+        deflator = get_real_deflator(year)
 
         baseline_income = baseline.calculate("household_net_income", year)
         reform_income_raw = reformed.calculate("household_net_income", year)
         income_decile = baseline.calculate("household_income_decile", year)
 
         # API v2: reform MicroSeries uses baseline weights
+        # Deflate reform income to baseline price level (real terms)
         reform_income = mdf.MicroSeries(
-            reform_income_raw.values, weights=baseline_income.weights
+            reform_income_raw.values * deflator, weights=baseline_income.weights
         )
 
         valid = np.array(income_decile) >= 0
@@ -175,11 +177,15 @@ class InequalityCalculator:
 
     def calculate(self, year: int) -> list[dict]:
         baseline, reformed = _create_simulations()
+        deflator = get_real_deflator(year)
         results = []
 
         for sim, label in [(baseline, "baseline"), (reformed, "reform")]:
             income = sim.calculate("equiv_household_net_income", year)
             income_vals = income.values.copy()
+            # Deflate reform income to baseline price level (real terms)
+            if label == "reform":
+                income_vals = income_vals * deflator
             income_vals[income_vals < 0] = 0
 
             hh_count = sim.calculate("household_count_people", year)
@@ -244,14 +250,16 @@ class IntraDecileCalculator:
 
     def calculate(self, year: int) -> list[dict]:
         baseline, reformed = _create_simulations()
+        deflator = get_real_deflator(year)
 
         baseline_income = baseline.calculate("household_net_income", year)
         reform_income_raw = reformed.calculate("household_net_income", year)
         income_decile = baseline.calculate("household_income_decile", year)
         hh_count_people = baseline.calculate("household_count_people", year)
 
+        # Deflate reform income to baseline price level (real terms)
         reform_income = mdf.MicroSeries(
-            reform_income_raw.values, weights=baseline_income.weights
+            reform_income_raw.values * deflator, weights=baseline_income.weights
         )
 
         # API v2 percentage change
@@ -305,6 +313,7 @@ class DetailedBudgetaryImpactCalculator:
 
     def calculate(self, year: int) -> list[dict]:
         baseline, reformed = _create_simulations()
+        deflator = get_real_deflator(year)
         results = []
 
         for program_name, info in UK_PROGRAMS.items():
@@ -317,14 +326,16 @@ class DetailedBudgetaryImpactCalculator:
             except Exception:
                 continue
 
+            # Deflate reform value to baseline price level (real terms)
+            r_val_real = r_val * deflator
             sign = 1 if is_tax else -1
-            difference = sign * (r_val - b_val) / 1e6
+            difference = sign * (r_val_real - b_val) / 1e6
 
             results.append({
                 "year": year,
                 "program": program_name,
                 "baseline": float(b_val / 1e6),
-                "reform": float(r_val / 1e6),
+                "reform": float(r_val_real / 1e6),
                 "difference": float(difference),
             })
 
@@ -338,12 +349,16 @@ class WinnersLosersCalculator:
 
     def calculate(self, year: int) -> list[dict]:
         baseline, reformed = _create_simulations()
+        deflator = get_real_deflator(year)
 
         baseline_income = baseline.calculate("household_net_income", year)
         reformed_income = reformed.calculate("household_net_income", year)
         income_decile = baseline.calculate("household_income_decile", year)
 
-        change = reformed_income - baseline_income
+        # Deflate reform income to baseline price level (real terms)
+        change = mdf.MicroSeries(
+            reformed_income.values * deflator, weights=reformed_income.weights
+        ) - baseline_income
         weights = np.array(baseline_income.weights)
         change_arr = np.array(change)
         decile_arr = np.array(income_decile)
@@ -395,6 +410,7 @@ class HouseholdScatterCalculator:
 
     def calculate(self, year: int) -> pd.DataFrame:
         baseline, reformed = _create_simulations()
+        deflator = get_real_deflator(year)
 
         baseline_income = np.array(
             baseline.calculate("household_net_income", year)
@@ -406,7 +422,8 @@ class HouseholdScatterCalculator:
             baseline.calculate("household_income_decile", year)
         )
 
-        change = reformed_income - baseline_income
+        # Deflate reform income to baseline price level (real terms)
+        change = reformed_income * deflator - baseline_income
         mask = baseline_income <= self.MAX_INCOME
 
         df = pd.DataFrame({
@@ -436,13 +453,15 @@ class ConstituencyCalculator:
         constituency_df: pd.DataFrame,
     ) -> list[dict]:
         baseline, reformed = _create_simulations()
+        deflator = get_real_deflator(year)
 
         baseline_income = np.array(
             baseline.calculate("household_net_income", year)
         )
+        # Deflate reform income to baseline price level (real terms)
         reformed_income = np.array(
             reformed.calculate("household_net_income", year)
-        )
+        ) * deflator
 
         results = []
 

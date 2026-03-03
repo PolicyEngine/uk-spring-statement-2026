@@ -1,38 +1,38 @@
 [
   {
     "group": "Single adult, no children",
-    "mean_hnet": 29438,
-    "median_hnet": 24215,
-    "weighted_n": 8135470
+    "mean_hnet": 28974,
+    "median_hnet": 24878,
+    "weighted_n": 5553858
   },
   {
     "group": "Couple, no children",
-    "mean_hnet": 64188,
-    "median_hnet": 54442,
-    "weighted_n": 10806929
+    "mean_hnet": 73700,
+    "median_hnet": 61662,
+    "weighted_n": 8869591
   },
   {
     "group": "Single parent",
-    "mean_hnet": 39886,
-    "median_hnet": 36933,
-    "weighted_n": 2516884
+    "mean_hnet": 39720,
+    "median_hnet": 37036,
+    "weighted_n": 2059121
   },
   {
     "group": "Couple with children",
-    "mean_hnet": 74966,
-    "median_hnet": 63045,
-    "weighted_n": 6611670
+    "mean_hnet": 79390,
+    "median_hnet": 67388,
+    "weighted_n": 6785480
   },
   {
     "group": "Single pensioner",
-    "mean_hnet": 27033,
-    "median_hnet": 23103,
-    "weighted_n": 4061703
+    "mean_hnet": 27058,
+    "median_hnet": 23223,
+    "weighted_n": 3938884
   },
   {
     "group": "Pensioner couple",
-    "mean_hnet": 54118,
-    "median_hnet": 49209,
-    "weighted_n": 3383456
+    "mean_hnet": 55211,
+    "median_hnet": 50027,
+    "weighted_n": 4831445
   }
 ]

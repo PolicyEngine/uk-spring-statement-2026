@@ -24,6 +24,8 @@ from .calculators import (
 from .reforms import (
     DEFAULT_YEARS,
     generate_economic_forecast_json,
+    get_pre_statement_scenario,
+    get_real_deflator,
     save_economic_forecast_json,
 )
 
@@ -150,8 +152,103 @@ def generate_all_data(
         if len(df) > 0:
             _save_csv(df, output_dir / f"{name}.csv")
 
+    # Household archetypes (stats + comparison JSONs)
+    _generate_household_archetypes(output_dir, year=2029)
+
     print(f"\nAll data saved to {output_dir}/")
     return results
+
+
+# Household type classification
+_HH_GROUPS = [
+    "Single adult, no children",
+    "Couple, no children",
+    "Single parent",
+    "Couple with children",
+    "Single pensioner",
+    "Pensioner couple",
+]
+
+
+def _classify_household(sim, year):
+    """Return an array classifying each household into an archetype group.
+
+    All variables mapped to household level for consistent shapes.
+    """
+    # num_adults/num_children are benunit-level; map to household
+    n_adults = np.array(sim.calculate("num_adults", year, map_to="household"))
+    n_children = np.array(sim.calculate("num_children", year, map_to="household"))
+    # is_SP_age is person-level; map_to="household" gives max across members
+    is_sp_age = np.array(
+        sim.calculate("is_SP_age", year, map_to="household")
+    ).astype(bool)
+
+    groups = np.full(len(n_adults), "", dtype=object)
+    groups[(n_adults == 1) & (n_children == 0) & (~is_sp_age)] = "Single adult, no children"
+    groups[(n_adults >= 2) & (n_children == 0) & (~is_sp_age)] = "Couple, no children"
+    groups[(n_adults == 1) & (n_children > 0)] = "Single parent"
+    groups[(n_adults >= 2) & (n_children > 0)] = "Couple with children"
+    groups[(n_adults == 1) & (n_children == 0) & is_sp_age] = "Single pensioner"
+    groups[(n_adults >= 2) & (n_children == 0) & is_sp_age] = "Pensioner couple"
+    return groups
+
+
+def _generate_household_archetypes(output_dir: Path, year: int = 2029):
+    """Generate household_stats.json and household_comparison.json (real terms)."""
+    from policyengine_uk import Microsimulation
+    import microdf as mdf
+
+    deflator = get_real_deflator(year)
+    scenario = get_pre_statement_scenario()
+    baseline = Microsimulation(scenario=scenario)
+    reformed = Microsimulation()
+
+    groups = _classify_household(baseline, year)
+    baseline_hnet = baseline.calculate("household_net_income", year)
+    reform_hnet_raw = reformed.calculate("household_net_income", year)
+    # Deflate reform to baseline prices
+    reform_hnet = mdf.MicroSeries(
+        reform_hnet_raw.values * deflator, weights=baseline_hnet.weights
+    )
+    weights = np.array(baseline_hnet.weights)
+
+    stats = []
+    comparison = []
+
+    for group in _HH_GROUPS:
+        mask = groups == group
+        if not mask.any():
+            continue
+
+        b_inc = baseline_hnet[mask]
+        r_inc = reform_hnet[mask]
+        w = weights[mask]
+
+        mean_b = float(b_inc.mean())
+        mean_r = float(r_inc.mean())
+        median_b = float(b_inc.median())
+        weighted_n = float(w.sum())
+
+        stats.append({
+            "group": group,
+            "mean_hnet": round(mean_b),
+            "median_hnet": round(median_b),
+            "weighted_n": round(weighted_n),
+        })
+        comparison.append({
+            "group": group,
+            "baseline_hnet": round(mean_b),
+            "reformed_hnet": round(mean_r),
+            "change": round(mean_r - mean_b),
+        })
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    with open(output_dir / "household_stats.json", "w") as f:
+        json.dump(stats, f, indent=2)
+    print(f"Saved: {output_dir / 'household_stats.json'}")
+    with open(output_dir / "household_comparison.json", "w") as f:
+        json.dump(comparison, f, indent=2)
+    print(f"Saved: {output_dir / 'household_comparison.json'}")
 
 
 if __name__ == "__main__":

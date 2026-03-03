@@ -241,7 +241,8 @@ function WinnersLosersChart({ data, year }) {
               axisLine={false}
               width={48}
               allowDecimals={false}
-              tickCount={6}
+              domain={[-60, 60]}
+              ticks={[-60, -40, -20, 0, 20, 40, 60]}
             />
             <ReferenceLine y={0} stroke="#6b7280" strokeWidth={1} />
             <Tooltip
@@ -360,11 +361,6 @@ export default function PopulationTab({ data }) {
           />
         )}
       </div>
-
-      <IntraDecileChart
-        data={extraData.intraDecile}
-        selectedYear={selectedYear}
-      />
 
       <InequalityTable
         data={extraData.inequality}
