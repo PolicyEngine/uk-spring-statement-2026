@@ -2,8 +2,9 @@
 
 import { useState, useMemo, useEffect } from "react";
 import {
-  BarChart,
+  ComposedChart,
   Bar,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -88,12 +89,16 @@ function WinnersLosersChart({ data, year }) {
       .filter(
         (d) => d.year === year && d.decile !== "All" && d.decile !== "Overall",
       )
-      .map((d) => ({
-        decile: d.decile,
-        gaining: d.pct_gaining,
-        losing: d.pct_losing ? -Math.abs(d.pct_losing) : 0,
-        unchanged: d.pct_unchanged || 0,
-      }))
+      .map((d) => {
+        const gaining = d.pct_gaining;
+        const losing = d.pct_losing ? -Math.abs(d.pct_losing) : 0;
+        return {
+          decile: d.decile,
+          gaining,
+          losing,
+          net: gaining + losing,
+        };
+      })
       .sort(
         (a, b) =>
           DECILE_ORDER.indexOf(a.decile) - DECILE_ORDER.indexOf(b.decile),
@@ -111,7 +116,7 @@ function WinnersLosersChart({ data, year }) {
       </p>
       <div className="chart-container-tall">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart
+          <ComposedChart
             data={chartData}
             margin={{ top: 8, right: 24, left: 16, bottom: 32 }}
             stackOffset="sign"
@@ -147,10 +152,13 @@ function WinnersLosersChart({ data, year }) {
                 boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
                 fontSize: "0.85rem",
               }}
-              formatter={(value, name) => [
-                `${Math.abs(value).toFixed(1)}%`,
-                name === "gaining" ? "Gaining" : "Losing",
-              ]}
+              formatter={(value, name) => {
+                if (name === "net") return [`${value >= 0 ? "+" : ""}${value.toFixed(1)}%`, "Net"];
+                return [
+                  `${Math.abs(value).toFixed(1)}%`,
+                  name === "gaining" ? "Gaining" : "Losing",
+                ];
+              }}
               labelFormatter={(label) => `${label} decile`}
             />
             <Bar
@@ -165,9 +173,18 @@ function WinnersLosersChart({ data, year }) {
               fill="#EF4444"
               stackId="stack"
               name="losing"
-              radius={[0, 0, 4, 4]}
+              radius={[4, 4, 0, 0]}
             />
-          </BarChart>
+            <Line
+              dataKey="net"
+              type="monotone"
+              stroke="#1f2937"
+              strokeWidth={2}
+              dot={{ r: 4, fill: "#1f2937", stroke: "#1f2937" }}
+              name="net"
+              isAnimationActive={false}
+            />
+          </ComposedChart>
         </ResponsiveContainer>
       </div>
     </div>
