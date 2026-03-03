@@ -107,8 +107,8 @@ function HouseholdSummaryTable({ stats, comparison }) {
   return (
     <div className="section-card">
       <h3 className="chart-title">Household income summary</h3>
-      <p className="chart-description">
-        Median and mean household net income by family type, comparing pre- and post-Spring Statement forecasts.
+      <p className="chart-subtitle">
+        Median and mean household net income by family type, comparing pre- and post-Spring Statement forecasts
       </p>
       <div className="forecast-table-wrapper">
         <table className="forecast-table">
