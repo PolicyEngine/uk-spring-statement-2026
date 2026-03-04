@@ -911,6 +911,81 @@
   .impact-amount.negative { color: #dc2626; }
   .impact-amount.neutral { color: var(--pe-gray-500); }
 
+  /* --- Decomposition breakdown --- */
+  .decomp-breakdown {
+    background: white;
+    border: 1px solid var(--pe-gray-200);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+
+  .decomp-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .decomp-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .decomp-label {
+    font-size: 0.85rem;
+    color: var(--pe-gray-600);
+    white-space: nowrap;
+  }
+
+  .decomp-bar-track {
+    position: relative;
+    height: 18px;
+    background: var(--pe-gray-50);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .decomp-bar-fill {
+    position: absolute;
+    top: 2px;
+    height: 14px;
+    border-radius: 3px;
+    opacity: 0.75;
+    transition: width 0.3s ease;
+  }
+
+  .decomp-bar-zero {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--pe-gray-300);
+  }
+
+  .decomp-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .decomp-value.positive { color: #059669; }
+  .decomp-value.negative { color: #dc2626; }
+  .decomp-value.zero { color: var(--pe-gray-400); }
+
+  .decomp-total-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+    padding-top: 10px;
+    border-top: 1px solid var(--pe-gray-200);
+  }
+
   /* --- Impact table --- */
 
   .impact-table-container {

@@ -64,17 +64,33 @@ _FORECAST_SERIES = {
         "CPI inflation",
         "gov.economic_assumptions.yoy_growth.obr.consumer_price_index",
     ),
+    "cpih": (
+        "CPIH",
+        "gov.economic_assumptions.yoy_growth.obr.cpih",
+    ),
+    "cpi_ahc": (
+        "CPI (after housing costs)",
+        "gov.economic_assumptions.yoy_growth.obr.consumer_price_index_ahc",
+    ),
     "rpi_inflation": (
         "RPI inflation",
         "gov.economic_assumptions.yoy_growth.obr.rpi",
+    ),
+    "non_labour_income": (
+        "Non-labour income",
+        "gov.economic_assumptions.yoy_growth.obr.non_labour_income",
     ),
     "house_prices": (
         "House prices",
         "gov.economic_assumptions.yoy_growth.obr.house_prices",
     ),
-    "per_capita_gdp": (
-        "Per capita GDP growth",
-        "gov.economic_assumptions.yoy_growth.obr.per_capita.gdp",
+    "mortgage_interest": (
+        "Mortgage interest",
+        "gov.economic_assumptions.yoy_growth.obr.mortgage_interest",
+    ),
+    "rent": (
+        "Private rent",
+        "gov.economic_assumptions.yoy_growth.obr.rent",
     ),
     "social_rent": (
         "Social rent",
@@ -148,6 +164,10 @@ get_reform_scenario = get_pre_statement_scenario
 _CPI_PATH = "gov.economic_assumptions.yoy_growth.obr.consumer_price_index"
 _NOV_CPI = {int(k[:4]): v for k, v in _NOVEMBER_2025[_CPI_PATH].items()}
 _MAR_CPI = {int(k[:4]): v for k, v in _MARCH_2026[_CPI_PATH].items()}
+
+# Public CPI dicts for downstream consumers (spring_statement.py)
+NOVEMBER_2025_CPI = _NOV_CPI
+MARCH_2026_CPI = _MAR_CPI
 
 
 def get_real_deflator(year: int) -> float:

@@ -15,9 +15,17 @@ Comparison:
 from policyengine_uk import Simulation
 
 try:
-    from .reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
+    from .reforms import (
+        PRE_STATEMENT_PARAMS,
+        get_pre_statement_scenario,
+        MARCH_2026_CPI,
+    )
 except ImportError:
-    from reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
+    from reforms import (
+        PRE_STATEMENT_PARAMS,
+        get_pre_statement_scenario,
+        MARCH_2026_CPI,
+    )
 
 CPI_YEARS = range(2025, 2031)
 
@@ -28,6 +36,59 @@ CPI_PARAMETER = "gov.economic_assumptions.yoy_growth.obr.consumer_price_index"
 PRE_STATEMENT_CPI = {
     int(k[:4]): v for k, v in PRE_STATEMENT_PARAMS[CPI_PARAMETER].items()
 }
+
+
+def _cpi_deflator_to_2026(cpi_dict, year):
+    """Deflator to convert year-Y nominal pounds to 2026 real pounds.
+
+    For 2026 returns 1.0.  For later years, discounts by the cumulative
+    CPI growth from 2027 to *year*.
+    """
+    if year <= 2026:
+        return 1.0
+    cumulative = 1.0
+    for y in range(2027, year + 1):
+        cumulative *= 1 + cpi_dict.get(y, 0)
+    return 1.0 / cumulative
+
+
+def _compute_decomposition(
+    baseline_net,
+    reform_net,
+    total_taxes_b,
+    total_taxes_r,
+    total_benefits_b,
+    total_benefits_r,
+    year,
+):
+    """Four-component real (2026 pounds) decomposition of net income impact.
+
+    Components (all in 2026 real pounds):
+    1. market_income — change in gross market income (employment, pensions, etc.)
+    2. taxes — change in total taxes (positive = taxes fell = good for household)
+    3. benefits — change in total benefits
+    4. purchasing_power — effect of revised CPI on existing baseline income
+
+    The four components sum exactly to *total*.
+    """
+    # Market income = net + taxes - benefits (residual)
+    market_b = baseline_net + total_taxes_b - total_benefits_b
+    market_r = reform_net + total_taxes_r - total_benefits_r
+
+    delta_market = market_r - market_b
+    delta_taxes = total_taxes_r - total_taxes_b
+    delta_benefits = total_benefits_r - total_benefits_b
+
+    d_b = _cpi_deflator_to_2026(PRE_STATEMENT_CPI, year)
+    d_r = _cpi_deflator_to_2026(MARCH_2026_CPI, year)
+
+    return {
+        "market_income": round(delta_market * d_r, 2),
+        "taxes": round(-delta_taxes * d_r, 2),
+        "benefits": round(delta_benefits * d_r, 2),
+        "purchasing_power": round(baseline_net * (d_r - d_b), 2),
+        "total": round(reform_net * d_r - baseline_net * d_b, 2),
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -600,11 +661,21 @@ def calculate_household_impact(
 
     # Build full program structure, filtering by region where applicable.
     active_structure = []
+    total_taxes_b = 0.0
+    total_taxes_r = 0.0
+    total_benefits_b = 0.0
+    total_benefits_r = 0.0
     for prog in PROGRAM_STRUCTURE:
         prog_region = prog.get("region")
         if prog_region and prog_region != region:
             continue
         pid = prog["id"]
+        if prog.get("is_tax", False):
+            total_taxes_b += baseline.get(pid, 0)
+            total_taxes_r += reform.get(pid, 0)
+        else:
+            total_benefits_b += baseline.get(pid, 0)
+            total_benefits_r += reform.get(pid, 0)
         entry = {
             "id": pid,
             "label": prog["label"],
@@ -619,10 +690,21 @@ def calculate_household_impact(
             ]
         active_structure.append(entry)
 
+    decomposition = _compute_decomposition(
+        baseline["household_net_income"],
+        reform["household_net_income"],
+        total_taxes_b,
+        total_taxes_r,
+        total_benefits_b,
+        total_benefits_r,
+        year,
+    )
+
     return {
         "baseline": baseline,
         "reform": reform,
         "impact": impact,
+        "decomposition": decomposition,
         "program_structure": active_structure,
         "program_groups": PROGRAM_GROUPS,
         "cpi_values": {
@@ -723,9 +805,19 @@ def calculate_multi_year_net_impact(
         impact = round(reform_net - baseline_net, 2)
 
         breakdown = []
+        total_taxes_b = 0.0
+        total_taxes_r = 0.0
+        total_benefits_b = 0.0
+        total_benefits_r = 0.0
         for prog in top_programs:
             b_val = _calc(baseline_sim, prog["id"], prog["entity"])
             r_val = _calc(reform_sim, prog["id"], prog["entity"])
+            if prog["is_tax"]:
+                total_taxes_b += b_val
+                total_taxes_r += r_val
+            else:
+                total_benefits_b += b_val
+                total_benefits_r += r_val
             diff = r_val - b_val
             if abs(diff) > 0.005:
                 household_impact = -diff if prog["is_tax"] else diff
@@ -736,17 +828,30 @@ def calculate_multi_year_net_impact(
                     }
                 )
 
-        return str(year), impact, breakdown
+        decomposition = _compute_decomposition(
+            baseline_net,
+            reform_net,
+            total_taxes_b,
+            total_taxes_r,
+            total_benefits_b,
+            total_benefits_r,
+            year,
+        )
+
+        return str(year), impact, breakdown, decomposition
 
     # Run sequentially with fresh scenario each iteration
+    yearly_decomposition = {}
     for yr in range(2026, 2031):
-        year_str, impact, breakdown = _calculate_year(yr)
+        year_str, impact, breakdown, decomposition = _calculate_year(yr)
         yearly_impact[year_str] = impact
         yearly_breakdown[year_str] = breakdown
+        yearly_decomposition[year_str] = decomposition
 
     return {
         "yearly_impact": yearly_impact,
         "yearly_breakdown": yearly_breakdown,
+        "yearly_decomposition": yearly_decomposition,
     }
 
 

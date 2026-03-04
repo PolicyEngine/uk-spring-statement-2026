@@ -27,6 +27,14 @@ const COLORS = {
   border: colors.border.light,
 };
 
+const DECOMP_KEYS = ["market_income", "taxes", "benefits", "purchasing_power"];
+const DECOMP_META = {
+  market_income: { label: "Market income", color: colors.gray[400] },
+  taxes: { label: "Taxes", color: "#f59e0b" },
+  benefits: { label: "Benefits", color: chartColors.positive },
+  purchasing_power: { label: "Purchasing power", color: colors.primary[500] },
+};
+
 function formatCurrency(value) {
   const absVal = Math.abs(value);
   const formatted =
@@ -149,26 +157,33 @@ export default function PersonalTab() {
     draftStudentLoan, draftHasPostgrad, draftLoanBalance, draftYear,
   ]);
 
-  // Multi-year bar chart data
+  // Multi-year chart data — use real (2026£) decomposition when available
   const multiYearChartData = useMemo(() => {
-    if (!multiYearData?.yearly_impact) return [];
-    return Object.entries(multiYearData.yearly_impact)
+    const decomp = multiYearData?.yearly_decomposition;
+    const impacts = multiYearData?.yearly_impact;
+    if (!impacts) return [];
+    return Object.entries(impacts)
       .filter(([year]) => Number(year) <= 2029)
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([year, impact]) => ({
-        year,
-        label: `${year}-${String(Number(year) + 1).slice(-2)}`,
-        impact,
-      }));
+      .map(([year, nominalImpact]) => {
+        const d = decomp?.[year];
+        return {
+          year,
+          label: `${year}-${String(Number(year) + 1).slice(-2)}`,
+          impact: d ? d.total : nominalImpact,
+          ...(d || {}),
+        };
+      });
   }, [multiYearData]);
 
-  // D3 multi-year bar chart
+  // D3 stacked bar chart — decomposed into market income, taxes, benefits, purchasing power
   useEffect(() => {
     if (!multiYearChartRef.current || multiYearChartData.length === 0) return;
 
+    const hasDecomp = multiYearChartData[0].purchasing_power !== undefined;
     const container = multiYearChartRef.current;
     const containerWidth = container.clientWidth;
-    const margin = { top: 24, right: 20, bottom: 40, left: 60 };
+    const margin = { top: 24, right: 20, bottom: 60, left: 60 };
     const width = containerWidth - margin.left - margin.right;
     const height = 280;
 
@@ -187,7 +202,35 @@ export default function PersonalTab() {
       .range([0, width])
       .padding(0.35);
 
-    const maxAbs = d3.max(multiYearChartData, (d) => Math.abs(d.impact)) || 10;
+    // Compute stack offsets for diverging bars
+    const stackedData = multiYearChartData.map((d) => {
+      const entry = { ...d, segments: [] };
+      if (!hasDecomp) {
+        entry.segments = [{ key: "total", value: d.impact, y0: 0, y1: d.impact, color: d.impact >= 0 ? COLORS.positive : COLORS.negative }];
+        return entry;
+      }
+      let posOffset = 0;
+      let negOffset = 0;
+      DECOMP_KEYS.forEach((key) => {
+        const val = d[key] || 0;
+        if (Math.abs(val) < 0.005) return;
+        const seg = { key, value: val, color: DECOMP_META[key].color };
+        if (val >= 0) {
+          seg.y0 = posOffset;
+          seg.y1 = posOffset + val;
+          posOffset += val;
+        } else {
+          seg.y1 = negOffset;
+          seg.y0 = negOffset + val;
+          negOffset += val;
+        }
+        entry.segments.push(seg);
+      });
+      return entry;
+    });
+
+    const allValues = stackedData.flatMap((d) => d.segments.flatMap((s) => [s.y0, s.y1]));
+    const maxAbs = Math.max(d3.max(allValues, Math.abs) || 10, 1);
     const yExtent = maxAbs * 1.35;
 
     const y = d3.scaleLinear()
@@ -204,44 +247,48 @@ export default function PersonalTab() {
 
     const tooltip = d3.select(container).append("div").attr("class", "bar-tooltip");
 
-    g.selectAll(".multi-year-bar")
-      .data(multiYearChartData)
-      .join("rect")
-      .attr("class", "multi-year-bar")
-      .attr("x", (d) => x(d.label))
-      .attr("width", x.bandwidth())
-      .attr("y", (d) => (d.impact >= 0 ? y(d.impact) : y(0)))
-      .attr("height", (d) => Math.abs(y(d.impact) - y(0)))
-      .attr("rx", 4)
-      .attr("fill", (d) => d.impact >= 0 ? COLORS.positive : COLORS.negative)
-      .attr("opacity", 0.85)
-      .on("mouseenter", (event, d) => {
-        const sign = d.impact >= 0 ? "+" : "\u2212";
-        tooltip.style("opacity", 1)
-          .html(
-            `<div class="tooltip-label">${d.label}</div>` +
-            `<div class="tooltip-value" style="color: ${d.impact >= 0 ? COLORS.positive : COLORS.negative}">${sign}\u00A3${Math.abs(d.impact).toFixed(2)}/year</div>`
-          );
-      })
-      .on("mousemove", (event) => {
-        tooltip.style("left", event.clientX + 12 + "px").style("top", event.clientY - 10 + "px");
-      })
-      .on("mouseleave", () => tooltip.style("opacity", 0));
-
-    g.selectAll(".multi-year-label")
-      .data(multiYearChartData)
-      .join("text")
-      .attr("class", "multi-year-label")
-      .attr("x", (d) => x(d.label) + x.bandwidth() / 2)
-      .attr("y", (d) => (d.impact >= 0 ? y(d.impact) - 8 : y(d.impact) + 18))
-      .attr("text-anchor", "middle")
-      .attr("fill", (d) => d.impact >= 0 ? COLORS.positive : COLORS.negative)
-      .attr("font-size", "13px")
-      .attr("font-weight", "600")
-      .text((d) => {
-        const sign = d.impact >= 0 ? "+" : "\u2212";
-        return `${sign}\u00A3${Math.abs(d.impact).toFixed(0)}`;
+    // Draw stacked segments
+    stackedData.forEach((d) => {
+      d.segments.forEach((seg) => {
+        g.append("rect")
+          .attr("x", x(d.label))
+          .attr("width", x.bandwidth())
+          .attr("y", y(Math.max(seg.y0, seg.y1)))
+          .attr("height", Math.abs(y(seg.y0) - y(seg.y1)))
+          .attr("rx", 3)
+          .attr("fill", seg.color)
+          .attr("opacity", 0.85)
+          .on("mouseenter", (event) => {
+            const label = DECOMP_META[seg.key]?.label || "Total";
+            const sign = seg.value >= 0 ? "+" : "\u2212";
+            tooltip.style("opacity", 1)
+              .html(
+                `<div class="tooltip-label">${d.label}: ${label}</div>` +
+                `<div class="tooltip-value" style="color: ${seg.value >= 0 ? COLORS.positive : COLORS.negative}">${sign}\u00A3${Math.abs(seg.value).toFixed(2)}/year</div>`
+              );
+          })
+          .on("mousemove", (event) => {
+            tooltip.style("left", event.clientX + 12 + "px").style("top", event.clientY - 10 + "px");
+          })
+          .on("mouseleave", () => tooltip.style("opacity", 0));
       });
+    });
+
+    // Total labels above/below bars
+    stackedData.forEach((d) => {
+      const total = d.impact;
+      const topY = d3.max(d.segments, (s) => Math.max(s.y0, s.y1)) || 0;
+      const botY = d3.min(d.segments, (s) => Math.min(s.y0, s.y1)) || 0;
+      const labelY = total >= 0 ? y(topY) - 8 : y(botY) + 18;
+      g.append("text")
+        .attr("x", x(d.label) + x.bandwidth() / 2)
+        .attr("y", labelY)
+        .attr("text-anchor", "middle")
+        .attr("fill", total >= 0 ? COLORS.positive : COLORS.negative)
+        .attr("font-size", "13px")
+        .attr("font-weight", "600")
+        .text(`${total >= 0 ? "+" : "\u2212"}\u00A3${Math.abs(total).toFixed(0)}`);
+    });
 
     g.append("g").attr("class", "axis")
       .attr("transform", `translate(0,${height})`)
@@ -258,9 +305,26 @@ export default function PersonalTab() {
 
     g.selectAll(".axis-y text")
       .attr("font-size", "11px").attr("font-weight", "500").attr("fill", colors.gray[600]);
+
+    // Legend (only when decomposition is available)
+    if (hasDecomp) {
+      const activeKeys = DECOMP_KEYS.filter((key) =>
+        stackedData.some((d) => Math.abs(d[key] || 0) >= 0.005)
+      );
+      const legend = svg.append("g")
+        .attr("transform", `translate(${margin.left}, ${height + margin.top + 36})`);
+      let lx = 0;
+      activeKeys.forEach((key) => {
+        const meta = DECOMP_META[key];
+        legend.append("rect").attr("x", lx).attr("y", 0).attr("width", 12).attr("height", 12).attr("rx", 2).attr("fill", meta.color).attr("opacity", 0.85);
+        legend.append("text").attr("x", lx + 16).attr("y", 10).attr("font-size", "11px").attr("fill", colors.gray[600]).text(meta.label);
+        lx += meta.label.length * 7 + 30;
+      });
+    }
   }, [multiYearChartData]);
 
-  const netImpact = result?.impact?.household_net_income || 0;
+  const decomposition = result?.decomposition;
+  const realImpact = decomposition?.total ?? result?.impact?.household_net_income ?? 0;
 
   return (
     <div className="max-w-[1400px] mx-auto pt-4 pb-6 font-sans text-gray-800 leading-relaxed">
@@ -553,28 +617,91 @@ export default function PersonalTab() {
           {loading && !result ? (
             <div className="multi-year-loading"><span className="spinner" /> Calculating your impact...</div>
           ) : result && (
-            <div
-              className={`impact-headline ${netImpact > 0.5 ? "positive" : netImpact < -0.5 ? "negative" : "neutral"}`}
-            >
-              <p>
-                The Spring Statement changes would{" "}
-                {netImpact > 0.5 ? "increase" : netImpact < -0.5 ? "decrease" : "not significantly change"}{" "}
-                your household&apos;s annual net income by{" "}
-                <span className={`impact-amount ${netImpact > 0.5 ? "positive" : netImpact < -0.5 ? "negative" : "neutral"}`}>
-                  {formatCurrency(netImpact)}
-                </span>{" "}
-                in {draftYear}-{String(draftYear + 1).slice(-2)}
-              </p>
-            </div>
+            <>
+              <div
+                className={`impact-headline ${realImpact > 0.5 ? "positive" : realImpact < -0.5 ? "negative" : "neutral"}`}
+              >
+                <p>
+                  The Spring Statement changes would{" "}
+                  {realImpact > 0.5 ? "increase" : realImpact < -0.5 ? "decrease" : "not significantly change"}{" "}
+                  your household&apos;s annual net income by{" "}
+                  <span className={`impact-amount ${realImpact > 0.5 ? "positive" : realImpact < -0.5 ? "negative" : "neutral"}`}>
+                    {formatCurrency(realImpact)}
+                  </span>{" "}
+                  in {draftYear}-{String(draftYear + 1).slice(-2)}
+                  {draftYear > 2026 && " (in 2026 prices)"}
+                </p>
+              </div>
+
+              {/* Decomposition breakdown */}
+              {decomposition && (
+                <div className="decomp-breakdown">
+                  <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                    Breakdown{draftYear > 2026 ? " (2026 prices)" : ""}
+                  </h3>
+                  <div className="decomp-rows">
+                    {DECOMP_KEYS.map((key) => {
+                      const val = decomposition[key] || 0;
+                      const meta = DECOMP_META[key];
+                      const maxAbs = Math.max(
+                        ...DECOMP_KEYS.map((k) => Math.abs(decomposition[k] || 0)),
+                        0.01,
+                      );
+                      const pct = Math.abs(val) / maxAbs;
+                      return (
+                        <div key={key} className="decomp-row">
+                          <span className="decomp-label">{meta.label}</span>
+                          <div className="decomp-bar-track">
+                            {val >= 0.005 ? (
+                              <div
+                                className="decomp-bar-fill"
+                                style={{
+                                  width: `${pct * 100}%`,
+                                  backgroundColor: meta.color,
+                                  marginLeft: "50%",
+                                }}
+                              />
+                            ) : val <= -0.005 ? (
+                              <div
+                                className="decomp-bar-fill"
+                                style={{
+                                  width: `${pct * 100}%`,
+                                  backgroundColor: meta.color,
+                                  marginLeft: `${50 - pct * 50}%`,
+                                }}
+                              />
+                            ) : null}
+                            <div className="decomp-bar-zero" />
+                          </div>
+                          <span
+                            className={`decomp-value ${val > 0.005 ? "positive" : val < -0.005 ? "negative" : "zero"}`}
+                          >
+                            {formatCurrency(val)}
+                          </span>
+                        </div>
+                      );
+                    })}
+                    <div className="decomp-total-row">
+                      <span className="decomp-label font-semibold">Net change</span>
+                      <span
+                        className={`decomp-value font-semibold ${decomposition.total > 0.005 ? "positive" : decomposition.total < -0.005 ? "negative" : "zero"}`}
+                      >
+                        {formatCurrency(decomposition.total)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
           )}
 
           {/* Multi-Year Chart */}
           {(multiYearLoading || multiYearChartData.length > 0) && (
             <section className="narrative-section">
-              <h2>Impact over time</h2>
+              <h2>Impact over time (2026 prices)</h2>
               <p>
-                Net household income impact for each fiscal year as OBR forecasts
-                diverge before and after the Spring Statement.
+                Real household income impact for each fiscal year, broken down by
+                market income, taxes, benefits, and purchasing power.
               </p>
               {multiYearLoading ? (
                 <div className="multi-year-loading"><span className="spinner" /> Loading multi-year projections...</div>
