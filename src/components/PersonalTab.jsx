@@ -38,6 +38,24 @@ function formatCurrency(value) {
   return formatted;
 }
 
+function formatChange(value, isTax) {
+  // For taxes, an increase is bad for the household (flip sign for display)
+  const displayValue = isTax ? -value : value;
+  const absVal = Math.abs(displayValue);
+  if (absVal < 0.005) return { text: "\u00A30.00", className: "impact-neutral" };
+  const formatted = absVal >= 1
+    ? `\u00A3${absVal.toLocaleString("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+    : `\u00A3${absVal.toFixed(2)}`;
+  if (displayValue > 0.005) return { text: `+${formatted}`, className: "impact-positive" };
+  return { text: `\u2212${formatted}`, className: "impact-negative" };
+}
+
+function formatAbsolute(value) {
+  if (value == null) return "\u00A30.00";
+  const absVal = Math.abs(value);
+  return `\u00A3${absVal.toLocaleString("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
 export default function PersonalTab() {
   // Form state
   const [draftIncome, setDraftIncome] = useState(30000);
@@ -73,6 +91,10 @@ export default function PersonalTab() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [hasCalculated, setHasCalculated] = useState(false);
+
+  // Breakdown table state
+  const [expandedGroups, setExpandedGroups] = useState({});
+  const [expandedPrograms, setExpandedPrograms] = useState({});
 
   // Multi-year state
   const [multiYearData, setMultiYearData] = useState(null);
@@ -148,6 +170,19 @@ export default function PersonalTab() {
     draftTenureType, draftChildcare,
     draftStudentLoan, draftHasPostgrad, draftLoanBalance, draftYear,
   ]);
+
+  // Auto-expand groups with non-zero changes when results arrive
+  useEffect(() => {
+    if (!result?.program_groups || !result?.program_structure || !result?.impact) return;
+    const groups = {};
+    for (const group of result.program_groups) {
+      const programs = result.program_structure.filter((p) => p.group === group.id);
+      const hasChange = programs.some((p) => Math.abs(result.impact[p.id] || 0) >= 0.01);
+      groups[group.id] = hasChange;
+    }
+    setExpandedGroups(groups);
+    setExpandedPrograms({});
+  }, [result]);
 
   // Multi-year bar chart data
   const multiYearChartData = useMemo(() => {
@@ -566,6 +601,187 @@ export default function PersonalTab() {
                 in {draftYear}-{String(draftYear + 1).slice(-2)}
               </p>
             </div>
+          )}
+
+          {/* Breakdown by program */}
+          {result?.program_structure && result?.program_groups && (
+            <section className="narrative-section">
+              <h2>Breakdown by program</h2>
+              <p>
+                How each tax and benefit program changes under the Spring Statement
+                OBR forecast update.
+              </p>
+              <div className="impact-table-container">
+                <table className="impact-table">
+                  <thead>
+                    <tr>
+                      <th>Program</th>
+                      <th>Pre-Spring Statement</th>
+                      <th>Post-Spring Statement</th>
+                      <th>Change</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {result.program_groups.map((group) => {
+                      const programs = result.program_structure.filter(
+                        (p) => p.group === group.id
+                      );
+                      if (programs.length === 0) return null;
+                      const isGroupExpanded = expandedGroups[group.id] ?? false;
+                      return (
+                        <React.Fragment key={group.id}>
+                          <tr
+                            className="group-header-row"
+                            onClick={() =>
+                              setExpandedGroups((prev) => ({
+                                ...prev,
+                                [group.id]: !prev[group.id],
+                              }))
+                            }
+                          >
+                            <td colSpan={4}>
+                              <span
+                                className={`group-chevron ${isGroupExpanded ? "expanded" : ""}`}
+                              >
+                                <svg width="10" height="10" viewBox="0 0 10 10">
+                                  <path
+                                    d="M3 1L7 5L3 9"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    strokeLinecap="round"
+                                  />
+                                </svg>
+                              </span>
+                              {group.label}
+                            </td>
+                          </tr>
+                          {isGroupExpanded &&
+                            programs.map((prog) => {
+                              const baseVal = result.baseline[prog.id] || 0;
+                              const reformVal = result.reform[prog.id] || 0;
+                              const impactVal = result.impact[prog.id] || 0;
+                              const change = formatChange(impactVal, prog.is_tax);
+                              const hasChildren =
+                                prog.children && prog.children.length > 0;
+                              const isProgramExpanded =
+                                expandedPrograms[prog.id] ?? false;
+
+                              return (
+                                <React.Fragment key={prog.id}>
+                                  <tr
+                                    className={hasChildren ? "expandable-row" : ""}
+                                    onClick={
+                                      hasChildren
+                                        ? () =>
+                                            setExpandedPrograms((prev) => ({
+                                              ...prev,
+                                              [prog.id]: !prev[prog.id],
+                                            }))
+                                        : undefined
+                                    }
+                                  >
+                                    <td>
+                                      {hasChildren ? (
+                                        <span
+                                          className={`row-chevron ${isProgramExpanded ? "expanded" : ""}`}
+                                        >
+                                          <svg
+                                            width="8"
+                                            height="8"
+                                            viewBox="0 0 10 10"
+                                          >
+                                            <path
+                                              d="M3 1L7 5L3 9"
+                                              fill="none"
+                                              stroke="currentColor"
+                                              strokeWidth="1.5"
+                                              strokeLinecap="round"
+                                            />
+                                          </svg>
+                                        </span>
+                                      ) : (
+                                        <span className="row-chevron row-chevron-disabled">
+                                          <svg
+                                            width="8"
+                                            height="8"
+                                            viewBox="0 0 10 10"
+                                          />
+                                        </span>
+                                      )}
+                                      {prog.label}
+                                    </td>
+                                    <td>{formatAbsolute(baseVal)}</td>
+                                    <td>{formatAbsolute(reformVal)}</td>
+                                    <td className={change.className}>
+                                      {change.text}
+                                    </td>
+                                  </tr>
+                                  {hasChildren &&
+                                    isProgramExpanded &&
+                                    prog.children.map((child) => {
+                                      const cBase =
+                                        result.baseline[child.id] || 0;
+                                      const cReform =
+                                        result.reform[child.id] || 0;
+                                      const cImpact =
+                                        result.impact[child.id] || 0;
+                                      const cChange = formatChange(
+                                        cImpact,
+                                        prog.is_tax
+                                      );
+                                      return (
+                                        <tr key={child.id} className="child-row">
+                                          <td className="child-label">
+                                            {child.label}
+                                          </td>
+                                          <td>{formatAbsolute(cBase)}</td>
+                                          <td>{formatAbsolute(cReform)}</td>
+                                          <td className={cChange.className}>
+                                            {cChange.text}
+                                          </td>
+                                        </tr>
+                                      );
+                                    })}
+                                </React.Fragment>
+                              );
+                            })}
+                        </React.Fragment>
+                      );
+                    })}
+                    {/* Net household income total */}
+                    <tr className="total-row">
+                      <td>Net household income</td>
+                      <td>
+                        {formatAbsolute(
+                          result.baseline?.household_net_income || 0
+                        )}
+                      </td>
+                      <td>
+                        {formatAbsolute(
+                          result.reform?.household_net_income || 0
+                        )}
+                      </td>
+                      <td
+                        className={
+                          formatChange(
+                            result.impact?.household_net_income || 0,
+                            false
+                          ).className
+                        }
+                      >
+                        {
+                          formatChange(
+                            result.impact?.household_net_income || 0,
+                            false
+                          ).text
+                        }
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
           )}
 
           {/* Multi-Year Chart */}
