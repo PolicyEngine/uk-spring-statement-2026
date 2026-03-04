@@ -37,10 +37,7 @@ const DECOMP_META = {
 
 function formatCurrency(value) {
   const absVal = Math.abs(value);
-  const formatted =
-    absVal >= 1
-      ? `\u00A3${absVal.toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
-      : `\u00A3${absVal.toFixed(2)}`;
+  const formatted = `\u00A3${absVal.toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`;
   if (value < -0.005) return `\u2212${formatted}`;
   if (value > 0.005) return `+${formatted}`;
   return formatted;
@@ -264,7 +261,7 @@ export default function PersonalTab() {
                 const sLabel = DECOMP_META[s.key]?.label || s.key;
                 const sSign = s.value >= 0 ? "+" : "\u2212";
                 const sColor = s.value >= 0 ? COLORS.positive : COLORS.negative;
-                return `<div class="tooltip-breakdown-row"><span class="tooltip-breakdown-label">${sLabel}</span><span style="color:${sColor}">${sSign}\u00A3${Math.abs(s.value).toFixed(2)}</span></div>`;
+                return `<div class="tooltip-breakdown-row"><span class="tooltip-breakdown-label">${sLabel}</span><span style="color:${sColor}">${sSign}\u00A3${Math.abs(s.value).toFixed(1)}</span></div>`;
               })
               .join("");
             const totalSign = d.impact >= 0 ? "+" : "\u2212";
@@ -273,7 +270,7 @@ export default function PersonalTab() {
               .html(
                 `<div class="tooltip-label">${d.label}</div>` +
                 `<div class="tooltip-breakdown">${rows}</div>` +
-                `<div style="margin-top:6px;padding-top:6px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;gap:16px;font-weight:600"><span>Net</span><span style="color:${totalColor}">${totalSign}\u00A3${Math.abs(d.impact).toFixed(2)}/yr</span></div>`
+                `<div style="margin-top:6px;padding-top:6px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;gap:16px;font-weight:600"><span>Net</span><span style="color:${totalColor}">${totalSign}\u00A3${Math.abs(d.impact).toFixed(1)}/yr</span></div>`
               );
           })
           .on("mousemove", (event) => {
@@ -296,7 +293,7 @@ export default function PersonalTab() {
         .attr("fill", total >= 0 ? COLORS.positive : COLORS.negative)
         .attr("font-size", "13px")
         .attr("font-weight", "600")
-        .text(`${total >= 0 ? "+" : "\u2212"}\u00A3${Math.abs(total).toFixed(0)}`);
+        .text(`${total >= 0 ? "+" : "\u2212"}\u00A3${Math.abs(total).toFixed(1)}`);
     });
 
     // Net total line with dots (like Winners/Losers chart)
