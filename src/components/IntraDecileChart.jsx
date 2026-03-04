@@ -11,13 +11,15 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { colors } from "@policyengine/design-system/tokens/colors";
+
 
 const OUTCOME_COLORS = {
-  "Lose more than 5%": "#991b1b",
-  "Lose less than 5%": "#dc2626",
-  "No change": "#9ca3af",
-  "Gain less than 5%": "#16a34a",
-  "Gain more than 5%": "#15803d",
+  "Lose more than 5%": "#991b1b",    // red-800
+  "Lose less than 5%": "#dc2626",    // red-600
+  "No change": colors.gray[400],
+  "Gain less than 5%": "#16a34a",    // green-600
+  "Gain more than 5%": "#15803d",    // green-700
 };
 
 const OUTCOME_ORDER = [
@@ -59,11 +61,8 @@ export default function IntraDecileChart({ data, selectedYear, termsMode = "nomi
   const formatDecile = (value) => value.replace(/st|nd|rd|th/g, "");
 
   return (
-    <div style={{ marginTop: "24px" }}>
-      <h3
-        className="chart-title"
-        style={{ fontSize: "1.1rem", fontWeight: 600 }}
-      >
+    <div className="mt-6">
+      <h3 className="chart-title">
         Winners and losers by income decile
       </h3>
       <p className="chart-description">
@@ -76,22 +75,22 @@ export default function IntraDecileChart({ data, selectedYear, termsMode = "nomi
           data={chartData}
           margin={{ top: 10, right: 30, left: 60, bottom: 40 }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+          <CartesianGrid strokeDasharray="3 3" stroke={colors.border.light} />
           <XAxis
             dataKey="decile"
             tickFormatter={formatDecile}
-            tick={{ fontSize: 12, fill: "#666" }}
+            tick={{ fontSize: 12, fill: colors.gray[500] }}
             label={{
               value: "Income decile",
               position: "insideBottom",
               offset: -10,
-              style: { fill: "#374151", fontSize: 12, fontWeight: 500 },
+              style: { fill: colors.gray[700], fontSize: 12, fontWeight: 500 },
             }}
           />
           <YAxis
             domain={[0, 100]}
             tickFormatter={(v) => `${v}%`}
-            tick={{ fontSize: 12, fill: "#666" }}
+            tick={{ fontSize: 12, fill: colors.gray[500] }}
             label={{
               value: "Share of people",
               angle: -90,
@@ -99,7 +98,7 @@ export default function IntraDecileChart({ data, selectedYear, termsMode = "nomi
               dx: -20,
               style: {
                 textAnchor: "middle",
-                fill: "#374151",
+                fill: colors.gray[700],
                 fontSize: 12,
                 fontWeight: 500,
               },
@@ -126,7 +125,7 @@ export default function IntraDecileChart({ data, selectedYear, termsMode = "nomi
         style={{
           marginTop: "8px",
           fontSize: "13px",
-          color: "#666",
+          color: colors.gray[500],
           textAlign: "center",
         }}
       >

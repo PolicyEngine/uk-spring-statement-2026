@@ -2,7 +2,8 @@
 
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import * as d3 from "d3";
-import "./PersonalTab.css";
+import { colors } from "@policyengine/design-system/tokens/colors";
+import { chartColors } from "@policyengine/design-system/charts";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
@@ -17,13 +18,13 @@ const STUDENT_LOAN_PLANS = [
 ];
 
 const COLORS = {
-  positive: "#22C55E",
-  negative: "#EF4444",
-  teal: "#319795",
-  tealDark: "#2c7a7b",
-  text: "#1e293b",
-  textSecondary: "#475569",
-  border: "#e2e8f0",
+  positive: chartColors.positive,
+  negative: chartColors.negative,
+  teal: colors.primary[500],
+  tealDark: colors.primary[600],
+  text: colors.gray[800],
+  textSecondary: colors.gray[600],
+  border: colors.border.light,
 };
 
 function formatCurrency(value) {
@@ -199,7 +200,7 @@ export default function PersonalTab() {
     g.append("line")
       .attr("x1", 0).attr("x2", width)
       .attr("y1", y(0)).attr("y2", y(0))
-      .attr("stroke", "#94a3b8").attr("stroke-width", 1);
+      .attr("stroke", colors.gray[400]).attr("stroke-width", 1);
 
     const tooltip = d3.select(container).append("div").attr("class", "bar-tooltip");
 
@@ -249,21 +250,21 @@ export default function PersonalTab() {
 
     g.selectAll(".axis text")
       .attr("font-size", "13px").attr("font-weight", "500")
-      .attr("fill", "#475569").attr("dy", "1em");
+      .attr("fill", colors.gray[600]).attr("dy", "1em");
 
     g.append("g").attr("class", "axis axis-y")
       .call(d3.axisLeft(y).ticks(5).tickFormat((d) => `\u00A3${d}`))
       .select(".domain").remove();
 
     g.selectAll(".axis-y text")
-      .attr("font-size", "11px").attr("font-weight", "500").attr("fill", "#475569");
+      .attr("font-size", "11px").attr("font-weight", "500").attr("fill", colors.gray[600]);
   }, [multiYearChartData]);
 
   const netImpact = result?.impact?.household_net_income || 0;
 
   return (
-    <div className="narrative-container">
-      <p className="narrative-about">
+    <div className="max-w-[1400px] mx-auto pt-4 pb-6 font-sans text-gray-800 leading-relaxed">
+      <p className="text-[0.95rem] leading-relaxed text-gray-600 mb-6">
         See how the Spring Statement 2026 OBR forecast changes affect your
         household&apos;s net income. Enter your details and hit Calculate to see your
         personal impact.

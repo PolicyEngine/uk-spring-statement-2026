@@ -12,6 +12,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import ForecastTable from "./ForecastTable";
+import { colors } from "@policyengine/design-system/tokens/colors";
+import { chartColors } from "@policyengine/design-system/charts";
 
 const SERIES_CONFIG = {
   earnings_growth: { title: "Earnings growth", unit: "%" },
@@ -29,8 +31,8 @@ const HERO_SERIES = [
 ];
 
 const COLORS = {
-  previous: "#9ca3af",
-  updated: "#0d9488",
+  previous: chartColors.secondary,
+  updated: colors.primary[600],
 };
 
 function ForecastLineChart({ data, title, unit }) {
@@ -38,22 +40,22 @@ function ForecastLineChart({ data, title, unit }) {
 
   return (
     <div className="section-card" style={{ animationDelay: "0ms" }}>
-      <h3 className="chart-title">{title}</h3>
-      <p className="chart-subtitle">Annual growth rate ({unit})</p>
-      <div className="chart-container">
+      <h3 className="text-base font-semibold text-gray-800 mb-2">{title}</h3>
+      <p className="text-xs text-gray-500 mb-4">Annual growth rate ({unit})</p>
+      <div className="w-full h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={data}
             margin={{ top: 8, right: 24, left: 8, bottom: 8 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <CartesianGrid strokeDasharray="3 3" stroke={colors.border.light} />
             <XAxis
               dataKey="year"
-              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tick={{ fontSize: 12, fill: colors.gray[500] }}
               tickLine={false}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tick={{ fontSize: 12, fill: colors.gray[500] }}
               tickFormatter={(v) => `${v}%`}
               tickLine={false}
               axisLine={false}
@@ -64,7 +66,7 @@ function ForecastLineChart({ data, title, unit }) {
             <Tooltip
               contentStyle={{
                 background: "#fff",
-                border: "1px solid #e5e7eb",
+                border: `1px solid ${colors.border.light}`,
                 borderRadius: 8,
                 boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
                 fontSize: "0.85rem",
@@ -114,7 +116,7 @@ function ForecastTableCard({ data, title }) {
 
   return (
     <div className="section-card">
-      <h3 className="chart-title">{title}</h3>
+      <h3 className="text-base font-semibold text-gray-800 mb-2">{title}</h3>
       <ForecastTable data={data} />
     </div>
   );
@@ -159,15 +161,17 @@ export default function ForecastTab({ data }) {
   return (
     <div style={{ animation: "fadeIn 0.3s ease-out" }}>
       {/* Hero numbers */}
-      <div className="hero-numbers">
+      <div className="grid grid-cols-3 gap-6 mb-8 max-lg:grid-cols-2 max-md:grid-cols-1">
         {heroCards.map((card) => (
           <div key={card.label} className="hero-card">
-            <div className="hero-label">{card.label}</div>
-            <div className="hero-value">
+            <div className="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
+              {card.label}
+            </div>
+            <div className="text-2xl font-bold text-gray-800 mb-1 tracking-tight">
               {card.previous}% &rarr; {card.updated}%
             </div>
             <div
-              className={`hero-change ${
+              className={`text-base font-semibold ${
                 card.change > 0
                   ? "change-positive"
                   : card.change < 0
@@ -199,8 +203,10 @@ export default function ForecastTab({ data }) {
       </div>
 
       {/* Top row */}
-      <h2 className="section-heading">Key inflation and earnings forecasts</h2>
-      <div className="charts-grid-3">
+      <h2 className="text-xl font-bold text-gray-800 mt-8 mb-4 tracking-tight">
+        Key inflation and earnings forecasts
+      </h2>
+      <div className="charts-grid-3 grid grid-cols-3 gap-6 mb-6 max-lg:grid-cols-2 max-md:grid-cols-1">
         {topRow.map(
           (key) =>
             forecast[key] &&
@@ -222,8 +228,10 @@ export default function ForecastTab({ data }) {
       </div>
 
       {/* Bottom row */}
-      <h2 className="section-heading">Other economic indicators</h2>
-      <div className="charts-grid-3">
+      <h2 className="text-xl font-bold text-gray-800 mt-8 mb-4 tracking-tight">
+        Other economic indicators
+      </h2>
+      <div className="charts-grid-3 grid grid-cols-3 gap-6 mb-6 max-lg:grid-cols-2 max-md:grid-cols-1">
         {bottomRow.map(
           (key) =>
             forecast[key] &&

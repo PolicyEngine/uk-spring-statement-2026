@@ -88,14 +88,14 @@ export default function DetailedBudgetTable({ data, selectedYear }) {
   };
 
   return (
-    <div className="section-card" style={{ marginTop: "24px" }}>
+    <div className="section-card mt-6">
       <h3 className="chart-title">Detailed budgetary breakdown</h3>
       <p className="chart-description">
         Per-program impact of revised OBR forecasts on government revenue and
         spending. Values in millions of pounds. Positive difference = fiscal improvement (higher tax revenue or lower spending).
       </p>
 
-      <div className="forecast-table-wrapper">
+      <div className="overflow-x-auto">
         <table className="forecast-table">
           <thead>
             <tr>
