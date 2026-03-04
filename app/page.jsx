@@ -6,7 +6,6 @@ import ForecastTab from "../src/components/ForecastTab";
 import PopulationTab from "../src/components/PopulationTab";
 import PersonalTab from "../src/components/PersonalTab";
 import parseCSV from "../lib/parseCSV";
-import "./App.css";
 
 const VALID_TABS = ["forecast", "population", "personal"];
 
@@ -74,14 +73,14 @@ function Dashboard() {
   );
 
   return (
-    <div className="app">
+    <div className="app min-h-screen bg-gradient-to-br from-gray-50 via-[#f0f4f5] to-gray-50 relative">
       <header className="title-row">
-        <div className="title-row-inner">
+        <div className="max-w-[1400px] mx-auto px-8 flex justify-between items-center">
           <h1>Spring Statement 2026 analysis</h1>
         </div>
       </header>
-      <main className="main-content">
-        <p className="dashboard-intro">
+      <main className="max-w-[1400px] mx-auto px-8 py-12 relative z-[1]">
+        <p className="text-[1.05rem] leading-relaxed text-gray-600 mb-8 animate-[fadeIn_0.4s_ease-out]">
           PolicyEngine analysis of the{" "}
           <a
             href="https://obr.uk/economic-and-fiscal-outlooks/"
@@ -95,7 +94,7 @@ function Dashboard() {
           from updated economic assumptions.
         </p>
 
-        <div className="tab-navigation">
+        <div className="flex mb-8 border-b-2 border-gray-200 w-fit">
           {[
             { id: "forecast", label: "Forecast changes" },
             { id: "population", label: "Population impact" },
@@ -111,8 +110,12 @@ function Dashboard() {
           ))}
         </div>
 
-        {error && <p className="loading">Error: {error}</p>}
-        {loading && !error && <p className="loading">Loading data...</p>}
+        {error && (
+          <p className="text-center p-12 text-gray-500">Error: {error}</p>
+        )}
+        {loading && !error && (
+          <p className="text-center p-12 text-gray-500">Loading data...</p>
+        )}
 
         {!loading && !error && (
           <>
@@ -122,13 +125,14 @@ function Dashboard() {
           </>
         )}
 
-        <footer className="footer">
+        <footer className="text-center pt-12 pb-6 text-gray-500 text-sm border-t border-gray-200 mt-12">
           <p>
             Built by{" "}
             <a
               href="https://policyengine.org"
               target="_blank"
               rel="noreferrer"
+              className="font-semibold"
             >
               PolicyEngine
             </a>{" "}
@@ -143,7 +147,11 @@ function Dashboard() {
 
 export default function Page() {
   return (
-    <Suspense fallback={<p className="loading">Loading...</p>}>
+    <Suspense
+      fallback={
+        <p className="text-center p-12 text-gray-500">Loading...</p>
+      }
+    >
       <Dashboard />
     </Suspense>
   );

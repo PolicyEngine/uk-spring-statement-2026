@@ -39,13 +39,13 @@ export default function InequalityTable({ data, selectedYear }) {
   };
 
   return (
-    <div className="section-card" style={{ marginTop: "24px" }}>
+    <div className="section-card mt-6">
       <h3 className="chart-title">Inequality impact</h3>
       <p className="chart-subtitle">
         Change in Gini coefficient and top income shares under revised OBR forecasts, based on equivalised household net income
       </p>
 
-      <div className="forecast-table-wrapper">
+      <div className="overflow-x-auto">
         <table className="forecast-table">
           <thead>
             <tr>

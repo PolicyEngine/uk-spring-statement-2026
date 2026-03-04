@@ -11,6 +11,8 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
+import { colors } from "@policyengine/design-system/tokens/colors";
+
 
 function shorten(group) {
   return group
@@ -57,25 +59,25 @@ function ChangeBarChart({ comparison }) {
             layout="vertical"
             margin={{ top: 8, right: 40, left: 10, bottom: 8 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <CartesianGrid strokeDasharray="3 3" stroke={colors.border.light} />
             <XAxis
               type="number"
               tickFormatter={(v) =>
                 `${v >= 0 ? "+" : "-"}\u00a3${Math.abs(v)}`
               }
-              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tick={{ fontSize: 12, fill: colors.gray[500] }}
             />
             <YAxis
               type="category"
               dataKey="group"
               width={130}
-              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tick={{ fontSize: 12, fill: colors.gray[500] }}
             />
-            <ReferenceLine x={0} stroke="#6b7280" strokeWidth={1} />
+            <ReferenceLine x={0} stroke={colors.gray[500]} strokeWidth={1} />
             <Tooltip
               contentStyle={{
                 background: "#fff",
-                border: "1px solid #e5e7eb",
+                border: `1px solid ${colors.border.light}`,
                 borderRadius: 8,
                 boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
                 fontSize: "0.85rem",
@@ -87,7 +89,7 @@ function ChangeBarChart({ comparison }) {
             />
             <Bar
               dataKey="change"
-              fill="#0d9488"
+              fill={colors.primary[600]}
               barSize={24}
               radius={[0, 4, 4, 0]}
               name="Change"
@@ -109,7 +111,7 @@ function HouseholdSummaryTable({ stats, comparison }) {
       <p className="chart-subtitle">
         Median and mean household net income by household type, comparing pre- and post-Spring Statement forecasts
       </p>
-      <div className="forecast-table-wrapper">
+      <div className="overflow-x-auto">
         <table className="forecast-table">
           <thead>
             <tr>
@@ -180,10 +182,10 @@ export default function HouseholdArchetypes({ selectedYear }) {
   if (stats.length === 0 || comparison.length === 0) return null;
 
   return (
-    <div style={{ marginTop: "var(--pe-space-xl)" }}>
+    <div className="mt-8">
       <HouseholdSummaryTable stats={stats} comparison={comparison} />
 
-      <div style={{ marginTop: "var(--pe-space-xl)" }}>
+      <div className="mt-8">
         <ChangeBarChart comparison={comparison} />
       </div>
     </div>

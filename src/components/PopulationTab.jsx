@@ -15,6 +15,8 @@ import {
 import InequalityTable from "./InequalityTable";
 import HouseholdArchetypes from "./HouseholdArchetypes";
 import parseCSV from "../../lib/parseCSV";
+import { colors } from "@policyengine/design-system/tokens/colors";
+
 
 const YEARS = [2026, 2027, 2028, 2029, 2030];
 
@@ -71,11 +73,15 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
   if (cards.length === 0) return null;
 
   return (
-    <div className="metrics-bar">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 mb-8 max-md:grid-cols-1">
       {cards.map((card) => (
         <div key={card.label} className="metric-card">
-          <div className="metric-label">{card.label}</div>
-          <div className="metric-value">{card.value}</div>
+          <div className="text-xs font-medium text-gray-500 mb-1">
+            {card.label}
+          </div>
+          <div className="text-2xl font-bold text-gray-800 tracking-tight">
+            {card.value}
+          </div>
         </div>
       ))}
     </div>
@@ -109,32 +115,34 @@ function WinnersLosersChart({ data, year }) {
 
   return (
     <div className="section-card">
-      <h3 className="chart-title">Winners and losers by income decile</h3>
-      <p className="chart-subtitle">
+      <h3 className="text-base font-semibold text-gray-800 mb-2">
+        Winners and losers by income decile
+      </h3>
+      <p className="text-xs text-gray-500 mb-4">
         Share of households seeing a net gain or loss in income under revised OBR forecasts, by income decile, {year}-
         {(year + 1).toString().slice(-2)}
       </p>
-      <div className="chart-container-tall">
+      <div className="w-full h-[380px]">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
             data={chartData}
             margin={{ top: 8, right: 24, left: 16, bottom: 32 }}
             stackOffset="sign"
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <CartesianGrid strokeDasharray="3 3" stroke={colors.border.light} />
             <XAxis
               dataKey="decile"
-              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tick={{ fontSize: 12, fill: colors.gray[500] }}
               tickLine={false}
               label={{
                 value: "Income decile",
                 position: "insideBottom",
                 offset: -16,
-                style: { fill: "#374151", fontSize: 12, fontWeight: 500 },
+                style: { fill: colors.gray[700], fontSize: 12, fontWeight: 500 },
               }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tick={{ fontSize: 12, fill: colors.gray[500] }}
               tickFormatter={(v) => `${v}%`}
               tickLine={false}
               axisLine={false}
@@ -143,11 +151,11 @@ function WinnersLosersChart({ data, year }) {
               domain={[-80, 80]}
               ticks={[-80, -60, -40, -20, 0, 20, 40, 60, 80]}
             />
-            <ReferenceLine y={0} stroke="#6b7280" strokeWidth={1} />
+            <ReferenceLine y={0} stroke={colors.gray[500]} strokeWidth={1} />
             <Tooltip
               contentStyle={{
                 background: "#fff",
-                border: "1px solid #e5e7eb",
+                border: `1px solid ${colors.border.light}`,
                 borderRadius: 8,
                 boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
                 fontSize: "0.85rem",
@@ -163,14 +171,14 @@ function WinnersLosersChart({ data, year }) {
             />
             <Bar
               dataKey="gaining"
-              fill="#2d6396"
+              fill={colors.blue[700]}
               stackId="stack"
               name="gaining"
               radius={[4, 4, 0, 0]}
             />
             <Bar
               dataKey="losing"
-              fill="#0d9488"
+              fill={colors.primary[600]}
               stackId="stack"
               name="losing"
               radius={[4, 4, 0, 0]}
@@ -178,9 +186,9 @@ function WinnersLosersChart({ data, year }) {
             <Line
               dataKey="net"
               type="monotone"
-              stroke="#1f2937"
+              stroke={colors.gray[800]}
               strokeWidth={2}
-              dot={{ r: 4, fill: "#1f2937", stroke: "#1f2937" }}
+              dot={{ r: 4, fill: colors.gray[800], stroke: colors.gray[800] }}
               name="net"
               isAnimationActive={false}
             />
@@ -221,7 +229,7 @@ export default function PopulationTab({ data }) {
 
   return (
     <div style={{ animation: "fadeIn 0.3s ease-out" }}>
-      <div className="year-selector" style={{ marginBottom: "var(--pe-space-lg)" }}>
+      <div className="year-selector mb-6">
         {YEARS.map((year) => (
           <button
             key={year}
@@ -242,7 +250,7 @@ export default function PopulationTab({ data }) {
 
       <HouseholdArchetypes selectedYear={selectedYear} />
 
-      <div style={{ marginTop: "var(--pe-space-xl)" }}>
+      <div className="mt-8">
         {hasWinnersLosers && (
           <WinnersLosersChart
             data={data.winnersLosers}

@@ -26,7 +26,7 @@ export default function ForecastTable({ data }) {
   };
 
   return (
-    <div className="forecast-table-wrapper">
+    <div className="overflow-x-auto">
       <table className="forecast-table">
         <thead>
           <tr>
