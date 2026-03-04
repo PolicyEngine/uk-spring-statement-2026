@@ -27,12 +27,12 @@ const COLORS = {
   border: colors.border.light,
 };
 
-const DECOMP_KEYS = ["market_income", "taxes", "benefits", "purchasing_power"];
+const DECOMP_KEYS = ["purchasing_power", "benefits", "taxes", "market_income"];
 const DECOMP_META = {
-  market_income: { label: "Market income", color: colors.gray[200] },
+  market_income: { label: "Market income", color: colors.blue[600] },
   taxes: { label: "Taxes", color: colors.gray[400] },
-  benefits: { label: "Benefits", color: colors.blue[700] },
-  purchasing_power: { label: "Purchasing power", color: colors.primary[600] },
+  benefits: { label: "Benefits", color: colors.gray[600] },
+  purchasing_power: { label: "Purchasing power", color: colors.blue[700] },
 };
 
 function formatCurrency(value) {
@@ -59,7 +59,7 @@ export default function PersonalTab() {
   const [draftStudentLoan, setDraftStudentLoan] = useState("NO_STUDENT_LOAN");
   const [draftHasPostgrad, setDraftHasPostgrad] = useState(false);
   const [draftLoanBalance, setDraftLoanBalance] = useState(40000);
-  const [draftYear, setDraftYear] = useState(2029);
+  const [draftYear, setDraftYear] = useState(2026);
   const [studentLoanExpanded, setStudentLoanExpanded] = useState(false);
   const [moreDetailsExpanded, setMoreDetailsExpanded] = useState(false);
 
@@ -388,7 +388,7 @@ export default function PersonalTab() {
             <div className="control-item control-span-2">
               <label>Fiscal year</label>
               <select value={draftYear} onChange={(e) => setDraftYear(parseInt(e.target.value))}>
-                {[2025, 2026, 2027, 2028, 2029].map((y) => (
+                {[2026, 2027, 2028, 2029].map((y) => (
                   <option key={y} value={y}>{y}-{String(y + 1).slice(-2)}</option>
                 ))}
               </select>
@@ -725,6 +725,12 @@ export default function PersonalTab() {
                       </span>
                     </div>
                   </div>
+                  <p className="text-xs text-gray-400 mt-3 leading-relaxed">
+                    {draftYear > 2026
+                      ? "Your income is deflated to a 2026-27 equivalent using March 2026 OBR earnings growth, then "
+                      : "Your income is set at 2026-27, then "}
+                    PolicyEngine uprates it under both the pre- and post-Spring Statement OBR forecasts. Market income reflects different earnings growth rates. Taxes and benefits change due to both different earnings and different CPI-driven uprating of thresholds and allowances. Purchasing power captures the effect of different CPI forecasts on your real living standard. All values are in 2026 prices.
+                  </p>
                 </div>
               )}
             </>

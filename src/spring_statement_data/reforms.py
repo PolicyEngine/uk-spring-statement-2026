@@ -169,6 +169,26 @@ _MAR_CPI = {int(k[:4]): v for k, v in _MARCH_2026[_CPI_PATH].items()}
 NOVEMBER_2025_CPI = _NOV_CPI
 MARCH_2026_CPI = _MAR_CPI
 
+_EARNINGS_PATH = "gov.economic_assumptions.yoy_growth.obr.average_earnings"
+_MAR_EARNINGS = {int(k[:4]): v for k, v in _MARCH_2026[_EARNINGS_PATH].items()}
+
+# Public export
+MARCH_2026_EARNINGS = _MAR_EARNINGS
+
+
+def deflate_income_to_2026(income: float, year: int) -> float:
+    """Convert income from *year* to 2026 equivalent using March 2026 earnings growth.
+
+    If the user says they earn £X in 2029, this returns what that
+    corresponds to in 2026 terms, so PolicyEngine can uprate from 2026.
+    """
+    if year <= 2026:
+        return income
+    cum_growth = 1.0
+    for y in range(2027, year + 1):
+        cum_growth *= 1 + _MAR_EARNINGS.get(y, 0)
+    return income / cum_growth
+
 
 def get_real_deflator(year: int) -> float:
     """Return the deflator to convert reform nominal £ to baseline prices.
