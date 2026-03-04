@@ -47,9 +47,15 @@ function ForecastLineChart({ data, title, unit }) {
   );
   const dataMin = Math.min(...allValues);
   const dataMax = Math.max(...allValues);
-  const padding = Math.max((dataMax - dataMin) * 0.4, 0.3);
-  const yMin = Math.floor((dataMin - padding) * 10) / 10;
-  const yMax = Math.ceil((dataMax + padding) * 10) / 10;
+  const range = dataMax - dataMin;
+  // Pick a nice step size: 0.5 for narrow ranges, 1 for wider, 2 for very wide
+  const step = range <= 2 ? 0.5 : range <= 5 ? 1 : 2;
+  const yMin = Math.floor(dataMin / step - 1) * step;
+  const yMax = Math.ceil(dataMax / step + 1) * step;
+  const ticks = [];
+  for (let v = yMin; v <= yMax + step * 0.01; v += step) {
+    ticks.push(Math.round(v * 10) / 10);
+  }
 
   return (
     <div className="section-card" style={{ animationDelay: "0ms" }}>
