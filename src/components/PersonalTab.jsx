@@ -27,7 +27,7 @@ const COLORS = {
   border: colors.border.light,
 };
 
-const DECOMP_KEYS = ["purchasing_power", "benefits", "taxes", "market_income"];
+const DECOMP_KEYS = ["market_income", "taxes", "benefits", "purchasing_power"];
 const DECOMP_META = {
   market_income: { label: "Market income", color: colors.blue[600] },
   taxes: { label: "Taxes", color: colors.gray[400] },
@@ -59,8 +59,8 @@ export default function PersonalTab() {
   const [draftStudentLoan, setDraftStudentLoan] = useState("NO_STUDENT_LOAN");
   const [draftHasPostgrad, setDraftHasPostgrad] = useState(false);
   const [draftLoanBalance, setDraftLoanBalance] = useState(40000);
-  const [draftYear, setDraftYear] = useState(2026);
   const [studentLoanExpanded, setStudentLoanExpanded] = useState(false);
+  const [breakdownYear, setBreakdownYear] = useState(2026);
   const [moreDetailsExpanded, setMoreDetailsExpanded] = useState(false);
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export default function PersonalTab() {
       tenure_type: draftTenureType,
       childcare_expenses: draftChildcare,
       student_loan_plan: effectiveStudentLoanPlan,
-      year: draftYear,
+      year: 2026,
     };
 
     const mainPromise = fetch(`${API_URL}/spring-statement`, {
@@ -151,7 +151,7 @@ export default function PersonalTab() {
     draftIncome, draftChildren, draftChildrenAges, draftRent, draftIsCouple,
     draftPartnerIncome, draftAdultAge, draftPartnerAge, draftRegion,
     draftTenureType, draftChildcare,
-    draftStudentLoan, draftHasPostgrad, draftLoanBalance, draftYear,
+    draftStudentLoan, draftHasPostgrad, draftLoanBalance,
   ]);
 
   // Multi-year chart data — use real (2026£) decomposition when available
@@ -358,7 +358,7 @@ export default function PersonalTab() {
     }
   }, [multiYearChartData]);
 
-  const decomposition = result?.decomposition;
+  const decomposition = multiYearData?.yearly_decomposition?.[String(breakdownYear)] ?? result?.decomposition;
   const realImpact = decomposition?.total ?? result?.impact?.household_net_income ?? 0;
 
   return (
@@ -384,17 +384,9 @@ export default function PersonalTab() {
         </div>
 
         <div className="controls-group">
-          <div className="controls-row controls-row-6">
+          <div className="controls-row controls-row-4">
             <div className="control-item control-span-2">
-              <label>Fiscal year</label>
-              <select value={draftYear} onChange={(e) => setDraftYear(parseInt(e.target.value))}>
-                {[2026, 2027, 2028, 2029].map((y) => (
-                  <option key={y} value={y}>{y}-{String(y + 1).slice(-2)}</option>
-                ))}
-              </select>
-            </div>
-            <div className="control-item control-span-2">
-              <label>Employment income</label>
+              <label>Employment income (2025-26)</label>
               <div className="salary-input-wrapper">
                 <span className="currency-symbol">&pound;</span>
                 <input
@@ -434,7 +426,7 @@ export default function PersonalTab() {
             {draftIsCouple && (
               <>
                 <div className="control-item control-span-2">
-                  <label>Partner&apos;s income</label>
+                  <label>Partner&apos;s income (2025-26)</label>
                   <div className="salary-input-wrapper">
                     <span className="currency-symbol">&pound;</span>
                     <input
@@ -663,74 +655,105 @@ export default function PersonalTab() {
                   <span className={`impact-amount ${realImpact > 0.5 ? "positive" : realImpact < -0.5 ? "negative" : "neutral"}`}>
                     {formatCurrency(realImpact)}
                   </span>{" "}
-                  in {draftYear}-{String(draftYear + 1).slice(-2)}
-                  {draftYear > 2026 && " (in 2026 prices)"}
+                  in {breakdownYear}-{String(breakdownYear + 1).slice(-2)}
+                  {breakdownYear > 2026 && " (in 2026 prices)"}
                 </p>
               </div>
 
-              {/* Decomposition breakdown */}
+              {/* Decomposition table */}
               {decomposition && (
                 <div className="decomp-breakdown">
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">
-                    Breakdown{draftYear > 2026 ? " (2026 prices)" : ""}
-                  </h3>
-                  <div className="decomp-rows">
-                    {DECOMP_KEYS.map((key) => {
-                      const val = decomposition[key] || 0;
-                      const meta = DECOMP_META[key];
-                      const maxAbs = Math.max(
-                        ...DECOMP_KEYS.map((k) => Math.abs(decomposition[k] || 0)),
-                        0.01,
-                      );
-                      const pct = Math.abs(val) / maxAbs;
-                      return (
-                        <div key={key} className="decomp-row">
-                          <span className="decomp-label">{meta.label}</span>
-                          <div className="decomp-bar-track">
-                            {val >= 0.005 ? (
-                              <div
-                                className="decomp-bar-fill"
-                                style={{
-                                  width: `${pct * 50}%`,
-                                  backgroundColor: meta.color,
-                                  marginLeft: "50%",
-                                }}
-                              />
-                            ) : val <= -0.005 ? (
-                              <div
-                                className="decomp-bar-fill"
-                                style={{
-                                  width: `${pct * 50}%`,
-                                  backgroundColor: meta.color,
-                                  marginLeft: `${50 - pct * 50}%`,
-                                }}
-                              />
-                            ) : null}
-                            <div className="decomp-bar-zero" />
-                          </div>
-                          <span
-                            className={`decomp-value ${val > 0.005 ? "positive" : val < -0.005 ? "negative" : "zero"}`}
-                          >
-                            {formatCurrency(val)}
-                          </span>
-                        </div>
-                      );
-                    })}
-                    <div className="decomp-total-row">
-                      <span className="decomp-label font-semibold">Net change</span>
-                      <span
-                        className={`decomp-value font-semibold ${decomposition.total > 0.005 ? "positive" : decomposition.total < -0.005 ? "negative" : "zero"}`}
-                      >
-                        {formatCurrency(decomposition.total)}
-                      </span>
+                  <div className="decomp-header">
+                    <h3 className="text-sm font-semibold text-gray-700">
+                      Breakdown of household net income impact
+                    </h3>
+                    <div className="year-selector">
+                      {[2026, 2027, 2028, 2029].map((y) => (
+                        <button
+                          key={y}
+                          className={breakdownYear === y ? "active" : ""}
+                          onClick={() => setBreakdownYear(y)}
+                        >
+                          {y}-{String(y + 1).slice(-2)}
+                        </button>
+                      ))}
                     </div>
                   </div>
-                  <p className="text-xs text-gray-400 mt-3 leading-relaxed">
-                    {draftYear > 2026
-                      ? "Your income is deflated to a 2026-27 equivalent using March 2026 OBR earnings growth, then "
-                      : "Your income is set at 2026-27, then "}
-                    PolicyEngine uprates it under both the pre- and post-Spring Statement OBR forecasts. Market income reflects different earnings growth rates. Taxes and benefits change due to both different earnings and different CPI-driven uprating of thresholds and allowances. Purchasing power captures the effect of different CPI forecasts on your real living standard. All values are in 2026 prices.
-                  </p>
+                  <table className="decomp-table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Pre-Statement</th>
+                        <th>Post-Statement</th>
+                        <th>Change</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {["market_income", "taxes", "benefits"].map((key) => {
+                        const meta = DECOMP_META[key];
+                        const detail = decomposition.details?.[key];
+                        const change = decomposition[key] || 0;
+                        return (
+                          <tr key={key}>
+                            <td className="decomp-table-label">
+                              <span className="decomp-color-dot" style={{ backgroundColor: meta.color }} />
+                              {meta.label}
+                            </td>
+                            <td className="decomp-table-value">{detail ? `£${Math.abs(detail.baseline).toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}` : "—"}</td>
+                            <td className="decomp-table-value">{detail ? `£${Math.abs(detail.reform).toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}` : "—"}</td>
+                            <td className={`decomp-table-change ${change > 0.005 ? "positive" : change < -0.005 ? "negative" : "zero"}`}>
+                              {formatCurrency(change)}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                      {(() => {
+                        const nominalChange = (decomposition.market_income || 0) + (decomposition.taxes || 0) + (decomposition.benefits || 0);
+                        return (
+                          <tr className="decomp-table-net-row">
+                            <td className="decomp-table-label font-semibold">Net income (nominal)</td>
+                            <td className="decomp-table-value font-semibold">
+                              {decomposition.details?.net_income ? `£${decomposition.details.net_income.baseline.toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}` : "—"}
+                            </td>
+                            <td className="decomp-table-value font-semibold">
+                              {decomposition.details?.net_income ? `£${decomposition.details.net_income.reform.toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}` : "—"}
+                            </td>
+                            <td className={`decomp-table-change font-semibold ${nominalChange > 0.005 ? "positive" : nominalChange < -0.005 ? "negative" : "zero"}`}>
+                              {formatCurrency(nominalChange)}
+                            </td>
+                          </tr>
+                        );
+                      })()}
+                      <tr className="decomp-table-purchasing-row">
+                        <td className="decomp-table-label">
+                          <span className="decomp-color-dot" style={{ backgroundColor: DECOMP_META.purchasing_power.color }} />
+                          {DECOMP_META.purchasing_power.label}
+                        </td>
+                        <td className="decomp-table-value"></td>
+                        <td className="decomp-table-value"></td>
+                        <td className={`decomp-table-change ${decomposition.purchasing_power > 0.005 ? "positive" : decomposition.purchasing_power < -0.005 ? "negative" : "zero"}`}>
+                          {formatCurrency(decomposition.purchasing_power)}
+                        </td>
+                      </tr>
+                      <tr className="decomp-table-total-row">
+                        <td className="decomp-table-label font-semibold">Net change (2026 prices)</td>
+                        <td className="decomp-table-value"></td>
+                        <td className="decomp-table-value"></td>
+                        <td className={`decomp-table-change font-semibold ${decomposition.total > 0.005 ? "positive" : decomposition.total < -0.005 ? "negative" : "zero"}`}>
+                          {formatCurrency(decomposition.total)}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <details className="methodology-details mt-3">
+                    <summary className="text-xs text-gray-500 cursor-pointer hover:text-gray-700">How is this calculated?</summary>
+                    <ul className="text-xs text-gray-400 mt-2 leading-relaxed list-disc pl-4 space-y-1">
+                      <li>PolicyEngine uprates your 2025-26 income under both the pre- and post-Spring Statement OBR forecasts</li>
+                      <li>Market income, taxes, benefits, and net income are shown in cash terms for that year</li>
+                      <li>Purchasing power adjusts the post-Statement cash net income for the difference in CPI forecasts: post-Statement net income × (CPI<sub>pre</sub> / CPI<sub>post</sub> − 1), where CPI<sub>pre</sub> and CPI<sub>post</sub> are cumulative price indices under each forecast</li>
+                      <li>Net change (2026 prices) = nominal net income change + purchasing power</li>
+                    </ul>
+                  </details>
                 </div>
               )}
             </>
