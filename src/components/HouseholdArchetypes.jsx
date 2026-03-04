@@ -109,7 +109,7 @@ function HouseholdSummaryTable({ stats, comparison }) {
     <div className="section-card">
       <h3 className="chart-title">Impact on household income by household type</h3>
       <p className="chart-subtitle">
-        Median and mean household net income by household type, comparing pre- and post-Spring Statement forecasts
+        Median and mean household net income by household type, comparing pre- and post-Spring Statement forecasts. Household net income includes employment and market income plus benefits (Universal Credit, State Pension, Child Benefit, etc.), minus taxes (Income Tax, National Insurance, Council Tax, VAT, etc.) and pension contributions.
       </p>
       <div className="overflow-x-auto">
         <table className="forecast-table">
