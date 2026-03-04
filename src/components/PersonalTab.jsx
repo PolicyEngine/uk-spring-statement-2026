@@ -29,10 +29,10 @@ const COLORS = {
 
 const DECOMP_KEYS = ["market_income", "taxes", "benefits", "purchasing_power"];
 const DECOMP_META = {
-  market_income: { label: "Market income", color: colors.gray[400] },
-  taxes: { label: "Taxes", color: "#f59e0b" },
-  benefits: { label: "Benefits", color: chartColors.positive },
-  purchasing_power: { label: "Purchasing power", color: colors.primary[500] },
+  market_income: { label: "Market income", color: colors.gray[200] },
+  taxes: { label: "Taxes", color: colors.gray[400] },
+  benefits: { label: "Benefits", color: colors.blue[700] },
+  purchasing_power: { label: "Purchasing power", color: colors.primary[600] },
 };
 
 function formatCurrency(value) {
@@ -255,16 +255,25 @@ export default function PersonalTab() {
           .attr("width", x.bandwidth())
           .attr("y", y(Math.max(seg.y0, seg.y1)))
           .attr("height", Math.abs(y(seg.y0) - y(seg.y1)))
-          .attr("rx", 3)
           .attr("fill", seg.color)
           .attr("opacity", 0.85)
           .on("mouseenter", (event) => {
-            const label = DECOMP_META[seg.key]?.label || "Total";
-            const sign = seg.value >= 0 ? "+" : "\u2212";
+            const rows = d.segments
+              .filter((s) => Math.abs(s.value) >= 0.005)
+              .map((s) => {
+                const sLabel = DECOMP_META[s.key]?.label || s.key;
+                const sSign = s.value >= 0 ? "+" : "\u2212";
+                const sColor = s.value >= 0 ? COLORS.positive : COLORS.negative;
+                return `<div class="tooltip-breakdown-row"><span class="tooltip-breakdown-label">${sLabel}</span><span style="color:${sColor}">${sSign}\u00A3${Math.abs(s.value).toFixed(2)}</span></div>`;
+              })
+              .join("");
+            const totalSign = d.impact >= 0 ? "+" : "\u2212";
+            const totalColor = d.impact >= 0 ? COLORS.positive : COLORS.negative;
             tooltip.style("opacity", 1)
               .html(
-                `<div class="tooltip-label">${d.label}: ${label}</div>` +
-                `<div class="tooltip-value" style="color: ${seg.value >= 0 ? COLORS.positive : COLORS.negative}">${sign}\u00A3${Math.abs(seg.value).toFixed(2)}/year</div>`
+                `<div class="tooltip-label">${d.label}</div>` +
+                `<div class="tooltip-breakdown">${rows}</div>` +
+                `<div style="margin-top:6px;padding-top:6px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;gap:16px;font-weight:600"><span>Net</span><span style="color:${totalColor}">${totalSign}\u00A3${Math.abs(d.impact).toFixed(2)}/yr</span></div>`
               );
           })
           .on("mousemove", (event) => {
@@ -289,6 +298,31 @@ export default function PersonalTab() {
         .attr("font-weight", "600")
         .text(`${total >= 0 ? "+" : "\u2212"}\u00A3${Math.abs(total).toFixed(0)}`);
     });
+
+    // Net total line with dots (like Winners/Losers chart)
+    const linePoints = stackedData.map((d) => ({
+      x: x(d.label) + x.bandwidth() / 2,
+      y: y(d.impact),
+    }));
+
+    const line = d3.line().x((d) => d.x).y((d) => d.y).curve(d3.curveMonotoneX);
+
+    g.append("path")
+      .datum(linePoints)
+      .attr("d", line)
+      .attr("fill", "none")
+      .attr("stroke", colors.gray[800])
+      .attr("stroke-width", 2);
+
+    g.selectAll(".net-dot")
+      .data(linePoints)
+      .join("circle")
+      .attr("class", "net-dot")
+      .attr("cx", (d) => d.x)
+      .attr("cy", (d) => d.y)
+      .attr("r", 4)
+      .attr("fill", colors.gray[800])
+      .attr("stroke", colors.gray[800]);
 
     g.append("g").attr("class", "axis")
       .attr("transform", `translate(0,${height})`)
@@ -320,6 +354,10 @@ export default function PersonalTab() {
         legend.append("text").attr("x", lx + 16).attr("y", 10).attr("font-size", "11px").attr("fill", colors.gray[600]).text(meta.label);
         lx += meta.label.length * 7 + 30;
       });
+      // Net line legend
+      legend.append("line").attr("x1", lx).attr("x2", lx + 16).attr("y1", 6).attr("y2", 6).attr("stroke", colors.gray[800]).attr("stroke-width", 2);
+      legend.append("circle").attr("cx", lx + 8).attr("cy", 6).attr("r", 3).attr("fill", colors.gray[800]);
+      legend.append("text").attr("x", lx + 22).attr("y", 10).attr("font-size", "11px").attr("fill", colors.gray[600]).text("Net");
     }
   }, [multiYearChartData]);
 
@@ -619,7 +657,7 @@ export default function PersonalTab() {
           ) : result && (
             <>
               <div
-                className={`impact-headline ${realImpact > 0.5 ? "positive" : realImpact < -0.5 ? "negative" : "neutral"}`}
+                className={`impact-headline ${realImpact > 10 ? "positive" : realImpact < -10 ? "negative" : "neutral"}`}
               >
                 <p>
                   The Spring Statement changes would{" "}
@@ -656,7 +694,7 @@ export default function PersonalTab() {
                               <div
                                 className="decomp-bar-fill"
                                 style={{
-                                  width: `${pct * 100}%`,
+                                  width: `${pct * 50}%`,
                                   backgroundColor: meta.color,
                                   marginLeft: "50%",
                                 }}
@@ -665,7 +703,7 @@ export default function PersonalTab() {
                               <div
                                 className="decomp-bar-fill"
                                 style={{
-                                  width: `${pct * 100}%`,
+                                  width: `${pct * 50}%`,
                                   backgroundColor: meta.color,
                                   marginLeft: `${50 - pct * 50}%`,
                                 }}
