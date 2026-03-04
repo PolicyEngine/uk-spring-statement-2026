@@ -137,7 +137,15 @@ function Dashboard() {
               PolicyEngine
             </a>{" "}
             using the Enhanced Family Resources Survey and PolicyEngine UK
-            microsimulation model.
+            microsimulation model.{" "}
+            <a
+              href="https://github.com/PolicyEngine/uk-spring-statement-2026"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold"
+            >
+              Replication code
+            </a>.
           </p>
         </footer>
       </main>
