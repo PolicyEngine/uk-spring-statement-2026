@@ -30,12 +30,16 @@ export default function InequalityTable({ data, selectedYear }) {
     const r = parseFloat(reform);
     const diff = r - b;
     if (metric === "gini") {
-      const sign = diff >= 0 ? "+" : "";
-      return `${sign}${diff.toFixed(2)}`;
+      const rounded = parseFloat(diff.toFixed(2));
+      if (rounded === 0) return "0.00";
+      const sign = rounded > 0 ? "+" : "";
+      return `${sign}${rounded.toFixed(2)}`;
     }
     const pctDiff = diff * 100;
-    const sign = pctDiff >= 0 ? "+" : "";
-    return `${sign}${pctDiff.toFixed(2)} pp`;
+    const rounded = parseFloat(pctDiff.toFixed(2));
+    if (rounded === 0) return "0.00 pp";
+    const sign = rounded > 0 ? "+" : "";
+    return `${sign}${rounded.toFixed(2)} pp`;
   };
 
   return (

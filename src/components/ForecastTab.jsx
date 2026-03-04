@@ -38,6 +38,15 @@ const COLORS = {
 function ForecastLineChart({ data, title, unit }) {
   if (!data || data.length === 0) return null;
 
+  const allValues = data.flatMap((d) =>
+    [d.previous, d.updated].filter((v) => v != null),
+  );
+  const dataMin = Math.min(...allValues);
+  const dataMax = Math.max(...allValues);
+  const padding = Math.max((dataMax - dataMin) * 0.4, 0.3);
+  const yMin = Math.floor((dataMin - padding) * 10) / 10;
+  const yMax = Math.ceil((dataMax + padding) * 10) / 10;
+
   return (
     <div className="section-card" style={{ animationDelay: "0ms" }}>
       <h3 className="text-base font-semibold text-gray-800 mb-2">{title}</h3>
@@ -60,7 +69,8 @@ function ForecastLineChart({ data, title, unit }) {
               tickLine={false}
               axisLine={false}
               width={48}
-              allowDecimals={false}
+              domain={[yMin, yMax]}
+              allowDecimals
               tickCount={6}
             />
             <Tooltip
