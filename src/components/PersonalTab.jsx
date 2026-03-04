@@ -577,9 +577,9 @@ export default function PersonalTab() {
                 diverge before and after the Spring Statement.
               </p>
               {multiYearLoading ? (
-                <div className="multi-year-loading"><span className="spinner" /> Loading multi-year projections...</div>
+                <div key="loading" className="multi-year-loading"><span className="spinner" /> Loading multi-year projections...</div>
               ) : (
-                <div className="impact-bar-chart multi-year-chart" ref={multiYearChartRef} />
+                <div key="chart" className="impact-bar-chart multi-year-chart" ref={multiYearChartRef} />
               )}
             </section>
           )}
