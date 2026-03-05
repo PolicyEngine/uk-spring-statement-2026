@@ -33,7 +33,7 @@ function MetricsBar({ metrics, winnersLosers, distributional, year }) {
       (d) => d.year === year && d.decile === "All",
     );
     if (allRow) {
-      const absChange = allRow.absolute_change_nominal;
+      const absChange = allRow.absolute_change_real;
       cards.push({
         label: "Average household impact",
         value: `${absChange >= 0 ? "+" : ""}\u00a3${absChange.toFixed(0)}/year`,
@@ -119,7 +119,7 @@ function WinnersLosersChart({ data, year }) {
         Winners and losers by income decile
       </h3>
       <p className="text-xs text-gray-500 mb-4">
-        Share of households seeing a net gain or loss in income under revised OBR forecasts, by income decile, {year}-
+        Share of households seeing a net gain or loss in real income (2026 prices) under revised OBR forecasts, by income decile, {year}-
         {(year + 1).toString().slice(-2)}
       </p>
       <div className="w-full h-[380px]">
@@ -200,7 +200,7 @@ function WinnersLosersChart({ data, year }) {
 }
 
 export default function PopulationTab({ data }) {
-  const [selectedYear, setSelectedYear] = useState(2026);
+  const [selectedYear, setSelectedYear] = useState(2029);
   const [inequalityData, setInequalityData] = useState(null);
 
   useEffect(() => {

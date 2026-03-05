@@ -6,31 +6,16 @@ Single reform: November 2025 OBR forecasts (baseline) vs March 2026 (reform).
 Uses native MicroSeries from PolicyEngine — sim.calculate() returns
 MicroSeries with weights.
 
-Real-terms values use PolicyEngine's built-in ``real_household_net_income``
-(deflated to 2026 prices via ``inflation_adjustment``).
+Real-terms values use the OBR CPI deflator (``get_real_deflator``) to convert
+reform nominal income to baseline (November 2025) price levels, matching the
+decomposition methodology used in the household archetypes tab.
 """
 
 import microdf as mdf
 import numpy as np
-import pandas as pd
 from policyengine_uk import Microsimulation
 
-from .reforms import get_pre_statement_scenario
-
-# Programs for detailed budgetary breakdown (API v2 UKPrograms.PROGRAMS)
-UK_PROGRAMS = {
-    "income_tax": {"variable": "income_tax", "is_tax": True},
-    "national_insurance": {"variable": "national_insurance", "is_tax": True},
-    "vat": {"variable": "vat", "is_tax": True},
-    "council_tax": {"variable": "council_tax", "is_tax": True},
-    "fuel_duty": {"variable": "fuel_duty", "is_tax": True},
-    "tax_credits": {"variable": "tax_credits", "is_tax": False},
-    "universal_credit": {"variable": "universal_credit", "is_tax": False},
-    "child_benefit": {"variable": "child_benefit", "is_tax": False},
-    "state_pension": {"variable": "state_pension", "is_tax": False},
-    "pension_credit": {"variable": "pension_credit", "is_tax": False},
-    "ni_employer": {"variable": "employer_national_insurance", "is_tax": True},
-}
+from .reforms import get_pre_statement_scenario, get_real_deflator, PRE_STATEMENT_PARAMS
 
 # Decile labels for income distribution analysis
 DECILE_LABELS = [
@@ -39,15 +24,58 @@ DECILE_LABELS = [
 ]
 
 
+_cached_sims = None
+
+
 def _create_simulations():
     """Create baseline and reformed Microsimulation instances.
 
     Baseline = November 2025 OBR forecasts (pre-Spring Statement).
     Reformed = March 2026 OBR forecasts (policyengine-uk default).
+
+    Works around a PE UK bug where ``process_parameters()`` calls
+    ``convert_to_fiscal_year_parameters`` which overwrites scenario parameter
+    changes.  The fix: monkey-patch ``process_parameters`` to re-apply the
+    pre-statement values using year-period format after the fiscal-year
+    conversion, and clear the URL dataset cache between sims so each gets
+    independently uprated data.
+
+    Results are cached so all calculators share the same sim pair.
     """
-    scenario = get_pre_statement_scenario()
-    baseline = Microsimulation(scenario=scenario)
-    reformed = Microsimulation()
+    global _cached_sims
+    if _cached_sims is not None:
+        return _cached_sims
+
+    from policyengine_uk import CountryTaxBenefitSystem
+    import policyengine_uk.simulation as sim_mod
+
+    original_process = CountryTaxBenefitSystem.process_parameters
+    pending_changes = {}
+
+    def _patched_process(self):
+        original_process(self)
+        if pending_changes:
+            for param_path, values in pending_changes.items():
+                p = self.parameters.get_child(param_path)
+                for tp, val in values.items():
+                    p.update(period=tp[:4], value=val)
+                self.reset_parameter_caches()
+
+    CountryTaxBenefitSystem.process_parameters = _patched_process
+    try:
+        # Baseline: pre-statement (November 2025) parameters
+        sim_mod._url_dataset_cache.clear()
+        pending_changes.update(PRE_STATEMENT_PARAMS)
+        baseline = Microsimulation(scenario=get_pre_statement_scenario())
+        pending_changes.clear()
+
+        # Reform: post-statement (March 2026 / PE UK default)
+        sim_mod._url_dataset_cache.clear()
+        reformed = Microsimulation()
+    finally:
+        CountryTaxBenefitSystem.process_parameters = original_process
+
+    _cached_sims = (baseline, reformed)
     return baseline, reformed
 
 
@@ -62,28 +90,27 @@ class DistributionalImpactCalculator:
 
     def calculate(self, year: int) -> list[dict]:
         baseline, reformed = _create_simulations()
+        deflator = get_real_deflator(year)
 
         baseline_income = baseline.calculate("household_net_income", year)
         reform_income_nominal_raw = reformed.calculate("household_net_income", year)
-        baseline_income_real = baseline.calculate("real_household_net_income", year)
-        reform_income_real_raw = reformed.calculate("real_household_net_income", year)
         income_decile = baseline.calculate("household_income_decile", year)
 
         # Align reform weights to baseline
         reform_income_nominal = mdf.MicroSeries(
             reform_income_nominal_raw.values, weights=baseline_income.weights
         )
+        # Real: deflate reform nominal to baseline (Nov 2025) prices
         reform_income_real = mdf.MicroSeries(
-            reform_income_real_raw.values, weights=baseline_income_real.weights
+            reform_income_nominal_raw.values * deflator, weights=baseline_income.weights
         )
 
         valid = np.array(income_decile) >= 0
         baseline_income = baseline_income[valid]
-        baseline_income_real = baseline_income_real[valid]
         reform_income_nominal = reform_income_nominal[valid]
         reform_income_real = reform_income_real[valid]
         income_change_nominal = reform_income_nominal - baseline_income
-        income_change_real = reform_income_real - baseline_income_real
+        income_change_real = reform_income_real - baseline_income
         decile_values = income_decile[valid]
 
         results = []
@@ -94,12 +121,11 @@ class DistributionalImpactCalculator:
                 continue
 
             baseline_sum = baseline_income[mask].sum()
-            baseline_sum_real = baseline_income_real[mask].sum()
 
             change_sum_nom = income_change_nominal[mask].sum()
             change_sum_real = income_change_real[mask].sum()
             relative_nom = (change_sum_nom / baseline_sum) * 100 if baseline_sum > 0 else 0
-            relative_real = (change_sum_real / baseline_sum_real) * 100 if baseline_sum_real > 0 else 0
+            relative_real = (change_sum_real / baseline_sum) * 100 if baseline_sum > 0 else 0
             avg_change_nom = income_change_nominal[mask].mean()
             avg_change_real = income_change_real[mask].mean()
 
@@ -115,12 +141,11 @@ class DistributionalImpactCalculator:
         total_change_nom = income_change_nominal.sum()
         total_change_real = income_change_real.sum()
         total_baseline = baseline_income.sum()
-        total_baseline_real = baseline_income_real.sum()
         overall_relative_nom = (
             (total_change_nom / total_baseline) * 100 if total_baseline > 0 else 0
         )
         overall_relative_real = (
-            (total_change_real / total_baseline_real) * 100 if total_baseline_real > 0 else 0
+            (total_change_real / total_baseline) * 100 if total_baseline > 0 else 0
         )
         results.append({
             "year": year,
@@ -201,6 +226,7 @@ class InequalityCalculator:
 
     def calculate(self, year: int) -> list[dict]:
         baseline, reformed = _create_simulations()
+        deflator = get_real_deflator(year)
         results = []
 
         # Compute baseline once (nominal: equiv_household_net_income)
@@ -226,14 +252,8 @@ class InequalityCalculator:
         r_original_weights = r_income_nom.weights.copy()
         r_person_weights = r_original_weights * np.array(r_hh_count)
 
-        # Reform real: real_household_net_income / household_equivalisation_bhc
-        r_real_hni = reformed.calculate("real_household_net_income", year)
-        r_equiv_bhc = reformed.calculate("household_equivalisation_bhc", year)
-        r_real_equiv_vals = np.where(
-            np.array(r_equiv_bhc) > 0,
-            np.array(r_real_hni) / np.array(r_equiv_bhc),
-            0.0,
-        )
+        # Reform real: deflate equiv_household_net_income to baseline prices
+        r_real_equiv_vals = r_income_nom.values.copy() * deflator
 
         reform_results = {}
         for mode, r_vals_raw in [("nominal", r_income_nom.values.copy()), ("real", r_real_equiv_vals.copy())]:
@@ -269,134 +289,6 @@ class InequalityCalculator:
         return merged
 
 
-class IntraDecileCalculator:
-    """Calculate intra-decile winners/losers (API v2).
-
-    For each decile, share of people who:
-    - Lose more than 5%
-    - Lose less than 5%
-    - No change
-    - Gain less than 5%
-    - Gain more than 5%
-    """
-
-    BOUNDS = [float("-inf"), -0.05, -1e-3, 1e-3, 0.05, float("inf")]
-    LABELS = [
-        "Lose more than 5%",
-        "Lose less than 5%",
-        "No change",
-        "Gain less than 5%",
-        "Gain more than 5%",
-    ]
-
-    def calculate(self, year: int) -> list[dict]:
-        baseline, reformed = _create_simulations()
-
-        baseline_income = baseline.calculate("household_net_income", year)
-        reform_income_nominal_raw = reformed.calculate("household_net_income", year)
-        baseline_income_real = baseline.calculate("real_household_net_income", year)
-        reform_income_real_raw = reformed.calculate("real_household_net_income", year)
-        income_decile = baseline.calculate("household_income_decile", year)
-        hh_count_people = baseline.calculate("household_count_people", year)
-
-        people = mdf.MicroSeries(
-            np.array(hh_count_people), weights=baseline_income.weights
-        )
-
-        results = []
-
-        mode_data = [
-            ("nominal", baseline_income, reform_income_nominal_raw),
-            ("real", baseline_income_real, reform_income_real_raw),
-        ]
-
-        for mode, base_inc, reform_inc_raw in mode_data:
-            reform_income = mdf.MicroSeries(
-                reform_inc_raw.values, weights=base_inc.weights
-            )
-
-            # API v2 percentage change
-            absolute_change = (reform_income - base_inc).values
-            capped_baseline = np.maximum(base_inc.values, 1)
-            capped_reform = np.maximum(reform_income.values, 1) + absolute_change
-            pct_change = (capped_reform - capped_baseline) / capped_baseline
-
-            all_decile_shares = []
-
-            for decile in range(1, 11):
-                in_decile = np.array(income_decile) == decile
-                decile_total = people[in_decile].sum()
-
-                decile_shares = {}
-                for i, label in enumerate(self.LABELS):
-                    lower, upper = self.BOUNDS[i], self.BOUNDS[i + 1]
-                    in_bin = (pct_change > lower) & (pct_change <= upper)
-                    share = people[in_decile & in_bin].sum() / decile_total if decile_total > 0 else 0
-                    decile_shares[label] = share
-
-                    results.append({
-                        "year": year,
-                        "decile": DECILE_LABELS[decile - 1],
-                        "outcome": label,
-                        f"share_{mode}": float(share),
-                    })
-
-                all_decile_shares.append(decile_shares)
-
-            # "All" = mean of 10 decile proportions (API v2)
-            for label in self.LABELS:
-                mean_share = np.mean([d[label] for d in all_decile_shares])
-                results.append({
-                    "year": year,
-                    "decile": "All",
-                    "outcome": label,
-                    f"share_{mode}": float(mean_share),
-                })
-
-        # Merge nominal and real rows by (year, decile, outcome)
-        merged = {}
-        for row in results:
-            key = (row["year"], row["decile"], row["outcome"])
-            if key not in merged:
-                merged[key] = {"year": row["year"], "decile": row["decile"], "outcome": row["outcome"]}
-            if "share_nominal" in row:
-                merged[key]["share_nominal"] = row["share_nominal"]
-            if "share_real" in row:
-                merged[key]["share_real"] = row["share_real"]
-
-        return list(merged.values())
-
-
-class DetailedBudgetaryImpactCalculator:
-    """Per-program budgetary breakdown (API v2 UKPrograms)."""
-
-    def calculate(self, year: int) -> list[dict]:
-        baseline, reformed = _create_simulations()
-        results = []
-
-        for program_name, info in UK_PROGRAMS.items():
-            variable = info["variable"]
-            is_tax = info["is_tax"]
-
-            try:
-                b_val = baseline.calculate(variable, year, map_to="household").sum()
-                r_val = reformed.calculate(variable, year, map_to="household").sum()
-            except Exception:
-                continue
-
-            sign = 1 if is_tax else -1
-
-            results.append({
-                "year": year,
-                "program": program_name,
-                "baseline": float(b_val / 1e6),
-                "reform": float(r_val / 1e6),
-                "difference": float(sign * (r_val - b_val) / 1e6),
-            })
-
-        return results
-
-
 class WinnersLosersCalculator:
     """Calculate percentage of households gaining/losing by decile."""
 
@@ -404,17 +296,20 @@ class WinnersLosersCalculator:
 
     def calculate(self, year: int) -> list[dict]:
         baseline, reformed = _create_simulations()
+        deflator = get_real_deflator(year)
 
-        baseline_income_real = baseline.calculate("real_household_net_income", year)
-        reformed_income_real = reformed.calculate("real_household_net_income", year)
+        baseline_income = baseline.calculate("household_net_income", year)
+        reform_income_raw = reformed.calculate("household_net_income", year)
         income_decile = baseline.calculate("household_income_decile", year)
 
-        weights = np.array(baseline_income_real.weights)
+        weights = np.array(baseline_income.weights)
         decile_arr = np.array(income_decile)
 
-        change = mdf.MicroSeries(
-            reformed_income_real.values, weights=baseline_income_real.weights
-        ) - baseline_income_real
+        # Real change: deflate reform to baseline prices
+        reform_income_real = mdf.MicroSeries(
+            reform_income_raw.values * deflator, weights=baseline_income.weights
+        )
+        change = reform_income_real - baseline_income
         change_arr = np.array(change)
 
         results = []
@@ -456,105 +351,3 @@ class WinnersLosersCalculator:
         return results
 
 
-class HouseholdScatterCalculator:
-    """Sample individual household impacts for scatter-plot display."""
-
-    MAX_INCOME = 150_000
-    SAMPLE_SIZE = 2000
-
-    def calculate(self, year: int) -> pd.DataFrame:
-        baseline, reformed = _create_simulations()
-
-        baseline_income = np.array(
-            baseline.calculate("household_net_income", year)
-        )
-        reformed_income = np.array(
-            reformed.calculate("household_net_income", year)
-        )
-        baseline_income_real = np.array(
-            baseline.calculate("real_household_net_income", year)
-        )
-        reformed_income_real = np.array(
-            reformed.calculate("real_household_net_income", year)
-        )
-        income_decile = np.array(
-            baseline.calculate("household_income_decile", year)
-        )
-
-        change_nominal = reformed_income - baseline_income
-        change_real = reformed_income_real - baseline_income_real
-        mask = baseline_income <= self.MAX_INCOME
-
-        df = pd.DataFrame({
-            "baseline_income": baseline_income[mask],
-            "net_impact_nominal": change_nominal[mask],
-            "net_impact_real": change_real[mask],
-            "decile": income_decile[mask],
-        })
-
-        if len(df) > self.SAMPLE_SIZE:
-            df = df.sample(n=self.SAMPLE_SIZE, random_state=42)
-
-        return df
-
-
-class ConstituencyCalculator:
-    """Calculate average household impact per parliamentary constituency.
-
-    API v2 methodology:
-    - Average: (reform.sum() - baseline.sum()) / baseline.count()
-    - Relative: reform.sum() / baseline.sum() - 1
-    """
-
-    def calculate(
-        self,
-        year: int,
-        weights: np.ndarray,
-        constituency_df: pd.DataFrame,
-    ) -> list[dict]:
-        baseline, reformed = _create_simulations()
-
-        baseline_income_real = np.array(
-            baseline.calculate("real_household_net_income", year)
-        )
-        reformed_income_real = np.array(
-            reformed.calculate("real_household_net_income", year)
-        )
-
-        results = []
-
-        for idx, row in constituency_df.iterrows():
-            if idx >= weights.shape[0]:
-                continue
-
-            code = row.get("code", row.get("constituency_code", ""))
-            name = row.get("name", row.get("constituency_name", ""))
-            w = weights[idx, :]
-
-            baseline_ms = mdf.MicroSeries(baseline_income_real, weights=w)
-            reform_ms_real = mdf.MicroSeries(reformed_income_real, weights=w)
-
-            baseline_sum = baseline_ms.sum()
-            reform_sum = reform_ms_real.sum()
-            weighted_count = baseline_ms.count()
-
-            avg_gain = (
-                (reform_sum - baseline_sum) / weighted_count
-                if weighted_count > 0
-                else 0
-            )
-            relative = (
-                ((reform_sum / baseline_sum) - 1) * 100
-                if baseline_sum > 0
-                else 0
-            )
-
-            results.append({
-                "year": year,
-                "constituency_code": code,
-                "constituency_name": name,
-                "average_gain": round(float(avg_gain), 2),
-                "relative_change": round(float(relative), 4),
-            })
-
-        return results

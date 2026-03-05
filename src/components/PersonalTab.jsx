@@ -749,9 +749,11 @@ export default function PersonalTab() {
                     <summary className="text-xs text-gray-500 cursor-pointer hover:text-gray-700">How is this calculated?</summary>
                     <ul className="text-xs text-gray-400 mt-2 leading-relaxed list-disc pl-4 space-y-1">
                       <li>PolicyEngine uprates your 2025-26 income under both the pre- and post-Spring Statement OBR forecasts</li>
-                      <li>Market income, taxes, benefits, and net income are shown in cash terms for that year</li>
-                      <li>Purchasing power adjusts the post-Statement cash net income for the difference in CPI forecasts: post-Statement net income × (CPI<sub>pre</sub> / CPI<sub>post</sub> − 1), where CPI<sub>pre</sub> and CPI<sub>post</sub> are cumulative price indices under each forecast</li>
+                      <li>Market income, taxes, benefits, and net income (nominal) are shown in <strong>cash terms</strong> for that year</li>
+                      <li>Purchasing power captures the effect of different CPI forecasts on the purchasing power of post-Statement net income</li>
+                      <li>Purchasing power = post-Statement net income × (CPI<sub>pre</sub> / CPI<sub>post</sub> − 1), where CPI<sub>pre</sub> and CPI<sub>post</sub> are the price level indices for that year under the pre- and post-Statement forecasts</li>
                       <li>Net change (2026 prices) = nominal net income change + purchasing power</li>
+                      <li>This is the impact of revised macroeconomic forecasts (earnings and CPI), not a direct estimate of policy changes</li>
                     </ul>
                   </details>
                 </div>

@@ -9,7 +9,7 @@ const METRIC_LABELS = {
 export default function InequalityTable({ data, selectedYear }) {
   if (!data) return null;
 
-  const reformField = "reform_nominal";
+  const reformField = "reform_real";
 
   const filtered = data.filter(
     (row) => parseInt(row.year) === selectedYear,
@@ -46,7 +46,7 @@ export default function InequalityTable({ data, selectedYear }) {
     <div className="section-card mt-6">
       <h3 className="chart-title">Inequality impact</h3>
       <p className="chart-subtitle">
-        Change in Gini coefficient and top income shares under revised OBR forecasts, based on equivalised household net income
+        Change in Gini coefficient and top income shares under revised OBR forecasts
       </p>
 
       <div className="overflow-x-auto">
