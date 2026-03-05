@@ -15,9 +15,19 @@ Comparison:
 from policyengine_uk import Simulation
 
 try:
-    from .reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
+    from .reforms import (
+        PRE_STATEMENT_PARAMS,
+        get_pre_statement_scenario,
+        get_real_deflator,
+        deflate_income_to_2026,
+    )
 except ImportError:
-    from reforms import PRE_STATEMENT_PARAMS, get_pre_statement_scenario
+    from reforms import (
+        PRE_STATEMENT_PARAMS,
+        get_pre_statement_scenario,
+        get_real_deflator,
+        deflate_income_to_2026,
+    )
 
 CPI_YEARS = range(2025, 2031)
 
@@ -28,6 +38,71 @@ CPI_PARAMETER = "gov.economic_assumptions.yoy_growth.obr.consumer_price_index"
 PRE_STATEMENT_CPI = {
     int(k[:4]): v for k, v in PRE_STATEMENT_PARAMS[CPI_PARAMETER].items()
 }
+
+
+def _compute_decomposition(
+    baseline_net,
+    reform_net,
+    total_taxes_b,
+    total_taxes_r,
+    total_benefits_b,
+    total_benefits_r,
+    market_income_b,
+    market_income_r,
+    year,
+):
+    """Decompose the real net income impact into four components.
+
+    Steps:
+    1. Compute nominal changes: market income, taxes, benefits
+    2. Sum to nominal net income change
+    3. Apply purchasing power adjustment to reform net income
+       (CPI deflator converts reform £ to baseline price level)
+    4. Total real change = nominal change + purchasing power
+
+    Components:
+    1. market_income — change from different earnings growth forecasts
+    2. taxes — nominal change in total taxes (positive = taxes fell = good)
+    3. benefits — nominal change in total benefits
+    4. purchasing_power — CPI adjustment applied to reform net income
+
+    The four components sum exactly to *total*.
+    """
+    deflator = get_real_deflator(year)
+
+    # Nominal changes (round individually)
+    market_income_effect = round(market_income_r - market_income_b, 2)
+    taxes_effect = round(-(total_taxes_r - total_taxes_b), 2)
+    benefits_effect = round(total_benefits_r - total_benefits_b, 2)
+
+    # Purchasing power: CPI adjustment applied to reform net income
+    purchasing_power_raw = reform_net * (deflator - 1)
+
+    # Total = nominal change + purchasing power (from unrounded values)
+    total = round(
+        (market_income_r - market_income_b)
+        + (-(total_taxes_r - total_taxes_b))
+        + (total_benefits_r - total_benefits_b)
+        + purchasing_power_raw,
+        2,
+    )
+
+    # Purchasing power absorbs rounding so components sum exactly to total
+    purchasing_power = total - market_income_effect - taxes_effect - benefits_effect
+
+    return {
+        "market_income": market_income_effect,
+        "taxes": taxes_effect,
+        "benefits": benefits_effect,
+        "purchasing_power": round(purchasing_power, 2),
+        "total": total,
+        "details": {
+            "market_income": {"baseline": round(market_income_b, 2), "reform": round(market_income_r, 2)},
+            "taxes": {"baseline": round(total_taxes_b, 2), "reform": round(total_taxes_r, 2)},
+            "benefits": {"baseline": round(total_benefits_b, 2), "reform": round(total_benefits_r, 2)},
+            "net_income": {"baseline": round(baseline_net, 2), "reform": round(reform_net, 2)},
+        },
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -418,18 +493,26 @@ def _build_situation(
     childcare_expenses: float = 0,
     student_loan_plan: str = "NO_STUDENT_LOAN",
     self_employment_income: float = 0,
+    income_base_year: int = None,
 ) -> dict:
-    """Build a PolicyEngine household situation dict."""
+    """Build a PolicyEngine household situation dict.
+
+    If *income_base_year* is set (e.g. 2026), employment/self-employment
+    income is pinned at that year and PolicyEngine uprates it to *year*
+    using the earnings growth forecast.  This means baseline vs reform
+    will produce different market incomes for years after the base year.
+    """
+    inc_year = income_base_year or year
     people = {
         "adult": {
             "age": {year: adult_age},
-            "employment_income": {year: employment_income},
+            "employment_income": {inc_year: employment_income},
         }
     }
 
     if self_employment_income > 0:
         people["adult"]["self_employment_income"] = {
-            year: self_employment_income
+            inc_year: self_employment_income
         }
     members = ["adult"]
 
@@ -439,7 +522,7 @@ def _build_situation(
     if is_couple:
         people["partner"] = {
             "age": {year: partner_age},
-            "employment_income": {year: partner_income},
+            "employment_income": {inc_year: partner_income},
         }
         members.append("partner")
 
@@ -529,6 +612,18 @@ def _extract_results(sim: Simulation, situation: dict, year: int) -> dict:
     results["household_net_income"] = round(
         _household_val("household_net_income"), 2
     )
+    results["real_household_net_income"] = round(
+        _household_val("real_household_net_income"), 2
+    )
+
+    # Market income = employment + self-employment (summed across people)
+    try:
+        market = _person_sum("employment_income") + _person_sum(
+            "self_employment_income"
+        )
+    except Exception:
+        market = _person_sum("employment_income")
+    results["market_income"] = round(market, 2)
 
     return results
 
@@ -556,7 +651,8 @@ def calculate_household_impact(
     - Baseline: November 2025 OBR forecasts (pre-statement)
     - Reform: March 2026 OBR forecasts (post-statement, PE UK default)
 
-    Returns per-program values and diffs, with hierarchical breakdown.
+    Income is set at 2025 (fiscal year 2025-26) and PolicyEngine
+    uprates it to the target year using each scenario's earnings growth.
     """
     situation = _build_situation(
         employment_income=employment_income,
@@ -574,6 +670,7 @@ def calculate_household_impact(
         childcare_expenses=childcare_expenses,
         student_loan_plan=student_loan_plan,
         self_employment_income=self_employment_income,
+        income_base_year=2025,
     )
 
     # Baseline = November 2025 forecasts (pre-statement)
@@ -600,11 +697,21 @@ def calculate_household_impact(
 
     # Build full program structure, filtering by region where applicable.
     active_structure = []
+    total_taxes_b = 0.0
+    total_taxes_r = 0.0
+    total_benefits_b = 0.0
+    total_benefits_r = 0.0
     for prog in PROGRAM_STRUCTURE:
         prog_region = prog.get("region")
         if prog_region and prog_region != region:
             continue
         pid = prog["id"]
+        if prog.get("is_tax", False):
+            total_taxes_b += baseline.get(pid, 0)
+            total_taxes_r += reform.get(pid, 0)
+        else:
+            total_benefits_b += baseline.get(pid, 0)
+            total_benefits_r += reform.get(pid, 0)
         entry = {
             "id": pid,
             "label": prog["label"],
@@ -619,10 +726,23 @@ def calculate_household_impact(
             ]
         active_structure.append(entry)
 
+    decomposition = _compute_decomposition(
+        baseline["household_net_income"],
+        reform["household_net_income"],
+        total_taxes_b,
+        total_taxes_r,
+        total_benefits_b,
+        total_benefits_r,
+        baseline["market_income"],
+        reform["market_income"],
+        year,
+    )
+
     return {
         "baseline": baseline,
         "reform": reform,
         "impact": impact,
+        "decomposition": decomposition,
         "program_structure": active_structure,
         "program_groups": PROGRAM_GROUPS,
         "cpi_values": {
@@ -647,13 +767,16 @@ def calculate_multi_year_net_impact(
     childcare_expenses: float = 0,
     student_loan_plan: str = "NO_STUDENT_LOAN",
     self_employment_income: float = 0,
+    income_year: int = 2026,
 ) -> dict:
     """Calculate net household income impact for each year 2026-2030.
 
     Baseline = November 2025 OBR forecasts (pre-statement).
     Reform = March 2026 OBR forecasts (PE UK default).
-    Uses the same income for all years (no salary growth).
+    Income is set at 2025 (fiscal year 2025-26) and PolicyEngine
+    uprates it to each target year using each scenario's earnings growth.
     """
+
     yearly_impact = {}
     yearly_breakdown = {}
 
@@ -686,6 +809,7 @@ def calculate_multi_year_net_impact(
             childcare_expenses=childcare_expenses,
             student_loan_plan=student_loan_plan,
             self_employment_income=self_employment_income,
+            income_base_year=2025,
         )
 
         num_people = len(situation["people"])
@@ -722,10 +846,34 @@ def calculate_multi_year_net_impact(
 
         impact = round(reform_net - baseline_net, 2)
 
+        # Market income (employment + self-employment)
+        def _market_income(sim):
+            emp = sim.calculate("employment_income", year)
+            total = float(emp.sum()) if num_people > 1 else float(emp[0])
+            try:
+                se = sim.calculate("self_employment_income", year)
+                total += float(se.sum()) if num_people > 1 else float(se[0])
+            except Exception:
+                pass
+            return total
+
+        market_b = _market_income(baseline_sim)
+        market_r = _market_income(reform_sim)
+
         breakdown = []
+        total_taxes_b = 0.0
+        total_taxes_r = 0.0
+        total_benefits_b = 0.0
+        total_benefits_r = 0.0
         for prog in top_programs:
             b_val = _calc(baseline_sim, prog["id"], prog["entity"])
             r_val = _calc(reform_sim, prog["id"], prog["entity"])
+            if prog["is_tax"]:
+                total_taxes_b += b_val
+                total_taxes_r += r_val
+            else:
+                total_benefits_b += b_val
+                total_benefits_r += r_val
             diff = r_val - b_val
             if abs(diff) > 0.005:
                 household_impact = -diff if prog["is_tax"] else diff
@@ -736,17 +884,32 @@ def calculate_multi_year_net_impact(
                     }
                 )
 
-        return str(year), impact, breakdown
+        decomposition = _compute_decomposition(
+            baseline_net,
+            reform_net,
+            total_taxes_b,
+            total_taxes_r,
+            total_benefits_b,
+            total_benefits_r,
+            market_b,
+            market_r,
+            year,
+        )
+
+        return str(year), impact, breakdown, decomposition
 
     # Run sequentially with fresh scenario each iteration
+    yearly_decomposition = {}
     for yr in range(2026, 2031):
-        year_str, impact, breakdown = _calculate_year(yr)
+        year_str, impact, breakdown, decomposition = _calculate_year(yr)
         yearly_impact[year_str] = impact
         yearly_breakdown[year_str] = breakdown
+        yearly_decomposition[year_str] = decomposition
 
     return {
         "yearly_impact": yearly_impact,
         "yearly_breakdown": yearly_breakdown,
+        "yearly_decomposition": yearly_decomposition,
     }
 
 

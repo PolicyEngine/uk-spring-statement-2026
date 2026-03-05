@@ -64,17 +64,33 @@ _FORECAST_SERIES = {
         "CPI inflation",
         "gov.economic_assumptions.yoy_growth.obr.consumer_price_index",
     ),
+    "cpih": (
+        "CPIH",
+        "gov.economic_assumptions.yoy_growth.obr.cpih",
+    ),
+    "cpi_ahc": (
+        "CPI (after housing costs)",
+        "gov.economic_assumptions.yoy_growth.obr.consumer_price_index_ahc",
+    ),
     "rpi_inflation": (
         "RPI inflation",
         "gov.economic_assumptions.yoy_growth.obr.rpi",
+    ),
+    "non_labour_income": (
+        "Non-labour income",
+        "gov.economic_assumptions.yoy_growth.obr.non_labour_income",
     ),
     "house_prices": (
         "House prices",
         "gov.economic_assumptions.yoy_growth.obr.house_prices",
     ),
-    "per_capita_gdp": (
-        "Per capita GDP growth",
-        "gov.economic_assumptions.yoy_growth.obr.per_capita.gdp",
+    "mortgage_interest": (
+        "Mortgage interest",
+        "gov.economic_assumptions.yoy_growth.obr.mortgage_interest",
+    ),
+    "rent": (
+        "Private rent",
+        "gov.economic_assumptions.yoy_growth.obr.rent",
     ),
     "social_rent": (
         "Social rent",
@@ -148,6 +164,30 @@ get_reform_scenario = get_pre_statement_scenario
 _CPI_PATH = "gov.economic_assumptions.yoy_growth.obr.consumer_price_index"
 _NOV_CPI = {int(k[:4]): v for k, v in _NOVEMBER_2025[_CPI_PATH].items()}
 _MAR_CPI = {int(k[:4]): v for k, v in _MARCH_2026[_CPI_PATH].items()}
+
+# Public CPI dicts for downstream consumers (spring_statement.py)
+NOVEMBER_2025_CPI = _NOV_CPI
+MARCH_2026_CPI = _MAR_CPI
+
+_EARNINGS_PATH = "gov.economic_assumptions.yoy_growth.obr.average_earnings"
+_MAR_EARNINGS = {int(k[:4]): v for k, v in _MARCH_2026[_EARNINGS_PATH].items()}
+
+# Public export
+MARCH_2026_EARNINGS = _MAR_EARNINGS
+
+
+def deflate_income_to_2026(income: float, year: int) -> float:
+    """Convert income from *year* to 2026 equivalent using March 2026 earnings growth.
+
+    If the user says they earn £X in 2029, this returns what that
+    corresponds to in 2026 terms, so PolicyEngine can uprate from 2026.
+    """
+    if year <= 2026:
+        return income
+    cum_growth = 1.0
+    for y in range(2027, year + 1):
+        cum_growth *= 1 + _MAR_EARNINGS.get(y, 0)
+    return income / cum_growth
 
 
 def get_real_deflator(year: int) -> float:

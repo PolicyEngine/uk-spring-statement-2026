@@ -6,44 +6,30 @@ Runs all calculators for each year and saves output to public/data/.
 import json
 from pathlib import Path
 
-import h5py
 import numpy as np
 import pandas as pd
-from huggingface_hub import hf_hub_download
 
 from .calculators import (
-    ConstituencyCalculator,
-    DetailedBudgetaryImpactCalculator,
     DistributionalImpactCalculator,
-    HouseholdScatterCalculator,
     InequalityCalculator,
-    IntraDecileCalculator,
     MetricsCalculator,
     WinnersLosersCalculator,
+    _create_simulations,
 )
 from .reforms import (
     DEFAULT_YEARS,
-    generate_economic_forecast_json,
-    get_pre_statement_scenario,
     save_economic_forecast_json,
 )
-
-# HuggingFace repo for data files
-HF_REPO = "policyengine/policyengine-uk-data"
+from .spring_statement import (
+    _compute_decomposition,
+    PROGRAM_STRUCTURE,
+    PERSON_VARS,
+    BENUNIT_VARS,
+    HOUSEHOLD_VARS,
+)
 
 # Default output directory
 DEFAULT_OUTPUT_DIR = Path("public/data")
-
-
-def _get_constituency_files() -> tuple[str, str]:
-    """Download parliamentary constituency files from HuggingFace."""
-    weights_path = hf_hub_download(
-        HF_REPO, "parliamentary_constituency_weights.h5"
-    )
-    csv_path = hf_hub_download(
-        HF_REPO, "parliamentary_constituencies_2025.csv"
-    )
-    return weights_path, csv_path
 
 
 def _save_csv(df: pd.DataFrame, path: Path) -> None:
@@ -68,37 +54,13 @@ def generate_all_data(
     distributional_calc = DistributionalImpactCalculator()
     metrics_calc = MetricsCalculator()
     winners_losers_calc = WinnersLosersCalculator()
-    scatter_calc = HouseholdScatterCalculator()
-    constituency_calc = ConstituencyCalculator()
     inequality_calc = InequalityCalculator()
-    intra_decile_calc = IntraDecileCalculator()
-    detailed_budget_calc = DetailedBudgetaryImpactCalculator()
-
-    # Download constituency data
-    constituency_weights = None
-    constituency_df = None
-
-    try:
-        weights_path, csv_path = _get_constituency_files()
-        print("Downloaded constituency files from HuggingFace")
-
-        with h5py.File(weights_path, "r") as f:
-            keys = sorted(f.keys())
-            constituency_weights = f[keys[-1]][...]
-        constituency_df = pd.read_csv(csv_path)
-        print(f"Loaded {len(constituency_df)} constituencies")
-    except Exception as e:
-        print(f"Warning: Could not load constituency data: {e}")
 
     # Aggregate results
     all_distributional = []
     all_metrics = []
     all_winners_losers = []
-    all_constituency = []
     all_inequality = []
-    all_intra_decile = []
-    all_detailed_budget = []
-    scatter_df = None
 
     for year in years:
         print(f"\nYear {year}...")
@@ -115,21 +77,6 @@ def generate_all_data(
         inequality = inequality_calc.calculate(year)
         all_inequality.extend(inequality)
 
-        intra_decile = intra_decile_calc.calculate(year)
-        all_intra_decile.extend(intra_decile)
-
-        detailed_budget = detailed_budget_calc.calculate(year)
-        all_detailed_budget.extend(detailed_budget)
-
-        if scatter_df is None:
-            scatter_df = scatter_calc.calculate(year)
-
-        if constituency_weights is not None and constituency_df is not None:
-            constituency = constituency_calc.calculate(
-                year, constituency_weights, constituency_df
-            )
-            all_constituency.extend(constituency)
-
         print(f"  Done: {year}")
 
     # Build DataFrames
@@ -138,12 +85,6 @@ def generate_all_data(
         "metrics": pd.DataFrame(all_metrics),
         "winners_losers": pd.DataFrame(all_winners_losers),
         "inequality": pd.DataFrame(all_inequality),
-        "intra_decile": pd.DataFrame(all_intra_decile),
-        "detailed_budgetary_impact": pd.DataFrame(all_detailed_budget),
-        "household_scatter": (
-            scatter_df if scatter_df is not None else pd.DataFrame()
-        ),
-        "constituency": pd.DataFrame(all_constituency),
     }
 
     # Save to CSV
@@ -193,79 +134,106 @@ def _classify_household(sim, year):
 
 
 def _generate_household_archetypes(output_dir: Path, years: list[int] = None):
-    """Generate household_stats.json and household_comparison.json for all years."""
-    from policyengine_uk import Microsimulation
+    """Generate household decomposition JSON for all years.
+
+    Output: household_decomposition.json — decomposition per group per year.
+    """
     import microdf as mdf
 
     if years is None:
         years = DEFAULT_YEARS
 
-    scenario = get_pre_statement_scenario()
-    baseline = Microsimulation(scenario=scenario)
-    reformed = Microsimulation()
+    baseline, reformed = _create_simulations()
 
-    all_stats = []
-    all_comparison = []
+    all_decomposition = []
 
     for year in years:
         print(f"  Household archetypes: {year}...")
         groups = _classify_household(baseline, year)
         baseline_hnet = baseline.calculate("household_net_income", year)
         reform_hnet_raw = reformed.calculate("household_net_income", year)
-        baseline_hnet_real = baseline.calculate("real_household_net_income", year)
-        reform_hnet_real_raw = reformed.calculate("real_household_net_income", year)
 
         # Align reform weights to baseline
         reform_hnet_nominal = mdf.MicroSeries(
             reform_hnet_raw.values, weights=baseline_hnet.weights
         )
-        reform_hnet_real = mdf.MicroSeries(
-            reform_hnet_real_raw.values, weights=baseline_hnet_real.weights
-        )
         weights = np.array(baseline_hnet.weights)
+
+        # Market income: employment + self-employment, mapped to household
+        market_b = np.array(
+            baseline.calculate("employment_income", year, map_to="household")
+        ) + np.array(
+            baseline.calculate("self_employment_income", year, map_to="household")
+        )
+        market_r = np.array(
+            reformed.calculate("employment_income", year, map_to="household")
+        ) + np.array(
+            reformed.calculate("self_employment_income", year, map_to="household")
+        )
+
+        # Taxes & benefits from PROGRAM_STRUCTURE
+        taxes_b = np.zeros(len(weights))
+        taxes_r = np.zeros(len(weights))
+        benefits_b = np.zeros(len(weights))
+        benefits_r = np.zeros(len(weights))
+        for prog in PROGRAM_STRUCTURE:
+            pid = prog["id"]
+            try:
+                arr_b = np.array(baseline.calculate(pid, year, map_to="household"))
+                arr_r = np.array(reformed.calculate(pid, year, map_to="household"))
+            except (ValueError, Exception):
+                continue
+            if prog.get("is_tax", False):
+                taxes_b += arr_b
+                taxes_r += arr_r
+            else:
+                benefits_b += arr_b
+                benefits_r += arr_r
 
         for group in _HH_GROUPS:
             mask = groups == group
             if not mask.any():
                 continue
 
-            b_inc = baseline_hnet[mask]
-            r_inc_nom = reform_hnet_nominal[mask]
-            r_inc_real = reform_hnet_real[mask]
-            b_inc_real = baseline_hnet_real[mask]
             w = weights[mask]
-
-            mean_b = float(b_inc.mean())
-            mean_r_nom = float(r_inc_nom.mean())
-            mean_r_real = float(r_inc_real.mean())
-            mean_b_real = float(b_inc_real.mean())
-            median_b = float(b_inc.median())
             weighted_n = float(w.sum())
 
-            all_stats.append({
+            # Weighted means
+            def _wmean(arr):
+                return float(np.average(arr[mask], weights=w))
+
+            mean_b = _wmean(np.array(baseline_hnet))
+            mean_r_nom = _wmean(np.array(reform_hnet_nominal))
+            mean_market_b = _wmean(market_b)
+            mean_market_r = _wmean(market_r)
+            mean_taxes_b = _wmean(taxes_b)
+            mean_taxes_r = _wmean(taxes_r)
+            mean_benefits_b = _wmean(benefits_b)
+            mean_benefits_r = _wmean(benefits_r)
+
+            decomposition = _compute_decomposition(
+                mean_b,
+                mean_r_nom,
+                mean_taxes_b,
+                mean_taxes_r,
+                mean_benefits_b,
+                mean_benefits_r,
+                mean_market_b,
+                mean_market_r,
+                year,
+            )
+
+            all_decomposition.append({
                 "year": year,
                 "group": group,
-                "mean_hnet": round(mean_b),
-                "median_hnet": round(median_b),
                 "weighted_n": round(weighted_n),
-            })
-            all_comparison.append({
-                "year": year,
-                "group": group,
-                "baseline_hnet": round(mean_b),
-                "reformed_hnet_nominal": round(mean_r_nom),
-                "reformed_hnet_real": round(mean_r_real),
-                "change_nominal": round(mean_r_nom - mean_b),
-                "change_real": round(mean_r_real - mean_b_real),
+                "decomposition": decomposition,
             })
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    with open(output_dir / "household_stats.json", "w") as f:
-        json.dump(all_stats, f, indent=2)
-    print(f"Saved: {output_dir / 'household_stats.json'}")
-    with open(output_dir / "household_comparison.json", "w") as f:
-        json.dump(all_comparison, f, indent=2)
-    print(f"Saved: {output_dir / 'household_comparison.json'}")
+    with open(output_dir / "household_decomposition.json", "w") as f:
+        json.dump(all_decomposition, f, indent=2)
+    print(f"Saved: {output_dir / 'household_decomposition.json'}")
 
 
 if __name__ == "__main__":

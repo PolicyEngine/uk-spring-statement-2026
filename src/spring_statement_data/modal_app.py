@@ -199,6 +199,7 @@ def fastapi_app():
                     tenure_type=data.tenure_type,
                     childcare_expenses=data.childcare_expenses,
                     student_loan_plan=data.student_loan_plan,
+                    income_year=data.year,
                 ),
             )
             return result

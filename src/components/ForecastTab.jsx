@@ -16,12 +16,16 @@ import { colors } from "@policyengine/design-system/tokens/colors";
 import { chartColors } from "@policyengine/design-system/charts";
 
 const SERIES_CONFIG = {
-  earnings_growth: { title: "Earnings growth", unit: "%" },
   cpi_inflation: { title: "CPI inflation", unit: "%" },
+  cpih: { title: "CPIH", unit: "%" },
+  cpi_ahc: { title: "CPI (after housing costs)", unit: "%" },
   rpi_inflation: { title: "RPI inflation", unit: "%" },
+  earnings_growth: { title: "Earnings growth", unit: "%" },
+  non_labour_income: { title: "Non-labour income growth", unit: "%" },
   house_prices: { title: "House price growth", unit: "%" },
-  per_capita_gdp: { title: "Per capita GDP growth", unit: "%" },
+  rent: { title: "Private rent growth", unit: "%" },
   social_rent: { title: "Social rent growth", unit: "%" },
+  mortgage_interest: { title: "Mortgage interest growth", unit: "%" },
 };
 
 const HERO_SERIES = [
@@ -43,9 +47,15 @@ function ForecastLineChart({ data, title, unit }) {
   );
   const dataMin = Math.min(...allValues);
   const dataMax = Math.max(...allValues);
-  const padding = Math.max((dataMax - dataMin) * 0.4, 0.3);
-  const yMin = Math.floor((dataMin - padding) * 10) / 10;
-  const yMax = Math.ceil((dataMax + padding) * 10) / 10;
+  const range = dataMax - dataMin;
+  // Pick a nice step size: 0.5 for narrow ranges, 1 for wider, 2 for very wide
+  const step = range <= 2 ? 0.5 : range <= 5 ? 1 : 2;
+  const yMin = Math.floor(dataMin / step - 1) * step;
+  const yMax = Math.ceil(dataMax / step + 1) * step;
+  const ticks = [];
+  for (let v = yMin; v <= yMax + step * 0.01; v += step) {
+    ticks.push(Math.round(v * 10) / 10);
+  }
 
   return (
     <div className="section-card" style={{ animationDelay: "0ms" }}>
@@ -165,8 +175,21 @@ export default function ForecastTab({ data }) {
   }
 
   const heroCards = buildHeroCards(forecast);
-  const topRow = ["earnings_growth", "cpi_inflation", "rpi_inflation"];
-  const bottomRow = ["house_prices", "per_capita_gdp", "social_rent"];
+
+  const groups = [
+    {
+      heading: "Inflation and price indices",
+      keys: ["cpi_inflation", "cpih", "cpi_ahc", "rpi_inflation"],
+    },
+    {
+      heading: "Income and earnings",
+      keys: ["earnings_growth", "non_labour_income"],
+    },
+    {
+      heading: "Housing and rent",
+      keys: ["house_prices", "rent", "social_rent", "mortgage_interest"],
+    },
+  ];
 
   return (
     <div style={{ animation: "fadeIn 0.3s ease-out" }}>
@@ -212,55 +235,34 @@ export default function ForecastTab({ data }) {
         </button>
       </div>
 
-      {/* Top row */}
-      <h2 className="text-xl font-bold text-gray-800 mt-8 mb-4 tracking-tight">
-        Key inflation and earnings forecasts
-      </h2>
-      <div className="charts-grid-3 grid grid-cols-3 gap-6 mb-6 max-lg:grid-cols-2 max-md:grid-cols-1">
-        {topRow.map(
-          (key) =>
-            forecast[key] &&
-            (viewMode === "chart" ? (
-              <ForecastLineChart
-                key={key}
-                data={forecast[key]}
-                title={SERIES_CONFIG[key].title}
-                unit={SERIES_CONFIG[key].unit}
-              />
-            ) : (
-              <ForecastTableCard
-                key={key}
-                data={forecast[key]}
-                title={SERIES_CONFIG[key].title}
-              />
-            )),
-        )}
-      </div>
-
-      {/* Bottom row */}
-      <h2 className="text-xl font-bold text-gray-800 mt-8 mb-4 tracking-tight">
-        Other economic indicators
-      </h2>
-      <div className="charts-grid-3 grid grid-cols-3 gap-6 mb-6 max-lg:grid-cols-2 max-md:grid-cols-1">
-        {bottomRow.map(
-          (key) =>
-            forecast[key] &&
-            (viewMode === "chart" ? (
-              <ForecastLineChart
-                key={key}
-                data={forecast[key]}
-                title={SERIES_CONFIG[key].title}
-                unit={SERIES_CONFIG[key].unit}
-              />
-            ) : (
-              <ForecastTableCard
-                key={key}
-                data={forecast[key]}
-                title={SERIES_CONFIG[key].title}
-              />
-            )),
-        )}
-      </div>
+      {groups.map((group) => (
+        <div key={group.heading}>
+          <h2 className="text-xl font-bold text-gray-800 mt-8 mb-4 tracking-tight">
+            {group.heading}
+          </h2>
+          <div className="grid grid-cols-2 gap-6 mb-6 max-md:grid-cols-1">
+            {group.keys.map(
+              (key) =>
+                forecast[key] &&
+                SERIES_CONFIG[key] &&
+                (viewMode === "chart" ? (
+                  <ForecastLineChart
+                    key={key}
+                    data={forecast[key]}
+                    title={SERIES_CONFIG[key].title}
+                    unit={SERIES_CONFIG[key].unit}
+                  />
+                ) : (
+                  <ForecastTableCard
+                    key={key}
+                    data={forecast[key]}
+                    title={SERIES_CONFIG[key].title}
+                  />
+                )),
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
