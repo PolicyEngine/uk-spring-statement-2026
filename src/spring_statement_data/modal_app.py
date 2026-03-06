@@ -126,6 +126,9 @@ def fastapi_app():
         childcare_expenses: float = Field(
             default=0, ge=0, le=5000
         )
+        pension_contributions: float = Field(
+            default=0, ge=0, le=5000
+        )
         student_loan_plan: str = Field(
             default="NO_STUDENT_LOAN"
         )
@@ -164,6 +167,7 @@ def fastapi_app():
                     council_tax_band=data.council_tax_band,
                     tenure_type=data.tenure_type,
                     childcare_expenses=data.childcare_expenses,
+                    pension_contributions=data.pension_contributions,
                     student_loan_plan=data.student_loan_plan,
                 ),
             )
@@ -198,6 +202,7 @@ def fastapi_app():
                     council_tax_band=data.council_tax_band,
                     tenure_type=data.tenure_type,
                     childcare_expenses=data.childcare_expenses,
+                    pension_contributions=data.pension_contributions,
                     student_loan_plan=data.student_loan_plan,
                     income_year=data.year,
                 ),

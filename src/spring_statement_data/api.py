@@ -82,6 +82,12 @@ class SpringStatementInput(BaseModel):
         le=5000,
         description="Monthly childcare expenses (GBP)",
     )
+    pension_contributions: float = Field(
+        default=0,
+        ge=0,
+        le=5000,
+        description="Monthly pension contributions (GBP)",
+    )
     student_loan_plan: str = Field(
         default="NO_STUDENT_LOAN", description="Student loan plan type"
     )
@@ -113,6 +119,7 @@ async def spring_statement(data: SpringStatementInput):
                 council_tax_band=data.council_tax_band,
                 tenure_type=data.tenure_type,
                 childcare_expenses=data.childcare_expenses,
+                pension_contributions=data.pension_contributions,
                 student_loan_plan=data.student_loan_plan,
             ),
         )
@@ -146,6 +153,7 @@ async def spring_statement_multi_year(data: SpringStatementInput):
                 council_tax_band=data.council_tax_band,
                 tenure_type=data.tenure_type,
                 childcare_expenses=data.childcare_expenses,
+                pension_contributions=data.pension_contributions,
                 student_loan_plan=data.student_loan_plan,
             ),
         )
