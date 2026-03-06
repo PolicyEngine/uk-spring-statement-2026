@@ -61,10 +61,10 @@ function ChangeBarChart({ decompositionData, selectedYear }) {
   return (
     <div className="section-card">
       <h3 className="chart-title">
-        Net change (2026 prices) by household type
+        Net change by household type
       </h3>
       <p className="chart-subtitle">
-        Net change in mean household income (2026 prices) by household type, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
+        Net change in mean household income by household type, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
       </p>
       <div className="chart-container-tall">
         <ResponsiveContainer width="100%" height="100%">
@@ -143,10 +143,10 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
   return (
     <div className="decomp-breakdown">
       <h3 className="chart-title">
-        Net change (2026 prices) by household type
+        Net change by household type
       </h3>
       <p className="chart-subtitle">
-        Net change in mean household income (2026 prices) for {(row.weighted_n / 1e6).toFixed(2)}m {selectedGroup.toLowerCase()} households, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
+        Net change in mean household income for {(row.weighted_n / 1e6).toFixed(2)}m {selectedGroup.toLowerCase()} households, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
       </p>
       <div style={{ marginBottom: 16 }}>
         <select
@@ -254,7 +254,7 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
           </tr>
           <tr className="decomp-table-total-row">
             <td className="decomp-table-label font-semibold">
-              Net change (2026 prices)
+              Net income (2026 £)
             </td>
             <td className="decomp-table-value"></td>
             <td className="decomp-table-value"></td>
@@ -290,7 +290,7 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
             indices for that year under the pre- and post-Statement forecasts
           </li>
           <li>
-            Net change (2026 prices) = nominal net income change + purchasing
+            Net income (2026 £) = nominal net income change + purchasing
             power
           </li>
           <li>

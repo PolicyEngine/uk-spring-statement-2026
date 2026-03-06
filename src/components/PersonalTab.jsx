@@ -736,7 +736,7 @@ export default function PersonalTab() {
                         </td>
                       </tr>
                       <tr className="decomp-table-total-row">
-                        <td className="decomp-table-label font-semibold">Net change (2026 prices)</td>
+                        <td className="decomp-table-label font-semibold">Net income (2026 £)</td>
                         <td className="decomp-table-value"></td>
                         <td className="decomp-table-value"></td>
                         <td className={`decomp-table-change font-semibold ${decomposition.total > 0.005 ? "positive" : decomposition.total < -0.005 ? "negative" : "zero"}`}>
@@ -752,7 +752,7 @@ export default function PersonalTab() {
                       <li>Market income, taxes, benefits, and net income (nominal) are shown in <strong>cash terms</strong> for that year</li>
                       <li>Purchasing power captures the effect of different CPI forecasts on the purchasing power of post-Statement net income</li>
                       <li>Purchasing power = post-Statement net income × (CPI<sub>pre</sub> / CPI<sub>post</sub> − 1), where CPI<sub>pre</sub> and CPI<sub>post</sub> are the price level indices for that year under the pre- and post-Statement forecasts</li>
-                      <li>Net change (2026 prices) = nominal net income change + purchasing power</li>
+                      <li>Net income (2026 £) = nominal net income change + purchasing power</li>
                       <li>This is the impact of revised macroeconomic forecasts (earnings and CPI), not a direct estimate of policy changes</li>
                     </ul>
                   </details>
