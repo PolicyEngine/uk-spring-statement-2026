@@ -797,8 +797,16 @@ export default function PersonalTab() {
                       </tr>
                       <tr className="decomp-table-total-row">
                         <td className="decomp-table-label font-semibold">Net income (2026 £)</td>
-                        <td className="decomp-table-value"></td>
-                        <td className="decomp-table-value"></td>
+                        <td className="decomp-table-value font-semibold">
+                          {decomposition.details?.real_net_income
+                            ? formatSigned(Math.round(decomposition.details.real_net_income.baseline))
+                            : ""}
+                        </td>
+                        <td className="decomp-table-value font-semibold">
+                          {decomposition.details?.real_net_income
+                            ? formatSigned(Math.round(decomposition.details.real_net_income.reform))
+                            : ""}
+                        </td>
                         <td className={`decomp-table-change font-semibold ${roundedTotal > 0 ? "positive" : roundedTotal < 0 ? "negative" : "zero"}`}>
                           {formatCurrency(roundedTotal)}
                         </td>

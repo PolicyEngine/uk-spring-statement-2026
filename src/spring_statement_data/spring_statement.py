@@ -40,6 +40,14 @@ PRE_STATEMENT_CPI = {
 }
 
 
+def _baseline_to_2026(year):
+    """Deflator to convert baseline year-Y nominal £ to 2026 £."""
+    cum = 1.0
+    for y in range(2027, year + 1):
+        cum *= 1 + PRE_STATEMENT_CPI.get(y, 0)
+    return 1.0 / cum
+
+
 def _compute_decomposition(
     baseline_net,
     reform_net,
@@ -109,6 +117,10 @@ def _compute_decomposition(
             "benefits": {"baseline": round(total_benefits_b, 2), "reform": round(total_benefits_r, 2)},
             "pension_contributions": {"baseline": round(pension_contrib_b, 2), "reform": round(pension_contrib_r, 2)},
             "net_income": {"baseline": round(baseline_net, 2), "reform": round(reform_net, 2)},
+            "real_net_income": {
+                "baseline": round(baseline_net * _baseline_to_2026(year), 2),
+                "reform": round(baseline_net * _baseline_to_2026(year) + total, 2),
+            },
         },
     }
 
