@@ -183,15 +183,6 @@ function WinnersLosersChart({ data, year }) {
               name="losing"
               radius={[4, 4, 0, 0]}
             />
-            <Line
-              dataKey="net"
-              type="monotone"
-              stroke="#000"
-              strokeWidth={2}
-              dot={{ r: 4, fill: "#000", stroke: "#000" }}
-              name="net"
-              isAnimationActive={false}
-            />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
