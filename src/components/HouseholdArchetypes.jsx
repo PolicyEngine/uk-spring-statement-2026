@@ -108,7 +108,7 @@ function consistentRound(details) {
 
 function ChangeBarChart({ decompositionData, selectedYear }) {
   const chartData = decompositionData
-    .filter((d) => d.year === selectedYear && d.group !== "All households")
+    .filter((d) => d.year === selectedYear)
     .map((d) => ({
       group: shorten(d.group),
       change: Math.round(d.decomposition.total),
