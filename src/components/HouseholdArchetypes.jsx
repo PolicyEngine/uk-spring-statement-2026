@@ -14,10 +14,11 @@ import {
 import { colors } from "@policyengine/design-system/tokens/colors";
 
 const DECOMP_META = {
-  market_income: { label: "Market income", color: colors.blue[600] },
-  taxes: { label: "Taxes", color: colors.gray[400] },
-  benefits: { label: "Benefits", color: colors.gray[600] },
-  purchasing_power: { label: "Purchasing power", color: colors.blue[700] },
+  market_income: { label: "Market income", color: colors.blue[600], sign: 1 },
+  taxes: { label: "Taxes", color: colors.gray[400], sign: -1 },
+  benefits: { label: "Benefits", color: colors.gray[600], sign: 1 },
+  pension_contributions: { label: "Pension contributions", color: colors.gray[500], sign: -1 },
+  purchasing_power: { label: "Purchasing power", color: colors.blue[700], sign: 1 },
 };
 
 function shorten(group) {
@@ -44,14 +45,70 @@ function formatDecomp(value) {
   return formatted;
 }
 
-function formatAbsolute(value) {
+function formatAbsolute(value, sign = 1) {
   if (value == null) return "\u2014";
-  return `\u00a3${Math.abs(value).toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+  const displayVal = value * sign;
+  const prefix = displayVal < -0.5 ? "\u2212" : "";
+  return `${prefix}\u00a3${Math.abs(displayVal).toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+}
+
+function formatSigned(roundedVal) {
+  if (roundedVal == null) return "\u2014";
+  const prefix = roundedVal < 0 ? "\u2212" : "";
+  return `${prefix}\u00a3${Math.abs(roundedVal).toLocaleString("en-GB")}`;
+}
+
+/**
+ * Round component values so they sum exactly to the rounded net income.
+ * Uses largest-remainder method to distribute rounding residual.
+ * signs: +1 for income/benefits, -1 for taxes/pension (how they enter net income)
+ */
+function consistentRound(details) {
+  if (!details?.net_income) return null;
+  const keys = ["market_income", "taxes", "benefits", "pension_contributions"];
+  const signs = { market_income: 1, taxes: -1, benefits: 1, pension_contributions: -1 };
+
+  const result = {};
+  for (const scenario of ["baseline", "reform"]) {
+    const netRounded = Math.round(details.net_income[scenario]);
+    // Signed contributions to net income (unrounded)
+    const raw = keys.map((k) => {
+      const v = details[k]?.[scenario] ?? 0;
+      return { key: k, signed: v * signs[k], floored: Math.floor(v * signs[k]) };
+    });
+    // Sum of floored values
+    let flooredSum = raw.reduce((s, r) => s + r.floored, 0);
+    // Remainders (fractional parts)
+    const remainders = raw.map((r) => ({
+      key: r.key,
+      floored: r.floored,
+      remainder: r.signed - r.floored,
+    }));
+    // Sort by largest remainder descending
+    remainders.sort((a, b) => b.remainder - a.remainder);
+    // Distribute the difference
+    let diff = netRounded - flooredSum;
+    for (const r of remainders) {
+      if (diff > 0) { r.floored += 1; diff -= 1; }
+      else break;
+    }
+    for (const r of remainders) {
+      if (!result[r.key]) result[r.key] = {};
+      result[r.key][scenario] = r.floored;
+    }
+    result.net_income = result.net_income || {};
+    result.net_income[scenario] = netRounded;
+  }
+  // Change column: use rounded values
+  for (const k of [...keys, "net_income"]) {
+    result[k].change = result[k].reform - result[k].baseline;
+  }
+  return result;
 }
 
 function ChangeBarChart({ decompositionData, selectedYear }) {
   const chartData = decompositionData
-    .filter((d) => d.year === selectedYear)
+    .filter((d) => d.year === selectedYear && d.group !== "All households")
     .map((d) => ({
       group: shorten(d.group),
       change: Math.round(d.decomposition.total),
@@ -120,7 +177,7 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
     .filter((d) => d.year === selectedYear)
     .map((d) => d.group);
 
-  const [selectedGroup, setSelectedGroup] = useState(groups[0] || "");
+  const [selectedGroup, setSelectedGroup] = useState("All households");
 
   // Reset selection when year changes
   useEffect(() => {
@@ -135,10 +192,8 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
   if (!row) return null;
 
   const decomposition = row.decomposition;
-  const nominalChange =
-    (decomposition.market_income || 0) +
-    (decomposition.taxes || 0) +
-    (decomposition.benefits || 0);
+  const rounded = consistentRound(decomposition.details);
+  const nominalChange = rounded ? rounded.net_income.change : 0;
 
   return (
     <div className="decomp-breakdown">
@@ -146,7 +201,7 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
         Net change by household type
       </h3>
       <p className="chart-subtitle">
-        Net change in mean household income for {(row.weighted_n / 1e6).toFixed(2)}m {selectedGroup.toLowerCase()} households, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
+        Net change in mean household income for {(row.weighted_n / 1e6).toFixed(2)}m {selectedGroup === "All households" ? "households" : `${selectedGroup.toLowerCase()} households`}, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
       </p>
       <div style={{ marginBottom: 16 }}>
         <select
@@ -187,10 +242,10 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
           </tr>
         </thead>
         <tbody>
-          {["market_income", "taxes", "benefits"].map((key) => {
+          {["market_income", "taxes", "benefits", "pension_contributions"].map((key) => {
             const meta = DECOMP_META[key];
-            const detail = decomposition.details?.[key];
-            const change = decomposition[key] || 0;
+            const rv = rounded?.[key];
+            const change = rv ? rv.change : 0;
             return (
               <tr key={key}>
                 <td className="decomp-table-label">
@@ -201,13 +256,13 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
                   {meta.label}
                 </td>
                 <td className="decomp-table-value">
-                  {detail ? formatAbsolute(detail.baseline) : "\u2014"}
+                  {rv ? formatSigned(rv.baseline) : "\u2014"}
                 </td>
                 <td className="decomp-table-value">
-                  {detail ? formatAbsolute(detail.reform) : "\u2014"}
+                  {rv ? formatSigned(rv.reform) : "\u2014"}
                 </td>
                 <td
-                  className={`decomp-table-change ${change > 0.005 ? "positive" : change < -0.005 ? "negative" : "zero"}`}
+                  className={`decomp-table-change ${change > 0 ? "positive" : change < 0 ? "negative" : "zero"}`}
                 >
                   {formatDecomp(change)}
                 </td>
@@ -219,21 +274,25 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
               Net income (nominal)
             </td>
             <td className="decomp-table-value font-semibold">
-              {decomposition.details?.net_income
-                ? formatAbsolute(decomposition.details.net_income.baseline)
+              {rounded?.net_income
+                ? formatSigned(rounded.net_income.baseline)
                 : "\u2014"}
             </td>
             <td className="decomp-table-value font-semibold">
-              {decomposition.details?.net_income
-                ? formatAbsolute(decomposition.details.net_income.reform)
+              {rounded?.net_income
+                ? formatSigned(rounded.net_income.reform)
                 : "\u2014"}
             </td>
             <td
-              className={`decomp-table-change font-semibold ${nominalChange > 0.005 ? "positive" : nominalChange < -0.005 ? "negative" : "zero"}`}
+              className={`decomp-table-change font-semibold ${nominalChange > 0 ? "positive" : nominalChange < 0 ? "negative" : "zero"}`}
             >
               {formatDecomp(nominalChange)}
             </td>
           </tr>
+          {(() => {
+            const roundedTotal = Math.round(decomposition.total);
+            const displayedPP = roundedTotal - nominalChange;
+            return (<>
           <tr className="decomp-table-purchasing-row">
             <td className="decomp-table-label">
               <span
@@ -247,9 +306,9 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
             <td className="decomp-table-value"></td>
             <td className="decomp-table-value"></td>
             <td
-              className={`decomp-table-change ${decomposition.purchasing_power > 0.005 ? "positive" : decomposition.purchasing_power < -0.005 ? "negative" : "zero"}`}
+              className={`decomp-table-change ${displayedPP > 0 ? "positive" : displayedPP < 0 ? "negative" : "zero"}`}
             >
-              {formatDecomp(decomposition.purchasing_power)}
+              {formatDecomp(displayedPP)}
             </td>
           </tr>
           <tr className="decomp-table-total-row">
@@ -259,11 +318,13 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
             <td className="decomp-table-value"></td>
             <td className="decomp-table-value"></td>
             <td
-              className={`decomp-table-change font-semibold ${decomposition.total > 0.005 ? "positive" : decomposition.total < -0.005 ? "negative" : "zero"}`}
+              className={`decomp-table-change font-semibold ${roundedTotal > 0 ? "positive" : roundedTotal < 0 ? "negative" : "zero"}`}
             >
-              {formatDecomp(decomposition.total)}
+              {formatDecomp(roundedTotal)}
             </td>
           </tr>
+            </>);
+          })()}
         </tbody>
       </table>
       <details className="methodology-details mt-3">
@@ -276,7 +337,15 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
             group, simulated in PolicyEngine UK
           </li>
           <li>
-            Market income, taxes, benefits, and net income (nominal) are shown
+            Market income includes employment, self-employment, pension,
+            savings, dividend, property, and other private income
+          </li>
+          <li>
+            Pension contributions includes both personal contributions and
+            employer-matched employee contributions
+          </li>
+          <li>
+            Market income, taxes, benefits, pension contributions, and net income (nominal) are shown
             in <strong>cash terms</strong> for that year
           </li>
           <li>

@@ -159,36 +159,19 @@ def _generate_household_archetypes(output_dir: Path, years: list[int] = None):
         )
         weights = np.array(baseline_hnet.weights)
 
-        # Market income: employment + self-employment, mapped to household
-        market_b = np.array(
-            baseline.calculate("employment_income", year, map_to="household")
-        ) + np.array(
-            baseline.calculate("self_employment_income", year, map_to="household")
+        # Use PE's own aggregate variables so components sum to net income
+        market_b = np.array(baseline.calculate("household_market_income", year))
+        market_r = np.array(reformed.calculate("household_market_income", year))
+        taxes_b = np.array(baseline.calculate("household_tax", year))
+        taxes_r = np.array(reformed.calculate("household_tax", year))
+        benefits_b = np.array(baseline.calculate("household_benefits", year))
+        benefits_r = np.array(reformed.calculate("household_benefits", year))
+        pension_contrib_b = np.array(
+            baseline.calculate("pension_contributions", year, map_to="household")
         )
-        market_r = np.array(
-            reformed.calculate("employment_income", year, map_to="household")
-        ) + np.array(
-            reformed.calculate("self_employment_income", year, map_to="household")
+        pension_contrib_r = np.array(
+            reformed.calculate("pension_contributions", year, map_to="household")
         )
-
-        # Taxes & benefits from PROGRAM_STRUCTURE
-        taxes_b = np.zeros(len(weights))
-        taxes_r = np.zeros(len(weights))
-        benefits_b = np.zeros(len(weights))
-        benefits_r = np.zeros(len(weights))
-        for prog in PROGRAM_STRUCTURE:
-            pid = prog["id"]
-            try:
-                arr_b = np.array(baseline.calculate(pid, year, map_to="household"))
-                arr_r = np.array(reformed.calculate(pid, year, map_to="household"))
-            except (ValueError, Exception):
-                continue
-            if prog.get("is_tax", False):
-                taxes_b += arr_b
-                taxes_r += arr_r
-            else:
-                benefits_b += arr_b
-                benefits_r += arr_r
 
         for group in _HH_GROUPS:
             mask = groups == group
@@ -210,6 +193,8 @@ def _generate_household_archetypes(output_dir: Path, years: list[int] = None):
             mean_taxes_r = _wmean(taxes_r)
             mean_benefits_b = _wmean(benefits_b)
             mean_benefits_r = _wmean(benefits_r)
+            mean_pc_b = _wmean(pension_contrib_b)
+            mean_pc_r = _wmean(pension_contrib_r)
 
             decomposition = _compute_decomposition(
                 mean_b,
@@ -221,6 +206,8 @@ def _generate_household_archetypes(output_dir: Path, years: list[int] = None):
                 mean_market_b,
                 mean_market_r,
                 year,
+                pension_contrib_b=mean_pc_b,
+                pension_contrib_r=mean_pc_r,
             )
 
             all_decomposition.append({
@@ -229,6 +216,29 @@ def _generate_household_archetypes(output_dir: Path, years: list[int] = None):
                 "weighted_n": round(weighted_n),
                 "decomposition": decomposition,
             })
+
+        # "All households" aggregate
+        def _wmean_all(arr):
+            return float(np.average(arr, weights=weights))
+
+        all_decomposition.append({
+            "year": year,
+            "group": "All households",
+            "weighted_n": round(float(weights.sum())),
+            "decomposition": _compute_decomposition(
+                _wmean_all(np.array(baseline_hnet)),
+                _wmean_all(np.array(reform_hnet_nominal)),
+                _wmean_all(taxes_b),
+                _wmean_all(taxes_r),
+                _wmean_all(benefits_b),
+                _wmean_all(benefits_r),
+                _wmean_all(market_b),
+                _wmean_all(market_r),
+                year,
+                pension_contrib_b=_wmean_all(pension_contrib_b),
+                pension_contrib_r=_wmean_all(pension_contrib_r),
+            ),
+        })
 
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / "household_decomposition.json", "w") as f:

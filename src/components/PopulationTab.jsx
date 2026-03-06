@@ -186,9 +186,9 @@ function WinnersLosersChart({ data, year }) {
             <Line
               dataKey="net"
               type="monotone"
-              stroke={colors.gray[800]}
+              stroke="#000"
               strokeWidth={2}
-              dot={{ r: 4, fill: colors.gray[800], stroke: colors.gray[800] }}
+              dot={{ r: 4, fill: "#000", stroke: "#000" }}
               name="net"
               isAnimationActive={false}
             />

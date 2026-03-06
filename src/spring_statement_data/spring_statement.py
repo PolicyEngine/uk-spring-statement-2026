@@ -50,23 +50,28 @@ def _compute_decomposition(
     market_income_b,
     market_income_r,
     year,
+    pension_contrib_b=0,
+    pension_contrib_r=0,
 ):
     """Decompose the real net income impact into four components.
 
     Steps:
-    1. Compute nominal changes: market income, taxes, benefits
+    1. Compute nominal changes: market income, taxes, benefits,
+       pension contributions
     2. Sum to nominal net income change
     3. Apply purchasing power adjustment to reform net income
        (CPI deflator converts reform £ to baseline price level)
     4. Total real change = nominal change + purchasing power
 
     Components:
-    1. market_income — change from different earnings growth forecasts
-    2. taxes — nominal change in total taxes (positive = taxes fell = good)
-    3. benefits — nominal change in total benefits
+    1. market_income — change in household_market_income
+    2. taxes — nominal change in household_tax (positive = taxes fell = good)
+    3. benefits — nominal change in household_benefits
     4. purchasing_power — CPI adjustment applied to reform net income
 
-    The four components sum exactly to *total*.
+    Net income = market_income + benefits - taxes - pension_contributions.
+    The four displayed components plus pension_contributions sum exactly
+    to *total*.
     """
     deflator = get_real_deflator(year)
 
@@ -74,32 +79,35 @@ def _compute_decomposition(
     market_income_effect = round(market_income_r - market_income_b, 2)
     taxes_effect = round(-(total_taxes_r - total_taxes_b), 2)
     benefits_effect = round(total_benefits_r - total_benefits_b, 2)
+    pension_contrib_effect = round(-(pension_contrib_r - pension_contrib_b), 2)
 
     # Purchasing power: CPI adjustment applied to reform net income
     purchasing_power_raw = reform_net * (deflator - 1)
 
     # Total = nominal change + purchasing power (from unrounded values)
-    total = round(
+    nominal_raw = (
         (market_income_r - market_income_b)
         + (-(total_taxes_r - total_taxes_b))
         + (total_benefits_r - total_benefits_b)
-        + purchasing_power_raw,
-        2,
+        + (-(pension_contrib_r - pension_contrib_b))
     )
+    total = round(nominal_raw + purchasing_power_raw, 2)
 
     # Purchasing power absorbs rounding so components sum exactly to total
-    purchasing_power = total - market_income_effect - taxes_effect - benefits_effect
+    purchasing_power = total - market_income_effect - taxes_effect - benefits_effect - pension_contrib_effect
 
     return {
         "market_income": market_income_effect,
         "taxes": taxes_effect,
         "benefits": benefits_effect,
+        "pension_contributions": pension_contrib_effect,
         "purchasing_power": round(purchasing_power, 2),
         "total": total,
         "details": {
             "market_income": {"baseline": round(market_income_b, 2), "reform": round(market_income_r, 2)},
             "taxes": {"baseline": round(total_taxes_b, 2), "reform": round(total_taxes_r, 2)},
             "benefits": {"baseline": round(total_benefits_b, 2), "reform": round(total_benefits_r, 2)},
+            "pension_contributions": {"baseline": round(pension_contrib_b, 2), "reform": round(pension_contrib_r, 2)},
             "net_income": {"baseline": round(baseline_net, 2), "reform": round(reform_net, 2)},
         },
     }
@@ -491,6 +499,7 @@ def _build_situation(
     council_tax_band: str = "D",
     tenure_type: str = "RENT_PRIVATELY",
     childcare_expenses: float = 0,
+    pension_contributions: float = 0,
     student_loan_plan: str = "NO_STUDENT_LOAN",
     self_employment_income: float = 0,
     income_base_year: int = None,
@@ -513,6 +522,10 @@ def _build_situation(
     if self_employment_income > 0:
         people["adult"]["self_employment_income"] = {
             inc_year: self_employment_income
+        }
+    if pension_contributions > 0:
+        people["adult"]["personal_pension_contributions"] = {
+            inc_year: pension_contributions * 12
         }
     members = ["adult"]
 
@@ -616,7 +629,19 @@ def _extract_results(sim: Simulation, situation: dict, year: int) -> dict:
         _household_val("real_household_net_income"), 2
     )
 
-    # Market income = employment + self-employment (summed across people)
+    # PE aggregate variables for consistent decomposition
+    results["household_market_income"] = round(
+        _household_val("household_market_income"), 2
+    )
+    results["household_tax"] = round(
+        _household_val("household_tax"), 2
+    )
+    results["household_benefits"] = round(
+        _household_val("household_benefits"), 2
+    )
+    results["pension_contributions"] = round(_person_sum("pension_contributions"), 2)
+
+    # Legacy: market income = employment + self-employment
     try:
         market = _person_sum("employment_income") + _person_sum(
             "self_employment_income"
@@ -642,6 +667,7 @@ def calculate_household_impact(
     council_tax_band: str = "D",
     tenure_type: str = "RENT_PRIVATELY",
     childcare_expenses: float = 0,
+    pension_contributions: float = 0,
     student_loan_plan: str = "NO_STUDENT_LOAN",
     self_employment_income: float = 0,
 ) -> dict:
@@ -668,6 +694,7 @@ def calculate_household_impact(
         council_tax_band=council_tax_band,
         tenure_type=tenure_type,
         childcare_expenses=childcare_expenses,
+        pension_contributions=pension_contributions,
         student_loan_plan=student_loan_plan,
         self_employment_income=self_employment_income,
         income_base_year=2025,
@@ -729,13 +756,15 @@ def calculate_household_impact(
     decomposition = _compute_decomposition(
         baseline["household_net_income"],
         reform["household_net_income"],
-        total_taxes_b,
-        total_taxes_r,
-        total_benefits_b,
-        total_benefits_r,
-        baseline["market_income"],
-        reform["market_income"],
+        baseline["household_tax"],
+        reform["household_tax"],
+        baseline["household_benefits"],
+        reform["household_benefits"],
+        baseline["household_market_income"],
+        reform["household_market_income"],
         year,
+        pension_contrib_b=baseline["pension_contributions"],
+        pension_contrib_r=reform["pension_contributions"],
     )
 
     return {
@@ -765,6 +794,7 @@ def calculate_multi_year_net_impact(
     council_tax_band: str = "D",
     tenure_type: str = "RENT_PRIVATELY",
     childcare_expenses: float = 0,
+    pension_contributions: float = 0,
     student_loan_plan: str = "NO_STUDENT_LOAN",
     self_employment_income: float = 0,
     income_year: int = 2026,
@@ -807,6 +837,7 @@ def calculate_multi_year_net_impact(
             council_tax_band=council_tax_band,
             tenure_type=tenure_type,
             childcare_expenses=childcare_expenses,
+            pension_contributions=pension_contributions,
             student_loan_plan=student_loan_plan,
             self_employment_income=self_employment_income,
             income_base_year=2025,
@@ -846,34 +877,27 @@ def calculate_multi_year_net_impact(
 
         impact = round(reform_net - baseline_net, 2)
 
-        # Market income (employment + self-employment)
-        def _market_income(sim):
-            emp = sim.calculate("employment_income", year)
-            total = float(emp.sum()) if num_people > 1 else float(emp[0])
-            try:
-                se = sim.calculate("self_employment_income", year)
-                total += float(se.sum()) if num_people > 1 else float(se[0])
-            except Exception:
-                pass
-            return total
+        # PE aggregate variables for consistent decomposition
+        def _hh_val(sim, var):
+            return float(sim.calculate(var, year)[0])
 
-        market_b = _market_income(baseline_sim)
-        market_r = _market_income(reform_sim)
+        def _person_sum(sim, var):
+            raw = sim.calculate(var, year)
+            return float(raw.sum()) if num_people > 1 else float(raw[0])
+
+        market_b = _hh_val(baseline_sim, "household_market_income")
+        market_r = _hh_val(reform_sim, "household_market_income")
+        total_taxes_b = _hh_val(baseline_sim, "household_tax")
+        total_taxes_r = _hh_val(reform_sim, "household_tax")
+        total_benefits_b = _hh_val(baseline_sim, "household_benefits")
+        total_benefits_r = _hh_val(reform_sim, "household_benefits")
+        pc_b = _person_sum(baseline_sim, "pension_contributions")
+        pc_r = _person_sum(reform_sim, "pension_contributions")
 
         breakdown = []
-        total_taxes_b = 0.0
-        total_taxes_r = 0.0
-        total_benefits_b = 0.0
-        total_benefits_r = 0.0
         for prog in top_programs:
             b_val = _calc(baseline_sim, prog["id"], prog["entity"])
             r_val = _calc(reform_sim, prog["id"], prog["entity"])
-            if prog["is_tax"]:
-                total_taxes_b += b_val
-                total_taxes_r += r_val
-            else:
-                total_benefits_b += b_val
-                total_benefits_r += r_val
             diff = r_val - b_val
             if abs(diff) > 0.005:
                 household_impact = -diff if prog["is_tax"] else diff
@@ -894,6 +918,8 @@ def calculate_multi_year_net_impact(
             market_b,
             market_r,
             year,
+            pension_contrib_b=pc_b,
+            pension_contrib_r=pc_r,
         )
 
         return str(year), impact, breakdown, decomposition

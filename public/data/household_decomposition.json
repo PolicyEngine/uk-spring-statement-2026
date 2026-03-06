@@ -4,23 +4,28 @@
     "group": "Single adult, no children",
     "weighted_n": 5487196,
     "decomposition": {
-      "market_income": 31.52,
-      "taxes": -8.6,
-      "benefits": -9.29,
+      "market_income": 28.59,
+      "taxes": -6.21,
+      "benefits": -9.54,
+      "pension_contributions": -1.05,
       "purchasing_power": 62.04,
-      "total": 75.67,
+      "total": 73.83,
       "details": {
         "market_income": {
-          "baseline": 17783.59,
-          "reform": 17815.11
+          "baseline": 23793.43,
+          "reform": 23822.03
         },
         "taxes": {
-          "baseline": 5529.35,
-          "reform": 5537.95
+          "baseline": 7716.69,
+          "reform": 7722.89
         },
         "benefits": {
-          "baseline": 8524.03,
-          "reform": 8514.74
+          "baseline": 12107.08,
+          "reform": 12097.54
+        },
+        "pension_contributions": {
+          "baseline": 549.84,
+          "reform": 550.89
         },
         "net_income": {
           "baseline": 27633.99,
@@ -34,23 +39,28 @@
     "group": "Couple, no children",
     "weighted_n": 8763130,
     "decomposition": {
-      "market_income": 131.16,
-      "taxes": -113.97,
-      "benefits": -2.04,
+      "market_income": 123.18,
+      "taxes": -108.89,
+      "benefits": -2.32,
+      "pension_contributions": -5.07,
       "purchasing_power": 157.25,
-      "total": 172.4,
+      "total": 164.15,
       "details": {
         "market_income": {
-          "baseline": 76734.16,
-          "reform": 76865.32
+          "baseline": 91080.16,
+          "reform": 91203.34
         },
         "taxes": {
-          "baseline": 22697.57,
-          "reform": 22811.54
+          "baseline": 26576.74,
+          "reform": 26685.63
         },
         "benefits": {
-          "baseline": 2050.37,
-          "reform": 2048.33
+          "baseline": 8212.89,
+          "reform": 8210.58
+        },
+        "pension_contributions": {
+          "baseline": 2647.02,
+          "reform": 2652.08
         },
         "net_income": {
           "baseline": 70069.3,
@@ -64,23 +74,28 @@
     "group": "Single parent",
     "weighted_n": 2034406,
     "decomposition": {
-      "market_income": 26.22,
-      "taxes": -6.27,
-      "benefits": -21.35,
+      "market_income": 26.16,
+      "taxes": -3.43,
+      "benefits": -22.2,
+      "pension_contributions": -0.91,
       "purchasing_power": 85.24,
-      "total": 83.84,
+      "total": 84.86,
       "details": {
         "market_income": {
-          "baseline": 14490.73,
-          "reform": 14516.95
+          "baseline": 18373.51,
+          "reform": 18399.67
         },
         "taxes": {
-          "baseline": 3357.54,
-          "reform": 3363.81
+          "baseline": 5772.02,
+          "reform": 5775.46
         },
         "benefits": {
-          "baseline": 19911.55,
-          "reform": 19890.2
+          "baseline": 25860.93,
+          "reform": 25838.73
+        },
+        "pension_contributions": {
+          "baseline": 475.16,
+          "reform": 476.07
         },
         "net_income": {
           "baseline": 37987.26,
@@ -94,23 +109,28 @@
     "group": "Couple with children",
     "weighted_n": 6704035,
     "decomposition": {
-      "market_income": 130.98,
-      "taxes": -24.48,
-      "benefits": -6.76,
-      "purchasing_power": 170.05,
-      "total": 269.79,
+      "market_income": 128.95,
+      "taxes": -20.17,
+      "benefits": -7.37,
+      "pension_contributions": -4.21,
+      "purchasing_power": 170.06,
+      "total": 267.26,
       "details": {
         "market_income": {
-          "baseline": 74185.68,
-          "reform": 74316.66
+          "baseline": 87649.29,
+          "reform": 87778.24
         },
         "taxes": {
-          "baseline": 22142.66,
-          "reform": 22167.14
+          "baseline": 25595.5,
+          "reform": 25615.67
         },
         "benefits": {
-          "baseline": 7187.91,
-          "reform": 7181.15
+          "baseline": 15828.5,
+          "reform": 15821.13
+        },
+        "pension_contributions": {
+          "baseline": 2196.99,
+          "reform": 2201.2
         },
         "net_income": {
           "baseline": 75685.29,
@@ -124,23 +144,28 @@
     "group": "Single pensioner",
     "weighted_n": 3891606,
     "decomposition": {
-      "market_income": 2.13,
-      "taxes": 1.21,
-      "benefits": 4.89,
+      "market_income": -9.12,
+      "taxes": 3.1,
+      "benefits": 2.78,
+      "pension_contributions": -0.05,
       "purchasing_power": 58.0,
-      "total": 66.23,
+      "total": 54.71,
       "details": {
         "market_income": {
-          "baseline": 1711.64,
-          "reform": 1713.78
+          "baseline": 10326.16,
+          "reform": 10317.04
         },
         "taxes": {
-          "baseline": 3042.96,
-          "reform": 3041.75
+          "baseline": 5648.52,
+          "reform": 5645.42
         },
         "benefits": {
-          "baseline": 12840.36,
-          "reform": 12845.25
+          "baseline": 21201.57,
+          "reform": 21204.36
+        },
+        "pension_contributions": {
+          "baseline": 27.51,
+          "reform": 27.56
         },
         "net_income": {
           "baseline": 25851.71,
@@ -154,23 +179,28 @@
     "group": "Pensioner couple",
     "weighted_n": 4773454,
     "decomposition": {
-      "market_income": 17.53,
-      "taxes": 0.52,
-      "benefits": 11.19,
-      "purchasing_power": 118.17,
-      "total": 147.41,
+      "market_income": -12.33,
+      "taxes": 3.18,
+      "benefits": 10.42,
+      "pension_contributions": -0.88,
+      "purchasing_power": 118.18,
+      "total": 118.57,
       "details": {
         "market_income": {
-          "baseline": 10733.19,
-          "reform": 10750.72
+          "baseline": 33884.58,
+          "reform": 33872.25
         },
         "taxes": {
-          "baseline": 9206.21,
-          "reform": 9205.7
+          "baseline": 13184.03,
+          "reform": 13180.85
         },
         "benefits": {
-          "baseline": 20059.16,
-          "reform": 20070.34
+          "baseline": 32421.07,
+          "reform": 32431.49
+        },
+        "pension_contributions": {
+          "baseline": 458.19,
+          "reform": 459.06
         },
         "net_income": {
           "baseline": 52663.44,
@@ -180,27 +210,67 @@
     }
   },
   {
+    "year": 2026,
+    "group": "All households",
+    "weighted_n": 31883215,
+    "decomposition": {
+      "market_income": 65.04,
+      "taxes": -34.75,
+      "benefits": -3.49,
+      "pension_contributions": -2.67,
+      "purchasing_power": 120.93,
+      "total": 145.06,
+      "details": {
+        "market_income": {
+          "baseline": 55419.86,
+          "reform": 55484.9
+        },
+        "taxes": {
+          "baseline": 17145.84,
+          "reform": 17180.59
+        },
+        "benefits": {
+          "baseline": 16991.54,
+          "reform": 16988.05
+        },
+        "pension_contributions": {
+          "baseline": 1394.42,
+          "reform": 1397.09
+        },
+        "net_income": {
+          "baseline": 53871.14,
+          "reform": 53895.26
+        }
+      }
+    }
+  },
+  {
     "year": 2027,
     "group": "Single adult, no children",
     "weighted_n": 5507498,
     "decomposition": {
-      "market_income": 56.97,
-      "taxes": -17.75,
-      "benefits": -20.36,
-      "purchasing_power": 68.42,
-      "total": 87.28,
+      "market_income": 45.87,
+      "taxes": -14.71,
+      "benefits": -21.69,
+      "pension_contributions": -1.9,
+      "purchasing_power": 68.41,
+      "total": 75.98,
       "details": {
         "market_income": {
-          "baseline": 18202.98,
-          "reform": 18259.95
+          "baseline": 24413.31,
+          "reform": 24459.17
         },
         "taxes": {
-          "baseline": 5781.81,
-          "reform": 5799.56
+          "baseline": 8150.96,
+          "reform": 8165.68
         },
         "benefits": {
-          "baseline": 8728.86,
-          "reform": 8708.5
+          "baseline": 12327.89,
+          "reform": 12306.21
+        },
+        "pension_contributions": {
+          "baseline": 562.21,
+          "reform": 564.11
         },
         "net_income": {
           "baseline": 28028.03,
@@ -214,23 +284,28 @@
     "group": "Couple, no children",
     "weighted_n": 8795553,
     "decomposition": {
-      "market_income": 237.07,
-      "taxes": -2.41,
-      "benefits": -4.63,
-      "purchasing_power": 174.16,
-      "total": 404.19,
+      "market_income": 206.76,
+      "taxes": 4.44,
+      "benefits": -5.31,
+      "pension_contributions": -9.16,
+      "purchasing_power": 174.18,
+      "total": 370.91,
       "details": {
         "market_income": {
-          "baseline": 78580.74,
-          "reform": 78817.81
+          "baseline": 93407.49,
+          "reform": 93614.25
         },
         "taxes": {
-          "baseline": 23630.99,
-          "reform": 23633.4
+          "baseline": 27799.45,
+          "reform": 27795.0
         },
         "benefits": {
-          "baseline": 2098.7,
-          "reform": 2094.07
+          "baseline": 8267.82,
+          "reform": 8262.51
+        },
+        "pension_contributions": {
+          "baseline": 2706.57,
+          "reform": 2715.73
         },
         "net_income": {
           "baseline": 71169.28,
@@ -244,23 +319,28 @@
     "group": "Single parent",
     "weighted_n": 2041933,
     "decomposition": {
-      "market_income": 47.39,
-      "taxes": -14.02,
-      "benefits": -58.81,
-      "purchasing_power": 93.95,
-      "total": 68.51,
+      "market_income": 47.17,
+      "taxes": -10.57,
+      "benefits": -60.86,
+      "pension_contributions": -1.64,
+      "purchasing_power": 93.96,
+      "total": 68.06,
       "details": {
         "market_income": {
-          "baseline": 14828.4,
-          "reform": 14875.79
+          "baseline": 18836.72,
+          "reform": 18883.89
         },
         "taxes": {
-          "baseline": 3505.18,
-          "reform": 3519.2
+          "baseline": 6139.17,
+          "reform": 6149.74
         },
         "benefits": {
-          "baseline": 20358.66,
-          "reform": 20299.85
+          "baseline": 26315.95,
+          "reform": 26255.09
+        },
+        "pension_contributions": {
+          "baseline": 485.85,
+          "reform": 487.5
         },
         "net_income": {
           "baseline": 38527.64,
@@ -274,23 +354,28 @@
     "group": "Couple with children",
     "weighted_n": 6728840,
     "decomposition": {
-      "market_income": 236.75,
-      "taxes": -85.28,
-      "benefits": -19.25,
-      "purchasing_power": 187.84,
-      "total": 320.06,
+      "market_income": 229.06,
+      "taxes": -80.05,
+      "benefits": -20.77,
+      "pension_contributions": -7.6,
+      "purchasing_power": 187.83,
+      "total": 308.47,
       "details": {
         "market_income": {
-          "baseline": 75939.06,
-          "reform": 76175.81
+          "baseline": 89841.95,
+          "reform": 90071.01
         },
         "taxes": {
-          "baseline": 23021.77,
-          "reform": 23107.05
+          "baseline": 26761.43,
+          "reform": 26841.48
         },
         "benefits": {
-          "baseline": 7363.48,
-          "reform": 7344.23
+          "baseline": 16011.52,
+          "reform": 15990.75
+        },
+        "pension_contributions": {
+          "baseline": 2246.42,
+          "reform": 2254.03
         },
         "net_income": {
           "baseline": 76845.62,
@@ -304,23 +389,28 @@
     "group": "Single pensioner",
     "weighted_n": 3906005,
     "decomposition": {
-      "market_income": 3.85,
-      "taxes": 7.32,
-      "benefits": 5.0,
-      "purchasing_power": 64.06,
-      "total": 80.23,
+      "market_income": -38.9,
+      "taxes": 9.64,
+      "benefits": -1.12,
+      "pension_contributions": -0.1,
+      "purchasing_power": 64.07,
+      "total": 33.59,
       "details": {
         "market_income": {
-          "baseline": 1758.9,
-          "reform": 1762.75
+          "baseline": 10676.17,
+          "reform": 10637.28
         },
         "taxes": {
-          "baseline": 3167.48,
-          "reform": 3160.16
+          "baseline": 5977.71,
+          "reform": 5968.07
         },
         "benefits": {
-          "baseline": 13170.04,
-          "reform": 13175.04
+          "baseline": 21610.28,
+          "reform": 21609.16
+        },
+        "pension_contributions": {
+          "baseline": 28.13,
+          "reform": 28.23
         },
         "net_income": {
           "baseline": 26280.62,
@@ -334,23 +424,28 @@
     "group": "Pensioner couple",
     "weighted_n": 4791116,
     "decomposition": {
-      "market_income": 31.69,
-      "taxes": 16.36,
-      "benefits": 19.57,
-      "purchasing_power": 130.55,
-      "total": 198.17,
+      "market_income": -81.72,
+      "taxes": 19.64,
+      "benefits": 18.03,
+      "pension_contributions": -1.59,
+      "purchasing_power": 130.56,
+      "total": 84.92,
       "details": {
         "market_income": {
-          "baseline": 10997.68,
-          "reform": 11029.37
+          "baseline": 34961.87,
+          "reform": 34880.16
         },
         "taxes": {
-          "baseline": 9654.88,
-          "reform": 9638.52
+          "baseline": 13927.19,
+          "reform": 13907.55
         },
         "benefits": {
-          "baseline": 20599.16,
-          "reform": 20618.73
+          "baseline": 32974.5,
+          "reform": 32992.53
+        },
+        "pension_contributions": {
+          "baseline": 468.49,
+          "reform": 470.08
         },
         "net_income": {
           "baseline": 53540.69,
@@ -360,27 +455,67 @@
     }
   },
   {
+    "year": 2027,
+    "group": "All households",
+    "weighted_n": 32001183,
+    "decomposition": {
+      "market_income": 99.71,
+      "taxes": -14.98,
+      "benefits": -11.34,
+      "pension_contributions": -4.83,
+      "purchasing_power": 133.68,
+      "total": 202.24,
+      "details": {
+        "market_income": {
+          "baseline": 56870.42,
+          "reform": 56970.12
+        },
+        "taxes": {
+          "baseline": 17981.96,
+          "reform": 17996.94
+        },
+        "benefits": {
+          "baseline": 17247.78,
+          "reform": 17236.44
+        },
+        "pension_contributions": {
+          "baseline": 1425.8,
+          "reform": 1430.62
+        },
+        "net_income": {
+          "baseline": 54710.44,
+          "reform": 54778.99
+        }
+      }
+    }
+  },
+  {
     "year": 2028,
     "group": "Single adult, no children",
     "weighted_n": 5529528,
     "decomposition": {
-      "market_income": 58.17,
-      "taxes": -18.5,
-      "benefits": -22.36,
-      "purchasing_power": 80.73,
-      "total": 98.04,
+      "market_income": 44.94,
+      "taxes": -14.9,
+      "benefits": -23.72,
+      "pension_contributions": -1.94,
+      "purchasing_power": 80.74,
+      "total": 85.12,
       "details": {
         "market_income": {
-          "baseline": 18606.31,
-          "reform": 18664.48
+          "baseline": 25009.57,
+          "reform": 25054.51
         },
         "taxes": {
-          "baseline": 5994.42,
-          "reform": 6012.92
+          "baseline": 8497.62,
+          "reform": 8512.52
         },
         "benefits": {
-          "baseline": 8937.83,
-          "reform": 8915.46
+          "baseline": 12550.65,
+          "reform": 12526.94
+        },
+        "pension_contributions": {
+          "baseline": 574.02,
+          "reform": 575.96
         },
         "net_income": {
           "baseline": 28488.59,
@@ -394,23 +529,28 @@
     "group": "Couple, no children",
     "weighted_n": 8830735,
     "decomposition": {
-      "market_income": 242.05,
-      "taxes": -83.32,
-      "benefits": -5.23,
-      "purchasing_power": 205.7,
-      "total": 359.2,
+      "market_income": 205.95,
+      "taxes": -75.49,
+      "benefits": -5.94,
+      "pension_contributions": -9.35,
+      "purchasing_power": 205.69,
+      "total": 320.86,
       "details": {
         "market_income": {
-          "baseline": 80362.26,
-          "reform": 80604.31
+          "baseline": 95649.77,
+          "reform": 95855.72
         },
         "taxes": {
-          "baseline": 24344.24,
-          "reform": 24427.56
+          "baseline": 28722.12,
+          "reform": 28797.61
         },
         "benefits": {
-          "baseline": 2138.71,
-          "reform": 2133.48
+          "baseline": 8313.7,
+          "reform": 8307.76
+        },
+        "pension_contributions": {
+          "baseline": 2763.41,
+          "reform": 2772.76
         },
         "net_income": {
           "baseline": 72477.94,
@@ -424,23 +564,28 @@
     "group": "Single parent",
     "weighted_n": 2050101,
     "decomposition": {
-      "market_income": 48.38,
-      "taxes": -14.28,
-      "benefits": -63.08,
-      "purchasing_power": 110.77,
-      "total": 81.79,
+      "market_income": 48.13,
+      "taxes": -10.18,
+      "benefits": -65.32,
+      "pension_contributions": -1.68,
+      "purchasing_power": 110.76,
+      "total": 81.71,
       "details": {
         "market_income": {
-          "baseline": 15152.52,
-          "reform": 15200.9
+          "baseline": 19285.1,
+          "reform": 19333.23
         },
         "taxes": {
-          "baseline": 3642.68,
-          "reform": 3656.97
+          "baseline": 6432.77,
+          "reform": 6442.96
         },
         "benefits": {
-          "baseline": 20798.79,
-          "reform": 20735.71
+          "baseline": 26762.24,
+          "reform": 26696.93
+        },
+        "pension_contributions": {
+          "baseline": 496.05,
+          "reform": 497.73
         },
         "net_income": {
           "baseline": 39118.52,
@@ -454,23 +599,28 @@
     "group": "Couple with children",
     "weighted_n": 6755755,
     "decomposition": {
-      "market_income": 241.72,
-      "taxes": -73.51,
-      "benefits": -23.13,
+      "market_income": 232.57,
+      "taxes": -67.55,
+      "benefits": -25.03,
+      "pension_contributions": -7.76,
       "purchasing_power": 221.57,
-      "total": 366.65,
+      "total": 353.8,
       "details": {
         "market_income": {
-          "baseline": 77625.88,
-          "reform": 77867.61
+          "baseline": 91960.05,
+          "reform": 92192.61
         },
         "taxes": {
-          "baseline": 23828.99,
-          "reform": 23902.5
+          "baseline": 27777.39,
+          "reform": 27844.94
         },
         "benefits": {
-          "baseline": 7521.18,
-          "reform": 7498.05
+          "baseline": 16174.56,
+          "reform": 16149.53
+        },
+        "pension_contributions": {
+          "baseline": 2293.6,
+          "reform": 2301.36
         },
         "net_income": {
           "baseline": 78063.62,
@@ -484,23 +634,28 @@
     "group": "Single pensioner",
     "weighted_n": 3921629,
     "decomposition": {
-      "market_income": 3.93,
-      "taxes": 9.3,
-      "benefits": 4.44,
+      "market_income": -46.98,
+      "taxes": 12.16,
+      "benefits": -2.85,
+      "pension_contributions": -0.1,
       "purchasing_power": 75.45,
-      "total": 93.12,
+      "total": 37.68,
       "details": {
         "market_income": {
-          "baseline": 1805.4,
-          "reform": 1809.33
+          "baseline": 11000.69,
+          "reform": 10953.71
         },
         "taxes": {
-          "baseline": 3277.58,
-          "reform": 3268.28
+          "baseline": 6245.84,
+          "reform": 6233.68
         },
         "benefits": {
-          "baseline": 13431.23,
-          "reform": 13435.66
+          "baseline": 21940.14,
+          "reform": 21937.29
+        },
+        "pension_contributions": {
+          "baseline": 28.72,
+          "reform": 28.82
         },
         "net_income": {
           "baseline": 26666.27,
@@ -514,23 +669,28 @@
     "group": "Pensioner couple",
     "weighted_n": 4810280,
     "decomposition": {
-      "market_income": 32.36,
-      "taxes": 21.04,
-      "benefits": 19.4,
-      "purchasing_power": 153.89,
-      "total": 226.69,
+      "market_income": -102.72,
+      "taxes": 25.07,
+      "benefits": 17.71,
+      "pension_contributions": -1.62,
+      "purchasing_power": 153.9,
+      "total": 92.34,
       "details": {
         "market_income": {
-          "baseline": 11253.78,
-          "reform": 11286.14
+          "baseline": 35965.08,
+          "reform": 35862.36
         },
         "taxes": {
-          "baseline": 10025.43,
-          "reform": 10004.39
+          "baseline": 14527.92,
+          "reform": 14502.85
         },
         "benefits": {
-          "baseline": 21025.35,
-          "reform": 21044.75
+          "baseline": 33413.49,
+          "reform": 33431.2
+        },
+        "pension_contributions": {
+          "baseline": 478.33,
+          "reform": 479.95
         },
         "net_income": {
           "baseline": 54372.31,
@@ -540,27 +700,67 @@
     }
   },
   {
+    "year": 2028,
+    "group": "All households",
+    "weighted_n": 32129186,
+    "decomposition": {
+      "market_income": 96.01,
+      "taxes": -32.61,
+      "benefits": -13.45,
+      "pension_contributions": -4.93,
+      "purchasing_power": 157.74,
+      "total": 202.76,
+      "details": {
+        "market_income": {
+          "baseline": 58262.51,
+          "reform": 58358.51
+        },
+        "taxes": {
+          "baseline": 18654.86,
+          "reform": 18687.47
+        },
+        "benefits": {
+          "baseline": 17470.61,
+          "reform": 17457.16
+        },
+        "pension_contributions": {
+          "baseline": 1455.74,
+          "reform": 1460.67
+        },
+        "net_income": {
+          "baseline": 55622.51,
+          "reform": 55667.53
+        }
+      }
+    }
+  },
+  {
     "year": 2029,
     "group": "Single adult, no children",
     "weighted_n": 5553858,
     "decomposition": {
-      "market_income": 57.64,
-      "taxes": -20.08,
-      "benefits": -24.09,
-      "purchasing_power": 93.42,
-      "total": 106.89,
+      "market_income": 43.05,
+      "taxes": -15.98,
+      "benefits": -25.49,
+      "pension_contributions": -1.93,
+      "purchasing_power": 93.43,
+      "total": 93.08,
       "details": {
         "market_income": {
-          "baseline": 19156.35,
-          "reform": 19213.99
+          "baseline": 25747.87,
+          "reform": 25790.92
         },
         "taxes": {
-          "baseline": 6228.69,
-          "reform": 6248.78
+          "baseline": 8857.69,
+          "reform": 8873.67
         },
         "benefits": {
-          "baseline": 9170.57,
-          "reform": 9146.48
+          "baseline": 12797.63,
+          "reform": 12772.14
+        },
+        "pension_contributions": {
+          "baseline": 734.94,
+          "reform": 736.87
         },
         "net_income": {
           "baseline": 28952.87,
@@ -574,23 +774,28 @@
     "group": "Couple, no children",
     "weighted_n": 8869591,
     "decomposition": {
-      "market_income": 239.84,
-      "taxes": -94.94,
-      "benefits": -6.01,
-      "purchasing_power": 237.67,
-      "total": 376.56,
+      "market_income": 200.02,
+      "taxes": -86.17,
+      "benefits": -6.77,
+      "pension_contributions": -9.28,
+      "purchasing_power": 237.66,
+      "total": 335.46,
       "details": {
         "market_income": {
-          "baseline": 82676.96,
-          "reform": 82916.8
+          "baseline": 98413.5,
+          "reform": 98613.52
         },
         "taxes": {
-          "baseline": 25289.63,
-          "reform": 25384.56
+          "baseline": 29858.37,
+          "reform": 29944.55
         },
         "benefits": {
-          "baseline": 2182.47,
-          "reform": 2176.46
+          "baseline": 8363.42,
+          "reform": 8356.65
+        },
+        "pension_contributions": {
+          "baseline": 3363.48,
+          "reform": 3372.76
         },
         "net_income": {
           "baseline": 73555.07,
@@ -604,23 +809,28 @@
     "group": "Single parent",
     "weighted_n": 2059121,
     "decomposition": {
-      "market_income": 47.94,
-      "taxes": -15.51,
-      "benefits": -69.22,
+      "market_income": 47.66,
+      "taxes": -10.69,
+      "benefits": -71.69,
+      "pension_contributions": -1.67,
       "purchasing_power": 128.04,
-      "total": 91.25,
+      "total": 91.65,
       "details": {
         "market_income": {
-          "baseline": 15497.89,
-          "reform": 15545.83
+          "baseline": 19752.77,
+          "reform": 19800.44
         },
         "taxes": {
-          "baseline": 3782.09,
-          "reform": 3797.59
+          "baseline": 6718.93,
+          "reform": 6729.62
         },
         "benefits": {
-          "baseline": 21240.79,
-          "reform": 21171.57
+          "baseline": 27209.65,
+          "reform": 27137.96
+        },
+        "pension_contributions": {
+          "baseline": 529.6,
+          "reform": 531.27
         },
         "net_income": {
           "baseline": 39713.89,
@@ -634,23 +844,28 @@
     "group": "Couple with children",
     "weighted_n": 6785480,
     "decomposition": {
-      "market_income": 239.51,
-      "taxes": -122.39,
-      "benefits": -23.85,
-      "purchasing_power": 256.0,
-      "total": 349.27,
+      "market_income": 229.41,
+      "taxes": -115.85,
+      "benefits": -25.85,
+      "pension_contributions": -7.7,
+      "purchasing_power": 255.99,
+      "total": 336.0,
       "details": {
         "market_income": {
-          "baseline": 79927.84,
-          "reform": 80167.35
+          "baseline": 94685.41,
+          "reform": 94914.82
         },
         "taxes": {
-          "baseline": 24668.67,
-          "reform": 24791.06
+          "baseline": 28811.67,
+          "reform": 28927.51
         },
         "benefits": {
-          "baseline": 7685.1,
-          "reform": 7661.25
+          "baseline": 16343.95,
+          "reform": 16318.09
+        },
+        "pension_contributions": {
+          "baseline": 2965.7,
+          "reform": 2973.4
         },
         "net_income": {
           "baseline": 79251.99,
@@ -664,23 +879,28 @@
     "group": "Single pensioner",
     "weighted_n": 3938884,
     "decomposition": {
-      "market_income": 3.9,
-      "taxes": 10.69,
-      "benefits": 3.27,
+      "market_income": -52.27,
+      "taxes": 14.11,
+      "benefits": -3.99,
+      "pension_contributions": -0.1,
       "purchasing_power": 87.18,
-      "total": 105.04,
+      "total": 44.93,
       "details": {
         "market_income": {
-          "baseline": 1852.22,
-          "reform": 1856.11
+          "baseline": 11314.78,
+          "reform": 11262.52
         },
         "taxes": {
-          "baseline": 3387.82,
-          "reform": 3377.13
+          "baseline": 6506.22,
+          "reform": 6492.11
         },
         "benefits": {
-          "baseline": 13701.39,
-          "reform": 13704.65
+          "baseline": 22280.32,
+          "reform": 22276.33
+        },
+        "pension_contributions": {
+          "baseline": 29.68,
+          "reform": 29.78
         },
         "net_income": {
           "baseline": 27059.2,
@@ -694,23 +914,28 @@
     "group": "Pensioner couple",
     "weighted_n": 4831445,
     "decomposition": {
-      "market_income": 32.06,
-      "taxes": 25.2,
-      "benefits": 18.39,
-      "purchasing_power": 177.85,
-      "total": 253.5,
+      "market_income": -116.94,
+      "taxes": 30.01,
+      "benefits": 16.55,
+      "pension_contributions": -1.61,
+      "purchasing_power": 177.86,
+      "total": 105.87,
       "details": {
         "market_income": {
-          "baseline": 11726.56,
-          "reform": 11758.63
+          "baseline": 37156.28,
+          "reform": 37039.35
         },
         "taxes": {
-          "baseline": 10393.29,
-          "reform": 10368.09
+          "baseline": 15114.98,
+          "reform": 15084.97
         },
         "benefits": {
-          "baseline": 21454.48,
-          "reform": 21472.87
+          "baseline": 33853.08,
+          "reform": 33869.63
+        },
+        "pension_contributions": {
+          "baseline": 706.27,
+          "reform": 707.88
         },
         "net_income": {
           "baseline": 55188.11,
@@ -720,27 +945,67 @@
     }
   },
   {
+    "year": 2029,
+    "group": "All households",
+    "weighted_n": 32270555,
+    "decomposition": {
+      "market_income": 90.58,
+      "taxes": -46.17,
+      "benefits": -14.84,
+      "pension_contributions": -4.89,
+      "purchasing_power": 182.28,
+      "total": 206.96,
+      "details": {
+        "market_income": {
+          "baseline": 59978.48,
+          "reform": 60069.06
+        },
+        "taxes": {
+          "baseline": 19388.52,
+          "reform": 19434.69
+        },
+        "benefits": {
+          "baseline": 17702.42,
+          "reform": 17687.57
+        },
+        "pension_contributions": {
+          "baseline": 1826.63,
+          "reform": 1831.51
+        },
+        "net_income": {
+          "baseline": 56465.76,
+          "reform": 56490.43
+        }
+      }
+    }
+  },
+  {
     "year": 2030,
     "group": "Single adult, no children",
     "weighted_n": 5578851,
     "decomposition": {
-      "market_income": 73.05,
-      "taxes": -22.05,
-      "benefits": -36.02,
+      "market_income": 57.89,
+      "taxes": -17.6,
+      "benefits": -37.5,
+      "pension_contributions": -2.44,
       "purchasing_power": 95.04,
-      "total": 110.02,
+      "total": 95.39,
       "details": {
         "market_income": {
-          "baseline": 19616.28,
-          "reform": 19689.33
+          "baseline": 26411.93,
+          "reform": 26469.82
         },
         "taxes": {
-          "baseline": 6483.96,
-          "reform": 6506.01
+          "baseline": 9243.81,
+          "reform": 9261.41
         },
         "benefits": {
-          "baseline": 9389.7,
-          "reform": 9353.68
+          "baseline": 13031.44,
+          "reform": 12993.95
+        },
+        "pension_contributions": {
+          "baseline": 748.55,
+          "reform": 751.0
         },
         "net_income": {
           "baseline": 29451.01,
@@ -754,23 +1019,28 @@
     "group": "Couple, no children",
     "weighted_n": 8909504,
     "decomposition": {
-      "market_income": 303.98,
-      "taxes": -196.08,
-      "benefits": -7.5,
+      "market_income": 262.61,
+      "taxes": -186.24,
+      "benefits": -8.3,
+      "pension_contributions": -11.76,
       "purchasing_power": 242.24,
-      "total": 342.64,
+      "total": 298.55,
       "details": {
         "market_income": {
-          "baseline": 84700.61,
-          "reform": 85004.59
+          "baseline": 100923.28,
+          "reform": 101185.89
         },
         "taxes": {
-          "baseline": 26112.7,
-          "reform": 26308.78
+          "baseline": 30899.44,
+          "reform": 31085.67
         },
         "benefits": {
-          "baseline": 2229.69,
-          "reform": 2222.19
+          "baseline": 8416.82,
+          "reform": 8408.52
+        },
+        "pension_contributions": {
+          "baseline": 3429.01,
+          "reform": 3440.77
         },
         "net_income": {
           "baseline": 75011.65,
@@ -784,23 +1054,28 @@
     "group": "Single parent",
     "weighted_n": 2068387,
     "decomposition": {
-      "market_income": 60.76,
-      "taxes": -17.89,
-      "benefits": -94.71,
+      "market_income": 60.47,
+      "taxes": -12.8,
+      "benefits": -97.61,
+      "pension_contributions": -2.11,
       "purchasing_power": 129.57,
-      "total": 77.73,
+      "total": 77.52,
       "details": {
         "market_income": {
-          "baseline": 15868.35,
-          "reform": 15929.11
+          "baseline": 20257.2,
+          "reform": 20317.67
         },
         "taxes": {
-          "baseline": 3939.77,
-          "reform": 3957.65
+          "baseline": 7028.92,
+          "reform": 7041.72
         },
         "benefits": {
-          "baseline": 21542.92,
-          "reform": 21448.22
+          "baseline": 27517.74,
+          "reform": 27420.13
+        },
+        "pension_contributions": {
+          "baseline": 541.36,
+          "reform": 543.48
         },
         "net_income": {
           "baseline": 40204.66,
@@ -814,23 +1089,28 @@
     "group": "Couple with children",
     "weighted_n": 6816015,
     "decomposition": {
-      "market_income": 303.57,
-      "taxes": -116.38,
-      "benefits": -32.91,
-      "purchasing_power": 260.36,
-      "total": 414.64,
+      "market_income": 293.08,
+      "taxes": -109.37,
+      "benefits": -35.16,
+      "pension_contributions": -9.76,
+      "purchasing_power": 260.35,
+      "total": 399.14,
       "details": {
         "market_income": {
-          "baseline": 81850.53,
-          "reform": 82154.11
+          "baseline": 97070.54,
+          "reform": 97363.62
         },
         "taxes": {
-          "baseline": 25608.13,
-          "reform": 25724.52
+          "baseline": 29959.25,
+          "reform": 30068.62
         },
         "benefits": {
-          "baseline": 7792.01,
-          "reform": 7759.1
+          "baseline": 16456.25,
+          "reform": 16421.08
+        },
+        "pension_contributions": {
+          "baseline": 3020.09,
+          "reform": 3029.85
         },
         "net_income": {
           "baseline": 80547.45,
@@ -844,23 +1124,28 @@
     "group": "Single pensioner",
     "weighted_n": 3956609,
     "decomposition": {
-      "market_income": 4.94,
-      "taxes": 10.53,
-      "benefits": 0.92,
-      "purchasing_power": 88.26,
-      "total": 104.65,
+      "market_income": -53.41,
+      "taxes": 14.12,
+      "benefits": -6.29,
+      "pension_contributions": -0.12,
+      "purchasing_power": 88.25,
+      "total": 42.55,
       "details": {
         "market_income": {
-          "baseline": 1903.77,
-          "reform": 1908.71
+          "baseline": 11650.93,
+          "reform": 11597.51
         },
         "taxes": {
-          "baseline": 3511.35,
-          "reform": 3500.82
+          "baseline": 6785.26,
+          "reform": 6771.14
         },
         "benefits": {
-          "baseline": 13908.45,
-          "reform": 13909.37
+          "baseline": 22560.81,
+          "reform": 22554.52
+        },
+        "pension_contributions": {
+          "baseline": 30.37,
+          "reform": 30.49
         },
         "net_income": {
           "baseline": 27396.11,
@@ -874,27 +1159,67 @@
     "group": "Pensioner couple",
     "weighted_n": 4853187,
     "decomposition": {
-      "market_income": 40.64,
-      "taxes": 25.84,
-      "benefits": 17.19,
+      "market_income": -114.17,
+      "taxes": 30.9,
+      "benefits": 15.36,
+      "pension_contributions": -2.04,
       "purchasing_power": 180.45,
-      "total": 264.12,
+      "total": 110.5,
       "details": {
         "market_income": {
-          "baseline": 12016.18,
-          "reform": 12056.82
+          "baseline": 38211.17,
+          "reform": 38097.0
         },
         "taxes": {
-          "baseline": 10809.02,
-          "reform": 10783.18
+          "baseline": 15757.47,
+          "reform": 15726.57
         },
         "benefits": {
-          "baseline": 21843.95,
-          "reform": 21861.14
+          "baseline": 34255.91,
+          "reform": 34271.27
+        },
+        "pension_contributions": {
+          "baseline": 717.62,
+          "reform": 719.65
         },
         "net_income": {
           "baseline": 55992.0,
           "reform": 55922.05
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "group": "All households",
+    "weighted_n": 32415774,
+    "decomposition": {
+      "market_income": 125.03,
+      "taxes": -72.05,
+      "benefits": -21.61,
+      "pension_contributions": -6.2,
+      "purchasing_power": 185.39,
+      "total": 210.56,
+      "details": {
+        "market_income": {
+          "baseline": 61525.7,
+          "reform": 61650.73
+        },
+        "taxes": {
+          "baseline": 20137.43,
+          "reform": 20209.48
+        },
+        "benefits": {
+          "baseline": 17897.63,
+          "reform": 17876.02
+        },
+        "pension_contributions": {
+          "baseline": 1861.14,
+          "reform": 1867.34
+        },
+        "net_income": {
+          "baseline": 57424.75,
+          "reform": 57449.92
         }
       }
     }
