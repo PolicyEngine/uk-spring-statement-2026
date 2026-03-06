@@ -410,10 +410,9 @@ export default function PersonalTab() {
   return (
     <div className="max-w-[1400px] mx-auto pt-4 pb-6 font-sans text-gray-800 leading-relaxed">
       <p className="text-[0.95rem] leading-relaxed text-gray-600 mb-6">
-        See how revised OBR macroeconomic forecasts (earnings and CPI) from the
-        Spring Statement 2026 affect your household&apos;s net income. This is not a
-        direct estimate of policy changes. Enter your details and hit Calculate
-        to see your personal impact.
+        See how revised OBR macroeconomic forecasts from the
+        Spring Statement 2026 affect your household&apos;s net income. Enter your
+        details and hit Calculate to see your personal impact.
       </p>
 
       {/* Controls */}
