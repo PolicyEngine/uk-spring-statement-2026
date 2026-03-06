@@ -1,6 +1,31 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Consolas", monospace;
+
+  --color-pe-50: #E6FFFA;
+  --color-pe-100: #B2F5EA;
+  --color-pe-200: #81E6D9;
+  --color-pe-300: #4FD1C5;
+  --color-pe-400: #38B2AC;
+  --color-pe-500: #319795;
+  --color-pe-600: #2C7A7B;
+  --color-pe-700: #285E61;
+  --color-pe-800: #234E52;
+  --color-pe-900: #1D4044;
+
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F2F4F7;
+  --color-gray-200: #E2E8F0;
+  --color-gray-300: #D1D5DB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6B7280;
+  --color-gray-600: #4B5563;
+  --color-gray-700: #344054;
+  --color-gray-800: #1F2937;
+  --color-gray-900: #101828;
+}
 
 /* PolicyEngine design system - CSS variables for @layer component styles */
 :root {
@@ -920,81 +945,70 @@
     margin-bottom: 32px;
   }
 
-  .decomp-header {
+  .decomp-rows {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .decomp-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
     align-items: center;
-    margin-bottom: 12px;
+    gap: 12px;
   }
 
-  .decomp-table {
-    width: 100%;
-    border-collapse: collapse;
+  .decomp-label {
     font-size: 0.85rem;
-  }
-
-  .decomp-table th {
-    text-align: right;
-    font-weight: 500;
-    color: var(--pe-gray-500);
-    padding: 0 8px 8px;
-    font-size: 0.8rem;
-    border-bottom: 1px solid var(--pe-gray-200);
-  }
-
-  .decomp-table th:first-child {
-    text-align: left;
-  }
-
-  .decomp-table td {
-    padding: 8px;
-  }
-
-  .decomp-table-label {
     color: var(--pe-gray-600);
     white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
 
-  .decomp-color-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    display: inline-block;
-    flex-shrink: 0;
+  .decomp-bar-track {
+    position: relative;
+    height: 18px;
+    background: var(--pe-gray-50);
+    border-radius: 4px;
+    overflow: hidden;
   }
 
-  .decomp-table-value {
-    text-align: right;
-    color: var(--pe-gray-600);
-    font-variant-numeric: tabular-nums;
+  .decomp-bar-fill {
+    position: absolute;
+    top: 2px;
+    height: 14px;
+    border-radius: 3px;
+    opacity: 0.75;
+    transition: width 0.3s ease;
   }
 
-  .decomp-table-change {
-    text-align: right;
+  .decomp-bar-zero {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--pe-gray-300);
+  }
+
+  .decomp-value {
+    font-size: 0.85rem;
     font-weight: 600;
+    text-align: right;
     font-variant-numeric: tabular-nums;
   }
 
-  .decomp-table-change.positive { color: #059669; }
-  .decomp-table-change.negative { color: #dc2626; }
-  .decomp-table-change.zero { color: var(--pe-gray-400); }
+  .decomp-value.positive { color: #059669; }
+  .decomp-value.negative { color: #dc2626; }
+  .decomp-value.zero { color: var(--pe-gray-400); }
 
-  .decomp-table-net-row td {
+  .decomp-total-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+    padding-top: 10px;
     border-top: 1px solid var(--pe-gray-200);
-    padding-top: 10px;
-  }
-
-  .decomp-table-purchasing-row td {
-    padding-top: 12px;
-    border-top: 1px dashed var(--pe-gray-200);
-  }
-
-  .decomp-table-total-row td {
-    border-top: 1px solid var(--pe-gray-300);
-    padding-top: 10px;
   }
 
   /* --- Impact table --- */

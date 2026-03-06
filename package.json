@@ -20,19 +20,17 @@
   "homepage": "https://github.com/PolicyEngine/uk-spring-statement-2026#readme",
   "dependencies": {
     "d3": "^7.9.0",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-is": "^19.2.4",
+    "react": "^19",
+    "react-dom": "^19",
+    "react-is": "^19",
     "recharts": "^3.7.0"
   },
   "devDependencies": {
     "@policyengine/design-system": "^0.3.0",
     "@types/node": "25.3.3",
-    "@types/react": "19.2.14",
-    "autoprefixer": "^10.4.27",
-    "next": "^14.2",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^3.4",
+    "@types/react": "^19",
+    "next": "^16",
+    "tailwindcss": "^4",
     "typescript": "5.9.3"
   }
 }
