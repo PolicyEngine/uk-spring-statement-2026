@@ -30,6 +30,10 @@
         "net_income": {
           "baseline": 27633.99,
           "reform": 27645.79
+        },
+        "real_net_income": {
+          "baseline": 27633.99,
+          "reform": 27707.82
         }
       }
     }
@@ -65,6 +69,10 @@
         "net_income": {
           "baseline": 70069.3,
           "reform": 70076.2
+        },
+        "real_net_income": {
+          "baseline": 70069.3,
+          "reform": 70233.45
         }
       }
     }
@@ -100,6 +108,10 @@
         "net_income": {
           "baseline": 37987.26,
           "reform": 37986.87
+        },
+        "real_net_income": {
+          "baseline": 37987.26,
+          "reform": 38072.12
         }
       }
     }
@@ -135,6 +147,10 @@
         "net_income": {
           "baseline": 75685.29,
           "reform": 75782.5
+        },
+        "real_net_income": {
+          "baseline": 75685.29,
+          "reform": 75952.55
         }
       }
     }
@@ -170,6 +186,10 @@
         "net_income": {
           "baseline": 25851.71,
           "reform": 25848.42
+        },
+        "real_net_income": {
+          "baseline": 25851.71,
+          "reform": 25906.42
         }
       }
     }
@@ -205,6 +225,10 @@
         "net_income": {
           "baseline": 52663.44,
           "reform": 52663.83
+        },
+        "real_net_income": {
+          "baseline": 52663.44,
+          "reform": 52782.01
         }
       }
     }
@@ -240,6 +264,10 @@
         "net_income": {
           "baseline": 53871.14,
           "reform": 53895.26
+        },
+        "real_net_income": {
+          "baseline": 53871.14,
+          "reform": 54016.2
         }
       }
     }
@@ -275,6 +303,10 @@
         "net_income": {
           "baseline": 28028.03,
           "reform": 28035.59
+        },
+        "real_net_income": {
+          "baseline": 27473.07,
+          "reform": 27549.05
         }
       }
     }
@@ -310,6 +342,10 @@
         "net_income": {
           "baseline": 71169.28,
           "reform": 71366.02
+        },
+        "real_net_income": {
+          "baseline": 69760.13,
+          "reform": 70131.04
         }
       }
     }
@@ -345,6 +381,10 @@
         "net_income": {
           "baseline": 38527.64,
           "reform": 38501.74
+        },
+        "real_net_income": {
+          "baseline": 37764.79,
+          "reform": 37832.85
         }
       }
     }
@@ -380,6 +420,10 @@
         "net_income": {
           "baseline": 76845.62,
           "reform": 76966.25
+        },
+        "real_net_income": {
+          "baseline": 75324.07,
+          "reform": 75632.54
         }
       }
     }
@@ -415,6 +459,10 @@
         "net_income": {
           "baseline": 26280.62,
           "reform": 26250.15
+        },
+        "real_net_income": {
+          "baseline": 25760.26,
+          "reform": 25793.85
         }
       }
     }
@@ -450,6 +498,10 @@
         "net_income": {
           "baseline": 53540.69,
           "reform": 53495.05
+        },
+        "real_net_income": {
+          "baseline": 52480.58,
+          "reform": 52565.5
         }
       }
     }
@@ -485,6 +537,10 @@
         "net_income": {
           "baseline": 54710.44,
           "reform": 54778.99
+        },
+        "real_net_income": {
+          "baseline": 53627.17,
+          "reform": 53829.41
         }
       }
     }
@@ -520,6 +576,10 @@
         "net_income": {
           "baseline": 28488.59,
           "reform": 28492.97
+        },
+        "real_net_income": {
+          "baseline": 27366.24,
+          "reform": 27451.36
         }
       }
     }
@@ -555,6 +615,10 @@
         "net_income": {
           "baseline": 72477.94,
           "reform": 72593.1
+        },
+        "real_net_income": {
+          "baseline": 69622.57,
+          "reform": 69943.43
         }
       }
     }
@@ -590,6 +654,10 @@
         "net_income": {
           "baseline": 39118.52,
           "reform": 39089.47
+        },
+        "real_net_income": {
+          "baseline": 37577.39,
+          "reform": 37659.1
         }
       }
     }
@@ -625,6 +693,10 @@
         "net_income": {
           "baseline": 78063.62,
           "reform": 78195.84
+        },
+        "real_net_income": {
+          "baseline": 74988.2,
+          "reform": 75342.0
         }
       }
     }
@@ -660,6 +732,10 @@
         "net_income": {
           "baseline": 26666.27,
           "reform": 26628.5
+        },
+        "real_net_income": {
+          "baseline": 25615.72,
+          "reform": 25653.4
         }
       }
     }
@@ -695,6 +771,10 @@
         "net_income": {
           "baseline": 54372.31,
           "reform": 54310.76
+        },
+        "real_net_income": {
+          "baseline": 52230.24,
+          "reform": 52322.58
         }
       }
     }
@@ -730,6 +810,10 @@
         "net_income": {
           "baseline": 55622.51,
           "reform": 55667.53
+        },
+        "real_net_income": {
+          "baseline": 53431.19,
+          "reform": 53633.95
         }
       }
     }
@@ -765,6 +849,10 @@
         "net_income": {
           "baseline": 28952.87,
           "reform": 28952.52
+        },
+        "real_net_income": {
+          "baseline": 27256.21,
+          "reform": 27349.29
         }
       }
     }
@@ -800,6 +888,10 @@
         "net_income": {
           "baseline": 73555.07,
           "reform": 73652.86
+        },
+        "real_net_income": {
+          "baseline": 69244.68,
+          "reform": 69580.14
         }
       }
     }
@@ -835,6 +927,10 @@
         "net_income": {
           "baseline": 39713.89,
           "reform": 39677.51
+        },
+        "real_net_income": {
+          "baseline": 37386.62,
+          "reform": 37478.27
         }
       }
     }
@@ -870,6 +966,10 @@
         "net_income": {
           "baseline": 79251.99,
           "reform": 79332.0
+        },
+        "real_net_income": {
+          "baseline": 74607.75,
+          "reform": 74943.75
         }
       }
     }
@@ -905,6 +1005,10 @@
         "net_income": {
           "baseline": 27059.2,
           "reform": 27016.95
+        },
+        "real_net_income": {
+          "baseline": 25473.51,
+          "reform": 25518.44
         }
       }
     }
@@ -940,6 +1044,10 @@
         "net_income": {
           "baseline": 55188.11,
           "reform": 55116.13
+        },
+        "real_net_income": {
+          "baseline": 51954.04,
+          "reform": 52059.91
         }
       }
     }
@@ -975,6 +1083,10 @@
         "net_income": {
           "baseline": 56465.76,
           "reform": 56490.43
+        },
+        "real_net_income": {
+          "baseline": 53156.82,
+          "reform": 53363.78
         }
       }
     }
@@ -1010,6 +1122,10 @@
         "net_income": {
           "baseline": 29451.01,
           "reform": 29451.36
+        },
+        "real_net_income": {
+          "baseline": 27181.52,
+          "reform": 27276.91
         }
       }
     }
@@ -1045,6 +1161,10 @@
         "net_income": {
           "baseline": 75011.65,
           "reform": 75067.97
+        },
+        "real_net_income": {
+          "baseline": 69231.27,
+          "reform": 69529.82
         }
       }
     }
@@ -1080,6 +1200,10 @@
         "net_income": {
           "baseline": 40204.66,
           "reform": 40152.61
+        },
+        "real_net_income": {
+          "baseline": 37106.5,
+          "reform": 37184.02
         }
       }
     }
@@ -1115,6 +1239,10 @@
         "net_income": {
           "baseline": 80547.45,
           "reform": 80686.23
+        },
+        "real_net_income": {
+          "baseline": 74340.49,
+          "reform": 74739.63
         }
       }
     }
@@ -1150,6 +1278,10 @@
         "net_income": {
           "baseline": 27396.11,
           "reform": 27350.41
+        },
+        "real_net_income": {
+          "baseline": 25284.97,
+          "reform": 25327.52
         }
       }
     }
@@ -1185,6 +1317,10 @@
         "net_income": {
           "baseline": 55992.0,
           "reform": 55922.05
+        },
+        "real_net_income": {
+          "baseline": 51677.27,
+          "reform": 51787.77
         }
       }
     }
@@ -1220,6 +1356,10 @@
         "net_income": {
           "baseline": 57424.75,
           "reform": 57449.92
+        },
+        "real_net_income": {
+          "baseline": 52999.62,
+          "reform": 53210.18
         }
       }
     }
