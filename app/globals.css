@@ -1,45 +1,71 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@policyengine/design-system/tokens.css";
+
+@theme {
+  --font-sans: var(--pe-font-family-primary);
+  --font-mono: var(--pe-font-family-mono);
+
+  --color-pe-50: var(--pe-color-primary-50);
+  --color-pe-100: var(--pe-color-primary-100);
+  --color-pe-200: var(--pe-color-primary-200);
+  --color-pe-300: var(--pe-color-primary-300);
+  --color-pe-400: var(--pe-color-primary-400);
+  --color-pe-500: var(--pe-color-primary-500);
+  --color-pe-600: var(--pe-color-primary-600);
+  --color-pe-700: var(--pe-color-primary-700);
+  --color-pe-800: var(--pe-color-primary-800);
+  --color-pe-900: var(--pe-color-primary-900);
+
+  --color-gray-50: var(--pe-color-gray-50);
+  --color-gray-100: var(--pe-color-gray-100);
+  --color-gray-200: var(--pe-color-gray-200);
+  --color-gray-300: var(--pe-color-gray-300);
+  --color-gray-400: var(--pe-color-gray-400);
+  --color-gray-500: var(--pe-color-gray-500);
+  --color-gray-600: var(--pe-color-gray-600);
+  --color-gray-700: var(--pe-color-gray-700);
+  --color-gray-800: var(--pe-color-gray-800);
+  --color-gray-900: var(--pe-color-gray-900);
+}
 
 /* PolicyEngine design system - CSS variables for @layer component styles */
 :root {
-  /* Teal palette */
-  --pe-teal-50: #E6FFFA;
-  --pe-teal-100: #B2F5EA;
-  --pe-teal-200: #81E6D9;
-  --pe-teal-300: #4FD1C5;
-  --pe-teal-400: #38B2AC;
-  --pe-teal-500: #319795;
-  --pe-teal-600: #2C7A7B;
-  --pe-teal-700: #285E61;
-  --pe-teal-800: #234E52;
-  --pe-teal-900: #1D4044;
+  /* Teal palette — sourced from design-system tokens */
+  --pe-teal-50: var(--pe-color-primary-50);
+  --pe-teal-100: var(--pe-color-primary-100);
+  --pe-teal-200: var(--pe-color-primary-200);
+  --pe-teal-300: var(--pe-color-primary-300);
+  --pe-teal-400: var(--pe-color-primary-400);
+  --pe-teal-500: var(--pe-color-primary-500);
+  --pe-teal-600: var(--pe-color-primary-600);
+  --pe-teal-700: var(--pe-color-primary-700);
+  --pe-teal-800: var(--pe-color-primary-800);
+  --pe-teal-900: var(--pe-color-primary-900);
 
-  /* Gray palette */
-  --pe-gray-50: #F9FAFB;
-  --pe-gray-100: #F2F4F7;
-  --pe-gray-200: #E2E8F0;
-  --pe-gray-300: #D1D5DB;
-  --pe-gray-400: #9CA3AF;
-  --pe-gray-500: #6B7280;
-  --pe-gray-600: #4B5563;
-  --pe-gray-700: #344054;
-  --pe-gray-800: #1F2937;
-  --pe-gray-900: #101828;
+  /* Gray palette — sourced from design-system tokens */
+  --pe-gray-50: var(--pe-color-gray-50);
+  --pe-gray-100: var(--pe-color-gray-100);
+  --pe-gray-200: var(--pe-color-gray-200);
+  --pe-gray-300: var(--pe-color-gray-300);
+  --pe-gray-400: var(--pe-color-gray-400);
+  --pe-gray-500: var(--pe-color-gray-500);
+  --pe-gray-600: var(--pe-color-gray-600);
+  --pe-gray-700: var(--pe-color-gray-700);
+  --pe-gray-800: var(--pe-color-gray-800);
+  --pe-gray-900: var(--pe-color-gray-900);
 
   /* Semantic */
-  --pe-text-primary: var(--pe-gray-800);
-  --pe-text-secondary: var(--pe-gray-600);
-  --pe-text-muted: var(--pe-gray-500);
-  --pe-background: var(--pe-gray-50);
-  --pe-surface: #ffffff;
-  --pe-border: var(--pe-gray-200);
-  --pe-accent: var(--pe-teal-500);
+  --pe-text-primary: var(--pe-color-gray-800);
+  --pe-text-secondary: var(--pe-color-gray-600);
+  --pe-text-muted: var(--pe-color-gray-500);
+  --pe-background: var(--pe-color-gray-50);
+  --pe-surface: var(--pe-color-bg-primary);
+  --pe-border: var(--pe-color-border-light);
+  --pe-accent: var(--pe-color-primary-500);
 
   /* Font */
-  --pe-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --pe-font-mono: "JetBrains Mono", "SF Mono", "Monaco", monospace;
+  --pe-font-family: var(--pe-font-family-primary);
+  --pe-font-mono: var(--pe-font-family-mono);
 
   /* Shadows */
   --pe-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -256,7 +282,7 @@
   }
 
   .change-negative {
-    color: #EF4444;
+    color: var(--pe-color-error);
     font-weight: 600;
   }
 
@@ -598,7 +624,7 @@
     left: 50%;
     transform: translateX(-50%);
     background: var(--pe-gray-800);
-    color: #fff;
+    color: var(--pe-color-text-inverse);
     font-size: 0.72rem;
     font-weight: 400;
     padding: 6px 10px;
@@ -688,7 +714,7 @@
     padding: 10px 24px;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #fff;
+    color: var(--pe-color-text-inverse);
     background: var(--pe-teal-500);
     border: none;
     border-radius: 8px;
@@ -835,8 +861,8 @@
 
   .api-error {
     padding: 12px 16px;
-    background: #fef2f2;
-    border-left: 4px solid #EF4444;
+    background: var(--pe-color-error-bg, #fef2f2);
+    border-left: 4px solid var(--pe-color-error);
     color: var(--pe-gray-900);
     font-size: 0.95rem;
     margin-bottom: 16px;
@@ -886,8 +912,8 @@
   }
 
   .impact-headline.negative {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
+    background: var(--pe-color-error-bg, #fef2f2);
+    border: 1px solid var(--pe-color-error-border, #fecaca);
   }
 
   .impact-headline.neutral {
@@ -907,8 +933,8 @@
     font-size: 1.5rem;
   }
 
-  .impact-amount.positive { color: #059669; }
-  .impact-amount.negative { color: #dc2626; }
+  .impact-amount.positive { color: var(--pe-color-success); }
+  .impact-amount.negative { color: var(--pe-color-error); }
   .impact-amount.neutral { color: var(--pe-gray-500); }
 
   /* --- Decomposition breakdown --- */
@@ -920,81 +946,70 @@
     margin-bottom: 32px;
   }
 
-  .decomp-header {
+  .decomp-rows {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .decomp-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
     align-items: center;
-    margin-bottom: 12px;
+    gap: 12px;
   }
 
-  .decomp-table {
-    width: 100%;
-    border-collapse: collapse;
+  .decomp-label {
     font-size: 0.85rem;
-  }
-
-  .decomp-table th {
-    text-align: right;
-    font-weight: 500;
-    color: var(--pe-gray-500);
-    padding: 0 8px 8px;
-    font-size: 0.8rem;
-    border-bottom: 1px solid var(--pe-gray-200);
-  }
-
-  .decomp-table th:first-child {
-    text-align: left;
-  }
-
-  .decomp-table td {
-    padding: 8px;
-  }
-
-  .decomp-table-label {
     color: var(--pe-gray-600);
     white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
 
-  .decomp-color-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    display: inline-block;
-    flex-shrink: 0;
+  .decomp-bar-track {
+    position: relative;
+    height: 18px;
+    background: var(--pe-gray-50);
+    border-radius: 4px;
+    overflow: hidden;
   }
 
-  .decomp-table-value {
-    text-align: right;
-    color: var(--pe-gray-600);
-    font-variant-numeric: tabular-nums;
+  .decomp-bar-fill {
+    position: absolute;
+    top: 2px;
+    height: 14px;
+    border-radius: 3px;
+    opacity: 0.75;
+    transition: width 0.3s ease;
   }
 
-  .decomp-table-change {
-    text-align: right;
+  .decomp-bar-zero {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--pe-gray-300);
+  }
+
+  .decomp-value {
+    font-size: 0.85rem;
     font-weight: 600;
+    text-align: right;
     font-variant-numeric: tabular-nums;
   }
 
-  .decomp-table-change.positive { color: #059669; }
-  .decomp-table-change.negative { color: #dc2626; }
-  .decomp-table-change.zero { color: var(--pe-gray-400); }
+  .decomp-value.positive { color: var(--pe-color-success); }
+  .decomp-value.negative { color: var(--pe-color-error); }
+  .decomp-value.zero { color: var(--pe-gray-400); }
 
-  .decomp-table-net-row td {
+  .decomp-total-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+    padding-top: 10px;
     border-top: 1px solid var(--pe-gray-200);
-    padding-top: 10px;
-  }
-
-  .decomp-table-purchasing-row td {
-    padding-top: 12px;
-    border-top: 1px dashed var(--pe-gray-200);
-  }
-
-  .decomp-table-total-row td {
-    border-top: 1px solid var(--pe-gray-300);
-    padding-top: 10px;
   }
 
   /* --- Impact table --- */
@@ -1058,14 +1073,14 @@
     padding-bottom: 14px;
   }
 
-  .impact-positive { color: #059669 !important; font-weight: 600; }
-  .impact-negative { color: #dc2626 !important; font-weight: 600; }
+  .impact-positive { color: var(--pe-color-success) !important; font-weight: 600; }
+  .impact-negative { color: var(--pe-color-error) !important; font-weight: 600; }
   .impact-neutral { color: var(--pe-gray-400) !important; }
 
   /* --- Group/expandable rows --- */
 
   .group-header-row { cursor: pointer; }
-  .group-header-row:hover td { background: #e8edf2; }
+  .group-header-row:hover td { background: var(--pe-color-gray-200); }
 
   .group-header-row td {
     padding: 10px 20px 6px;
@@ -1262,12 +1277,12 @@
     align-items: flex-start;
     gap: 8px;
     padding: 10px 14px;
-    background: #fffbeb;
-    border: 1px solid #fde68a;
+    background: var(--pe-color-warning-bg, #fffbeb);
+    border: 1px solid var(--pe-color-warning-border, #fde68a);
     border-radius: 8px;
     font-size: 0.8rem;
     line-height: 1.4;
-    color: #92400e;
+    color: var(--pe-color-text-warning);
     margin-top: 14px;
   }
 

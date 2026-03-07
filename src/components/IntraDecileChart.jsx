@@ -12,14 +12,15 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { colors } from "@policyengine/design-system/tokens/colors";
+import { chartColors } from "@policyengine/design-system/charts";
 
 
 const OUTCOME_COLORS = {
-  "Lose more than 5%": "#991b1b",    // red-800
-  "Lose less than 5%": "#dc2626",    // red-600
+  "Lose more than 5%": "#991b1b",    // red-800 — no token; darker error shade for severity distinction
+  "Lose less than 5%": chartColors.negative,
   "No change": colors.gray[400],
-  "Gain less than 5%": "#16a34a",    // green-600
-  "Gain more than 5%": "#15803d",    // green-700
+  "Gain less than 5%": chartColors.positive,
+  "Gain more than 5%": "#15803d",    // green-700 — no token; darker success shade for severity distinction
 };
 
 const OUTCOME_ORDER = [
