@@ -154,7 +154,7 @@ function WinnersLosersChart({ data, year }) {
             <ReferenceLine y={0} stroke={colors.gray[500]} strokeWidth={1} />
             <Tooltip
               contentStyle={{
-                background: "#fff",
+                background: colors.white,
                 border: `1px solid ${colors.border.light}`,
                 borderRadius: 8,
                 boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
