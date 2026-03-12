@@ -1,1365 +1,7000 @@
 [
   {
     "year": 2026,
+    "country": "UK",
     "group": "Single adult, no children",
-    "weighted_n": 5487196,
+    "weighted_n": 5451382,
     "decomposition": {
-      "market_income": 28.59,
-      "taxes": -6.21,
-      "benefits": -9.54,
-      "pension_contributions": -1.05,
-      "purchasing_power": 62.04,
-      "total": 73.83,
+      "market_income": 28.1,
+      "taxes": -6.09,
+      "benefits": -9.83,
+      "pension_contributions": -1.08,
+      "purchasing_power": 63.63,
+      "total": 74.73,
       "details": {
         "market_income": {
-          "baseline": 23793.43,
-          "reform": 23822.03
+          "baseline": 24645.86,
+          "reform": 24673.97
         },
         "taxes": {
-          "baseline": 7716.69,
-          "reform": 7722.89
+          "baseline": 8012.55,
+          "reform": 8018.64
         },
         "benefits": {
-          "baseline": 12107.08,
-          "reform": 12097.54
+          "baseline": 12276.42,
+          "reform": 12266.59
         },
         "pension_contributions": {
-          "baseline": 549.84,
-          "reform": 550.89
+          "baseline": 566.67,
+          "reform": 567.76
         },
         "net_income": {
-          "baseline": 27633.99,
-          "reform": 27645.79
+          "baseline": 28343.06,
+          "reform": 28354.17
         },
         "real_net_income": {
-          "baseline": 27633.99,
-          "reform": 27707.82
+          "baseline": 28343.06,
+          "reform": 28417.79
         }
       }
     }
   },
   {
     "year": 2026,
+    "country": "UK",
     "group": "Couple, no children",
-    "weighted_n": 8763130,
+    "weighted_n": 8810739,
     "decomposition": {
-      "market_income": 123.18,
-      "taxes": -108.89,
-      "benefits": -2.32,
-      "pension_contributions": -5.07,
-      "purchasing_power": 157.25,
-      "total": 164.15,
+      "market_income": 123.51,
+      "taxes": -107.44,
+      "benefits": -2.35,
+      "pension_contributions": -5.14,
+      "purchasing_power": 156.89,
+      "total": 165.47,
       "details": {
         "market_income": {
-          "baseline": 91080.16,
-          "reform": 91203.34
+          "baseline": 90847.2,
+          "reform": 90970.71
         },
         "taxes": {
-          "baseline": 26576.74,
-          "reform": 26685.63
+          "baseline": 26415.95,
+          "reform": 26523.4
         },
         "benefits": {
-          "baseline": 8212.89,
-          "reform": 8210.58
+          "baseline": 8166.85,
+          "reform": 8164.5
         },
         "pension_contributions": {
-          "baseline": 2647.02,
-          "reform": 2652.08
+          "baseline": 2685.63,
+          "reform": 2690.77
         },
         "net_income": {
-          "baseline": 70069.3,
-          "reform": 70076.2
+          "baseline": 69912.47,
+          "reform": 69921.05
         },
         "real_net_income": {
-          "baseline": 70069.3,
-          "reform": 70233.45
+          "baseline": 69912.47,
+          "reform": 70077.94
         }
       }
     }
   },
   {
     "year": 2026,
+    "country": "UK",
     "group": "Single parent",
-    "weighted_n": 2034406,
+    "weighted_n": 2038103,
     "decomposition": {
-      "market_income": 26.16,
-      "taxes": -3.43,
-      "benefits": -22.2,
-      "pension_contributions": -0.91,
-      "purchasing_power": 85.24,
-      "total": 84.86,
+      "market_income": 25.63,
+      "taxes": -3.71,
+      "benefits": -21.72,
+      "pension_contributions": -0.89,
+      "purchasing_power": 86.9,
+      "total": 86.21,
       "details": {
         "market_income": {
-          "baseline": 18373.51,
-          "reform": 18399.67
+          "baseline": 18168.43,
+          "reform": 18194.07
         },
         "taxes": {
-          "baseline": 5772.02,
-          "reform": 5775.46
+          "baseline": 5014.77,
+          "reform": 5018.49
         },
         "benefits": {
-          "baseline": 25860.93,
-          "reform": 25838.73
+          "baseline": 26038.35,
+          "reform": 26016.63
         },
         "pension_contributions": {
-          "baseline": 475.16,
-          "reform": 476.07
+          "baseline": 466.37,
+          "reform": 467.26
         },
         "net_income": {
-          "baseline": 37987.26,
-          "reform": 37986.87
+          "baseline": 38725.64,
+          "reform": 38724.94
         },
         "real_net_income": {
-          "baseline": 37987.26,
-          "reform": 38072.12
+          "baseline": 38725.64,
+          "reform": 38811.85
         }
       }
     }
   },
   {
     "year": 2026,
+    "country": "UK",
     "group": "Couple with children",
-    "weighted_n": 6704035,
+    "weighted_n": 6698974,
     "decomposition": {
-      "market_income": 128.95,
-      "taxes": -20.17,
-      "benefits": -7.37,
-      "pension_contributions": -4.21,
-      "purchasing_power": 170.06,
-      "total": 267.26,
+      "market_income": 129.17,
+      "taxes": -20.38,
+      "benefits": -7.78,
+      "pension_contributions": -4.27,
+      "purchasing_power": 169.99,
+      "total": 266.73,
       "details": {
         "market_income": {
-          "baseline": 87649.29,
-          "reform": 87778.24
+          "baseline": 86806.5,
+          "reform": 86935.67
         },
         "taxes": {
-          "baseline": 25595.5,
-          "reform": 25615.67
+          "baseline": 24743.41,
+          "reform": 24763.79
         },
         "benefits": {
-          "baseline": 15828.5,
-          "reform": 15821.13
+          "baseline": 15826.91,
+          "reform": 15819.14
         },
         "pension_contributions": {
-          "baseline": 2196.99,
-          "reform": 2201.2
+          "baseline": 2230.27,
+          "reform": 2234.54
         },
         "net_income": {
-          "baseline": 75685.29,
-          "reform": 75782.5
+          "baseline": 75659.74,
+          "reform": 75756.48
         },
         "real_net_income": {
-          "baseline": 75685.29,
-          "reform": 75952.55
+          "baseline": 75659.74,
+          "reform": 75926.47
         }
       }
     }
   },
   {
     "year": 2026,
+    "country": "UK",
     "group": "Single pensioner",
-    "weighted_n": 3891606,
+    "weighted_n": 3849034,
     "decomposition": {
-      "market_income": -9.12,
-      "taxes": 3.1,
-      "benefits": 2.78,
-      "pension_contributions": -0.05,
-      "purchasing_power": 58.0,
-      "total": 54.71,
+      "market_income": -9.45,
+      "taxes": 3.0,
+      "benefits": 2.63,
+      "pension_contributions": -0.06,
+      "purchasing_power": 54.29,
+      "total": 50.41,
       "details": {
         "market_income": {
-          "baseline": 10326.16,
-          "reform": 10317.04
+          "baseline": 10308.53,
+          "reform": 10299.08
         },
         "taxes": {
-          "baseline": 5648.52,
-          "reform": 5645.42
+          "baseline": 7254.97,
+          "reform": 7251.96
         },
         "benefits": {
-          "baseline": 21201.57,
-          "reform": 21204.36
+          "baseline": 21166.05,
+          "reform": 21168.69
         },
         "pension_contributions": {
-          "baseline": 27.51,
-          "reform": 27.56
+          "baseline": 29.26,
+          "reform": 29.32
         },
         "net_income": {
-          "baseline": 25851.71,
-          "reform": 25848.42
+          "baseline": 24190.36,
+          "reform": 24186.49
         },
         "real_net_income": {
-          "baseline": 25851.71,
-          "reform": 25906.42
+          "baseline": 24190.36,
+          "reform": 24240.77
         }
       }
     }
   },
   {
     "year": 2026,
+    "country": "UK",
     "group": "Pensioner couple",
-    "weighted_n": 4773454,
+    "weighted_n": 4782134,
     "decomposition": {
-      "market_income": -12.33,
-      "taxes": 3.18,
-      "benefits": 10.42,
-      "pension_contributions": -0.88,
-      "purchasing_power": 118.18,
-      "total": 118.57,
+      "market_income": -12.54,
+      "taxes": 3.16,
+      "benefits": 10.46,
+      "pension_contributions": -0.86,
+      "purchasing_power": 119.09,
+      "total": 119.31,
       "details": {
         "market_income": {
-          "baseline": 33884.58,
-          "reform": 33872.25
+          "baseline": 33801.05,
+          "reform": 33788.51
         },
         "taxes": {
-          "baseline": 13184.03,
-          "reform": 13180.85
+          "baseline": 12862.84,
+          "reform": 12859.68
         },
         "benefits": {
-          "baseline": 32421.07,
-          "reform": 32431.49
+          "baseline": 32580.31,
+          "reform": 32590.78
         },
         "pension_contributions": {
-          "baseline": 458.19,
-          "reform": 459.06
+          "baseline": 448.62,
+          "reform": 449.48
         },
         "net_income": {
-          "baseline": 52663.44,
-          "reform": 52663.83
+          "baseline": 53069.9,
+          "reform": 53070.12
         },
         "real_net_income": {
-          "baseline": 52663.44,
-          "reform": 52782.01
+          "baseline": 53069.9,
+          "reform": 53189.21
         }
       }
     }
   },
   {
     "year": 2026,
+    "country": "UK",
     "group": "All households",
-    "weighted_n": 31883215,
+    "weighted_n": 31857480,
     "decomposition": {
-      "market_income": 65.04,
-      "taxes": -34.75,
-      "benefits": -3.49,
-      "pension_contributions": -2.67,
-      "purchasing_power": 120.93,
-      "total": 145.06,
+      "market_income": 65.18,
+      "taxes": -34.6,
+      "benefits": -3.61,
+      "pension_contributions": -2.71,
+      "purchasing_power": 121.06,
+      "total": 145.32,
       "details": {
         "market_income": {
-          "baseline": 55419.86,
-          "reform": 55484.9
+          "baseline": 55426.85,
+          "reform": 55492.03
         },
         "taxes": {
-          "baseline": 17145.84,
-          "reform": 17180.59
+          "baseline": 17113.26,
+          "reform": 17147.86
         },
         "benefits": {
-          "baseline": 16991.54,
-          "reform": 16988.05
+          "baseline": 17028.68,
+          "reform": 17025.07
         },
         "pension_contributions": {
-          "baseline": 1394.42,
-          "reform": 1397.09
+          "baseline": 1417.54,
+          "reform": 1420.26
         },
         "net_income": {
-          "baseline": 53871.14,
-          "reform": 53895.26
+          "baseline": 53924.72,
+          "reform": 53948.99
         },
         "real_net_income": {
-          "baseline": 53871.14,
-          "reform": 54016.2
+          "baseline": 53924.72,
+          "reform": 54070.04
         }
       }
     }
   },
   {
-    "year": 2027,
+    "year": 2026,
+    "country": "ENGLAND",
     "group": "Single adult, no children",
-    "weighted_n": 5507498,
+    "weighted_n": 4555860,
     "decomposition": {
-      "market_income": 45.87,
-      "taxes": -14.71,
-      "benefits": -21.69,
-      "pension_contributions": -1.9,
-      "purchasing_power": 68.41,
-      "total": 75.98,
+      "market_income": 29.61,
+      "taxes": -6.37,
+      "benefits": -10.26,
+      "pension_contributions": -1.2,
+      "purchasing_power": 65.79,
+      "total": 77.57,
       "details": {
         "market_income": {
-          "baseline": 24413.31,
-          "reform": 24459.17
+          "baseline": 26114.89,
+          "reform": 26144.5
         },
         "taxes": {
-          "baseline": 8150.96,
-          "reform": 8165.68
+          "baseline": 8600.04,
+          "reform": 8606.41
         },
         "benefits": {
-          "baseline": 12327.89,
-          "reform": 12306.21
+          "baseline": 12413.65,
+          "reform": 12403.39
         },
         "pension_contributions": {
-          "baseline": 562.21,
-          "reform": 564.11
+          "baseline": 626.04,
+          "reform": 627.23
         },
         "net_income": {
-          "baseline": 28028.03,
-          "reform": 28035.59
+          "baseline": 29302.46,
+          "reform": 29314.24
         },
         "real_net_income": {
-          "baseline": 27473.07,
-          "reform": 27549.05
+          "baseline": 29302.46,
+          "reform": 29380.03
         }
       }
     }
   },
   {
-    "year": 2027,
+    "year": 2026,
+    "country": "ENGLAND",
     "group": "Couple, no children",
-    "weighted_n": 8795553,
+    "weighted_n": 7319513,
     "decomposition": {
-      "market_income": 206.76,
-      "taxes": 4.44,
-      "benefits": -5.31,
-      "pension_contributions": -9.16,
-      "purchasing_power": 174.18,
-      "total": 370.91,
+      "market_income": 127.5,
+      "taxes": -125.02,
+      "benefits": -2.31,
+      "pension_contributions": -5.54,
+      "purchasing_power": 159.89,
+      "total": 154.52,
       "details": {
         "market_income": {
-          "baseline": 93407.49,
-          "reform": 93614.25
+          "baseline": 94172.84,
+          "reform": 94300.35
         },
         "taxes": {
-          "baseline": 27799.45,
-          "reform": 27795.0
+          "baseline": 28040.6,
+          "reform": 28165.62
         },
         "benefits": {
-          "baseline": 8267.82,
-          "reform": 8262.51
+          "baseline": 8022.61,
+          "reform": 8020.3
         },
         "pension_contributions": {
-          "baseline": 2706.57,
-          "reform": 2715.73
+          "baseline": 2893.91,
+          "reform": 2899.45
         },
         "net_income": {
-          "baseline": 71169.28,
-          "reform": 71366.02
+          "baseline": 71260.95,
+          "reform": 71255.58
         },
         "real_net_income": {
-          "baseline": 69760.13,
-          "reform": 70131.04
+          "baseline": 71260.95,
+          "reform": 71415.47
         }
       }
     }
   },
   {
-    "year": 2027,
+    "year": 2026,
+    "country": "ENGLAND",
     "group": "Single parent",
-    "weighted_n": 2041933,
+    "weighted_n": 1703049,
     "decomposition": {
-      "market_income": 47.17,
-      "taxes": -10.57,
-      "benefits": -60.86,
-      "pension_contributions": -1.64,
-      "purchasing_power": 93.96,
-      "total": 68.06,
+      "market_income": 26.58,
+      "taxes": -3.75,
+      "benefits": -22.01,
+      "pension_contributions": -0.95,
+      "purchasing_power": 86.94,
+      "total": 86.81,
       "details": {
         "market_income": {
-          "baseline": 18836.72,
-          "reform": 18883.89
+          "baseline": 18097.19,
+          "reform": 18123.77
         },
         "taxes": {
-          "baseline": 6139.17,
-          "reform": 6149.74
+          "baseline": 5053.37,
+          "reform": 5057.12
         },
         "benefits": {
-          "baseline": 26315.95,
-          "reform": 26255.09
+          "baseline": 26192.39,
+          "reform": 26170.39
         },
         "pension_contributions": {
-          "baseline": 485.85,
-          "reform": 487.5
+          "baseline": 496.65,
+          "reform": 497.6
         },
         "net_income": {
-          "baseline": 38527.64,
-          "reform": 38501.74
+          "baseline": 38739.56,
+          "reform": 38739.44
         },
         "real_net_income": {
-          "baseline": 37764.79,
-          "reform": 37832.85
+          "baseline": 38739.56,
+          "reform": 38826.37
         }
       }
     }
   },
   {
-    "year": 2027,
+    "year": 2026,
+    "country": "ENGLAND",
     "group": "Couple with children",
-    "weighted_n": 6728840,
+    "weighted_n": 5679283,
     "decomposition": {
-      "market_income": 229.06,
-      "taxes": -80.05,
-      "benefits": -20.77,
-      "pension_contributions": -7.6,
-      "purchasing_power": 187.83,
-      "total": 308.47,
+      "market_income": 133.15,
+      "taxes": -20.86,
+      "benefits": -7.43,
+      "pension_contributions": -4.21,
+      "purchasing_power": 173.55,
+      "total": 274.2,
       "details": {
         "market_income": {
-          "baseline": 89841.95,
-          "reform": 90071.01
+          "baseline": 88859.82,
+          "reform": 88992.97
         },
         "taxes": {
-          "baseline": 26761.43,
-          "reform": 26841.48
+          "baseline": 25358.96,
+          "reform": 25379.82
         },
         "benefits": {
-          "baseline": 16011.52,
-          "reform": 15990.75
+          "baseline": 15935.01,
+          "reform": 15927.58
         },
         "pension_contributions": {
-          "baseline": 2246.42,
-          "reform": 2254.03
+          "baseline": 2198.4,
+          "reform": 2202.61
         },
         "net_income": {
-          "baseline": 76845.62,
-          "reform": 76966.25
+          "baseline": 77237.46,
+          "reform": 77338.12
         },
         "real_net_income": {
-          "baseline": 75324.07,
-          "reform": 75632.54
+          "baseline": 77237.46,
+          "reform": 77511.66
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "ENGLAND",
+    "group": "Single pensioner",
+    "weighted_n": 3426214,
+    "decomposition": {
+      "market_income": -9.14,
+      "taxes": 2.97,
+      "benefits": 3.76,
+      "pension_contributions": -0.06,
+      "purchasing_power": 52.41,
+      "total": 49.94,
+      "details": {
+        "market_income": {
+          "baseline": 10379.04,
+          "reform": 10369.9
+        },
+        "taxes": {
+          "baseline": 7616.3,
+          "reform": 7613.34
+        },
+        "benefits": {
+          "baseline": 20629.92,
+          "reform": 20633.69
+        },
+        "pension_contributions": {
+          "baseline": 32.39,
+          "reform": 32.46
+        },
+        "net_income": {
+          "baseline": 23360.26,
+          "reform": 23357.79
+        },
+        "real_net_income": {
+          "baseline": 23360.26,
+          "reform": 23410.2
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "ENGLAND",
+    "group": "Pensioner couple",
+    "weighted_n": 3941818,
+    "decomposition": {
+      "market_income": -10.8,
+      "taxes": 3.09,
+      "benefits": 10.62,
+      "pension_contributions": -0.98,
+      "purchasing_power": 118.72,
+      "total": 120.65,
+      "details": {
+        "market_income": {
+          "baseline": 35947.78,
+          "reform": 35936.99
+        },
+        "taxes": {
+          "baseline": 13808.29,
+          "reform": 13805.2
+        },
+        "benefits": {
+          "baseline": 31276.63,
+          "reform": 31287.25
+        },
+        "pension_contributions": {
+          "baseline": 512.06,
+          "reform": 513.04
+        },
+        "net_income": {
+          "baseline": 52904.07,
+          "reform": 52906.0
+        },
+        "real_net_income": {
+          "baseline": 52904.07,
+          "reform": 53024.72
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "ENGLAND",
+    "group": "All households",
+    "weighted_n": 26825232,
+    "decomposition": {
+      "market_income": 67.41,
+      "taxes": -39.18,
+      "benefits": -3.45,
+      "pension_contributions": -2.83,
+      "purchasing_power": 122.3,
+      "total": 144.25,
+      "details": {
+        "market_income": {
+          "baseline": 57074.11,
+          "reform": 57141.52
+        },
+        "taxes": {
+          "baseline": 17916.77,
+          "reform": 17955.95
+        },
+        "benefits": {
+          "baseline": 16806.61,
+          "reform": 16803.16
+        },
+        "pension_contributions": {
+          "baseline": 1480.67,
+          "reform": 1483.51
+        },
+        "net_income": {
+          "baseline": 54483.27,
+          "reform": 54505.21
+        },
+        "real_net_income": {
+          "baseline": 54483.27,
+          "reform": 54627.52
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "SCOTLAND",
+    "group": "Single adult, no children",
+    "weighted_n": 529258,
+    "decomposition": {
+      "market_income": 26.53,
+      "taxes": -8.31,
+      "benefits": -6.07,
+      "pension_contributions": -0.6,
+      "purchasing_power": 52.09,
+      "total": 63.64,
+      "details": {
+        "market_income": {
+          "baseline": 18861.72,
+          "reform": 18888.25
+        },
+        "taxes": {
+          "baseline": 4997.19,
+          "reform": 5005.5
+        },
+        "benefits": {
+          "baseline": 9654.51,
+          "reform": 9648.44
+        },
+        "pension_contributions": {
+          "baseline": 314.71,
+          "reform": 315.31
+        },
+        "net_income": {
+          "baseline": 23204.32,
+          "reform": 23215.87
+        },
+        "real_net_income": {
+          "baseline": 23204.32,
+          "reform": 23267.96
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "SCOTLAND",
+    "group": "Couple, no children",
+    "weighted_n": 809436,
+    "decomposition": {
+      "market_income": 106.89,
+      "taxes": -17.96,
+      "benefits": -2.26,
+      "pension_contributions": -3.16,
+      "purchasing_power": 140.03,
+      "total": 223.54,
+      "details": {
+        "market_income": {
+          "baseline": 74384.84,
+          "reform": 74491.73
+        },
+        "taxes": {
+          "baseline": 18782.6,
+          "reform": 18800.56
+        },
+        "benefits": {
+          "baseline": 8378.63,
+          "reform": 8376.36
+        },
+        "pension_contributions": {
+          "baseline": 1652.98,
+          "reform": 1656.14
+        },
+        "net_income": {
+          "baseline": 62327.89,
+          "reform": 62411.39
+        },
+        "real_net_income": {
+          "baseline": 62327.89,
+          "reform": 62551.43
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "SCOTLAND",
+    "group": "Single parent",
+    "weighted_n": 183637,
+    "decomposition": {
+      "market_income": 23.24,
+      "taxes": -4.69,
+      "benefits": -18.39,
+      "pension_contributions": -0.79,
+      "purchasing_power": 84.25,
+      "total": 83.62,
+      "details": {
+        "market_income": {
+          "baseline": 18849.92,
+          "reform": 18873.16
+        },
+        "taxes": {
+          "baseline": 4770.97,
+          "reform": 4775.66
+        },
+        "benefits": {
+          "baseline": 23884.23,
+          "reform": 23865.84
+        },
+        "pension_contributions": {
+          "baseline": 414.12,
+          "reform": 414.91
+        },
+        "net_income": {
+          "baseline": 37549.07,
+          "reform": 37548.43
+        },
+        "real_net_income": {
+          "baseline": 37549.07,
+          "reform": 37632.69
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "SCOTLAND",
+    "group": "Couple with children",
+    "weighted_n": 536303,
+    "decomposition": {
+      "market_income": 112.88,
+      "taxes": -10.3,
+      "benefits": -9.92,
+      "pension_contributions": -5.49,
+      "purchasing_power": 158.15,
+      "total": 245.32,
+      "details": {
+        "market_income": {
+          "baseline": 84657.3,
+          "reform": 84770.18
+        },
+        "taxes": {
+          "baseline": 25825.49,
+          "reform": 25835.78
+        },
+        "benefits": {
+          "baseline": 14419.69,
+          "reform": 14409.77
+        },
+        "pension_contributions": {
+          "baseline": 2866.83,
+          "reform": 2872.32
+        },
+        "net_income": {
+          "baseline": 70384.67,
+          "reform": 70471.85
+        },
+        "real_net_income": {
+          "baseline": 70384.67,
+          "reform": 70629.99
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "SCOTLAND",
+    "group": "Single pensioner",
+    "weighted_n": 221239,
+    "decomposition": {
+      "market_income": -17.16,
+      "taxes": 4.9,
+      "benefits": -3.16,
+      "pension_contributions": -0.0,
+      "purchasing_power": 65.94,
+      "total": 50.52,
+      "details": {
+        "market_income": {
+          "baseline": 12257.01,
+          "reform": 12239.84
+        },
+        "taxes": {
+          "baseline": 5159.26,
+          "reform": 5154.36
+        },
+        "benefits": {
+          "baseline": 22303.84,
+          "reform": 22300.68
+        },
+        "pension_contributions": {
+          "baseline": 0.0,
+          "reform": 0.0
+        },
+        "net_income": {
+          "baseline": 29401.59,
+          "reform": 29386.17
+        },
+        "real_net_income": {
+          "baseline": 29401.59,
+          "reform": 29452.11
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "SCOTLAND",
+    "group": "Pensioner couple",
+    "weighted_n": 429642,
+    "decomposition": {
+      "market_income": -25.93,
+      "taxes": 3.89,
+      "benefits": 12.79,
+      "pension_contributions": -0.21,
+      "purchasing_power": 122.45,
+      "total": 112.99,
+      "details": {
+        "market_income": {
+          "baseline": 26408.41,
+          "reform": 26382.48
+        },
+        "taxes": {
+          "baseline": 9148.83,
+          "reform": 9144.95
+        },
+        "benefits": {
+          "baseline": 37431.84,
+          "reform": 37444.64
+        },
+        "pension_contributions": {
+          "baseline": 111.79,
+          "reform": 112.01
+        },
+        "net_income": {
+          "baseline": 54579.63,
+          "reform": 54570.16
+        },
+        "real_net_income": {
+          "baseline": 54579.63,
+          "reform": 54692.62
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "SCOTLAND",
+    "group": "All households",
+    "weighted_n": 2721090,
+    "decomposition": {
+      "market_income": 55.61,
+      "taxes": -8.44,
+      "benefits": -3.38,
+      "pension_contributions": -2.24,
+      "purchasing_power": 114.0,
+      "total": 155.55,
+      "details": {
+        "market_income": {
+          "baseline": 49176.64,
+          "reform": 49232.25
+        },
+        "taxes": {
+          "baseline": 13911.58,
+          "reform": 13920.02
+        },
+        "benefits": {
+          "baseline": 16671.91,
+          "reform": 16668.53
+        },
+        "pension_contributions": {
+          "baseline": 1170.07,
+          "reform": 1172.31
+        },
+        "net_income": {
+          "baseline": 50766.91,
+          "reform": 50808.45
+        },
+        "real_net_income": {
+          "baseline": 50766.91,
+          "reform": 50922.46
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "WALES",
+    "group": "Single adult, no children",
+    "weighted_n": 283562,
+    "decomposition": {
+      "market_income": 13.61,
+      "taxes": -2.18,
+      "benefits": -8.47,
+      "pension_contributions": -0.41,
+      "purchasing_power": 52.67,
+      "total": 55.22,
+      "details": {
+        "market_income": {
+          "baseline": 16988.25,
+          "reform": 17001.86
+        },
+        "taxes": {
+          "baseline": 5720.83,
+          "reform": 5723.01
+        },
+        "benefits": {
+          "baseline": 12422.54,
+          "reform": 12414.07
+        },
+        "pension_contributions": {
+          "baseline": 216.17,
+          "reform": 216.58
+        },
+        "net_income": {
+          "baseline": 23473.8,
+          "reform": 23476.34
+        },
+        "real_net_income": {
+          "baseline": 23473.8,
+          "reform": 23529.02
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "WALES",
+    "group": "Couple, no children",
+    "weighted_n": 443063,
+    "decomposition": {
+      "market_income": 98.17,
+      "taxes": -24.0,
+      "benefits": -1.86,
+      "pension_contributions": -3.79,
+      "purchasing_power": 145.92,
+      "total": 214.44,
+      "details": {
+        "market_income": {
+          "baseline": 77436.01,
+          "reform": 77534.18
+        },
+        "taxes": {
+          "baseline": 19095.35,
+          "reform": 19119.35
+        },
+        "benefits": {
+          "baseline": 8598.81,
+          "reform": 8596.95
+        },
+        "pension_contributions": {
+          "baseline": 1977.72,
+          "reform": 1981.51
+        },
+        "net_income": {
+          "baseline": 64961.74,
+          "reform": 65030.26
+        },
+        "real_net_income": {
+          "baseline": 64961.74,
+          "reform": 65176.18
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "WALES",
+    "group": "Single parent",
+    "weighted_n": 111177,
+    "decomposition": {
+      "market_income": 16.2,
+      "taxes": -1.85,
+      "benefits": -22.07,
+      "pension_contributions": -0.28,
+      "purchasing_power": 89.76,
+      "total": 81.76,
+      "details": {
+        "market_income": {
+          "baseline": 18266.7,
+          "reform": 18282.9
+        },
+        "taxes": {
+          "baseline": 5095.91,
+          "reform": 5097.76
+        },
+        "benefits": {
+          "baseline": 26979.74,
+          "reform": 26957.67
+        },
+        "pension_contributions": {
+          "baseline": 144.09,
+          "reform": 144.37
+        },
+        "net_income": {
+          "baseline": 40006.45,
+          "reform": 39998.45
+        },
+        "real_net_income": {
+          "baseline": 40006.45,
+          "reform": 40088.21
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "WALES",
+    "group": "Couple with children",
+    "weighted_n": 264490,
+    "decomposition": {
+      "market_income": 100.8,
+      "taxes": -27.58,
+      "benefits": -10.9,
+      "pension_contributions": -4.32,
+      "purchasing_power": 139.27,
+      "total": 197.27,
+      "details": {
+        "market_income": {
+          "baseline": 64247.89,
+          "reform": 64348.69
+        },
+        "taxes": {
+          "baseline": 17236.59,
+          "reform": 17264.18
+        },
+        "benefits": {
+          "baseline": 17253.09,
+          "reform": 17242.19
+        },
+        "pension_contributions": {
+          "baseline": 2256.99,
+          "reform": 2261.31
+        },
+        "net_income": {
+          "baseline": 62007.39,
+          "reform": 62065.39
+        },
+        "real_net_income": {
+          "baseline": 62007.39,
+          "reform": 62204.66
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "WALES",
+    "group": "Single pensioner",
+    "weighted_n": 182662,
+    "decomposition": {
+      "market_income": -6.41,
+      "taxes": 1.59,
+      "benefits": -11.16,
+      "pension_contributions": -0.01,
+      "purchasing_power": 74.54,
+      "total": 58.55,
+      "details": {
+        "market_income": {
+          "baseline": 7005.6,
+          "reform": 6999.19
+        },
+        "taxes": {
+          "baseline": 3486.18,
+          "reform": 3484.59
+        },
+        "benefits": {
+          "baseline": 29721.32,
+          "reform": 29710.16
+        },
+        "pension_contributions": {
+          "baseline": 4.93,
+          "reform": 4.94
+        },
+        "net_income": {
+          "baseline": 33235.81,
+          "reform": 33219.82
+        },
+        "real_net_income": {
+          "baseline": 33235.81,
+          "reform": 33294.36
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "WALES",
+    "group": "Pensioner couple",
+    "weighted_n": 256167,
+    "decomposition": {
+      "market_income": -17.88,
+      "taxes": 4.53,
+      "benefits": 6.63,
+      "pension_contributions": -0.28,
+      "purchasing_power": 119.98,
+      "total": 112.98,
+      "details": {
+        "market_income": {
+          "baseline": 22023.76,
+          "reform": 22005.88
+        },
+        "taxes": {
+          "baseline": 8880.28,
+          "reform": 8875.75
+        },
+        "benefits": {
+          "baseline": 40471.02,
+          "reform": 40477.65
+        },
+        "pension_contributions": {
+          "baseline": 145.18,
+          "reform": 145.46
+        },
+        "net_income": {
+          "baseline": 53469.32,
+          "reform": 53462.33
+        },
+        "real_net_income": {
+          "baseline": 53469.32,
+          "reform": 53582.3
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "WALES",
+    "group": "All households",
+    "weighted_n": 1548907,
+    "decomposition": {
+      "market_income": 45.41,
+      "taxes": -11.19,
+      "benefits": -5.86,
+      "pension_contributions": -1.97,
+      "purchasing_power": 110.81,
+      "total": 137.2,
+      "details": {
+        "market_income": {
+          "baseline": 42114.53,
+          "reform": 42159.94
+        },
+        "taxes": {
+          "baseline": 11728.03,
+          "reform": 11739.22
+        },
+        "benefits": {
+          "baseline": 19994.22,
+          "reform": 19988.37
+        },
+        "pension_contributions": {
+          "baseline": 1027.76,
+          "reform": 1029.73
+        },
+        "net_income": {
+          "baseline": 49352.97,
+          "reform": 49379.36
+        },
+        "real_net_income": {
+          "baseline": 49352.97,
+          "reform": 49490.17
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single adult, no children",
+    "weighted_n": 82701,
+    "decomposition": {
+      "market_income": 4.64,
+      "taxes": 10.23,
+      "benefits": -14.6,
+      "pension_contributions": -0.21,
+      "purchasing_power": 56.26,
+      "total": 56.32,
+      "details": {
+        "market_income": {
+          "baseline": 6992.58,
+          "reform": 6997.22
+        },
+        "taxes": {
+          "baseline": 2803.74,
+          "reform": 2793.51
+        },
+        "benefits": {
+          "baseline": 20995.13,
+          "reform": 20980.53
+        },
+        "pension_contributions": {
+          "baseline": 110.66,
+          "reform": 110.87
+        },
+        "net_income": {
+          "baseline": 25073.31,
+          "reform": 25073.37
+        },
+        "real_net_income": {
+          "baseline": 25073.31,
+          "reform": 25129.63
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "NORTHERN_IRELAND",
+    "group": "Couple, no children",
+    "weighted_n": 238727,
+    "decomposition": {
+      "market_income": 104.45,
+      "taxes": -26.7,
+      "benefits": -4.7,
+      "pension_contributions": -2.13,
+      "purchasing_power": 142.58,
+      "total": 213.5,
+      "details": {
+        "market_income": {
+          "baseline": 69589.13,
+          "reform": 69693.58
+        },
+        "taxes": {
+          "baseline": 16071.88,
+          "reform": 16098.58
+        },
+        "benefits": {
+          "baseline": 11069.47,
+          "reform": 11064.76
+        },
+        "pension_contributions": {
+          "baseline": 1114.81,
+          "reform": 1116.94
+        },
+        "net_income": {
+          "baseline": 63471.91,
+          "reform": 63542.82
+        },
+        "real_net_income": {
+          "baseline": 63471.91,
+          "reform": 63685.41
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single parent",
+    "weighted_n": 40240,
+    "decomposition": {
+      "market_income": 22.45,
+      "taxes": -2.99,
+      "benefits": -23.76,
+      "pension_contributions": -0.6,
+      "purchasing_power": 89.67,
+      "total": 84.77,
+      "details": {
+        "market_income": {
+          "baseline": 17802.19,
+          "reform": 17824.64
+        },
+        "taxes": {
+          "baseline": 4269.62,
+          "reform": 4272.61
+        },
+        "benefits": {
+          "baseline": 26748.08,
+          "reform": 26724.32
+        },
+        "pension_contributions": {
+          "baseline": 313.72,
+          "reform": 314.32
+        },
+        "net_income": {
+          "baseline": 39966.93,
+          "reform": 39962.03
+        },
+        "real_net_income": {
+          "baseline": 39966.93,
+          "reform": 40051.7
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "NORTHERN_IRELAND",
+    "group": "Couple with children",
+    "weighted_n": 218898,
+    "decomposition": {
+      "market_income": 100.04,
+      "taxes": -24.07,
+      "benefits": -7.77,
+      "pension_contributions": -2.8,
+      "purchasing_power": 144.08,
+      "total": 209.48,
+      "details": {
+        "market_income": {
+          "baseline": 66056.18,
+          "reform": 66156.22
+        },
+        "taxes": {
+          "baseline": 15192.01,
+          "reform": 15216.09
+        },
+        "benefits": {
+          "baseline": 14746.8,
+          "reform": 14739.03
+        },
+        "pension_contributions": {
+          "baseline": 1465.11,
+          "reform": 1467.92
+        },
+        "net_income": {
+          "baseline": 64145.86,
+          "reform": 64211.25
+        },
+        "real_net_income": {
+          "baseline": 64145.86,
+          "reform": 64355.34
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single pensioner",
+    "weighted_n": 18920,
+    "decomposition": {
+      "market_income": -4.32,
+      "taxes": 1.36,
+      "benefits": -1.86,
+      "pension_contributions": -0.07,
+      "purchasing_power": 58.88,
+      "total": 53.99,
+      "details": {
+        "market_income": {
+          "baseline": 6643.73,
+          "reform": 6639.41
+        },
+        "taxes": {
+          "baseline": 2712.19,
+          "reform": 2710.83
+        },
+        "benefits": {
+          "baseline": 22353.12,
+          "reform": 22351.25
+        },
+        "pension_contributions": {
+          "baseline": 38.73,
+          "reform": 38.8
+        },
+        "net_income": {
+          "baseline": 26245.94,
+          "reform": 26241.04
+        },
+        "real_net_income": {
+          "baseline": 26245.94,
+          "reform": 26299.93
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "NORTHERN_IRELAND",
+    "group": "Pensioner couple",
+    "weighted_n": 154507,
+    "decomposition": {
+      "market_income": -10.87,
+      "taxes": 0.6,
+      "benefits": 6.32,
+      "pension_contributions": -0.52,
+      "purchasing_power": 117.67,
+      "total": 113.2,
+      "details": {
+        "market_income": {
+          "baseline": 19116.23,
+          "reform": 19105.37
+        },
+        "taxes": {
+          "baseline": 5672.83,
+          "reform": 5672.23
+        },
+        "benefits": {
+          "baseline": 39266.93,
+          "reform": 39273.25
+        },
+        "pension_contributions": {
+          "baseline": 269.97,
+          "reform": 270.48
+        },
+        "net_income": {
+          "baseline": 52440.37,
+          "reform": 52435.91
+        },
+        "real_net_income": {
+          "baseline": 52440.37,
+          "reform": 52553.57
+        }
+      }
+    }
+  },
+  {
+    "year": 2026,
+    "country": "NORTHERN_IRELAND",
+    "group": "All households",
+    "weighted_n": 762252,
+    "decomposition": {
+      "market_income": 61.17,
+      "taxes": -14.08,
+      "benefits": -5.4,
+      "pension_contributions": -1.67,
+      "purchasing_power": 123.13,
+      "total": 163.15,
+      "details": {
+        "market_income": {
+          "baseline": 46819.15,
+          "reform": 46880.32
+        },
+        "taxes": {
+          "baseline": 11208.29,
+          "reform": 11222.36
+        },
+        "benefits": {
+          "baseline": 20091.27,
+          "reform": 20085.87
+        },
+        "pension_contributions": {
+          "baseline": 871.32,
+          "reform": 872.99
+        },
+        "net_income": {
+          "baseline": 54830.81,
+          "reform": 54870.84
+        },
+        "real_net_income": {
+          "baseline": 54830.81,
+          "reform": 54993.96
         }
       }
     }
   },
   {
     "year": 2027,
-    "group": "Single pensioner",
-    "weighted_n": 3906005,
+    "country": "UK",
+    "group": "Single adult, no children",
+    "weighted_n": 5471552,
     "decomposition": {
-      "market_income": -38.9,
-      "taxes": 9.64,
+      "market_income": 44.63,
+      "taxes": -14.49,
+      "benefits": -22.26,
+      "pension_contributions": -1.96,
+      "purchasing_power": 70.2,
+      "total": 76.12,
+      "details": {
+        "market_income": {
+          "baseline": 25295.54,
+          "reform": 25340.18
+        },
+        "taxes": {
+          "baseline": 8454.02,
+          "reform": 8468.5
+        },
+        "benefits": {
+          "baseline": 12492.86,
+          "reform": 12470.6
+        },
+        "pension_contributions": {
+          "baseline": 579.42,
+          "reform": 581.38
+        },
+        "net_income": {
+          "baseline": 28754.96,
+          "reform": 28760.89
+        },
+        "real_net_income": {
+          "baseline": 28185.61,
+          "reform": 28261.73
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "UK",
+    "group": "Couple, no children",
+    "weighted_n": 8843339,
+    "decomposition": {
+      "market_income": 207.68,
+      "taxes": 2.69,
+      "benefits": -5.42,
+      "pension_contributions": -9.29,
+      "purchasing_power": 173.79,
+      "total": 369.45,
+      "details": {
+        "market_income": {
+          "baseline": 93165.12,
+          "reform": 93372.8
+        },
+        "taxes": {
+          "baseline": 27626.49,
+          "reform": 27623.8
+        },
+        "benefits": {
+          "baseline": 8221.96,
+          "reform": 8216.55
+        },
+        "pension_contributions": {
+          "baseline": 2746.05,
+          "reform": 2755.35
+        },
+        "net_income": {
+          "baseline": 71014.55,
+          "reform": 71210.21
+        },
+        "real_net_income": {
+          "baseline": 69608.46,
+          "reform": 69977.91
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "UK",
+    "group": "Single parent",
+    "weighted_n": 2045644,
+    "decomposition": {
+      "market_income": 46.22,
+      "taxes": -10.8,
+      "benefits": -59.96,
+      "pension_contributions": -1.61,
+      "purchasing_power": 95.92,
+      "total": 69.77,
+      "details": {
+        "market_income": {
+          "baseline": 18628.36,
+          "reform": 18674.58
+        },
+        "taxes": {
+          "baseline": 5328.59,
+          "reform": 5339.4
+        },
+        "benefits": {
+          "baseline": 26507.32,
+          "reform": 26447.36
+        },
+        "pension_contributions": {
+          "baseline": 476.86,
+          "reform": 478.48
+        },
+        "net_income": {
+          "baseline": 39330.22,
+          "reform": 39304.07
+        },
+        "real_net_income": {
+          "baseline": 38551.48,
+          "reform": 38621.25
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "UK",
+    "group": "Couple with children",
+    "weighted_n": 6723760,
+    "decomposition": {
+      "market_income": 229.63,
+      "taxes": -80.24,
+      "benefits": -21.21,
+      "pension_contributions": -7.72,
+      "purchasing_power": 187.85,
+      "total": 308.31,
+      "details": {
+        "market_income": {
+          "baseline": 88971.06,
+          "reform": 89200.69
+        },
+        "taxes": {
+          "baseline": 25849.58,
+          "reform": 25929.83
+        },
+        "benefits": {
+          "baseline": 16009.57,
+          "reform": 15988.36
+        },
+        "pension_contributions": {
+          "baseline": 2280.45,
+          "reform": 2288.17
+        },
+        "net_income": {
+          "baseline": 76850.6,
+          "reform": 76971.06
+        },
+        "real_net_income": {
+          "baseline": 75328.95,
+          "reform": 75637.26
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "UK",
+    "group": "Single pensioner",
+    "weighted_n": 3863276,
+    "decomposition": {
+      "market_income": -40.15,
+      "taxes": 9.85,
       "benefits": -1.12,
       "pension_contributions": -0.1,
-      "purchasing_power": 64.07,
+      "purchasing_power": 59.75,
+      "total": 28.23,
+      "details": {
+        "market_income": {
+          "baseline": 10658.64,
+          "reform": 10618.5
+        },
+        "taxes": {
+          "baseline": 7678.7,
+          "reform": 7668.85
+        },
+        "benefits": {
+          "baseline": 21563.68,
+          "reform": 21562.56
+        },
+        "pension_contributions": {
+          "baseline": 29.92,
+          "reform": 30.02
+        },
+        "net_income": {
+          "baseline": 24513.7,
+          "reform": 24482.18
+        },
+        "real_net_income": {
+          "baseline": 24028.33,
+          "reform": 24056.56
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "UK",
+    "group": "Pensioner couple",
+    "weighted_n": 4799828,
+    "decomposition": {
+      "market_income": -81.8,
+      "taxes": 19.52,
+      "benefits": 17.56,
+      "pension_contributions": -1.55,
+      "purchasing_power": 131.61,
+      "total": 85.34,
+      "details": {
+        "market_income": {
+          "baseline": 34877.08,
+          "reform": 34795.28
+        },
+        "taxes": {
+          "baseline": 13581.21,
+          "reform": 13561.69
+        },
+        "benefits": {
+          "baseline": 33141.0,
+          "reform": 33158.56
+        },
+        "pension_contributions": {
+          "baseline": 458.71,
+          "reform": 460.27
+        },
+        "net_income": {
+          "baseline": 53978.16,
+          "reform": 53931.89
+        },
+        "real_net_income": {
+          "baseline": 52909.39,
+          "reform": 52994.73
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "UK",
+    "group": "All households",
+    "weighted_n": 31975354,
+    "decomposition": {
+      "market_income": 99.98,
+      "taxes": -15.47,
+      "benefits": -11.55,
+      "pension_contributions": -4.91,
+      "purchasing_power": 133.84,
+      "total": 201.89,
+      "details": {
+        "market_income": {
+          "baseline": 56876.83,
+          "reform": 56976.81
+        },
+        "taxes": {
+          "baseline": 17940.93,
+          "reform": 17956.4
+        },
+        "benefits": {
+          "baseline": 17284.46,
+          "reform": 17272.91
+        },
+        "pension_contributions": {
+          "baseline": 1449.44,
+          "reform": 1454.34
+        },
+        "net_income": {
+          "baseline": 54770.92,
+          "reform": 54838.98
+        },
+        "real_net_income": {
+          "baseline": 53686.46,
+          "reform": 53888.35
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "ENGLAND",
+    "group": "Single adult, no children",
+    "weighted_n": 4572717,
+    "decomposition": {
+      "market_income": 47.24,
+      "taxes": -15.34,
+      "benefits": -22.96,
+      "pension_contributions": -2.17,
+      "purchasing_power": 72.54,
+      "total": 79.31,
+      "details": {
+        "market_income": {
+          "baseline": 26804.39,
+          "reform": 26851.63
+        },
+        "taxes": {
+          "baseline": 9077.18,
+          "reform": 9092.52
+        },
+        "benefits": {
+          "baseline": 12625.09,
+          "reform": 12602.13
+        },
+        "pension_contributions": {
+          "baseline": 640.12,
+          "reform": 642.29
+        },
+        "net_income": {
+          "baseline": 29712.18,
+          "reform": 29718.96
+        },
+        "real_net_income": {
+          "baseline": 29123.88,
+          "reform": 29203.19
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "ENGLAND",
+    "group": "Couple, no children",
+    "weighted_n": 7346595,
+    "decomposition": {
+      "market_income": 214.73,
+      "taxes": 14.42,
+      "benefits": -5.21,
+      "pension_contributions": -10.01,
+      "purchasing_power": 177.12,
+      "total": 391.05,
+      "details": {
+        "market_income": {
+          "baseline": 96580.93,
+          "reform": 96795.67
+        },
+        "taxes": {
+          "baseline": 29333.33,
+          "reform": 29318.91
+        },
+        "benefits": {
+          "baseline": 8075.03,
+          "reform": 8069.82
+        },
+        "pension_contributions": {
+          "baseline": 2959.02,
+          "reform": 2969.03
+        },
+        "net_income": {
+          "baseline": 72363.61,
+          "reform": 72577.54
+        },
+        "real_net_income": {
+          "baseline": 70930.81,
+          "reform": 71321.86
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "ENGLAND",
+    "group": "Single parent",
+    "weighted_n": 1709350,
+    "decomposition": {
+      "market_income": 47.92,
+      "taxes": -11.47,
+      "benefits": -61.05,
+      "pension_contributions": -1.72,
+      "purchasing_power": 95.91,
+      "total": 69.59,
+      "details": {
+        "market_income": {
+          "baseline": 18550.6,
+          "reform": 18598.52
+        },
+        "taxes": {
+          "baseline": 5375.1,
+          "reform": 5386.57
+        },
+        "benefits": {
+          "baseline": 26657.13,
+          "reform": 26596.08
+        },
+        "pension_contributions": {
+          "baseline": 507.82,
+          "reform": 509.54
+        },
+        "net_income": {
+          "baseline": 39324.8,
+          "reform": 39298.49
+        },
+        "real_net_income": {
+          "baseline": 38546.17,
+          "reform": 38615.76
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "ENGLAND",
+    "group": "Couple with children",
+    "weighted_n": 5700297,
+    "decomposition": {
+      "market_income": 237.25,
+      "taxes": -85.48,
+      "benefits": -21.15,
+      "pension_contributions": -7.61,
+      "purchasing_power": 191.77,
+      "total": 314.78,
+      "details": {
+        "market_income": {
+          "baseline": 91070.5,
+          "reform": 91307.75
+        },
+        "taxes": {
+          "baseline": 26487.18,
+          "reform": 26572.67
+        },
+        "benefits": {
+          "baseline": 16117.87,
+          "reform": 16096.72
+        },
+        "pension_contributions": {
+          "baseline": 2247.87,
+          "reform": 2255.47
+        },
+        "net_income": {
+          "baseline": 78453.32,
+          "reform": 78576.34
+        },
+        "real_net_income": {
+          "baseline": 76899.94,
+          "reform": 77214.72
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "ENGLAND",
+    "group": "Single pensioner",
+    "weighted_n": 3438891,
+    "decomposition": {
+      "market_income": -39.37,
+      "taxes": 9.67,
+      "benefits": 2.39,
+      "pension_contributions": -0.11,
+      "purchasing_power": 57.64,
+      "total": 30.22,
+      "details": {
+        "market_income": {
+          "baseline": 10730.37,
+          "reform": 10691.0
+        },
+        "taxes": {
+          "baseline": 8058.47,
+          "reform": 8048.8
+        },
+        "benefits": {
+          "baseline": 21010.42,
+          "reform": 21012.8
+        },
+        "pension_contributions": {
+          "baseline": 33.12,
+          "reform": 33.24
+        },
+        "net_income": {
+          "baseline": 23649.2,
+          "reform": 23621.77
+        },
+        "real_net_income": {
+          "baseline": 23180.94,
+          "reform": 23211.16
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "ENGLAND",
+    "group": "Pensioner couple",
+    "weighted_n": 3956403,
+    "decomposition": {
+      "market_income": -78.79,
+      "taxes": 19.78,
+      "benefits": 18.7,
+      "pension_contributions": -1.77,
+      "purchasing_power": 131.17,
+      "total": 89.09,
+      "details": {
+        "market_income": {
+          "baseline": 37084.86,
+          "reform": 37006.07
+        },
+        "taxes": {
+          "baseline": 14578.19,
+          "reform": 14558.41
+        },
+        "benefits": {
+          "baseline": 31806.27,
+          "reform": 31824.96
+        },
+        "pension_contributions": {
+          "baseline": 523.58,
+          "reform": 525.35
+        },
+        "net_income": {
+          "baseline": 53789.36,
+          "reform": 53747.28
+        },
+        "real_net_income": {
+          "baseline": 52724.33,
+          "reform": 52813.42
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "ENGLAND",
+    "group": "All households",
+    "weighted_n": 26924486,
+    "decomposition": {
+      "market_income": 104.13,
+      "taxes": -13.66,
+      "benefits": -11.1,
+      "pension_contributions": -5.12,
+      "purchasing_power": 135.18,
+      "total": 209.43,
+      "details": {
+        "market_income": {
+          "baseline": 58567.08,
+          "reform": 58671.2
+        },
+        "taxes": {
+          "baseline": 18785.5,
+          "reform": 18799.16
+        },
+        "benefits": {
+          "baseline": 17054.42,
+          "reform": 17043.32
+        },
+        "pension_contributions": {
+          "baseline": 1513.99,
+          "reform": 1519.11
+        },
+        "net_income": {
+          "baseline": 55322.01,
+          "reform": 55396.24
+        },
+        "real_net_income": {
+          "baseline": 54226.63,
+          "reform": 54436.06
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "SCOTLAND",
+    "group": "Single adult, no children",
+    "weighted_n": 531217,
+    "decomposition": {
+      "market_income": 43.9,
+      "taxes": -15.23,
+      "benefits": -15.4,
+      "pension_contributions": -1.09,
+      "purchasing_power": 57.72,
+      "total": 69.9,
+      "details": {
+        "market_income": {
+          "baseline": 19333.31,
+          "reform": 19377.2
+        },
+        "taxes": {
+          "baseline": 5230.92,
+          "reform": 5246.16
+        },
+        "benefits": {
+          "baseline": 9860.29,
+          "reform": 9844.89
+        },
+        "pension_contributions": {
+          "baseline": 321.79,
+          "reform": 322.88
+        },
+        "net_income": {
+          "baseline": 23640.88,
+          "reform": 23653.06
+        },
+        "real_net_income": {
+          "baseline": 23172.79,
+          "reform": 23242.69
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "SCOTLAND",
+    "group": "Couple, no children",
+    "weighted_n": 812431,
+    "decomposition": {
+      "market_income": 179.37,
+      "taxes": -57.2,
+      "benefits": -5.63,
+      "pension_contributions": -5.72,
+      "purchasing_power": 155.13,
+      "total": 265.95,
+      "details": {
+        "market_income": {
+          "baseline": 76241.29,
+          "reform": 76420.66
+        },
+        "taxes": {
+          "baseline": 19534.22,
+          "reform": 19591.42
+        },
+        "benefits": {
+          "baseline": 8439.52,
+          "reform": 8433.89
+        },
+        "pension_contributions": {
+          "baseline": 1690.17,
+          "reform": 1695.89
+        },
+        "net_income": {
+          "baseline": 63456.43,
+          "reform": 63567.25
+        },
+        "real_net_income": {
+          "baseline": 62199.99,
+          "reform": 62465.94
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "SCOTLAND",
+    "group": "Single parent",
+    "weighted_n": 184316,
+    "decomposition": {
+      "market_income": 42.0,
+      "taxes": -9.33,
+      "benefits": -50.34,
+      "pension_contributions": -1.43,
+      "purchasing_power": 93.34,
+      "total": 74.24,
+      "details": {
+        "market_income": {
+          "baseline": 19341.2,
+          "reform": 19383.2
+        },
+        "taxes": {
+          "baseline": 5023.03,
+          "reform": 5032.36
+        },
+        "benefits": {
+          "baseline": 24372.18,
+          "reform": 24321.85
+        },
+        "pension_contributions": {
+          "baseline": 423.43,
+          "reform": 424.87
+        },
+        "net_income": {
+          "baseline": 38266.92,
+          "reform": 38247.82
+        },
+        "real_net_income": {
+          "baseline": 37509.23,
+          "reform": 37583.47
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "SCOTLAND",
+    "group": "Couple with children",
+    "weighted_n": 538287,
+    "decomposition": {
+      "market_income": 194.72,
+      "taxes": -49.87,
+      "benefits": -19.42,
+      "pension_contributions": -9.92,
+      "purchasing_power": 174.8,
+      "total": 290.31,
+      "details": {
+        "market_income": {
+          "baseline": 86835.56,
+          "reform": 87030.28
+        },
+        "taxes": {
+          "baseline": 26974.79,
+          "reform": 27024.65
+        },
+        "benefits": {
+          "baseline": 14577.02,
+          "reform": 14557.6
+        },
+        "pension_contributions": {
+          "baseline": 2931.34,
+          "reform": 2941.26
+        },
+        "net_income": {
+          "baseline": 71506.46,
+          "reform": 71621.97
+        },
+        "real_net_income": {
+          "baseline": 70090.63,
+          "reform": 70380.94
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "SCOTLAND",
+    "group": "Single pensioner",
+    "weighted_n": 222058,
+    "decomposition": {
+      "market_income": -66.45,
+      "taxes": 17.35,
+      "benefits": -17.13,
+      "pension_contributions": -0.0,
+      "purchasing_power": 73.01,
+      "total": 6.78,
+      "details": {
+        "market_income": {
+          "baseline": 12689.35,
+          "reform": 12622.9
+        },
+        "taxes": {
+          "baseline": 5474.12,
+          "reform": 5456.77
+        },
+        "benefits": {
+          "baseline": 22764.67,
+          "reform": 22747.54
+        },
+        "pension_contributions": {
+          "baseline": 0.0,
+          "reform": 0.0
+        },
+        "net_income": {
+          "baseline": 29979.9,
+          "reform": 29913.68
+        },
+        "real_net_income": {
+          "baseline": 29386.3,
+          "reform": 29393.08
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "SCOTLAND",
+    "group": "Pensioner couple",
+    "weighted_n": 431232,
+    "decomposition": {
+      "market_income": -112.75,
+      "taxes": 21.7,
+      "benefits": 21.76,
+      "pension_contributions": -0.39,
+      "purchasing_power": 135.66,
+      "total": 65.98,
+      "details": {
+        "market_income": {
+          "baseline": 27299.4,
+          "reform": 27186.65
+        },
+        "taxes": {
+          "baseline": 9630.09,
+          "reform": 9608.38
+        },
+        "benefits": {
+          "baseline": 38102.36,
+          "reform": 38124.12
+        },
+        "pension_contributions": {
+          "baseline": 114.31,
+          "reform": 114.69
+        },
+        "net_income": {
+          "baseline": 55657.37,
+          "reform": 55587.69
+        },
+        "real_net_income": {
+          "baseline": 54555.35,
+          "reform": 54621.33
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "SCOTLAND",
+    "group": "All households",
+    "weighted_n": 2731159,
+    "decomposition": {
+      "market_income": 80.49,
+      "taxes": -25.87,
+      "benefits": -10.16,
+      "pension_contributions": -4.05,
+      "purchasing_power": 126.22,
+      "total": 166.63,
+      "details": {
+        "market_income": {
+          "baseline": 50465.64,
+          "reform": 50546.13
+        },
+        "taxes": {
+          "baseline": 14529.39,
+          "reform": 14555.26
+        },
+        "benefits": {
+          "baseline": 16939.61,
+          "reform": 16929.45
+        },
+        "pension_contributions": {
+          "baseline": 1196.4,
+          "reform": 1200.44
+        },
+        "net_income": {
+          "baseline": 51679.47,
+          "reform": 51719.88
+        },
+        "real_net_income": {
+          "baseline": 50656.21,
+          "reform": 50822.84
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "WALES",
+    "group": "Single adult, no children",
+    "weighted_n": 284612,
+    "decomposition": {
+      "market_income": 14.8,
+      "taxes": -3.77,
+      "benefits": -19.67,
+      "pension_contributions": -0.75,
+      "purchasing_power": 58.17,
+      "total": 48.78,
+      "details": {
+        "market_income": {
+          "baseline": 17458.71,
+          "reform": 17473.52
+        },
+        "taxes": {
+          "baseline": 6057.39,
+          "reform": 6061.16
+        },
+        "benefits": {
+          "baseline": 12665.33,
+          "reform": 12645.66
+        },
+        "pension_contributions": {
+          "baseline": 221.03,
+          "reform": 221.78
+        },
+        "net_income": {
+          "baseline": 23845.61,
+          "reform": 23836.23
+        },
+        "real_net_income": {
+          "baseline": 23373.47,
+          "reform": 23422.25
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "WALES",
+    "group": "Couple, no children",
+    "weighted_n": 444702,
+    "decomposition": {
+      "market_income": 156.12,
+      "taxes": -52.68,
+      "benefits": -5.11,
+      "pension_contributions": -6.84,
+      "purchasing_power": 161.31,
+      "total": 252.8,
+      "details": {
+        "market_income": {
+          "baseline": 79425.38,
+          "reform": 79581.5
+        },
+        "taxes": {
+          "baseline": 20059.81,
+          "reform": 20112.5
+        },
+        "benefits": {
+          "baseline": 8663.47,
+          "reform": 8658.36
+        },
+        "pension_contributions": {
+          "baseline": 2022.22,
+          "reform": 2029.07
+        },
+        "net_income": {
+          "baseline": 66006.81,
+          "reform": 66098.3
+        },
+        "real_net_income": {
+          "baseline": 64699.87,
+          "reform": 64952.67
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "WALES",
+    "group": "Single parent",
+    "weighted_n": 111589,
+    "decomposition": {
+      "market_income": 29.28,
+      "taxes": -4.32,
+      "benefits": -58.4,
+      "pension_contributions": -0.5,
+      "purchasing_power": 99.18,
+      "total": 65.24,
+      "details": {
+        "market_income": {
+          "baseline": 18774.41,
+          "reform": 18803.69
+        },
+        "taxes": {
+          "baseline": 5417.54,
+          "reform": 5421.86
+        },
+        "benefits": {
+          "baseline": 27469.12,
+          "reform": 27410.71
+        },
+        "pension_contributions": {
+          "baseline": 147.33,
+          "reform": 147.83
+        },
+        "net_income": {
+          "baseline": 40678.66,
+          "reform": 40644.71
+        },
+        "real_net_income": {
+          "baseline": 39873.22,
+          "reform": 39938.46
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "WALES",
+    "group": "Couple with children",
+    "weighted_n": 265468,
+    "decomposition": {
+      "market_income": 179.92,
+      "taxes": -53.31,
+      "benefits": -25.08,
+      "pension_contributions": -7.81,
+      "purchasing_power": 153.63,
+      "total": 247.35,
+      "details": {
+        "market_income": {
+          "baseline": 65824.38,
+          "reform": 66004.3
+        },
+        "taxes": {
+          "baseline": 18125.76,
+          "reform": 18179.07
+        },
+        "benefits": {
+          "baseline": 17466.98,
+          "reform": 17441.89
+        },
+        "pension_contributions": {
+          "baseline": 2307.77,
+          "reform": 2315.58
+        },
+        "net_income": {
+          "baseline": 62857.83,
+          "reform": 62951.54
+        },
+        "real_net_income": {
+          "baseline": 61613.24,
+          "reform": 61860.59
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "WALES",
+    "group": "Single pensioner",
+    "weighted_n": 183337,
+    "decomposition": {
+      "market_income": -25.03,
+      "taxes": 4.72,
+      "benefits": -45.82,
+      "pension_contributions": -0.02,
+      "purchasing_power": 82.52,
+      "total": 16.37,
+      "details": {
+        "market_income": {
+          "baseline": 7246.61,
+          "reform": 7221.58
+        },
+        "taxes": {
+          "baseline": 3726.18,
+          "reform": 3721.45
+        },
+        "benefits": {
+          "baseline": 30359.86,
+          "reform": 30314.04
+        },
+        "pension_contributions": {
+          "baseline": 5.04,
+          "reform": 5.06
+        },
+        "net_income": {
+          "baseline": 33875.26,
+          "reform": 33809.12
+        },
+        "real_net_income": {
+          "baseline": 33204.53,
+          "reform": 33220.9
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "WALES",
+    "group": "Pensioner couple",
+    "weighted_n": 257115,
+    "decomposition": {
+      "market_income": -88.45,
+      "taxes": 18.97,
+      "benefits": 3.91,
+      "pension_contributions": -0.5,
+      "purchasing_power": 132.51,
+      "total": 66.44,
+      "details": {
+        "market_income": {
+          "baseline": 22748.02,
+          "reform": 22659.57
+        },
+        "taxes": {
+          "baseline": 9465.35,
+          "reform": 9446.37
+        },
+        "benefits": {
+          "baseline": 41232.23,
+          "reform": 41236.14
+        },
+        "pension_contributions": {
+          "baseline": 148.44,
+          "reform": 148.95
+        },
+        "net_income": {
+          "baseline": 54366.46,
+          "reform": 54300.38
+        },
+        "real_net_income": {
+          "baseline": 53290.0,
+          "reform": 53356.44
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "WALES",
+    "group": "All households",
+    "weighted_n": 1554638,
+    "decomposition": {
+      "market_income": 62.92,
+      "taxes": -21.54,
+      "benefits": -18.6,
+      "pension_contributions": -3.56,
+      "purchasing_power": 122.43,
+      "total": 141.65,
+      "details": {
+        "market_income": {
+          "baseline": 43226.02,
+          "reform": 43288.95
+        },
+        "taxes": {
+          "baseline": 12368.1,
+          "reform": 12389.64
+        },
+        "benefits": {
+          "baseline": 20333.17,
+          "reform": 20314.57
+        },
+        "pension_contributions": {
+          "baseline": 1050.88,
+          "reform": 1054.44
+        },
+        "net_income": {
+          "baseline": 50140.21,
+          "reform": 50159.44
+        },
+        "real_net_income": {
+          "baseline": 49147.43,
+          "reform": 49289.08
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single adult, no children",
+    "weighted_n": 83007,
+    "decomposition": {
+      "market_income": 7.8,
+      "taxes": 0.47,
+      "benefits": -36.38,
+      "pension_contributions": -0.38,
+      "purchasing_power": 62.36,
+      "total": 33.87,
+      "details": {
+        "market_income": {
+          "baseline": 7202.55,
+          "reform": 7210.35
+        },
+        "taxes": {
+          "baseline": 2969.19,
+          "reform": 2968.72
+        },
+        "benefits": {
+          "baseline": 21464.54,
+          "reform": 21428.16
+        },
+        "pension_contributions": {
+          "baseline": 113.15,
+          "reform": 113.53
+        },
+        "net_income": {
+          "baseline": 25584.75,
+          "reform": 25556.26
+        },
+        "real_net_income": {
+          "baseline": 25078.17,
+          "reform": 25112.04
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "NORTHERN_IRELAND",
+    "group": "Couple, no children",
+    "weighted_n": 239611,
+    "decomposition": {
+      "market_income": 183.1,
+      "taxes": -51.33,
+      "benefits": -11.5,
+      "pension_contributions": -3.86,
+      "purchasing_power": 157.87,
+      "total": 274.28,
+      "details": {
+        "market_income": {
+          "baseline": 71317.03,
+          "reform": 71500.14
+        },
+        "taxes": {
+          "baseline": 16774.78,
+          "reform": 16826.12
+        },
+        "benefits": {
+          "baseline": 11170.0,
+          "reform": 11158.49
+        },
+        "pension_contributions": {
+          "baseline": 1139.89,
+          "reform": 1143.75
+        },
+        "net_income": {
+          "baseline": 64572.36,
+          "reform": 64688.76
+        },
+        "real_net_income": {
+          "baseline": 63293.82,
+          "reform": 63568.1
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single parent",
+    "weighted_n": 40389,
+    "decomposition": {
+      "market_income": 40.58,
+      "taxes": -7.26,
+      "benefits": -61.98,
+      "pension_contributions": -1.09,
+      "purchasing_power": 99.23,
+      "total": 69.48,
+      "details": {
+        "market_income": {
+          "baseline": 18262.64,
+          "reform": 18303.22
+        },
+        "taxes": {
+          "baseline": 4508.78,
+          "reform": 4516.04
+        },
+        "benefits": {
+          "baseline": 27253.29,
+          "reform": 27191.31
+        },
+        "pension_contributions": {
+          "baseline": 320.77,
+          "reform": 321.86
+        },
+        "net_income": {
+          "baseline": 40686.37,
+          "reform": 40656.63
+        },
+        "real_net_income": {
+          "baseline": 39880.78,
+          "reform": 39950.26
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "NORTHERN_IRELAND",
+    "group": "Couple with children",
+    "weighted_n": 219708,
+    "decomposition": {
+      "market_income": 177.54,
+      "taxes": -51.35,
+      "benefits": -22.46,
+      "pension_contributions": -5.07,
+      "purchasing_power": 159.53,
+      "total": 258.19,
+      "details": {
+        "market_income": {
+          "baseline": 67700.89,
+          "reform": 67878.43
+        },
+        "taxes": {
+          "baseline": 15882.79,
+          "reform": 15934.14
+        },
+        "benefits": {
+          "baseline": 14948.47,
+          "reform": 14926.01
+        },
+        "pension_contributions": {
+          "baseline": 1498.08,
+          "reform": 1503.15
+        },
+        "net_income": {
+          "baseline": 65268.5,
+          "reform": 65367.16
+        },
+        "real_net_income": {
+          "baseline": 63976.18,
+          "reform": 64234.37
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single pensioner",
+    "weighted_n": 18990,
+    "decomposition": {
+      "market_income": -19.73,
+      "taxes": 4.15,
+      "benefits": -16.62,
+      "pension_contributions": -0.13,
+      "purchasing_power": 65.24,
+      "total": 32.91,
+      "details": {
+        "market_income": {
+          "baseline": 6864.53,
+          "reform": 6844.8
+        },
+        "taxes": {
+          "baseline": 2844.32,
+          "reform": 2840.17
+        },
+        "benefits": {
+          "baseline": 22787.02,
+          "reform": 22770.4
+        },
+        "pension_contributions": {
+          "baseline": 39.6,
+          "reform": 39.73
+        },
+        "net_income": {
+          "baseline": 26767.63,
+          "reform": 26735.29
+        },
+        "real_net_income": {
+          "baseline": 26237.63,
+          "reform": 26270.54
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "NORTHERN_IRELAND",
+    "group": "Pensioner couple",
+    "weighted_n": 155079,
+    "decomposition": {
+      "market_income": -61.59,
+      "taxes": 7.57,
+      "benefits": -0.62,
+      "pension_contributions": -0.93,
+      "purchasing_power": 130.38,
+      "total": 74.81,
+      "details": {
+        "market_income": {
+          "baseline": 19732.77,
+          "reform": 19671.19
+        },
+        "taxes": {
+          "baseline": 5956.92,
+          "reform": 5949.35
+        },
+        "benefits": {
+          "baseline": 39981.96,
+          "reform": 39981.34
+        },
+        "pension_contributions": {
+          "baseline": 276.04,
+          "reform": 276.97
+        },
+        "net_income": {
+          "baseline": 53481.77,
+          "reform": 53426.19
+        },
+        "real_net_income": {
+          "baseline": 52422.83,
+          "reform": 52497.64
+        }
+      }
+    }
+  },
+  {
+    "year": 2027,
+    "country": "NORTHERN_IRELAND",
+    "group": "All households",
+    "weighted_n": 765072,
+    "decomposition": {
+      "market_income": 98.98,
+      "taxes": -29.52,
+      "benefits": -18.06,
+      "pension_contributions": -3.02,
+      "purchasing_power": 136.35,
+      "total": 184.73,
+      "details": {
+        "market_income": {
+          "baseline": 48018.91,
+          "reform": 48117.88
+        },
+        "taxes": {
+          "baseline": 11721.43,
+          "reform": 11750.95
+        },
+        "benefits": {
+          "baseline": 20416.17,
+          "reform": 20398.11
+        },
+        "pension_contributions": {
+          "baseline": 890.92,
+          "reform": 893.94
+        },
+        "net_income": {
+          "baseline": 55822.73,
+          "reform": 55871.11
+        },
+        "real_net_income": {
+          "baseline": 54717.43,
+          "reform": 54902.16
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "UK",
+    "group": "Single adult, no children",
+    "weighted_n": 5493438,
+    "decomposition": {
+      "market_income": 43.57,
+      "taxes": -14.74,
+      "benefits": -23.75,
+      "pension_contributions": -2.0,
+      "purchasing_power": 82.84,
+      "total": 85.92,
+      "details": {
+        "market_income": {
+          "baseline": 25921.19,
+          "reform": 25964.76
+        },
+        "taxes": {
+          "baseline": 8810.1,
+          "reform": 8824.84
+        },
+        "benefits": {
+          "baseline": 12714.0,
+          "reform": 12690.25
+        },
+        "pension_contributions": {
+          "baseline": 591.59,
+          "reform": 593.59
+        },
+        "net_income": {
+          "baseline": 29233.49,
+          "reform": 29236.57
+        },
+        "real_net_income": {
+          "baseline": 28081.8,
+          "reform": 28167.72
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "UK",
+    "group": "Couple, no children",
+    "weighted_n": 8878712,
+    "decomposition": {
+      "market_income": 206.99,
+      "taxes": -75.56,
+      "benefits": -6.13,
+      "pension_contributions": -9.49,
+      "purchasing_power": 205.28,
+      "total": 321.09,
+      "details": {
+        "market_income": {
+          "baseline": 95398.2,
+          "reform": 95605.19
+        },
+        "taxes": {
+          "baseline": 28535.93,
+          "reform": 28611.49
+        },
+        "benefits": {
+          "baseline": 8268.76,
+          "reform": 8262.63
+        },
+        "pension_contributions": {
+          "baseline": 2803.72,
+          "reform": 2813.21
+        },
+        "net_income": {
+          "baseline": 72327.31,
+          "reform": 72443.12
+        },
+        "real_net_income": {
+          "baseline": 69477.88,
+          "reform": 69798.97
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "UK",
+    "group": "Single parent",
+    "weighted_n": 2053826,
+    "decomposition": {
+      "market_income": 47.16,
+      "taxes": -10.44,
+      "benefits": -65.29,
+      "pension_contributions": -1.65,
+      "purchasing_power": 113.15,
+      "total": 82.93,
+      "details": {
+        "market_income": {
+          "baseline": 19073.85,
+          "reform": 19121.01
+        },
+        "taxes": {
+          "baseline": 5576.8,
+          "reform": 5587.24
+        },
+        "benefits": {
+          "baseline": 26950.05,
+          "reform": 26884.76
+        },
+        "pension_contributions": {
+          "baseline": 486.88,
+          "reform": 488.52
+        },
+        "net_income": {
+          "baseline": 39960.23,
+          "reform": 39930.01
+        },
+        "real_net_income": {
+          "baseline": 38385.94,
+          "reform": 38468.87
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "UK",
+    "group": "Couple with children",
+    "weighted_n": 6750655,
+    "decomposition": {
+      "market_income": 233.21,
+      "taxes": -68.08,
+      "benefits": -25.72,
+      "pension_contributions": -7.88,
+      "purchasing_power": 221.66,
+      "total": 353.19,
+      "details": {
+        "market_income": {
+          "baseline": 91061.43,
+          "reform": 91294.64
+        },
+        "taxes": {
+          "baseline": 26808.89,
+          "reform": 26876.96
+        },
+        "benefits": {
+          "baseline": 16171.59,
+          "reform": 16145.87
+        },
+        "pension_contributions": {
+          "baseline": 2328.34,
+          "reform": 2336.22
+        },
+        "net_income": {
+          "baseline": 78095.81,
+          "reform": 78227.33
+        },
+        "real_net_income": {
+          "baseline": 75019.12,
+          "reform": 75372.31
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "UK",
+    "group": "Single pensioner",
+    "weighted_n": 3878729,
+    "decomposition": {
+      "market_income": -48.48,
+      "taxes": 12.37,
+      "benefits": -1.92,
+      "pension_contributions": -0.1,
+      "purchasing_power": 70.14,
+      "total": 32.01,
+      "details": {
+        "market_income": {
+          "baseline": 10982.62,
+          "reform": 10934.14
+        },
+        "taxes": {
+          "baseline": 8045.76,
+          "reform": 8033.39
+        },
+        "benefits": {
+          "baseline": 21886.03,
+          "reform": 21884.11
+        },
+        "pension_contributions": {
+          "baseline": 30.55,
+          "reform": 30.65
+        },
+        "net_income": {
+          "baseline": 24792.34,
+          "reform": 24754.21
+        },
+        "real_net_income": {
+          "baseline": 23815.61,
+          "reform": 23847.62
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "UK",
+    "group": "Pensioner couple",
+    "weighted_n": 4819027,
+    "decomposition": {
+      "market_income": -102.7,
+      "taxes": 24.84,
+      "benefits": 17.2,
+      "pension_contributions": -1.58,
+      "purchasing_power": 155.21,
+      "total": 92.97,
+      "details": {
+        "market_income": {
+          "baseline": 35879.47,
+          "reform": 35776.77
+        },
+        "taxes": {
+          "baseline": 14156.46,
+          "reform": 14131.63
+        },
+        "benefits": {
+          "baseline": 33583.28,
+          "reform": 33600.48
+        },
+        "pension_contributions": {
+          "baseline": 468.35,
+          "reform": 469.93
+        },
+        "net_income": {
+          "baseline": 54837.94,
+          "reform": 54775.69
+        },
+        "real_net_income": {
+          "baseline": 52677.52,
+          "reform": 52770.49
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "UK",
+    "group": "All households",
+    "weighted_n": 32103253,
+    "decomposition": {
+      "market_income": 96.29,
+      "taxes": -32.9,
+      "benefits": -13.61,
+      "pension_contributions": -5.01,
+      "purchasing_power": 157.92,
+      "total": 202.69,
+      "details": {
+        "market_income": {
+          "baseline": 58268.29,
+          "reform": 58364.59
+        },
+        "taxes": {
+          "baseline": 18606.59,
+          "reform": 18639.49
+        },
+        "benefits": {
+          "baseline": 17506.1,
+          "reform": 17492.49
+        },
+        "pension_contributions": {
+          "baseline": 1479.88,
+          "reform": 1484.88
+        },
+        "net_income": {
+          "baseline": 55687.93,
+          "reform": 55732.7
+        },
+        "real_net_income": {
+          "baseline": 53494.03,
+          "reform": 53696.72
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "ENGLAND",
+    "group": "Single adult, no children",
+    "weighted_n": 4591007,
+    "decomposition": {
+      "market_income": 46.2,
+      "taxes": -15.63,
+      "benefits": -24.44,
+      "pension_contributions": -2.21,
+      "purchasing_power": 85.57,
+      "total": 89.49,
+      "details": {
+        "market_income": {
+          "baseline": 27468.76,
+          "reform": 27514.96
+        },
+        "taxes": {
+          "baseline": 9461.51,
+          "reform": 9477.13
+        },
+        "benefits": {
+          "baseline": 12842.58,
+          "reform": 12818.14
+        },
+        "pension_contributions": {
+          "baseline": 653.56,
+          "reform": 655.78
+        },
+        "net_income": {
+          "baseline": 30196.27,
+          "reform": 30200.19
+        },
+        "real_net_income": {
+          "baseline": 29006.64,
+          "reform": 29096.13
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "ENGLAND",
+    "group": "Couple, no children",
+    "weighted_n": 7375981,
+    "decomposition": {
+      "market_income": 214.14,
+      "taxes": -78.57,
+      "benefits": -5.89,
+      "pension_contributions": -10.22,
+      "purchasing_power": 209.21,
+      "total": 328.67,
+      "details": {
+        "market_income": {
+          "baseline": 98902.14,
+          "reform": 99116.28
+        },
+        "taxes": {
+          "baseline": 30286.99,
+          "reform": 30365.56
+        },
+        "benefits": {
+          "baseline": 8120.32,
+          "reform": 8114.43
+        },
+        "pension_contributions": {
+          "baseline": 3021.16,
+          "reform": 3031.38
+        },
+        "net_income": {
+          "baseline": 73714.31,
+          "reform": 73833.76
+        },
+        "real_net_income": {
+          "baseline": 70810.24,
+          "reform": 71138.91
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "ENGLAND",
+    "group": "Single parent",
+    "weighted_n": 1716188,
+    "decomposition": {
+      "market_income": 48.88,
+      "taxes": -11.05,
+      "benefits": -66.77,
+      "pension_contributions": -1.75,
+      "purchasing_power": 113.08,
+      "total": 82.39,
+      "details": {
+        "market_income": {
+          "baseline": 18989.35,
+          "reform": 19038.24
+        },
+        "taxes": {
+          "baseline": 5629.76,
+          "reform": 5640.8
+        },
+        "benefits": {
+          "baseline": 27097.17,
+          "reform": 27030.4
+        },
+        "pension_contributions": {
+          "baseline": 518.49,
+          "reform": 520.24
+        },
+        "net_income": {
+          "baseline": 39938.28,
+          "reform": 39907.59
+        },
+        "real_net_income": {
+          "baseline": 38364.86,
+          "reform": 38447.25
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "ENGLAND",
+    "group": "Couple with children",
+    "weighted_n": 5723098,
+    "decomposition": {
+      "market_income": 241.12,
+      "taxes": -64.26,
+      "benefits": -26.25,
+      "pension_contributions": -7.77,
+      "purchasing_power": 226.3,
+      "total": 369.14,
+      "details": {
+        "market_income": {
+          "baseline": 93205.29,
+          "reform": 93446.41
+        },
+        "taxes": {
+          "baseline": 27471.08,
+          "reform": 27535.34
+        },
+        "benefits": {
+          "baseline": 16279.17,
+          "reform": 16252.93
+        },
+        "pension_contributions": {
+          "baseline": 2295.07,
+          "reform": 2302.84
+        },
+        "net_income": {
+          "baseline": 79718.31,
+          "reform": 79861.16
+        },
+        "real_net_income": {
+          "baseline": 76577.7,
+          "reform": 76946.84
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "ENGLAND",
+    "group": "Single pensioner",
+    "weighted_n": 3452646,
+    "decomposition": {
+      "market_income": -47.61,
+      "taxes": 12.29,
+      "benefits": 1.77,
+      "pension_contributions": -0.11,
+      "purchasing_power": 67.62,
+      "total": 33.96,
+      "details": {
+        "market_income": {
+          "baseline": 11055.73,
+          "reform": 11008.12
+        },
+        "taxes": {
+          "baseline": 8444.47,
+          "reform": 8432.17
+        },
+        "benefits": {
+          "baseline": 21317.47,
+          "reform": 21319.24
+        },
+        "pension_contributions": {
+          "baseline": 33.82,
+          "reform": 33.93
+        },
+        "net_income": {
+          "baseline": 23894.91,
+          "reform": 23861.26
+        },
+        "real_net_income": {
+          "baseline": 22953.54,
+          "reform": 22987.5
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "ENGLAND",
+    "group": "Pensioner couple",
+    "weighted_n": 3972229,
+    "decomposition": {
+      "market_income": -99.67,
+      "taxes": 25.06,
+      "benefits": 18.49,
+      "pension_contributions": -1.81,
+      "purchasing_power": 154.66,
+      "total": 96.73,
+      "details": {
+        "market_income": {
+          "baseline": 38146.99,
+          "reform": 38047.32
+        },
+        "taxes": {
+          "baseline": 15194.76,
+          "reform": 15169.7
+        },
+        "benefits": {
+          "baseline": 32221.61,
+          "reform": 32240.1
+        },
+        "pension_contributions": {
+          "baseline": 534.57,
+          "reform": 536.38
+        },
+        "net_income": {
+          "baseline": 54639.27,
+          "reform": 54581.34
+        },
+        "real_net_income": {
+          "baseline": 52486.68,
+          "reform": 52583.41
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "ENGLAND",
+    "group": "All households",
+    "weighted_n": 27032182,
+    "decomposition": {
+      "market_income": 100.57,
+      "taxes": -32.78,
+      "benefits": -13.28,
+      "pension_contributions": -5.23,
+      "purchasing_power": 159.5,
+      "total": 208.78,
+      "details": {
+        "market_income": {
+          "baseline": 60000.52,
+          "reform": 60101.09
+        },
+        "taxes": {
+          "baseline": 19480.71,
+          "reform": 19513.5
+        },
+        "benefits": {
+          "baseline": 17269.35,
+          "reform": 17256.07
+        },
+        "pension_contributions": {
+          "baseline": 1545.78,
+          "reform": 1551.01
+        },
+        "net_income": {
+          "baseline": 56243.38,
+          "reform": 56292.64
+        },
+        "real_net_income": {
+          "baseline": 54027.59,
+          "reform": 54236.37
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "SCOTLAND",
+    "group": "Single adult, no children",
+    "weighted_n": 533342,
+    "decomposition": {
+      "market_income": 43.5,
+      "taxes": -15.42,
+      "benefits": -16.71,
+      "pension_contributions": -1.11,
+      "purchasing_power": 68.33,
+      "total": 78.59,
+      "details": {
+        "market_income": {
+          "baseline": 19785.19,
+          "reform": 19828.7
+        },
+        "taxes": {
+          "baseline": 5421.08,
+          "reform": 5436.51
+        },
+        "benefits": {
+          "baseline": 10068.91,
+          "reform": 10052.21
+        },
+        "pension_contributions": {
+          "baseline": 328.55,
+          "reform": 329.66
+        },
+        "net_income": {
+          "baseline": 24104.47,
+          "reform": 24114.73
+        },
+        "real_net_income": {
+          "baseline": 23154.84,
+          "reform": 23233.43
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "SCOTLAND",
+    "group": "Couple, no children",
+    "weighted_n": 815681,
+    "decomposition": {
+      "market_income": 178.65,
+      "taxes": -78.08,
+      "benefits": -6.46,
+      "pension_contributions": -5.84,
+      "purchasing_power": 183.33,
+      "total": 271.6,
+      "details": {
+        "market_income": {
+          "baseline": 78022.75,
+          "reform": 78201.39
+        },
+        "taxes": {
+          "baseline": 20182.12,
+          "reform": 20260.2
+        },
+        "benefits": {
+          "baseline": 8494.58,
+          "reform": 8488.12
+        },
+        "pension_contributions": {
+          "baseline": 1725.66,
+          "reform": 1731.5
+        },
+        "net_income": {
+          "baseline": 64609.54,
+          "reform": 64697.81
+        },
+        "real_net_income": {
+          "baseline": 62064.16,
+          "reform": 62335.76
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "SCOTLAND",
+    "group": "Single parent",
+    "weighted_n": 185054,
+    "decomposition": {
+      "market_income": 42.88,
+      "taxes": -9.36,
+      "benefits": -52.74,
+      "pension_contributions": -1.46,
+      "purchasing_power": 110.42,
+      "total": 89.74,
+      "details": {
+        "market_income": {
+          "baseline": 19818.27,
+          "reform": 19861.15
+        },
+        "taxes": {
+          "baseline": 5218.78,
+          "reform": 5228.14
+        },
+        "benefits": {
+          "baseline": 24822.26,
+          "reform": 24769.52
+        },
+        "pension_contributions": {
+          "baseline": 432.33,
+          "reform": 433.79
+        },
+        "net_income": {
+          "baseline": 38989.43,
+          "reform": 38968.74
+        },
+        "real_net_income": {
+          "baseline": 37453.39,
+          "reform": 37543.13
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "SCOTLAND",
+    "group": "Couple with children",
+    "weighted_n": 540440,
+    "decomposition": {
+      "market_income": 195.79,
+      "taxes": -120.49,
+      "benefits": -18.47,
+      "pension_contributions": -10.13,
+      "purchasing_power": 206.24,
+      "total": 252.94,
+      "details": {
+        "market_income": {
+          "baseline": 88941.58,
+          "reform": 89137.36
+        },
+        "taxes": {
+          "baseline": 27936.52,
+          "reform": 28057.02
+        },
+        "benefits": {
+          "baseline": 14727.07,
+          "reform": 14708.6
+        },
+        "pension_contributions": {
+          "baseline": 2992.9,
+          "reform": 3003.02
+        },
+        "net_income": {
+          "baseline": 72739.23,
+          "reform": 72785.92
+        },
+        "real_net_income": {
+          "baseline": 69873.57,
+          "reform": 70126.51
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "SCOTLAND",
+    "group": "Single pensioner",
+    "weighted_n": 222946,
+    "decomposition": {
+      "market_income": -79.33,
+      "taxes": 19.54,
+      "benefits": -19.04,
+      "pension_contributions": -0.0,
+      "purchasing_power": 86.28,
+      "total": 7.45,
+      "details": {
+        "market_income": {
+          "baseline": 13082.94,
+          "reform": 13003.61
+        },
+        "taxes": {
+          "baseline": 5698.15,
+          "reform": 5678.61
+        },
+        "benefits": {
+          "baseline": 23146.29,
+          "reform": 23127.25
+        },
+        "pension_contributions": {
+          "baseline": 0.0,
+          "reform": 0.0
+        },
+        "net_income": {
+          "baseline": 30531.08,
+          "reform": 30452.24
+        },
+        "real_net_income": {
+          "baseline": 29328.27,
+          "reform": 29335.72
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "SCOTLAND",
+    "group": "Pensioner couple",
+    "weighted_n": 432957,
+    "decomposition": {
+      "market_income": -136.5,
+      "taxes": 27.31,
+      "benefits": 21.52,
+      "pension_contributions": -0.39,
+      "purchasing_power": 160.22,
+      "total": 72.16,
+      "details": {
+        "market_income": {
+          "baseline": 28115.14,
+          "reform": 27978.64
+        },
+        "taxes": {
+          "baseline": 10006.34,
+          "reform": 9979.03
+        },
+        "benefits": {
+          "baseline": 38638.14,
+          "reform": 38659.66
+        },
+        "pension_contributions": {
+          "baseline": 116.71,
+          "reform": 117.1
+        },
+        "net_income": {
+          "baseline": 56630.23,
+          "reform": 56542.17
+        },
+        "real_net_income": {
+          "baseline": 54399.2,
+          "reform": 54471.36
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "SCOTLAND",
+    "group": "All households",
+    "weighted_n": 2742083,
+    "decomposition": {
+      "market_income": 75.68,
+      "taxes": -44.96,
+      "benefits": -10.85,
+      "pension_contributions": -4.13,
+      "purchasing_power": 149.12,
+      "total": 164.86,
+      "details": {
+        "market_income": {
+          "baseline": 51698.09,
+          "reform": 51773.77
+        },
+        "taxes": {
+          "baseline": 15042.47,
+          "reform": 15087.43
+        },
+        "benefits": {
+          "baseline": 17174.13,
+          "reform": 17163.29
+        },
+        "pension_contributions": {
+          "baseline": 1221.52,
+          "reform": 1225.65
+        },
+        "net_income": {
+          "baseline": 52608.23,
+          "reform": 52623.97
+        },
+        "real_net_income": {
+          "baseline": 50535.65,
+          "reform": 50700.51
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "WALES",
+    "group": "Single adult, no children",
+    "weighted_n": 285750,
+    "decomposition": {
+      "market_income": 11.94,
+      "taxes": -3.54,
+      "benefits": -21.07,
+      "pension_contributions": -0.76,
+      "purchasing_power": 68.63,
+      "total": 55.2,
+      "details": {
+        "market_income": {
+          "baseline": 17908.52,
+          "reform": 17920.46
+        },
+        "taxes": {
+          "baseline": 6343.32,
+          "reform": 6346.86
+        },
+        "benefits": {
+          "baseline": 12898.4,
+          "reform": 12877.33
+        },
+        "pension_contributions": {
+          "baseline": 225.68,
+          "reform": 226.44
+        },
+        "net_income": {
+          "baseline": 24237.92,
+          "reform": 24224.49
+        },
+        "real_net_income": {
+          "baseline": 23283.04,
+          "reform": 23338.24
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "WALES",
+    "group": "Couple, no children",
+    "weighted_n": 446481,
+    "decomposition": {
+      "market_income": 152.49,
+      "taxes": -52.89,
+      "benefits": -5.82,
+      "pension_contributions": -6.99,
+      "purchasing_power": 190.27,
+      "total": 277.06,
+      "details": {
+        "market_income": {
+          "baseline": 81333.48,
+          "reform": 81485.97
+        },
+        "taxes": {
+          "baseline": 20904.1,
+          "reform": 20956.98
+        },
+        "benefits": {
+          "baseline": 8697.83,
+          "reform": 8692.01
+        },
+        "pension_contributions": {
+          "baseline": 2064.69,
+          "reform": 2071.68
+        },
+        "net_income": {
+          "baseline": 67062.52,
+          "reform": 67149.31
+        },
+        "real_net_income": {
+          "baseline": 64420.5,
+          "reform": 64697.56
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "WALES",
+    "group": "Single parent",
+    "weighted_n": 112035,
+    "decomposition": {
+      "market_income": 29.89,
+      "taxes": -4.12,
+      "benefits": -62.76,
+      "pension_contributions": -0.51,
+      "purchasing_power": 117.15,
+      "total": 79.65,
+      "details": {
+        "market_income": {
+          "baseline": 19270.62,
+          "reform": 19300.51
+        },
+        "taxes": {
+          "baseline": 5684.79,
+          "reform": 5688.91
+        },
+        "benefits": {
+          "baseline": 27945.35,
+          "reform": 27882.59
+        },
+        "pension_contributions": {
+          "baseline": 150.43,
+          "reform": 150.93
+        },
+        "net_income": {
+          "baseline": 41380.75,
+          "reform": 41343.25
+        },
+        "real_net_income": {
+          "baseline": 39750.5,
+          "reform": 39830.15
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "WALES",
+    "group": "Couple with children",
+    "weighted_n": 266530,
+    "decomposition": {
+      "market_income": 182.96,
+      "taxes": -56.22,
+      "benefits": -30.5,
+      "pension_contributions": -7.97,
+      "purchasing_power": 180.86,
+      "total": 269.13,
+      "details": {
+        "market_income": {
+          "baseline": 67344.7,
+          "reform": 67527.66
+        },
+        "taxes": {
+          "baseline": 18895.68,
+          "reform": 18951.9
+        },
+        "benefits": {
+          "baseline": 17648.4,
+          "reform": 17617.9
+        },
+        "pension_contributions": {
+          "baseline": 2356.23,
+          "reform": 2364.21
+        },
+        "net_income": {
+          "baseline": 63741.19,
+          "reform": 63829.46
+        },
+        "real_net_income": {
+          "baseline": 61230.02,
+          "reform": 61499.15
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "WALES",
+    "group": "Single pensioner",
+    "weighted_n": 184071,
+    "decomposition": {
+      "market_income": -29.92,
+      "taxes": 5.84,
+      "benefits": -48.69,
+      "pension_contributions": -0.02,
+      "purchasing_power": 97.33,
+      "total": 24.54,
+      "details": {
+        "market_income": {
+          "baseline": 7472.46,
+          "reform": 7442.55
+        },
+        "taxes": {
+          "baseline": 3939.3,
+          "reform": 3933.46
+        },
+        "benefits": {
+          "baseline": 30892.93,
+          "reform": 30844.23
+        },
+        "pension_contributions": {
+          "baseline": 5.14,
+          "reform": 5.16
+        },
+        "net_income": {
+          "baseline": 34420.95,
+          "reform": 34348.16
+        },
+        "real_net_income": {
+          "baseline": 33064.89,
+          "reform": 33089.43
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "WALES",
+    "group": "Pensioner couple",
+    "weighted_n": 258143,
+    "decomposition": {
+      "market_income": -108.52,
+      "taxes": 25.82,
+      "benefits": 1.98,
+      "pension_contributions": -0.51,
+      "purchasing_power": 156.06,
+      "total": 74.83,
+      "details": {
+        "market_income": {
+          "baseline": 23407.1,
+          "reform": 23298.58
+        },
+        "taxes": {
+          "baseline": 9950.97,
+          "reform": 9925.15
+        },
+        "benefits": {
+          "baseline": 41853.37,
+          "reform": 41855.34
+        },
+        "pension_contributions": {
+          "baseline": 151.56,
+          "reform": 152.07
+        },
+        "net_income": {
+          "baseline": 55157.94,
+          "reform": 55076.7
+        },
+        "real_net_income": {
+          "baseline": 52984.92,
+          "reform": 53059.75
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "WALES",
+    "group": "All households",
+    "weighted_n": 1560856,
+    "decomposition": {
+      "market_income": 58.03,
+      "taxes": -20.77,
+      "benefits": -20.98,
+      "pension_contributions": -3.63,
+      "purchasing_power": 144.31,
+      "total": 156.96,
+      "details": {
+        "market_income": {
+          "baseline": 44287.41,
+          "reform": 44345.44
+        },
+        "taxes": {
+          "baseline": 12919.95,
+          "reform": 12940.71
+        },
+        "benefits": {
+          "baseline": 20619.4,
+          "reform": 20598.42
+        },
+        "pension_contributions": {
+          "baseline": 1072.95,
+          "reform": 1076.58
+        },
+        "net_income": {
+          "baseline": 50913.91,
+          "reform": 50926.56
+        },
+        "real_net_income": {
+          "baseline": 48908.09,
+          "reform": 49065.05
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single adult, no children",
+    "weighted_n": 83339,
+    "decomposition": {
+      "market_income": 7.77,
+      "taxes": 0.1,
+      "benefits": -40.0,
+      "pension_contributions": -0.39,
+      "purchasing_power": 74.0,
+      "total": 41.48,
+      "details": {
+        "market_income": {
+          "baseline": 7409.7,
+          "reform": 7417.47
+        },
+        "taxes": {
+          "baseline": 3071.95,
+          "reform": 3071.85
+        },
+        "benefits": {
+          "baseline": 21926.14,
+          "reform": 21886.14
+        },
+        "pension_contributions": {
+          "baseline": 115.52,
+          "reform": 115.92
+        },
+        "net_income": {
+          "baseline": 26148.36,
+          "reform": 26115.84
+        },
+        "real_net_income": {
+          "baseline": 25118.21,
+          "reform": 25159.69
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "NORTHERN_IRELAND",
+    "group": "Couple, no children",
+    "weighted_n": 240569,
+    "decomposition": {
+      "market_income": 185.1,
+      "taxes": -16.8,
+      "benefits": -12.76,
+      "pension_contributions": -3.94,
+      "purchasing_power": 186.71,
+      "total": 338.31,
+      "details": {
+        "market_income": {
+          "baseline": 72982.27,
+          "reform": 73167.38
+        },
+        "taxes": {
+          "baseline": 17336.22,
+          "reform": 17353.02
+        },
+        "benefits": {
+          "baseline": 11257.93,
+          "reform": 11245.16
+        },
+        "pension_contributions": {
+          "baseline": 1163.83,
+          "reform": 1167.77
+        },
+        "net_income": {
+          "baseline": 65740.15,
+          "reform": 65891.75
+        },
+        "real_net_income": {
+          "baseline": 63150.23,
+          "reform": 63488.54
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single parent",
+    "weighted_n": 40550,
+    "decomposition": {
+      "market_income": 41.43,
+      "taxes": -6.95,
+      "benefits": -67.05,
+      "pension_contributions": -1.11,
+      "purchasing_power": 117.21,
+      "total": 83.53,
+      "details": {
+        "market_income": {
+          "baseline": 18709.3,
+          "reform": 18750.73
+        },
+        "taxes": {
+          "baseline": 4670.98,
+          "reform": 4677.93
+        },
+        "benefits": {
+          "baseline": 27684.04,
+          "reform": 27616.99
+        },
+        "pension_contributions": {
+          "baseline": 327.51,
+          "reform": 328.62
+        },
+        "net_income": {
+          "baseline": 41394.85,
+          "reform": 41361.18
+        },
+        "real_net_income": {
+          "baseline": 39764.05,
+          "reform": 39847.58
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "NORTHERN_IRELAND",
+    "group": "Couple with children",
+    "weighted_n": 220587,
+    "decomposition": {
+      "market_income": 180.21,
+      "taxes": -53.02,
+      "benefits": -24.16,
+      "pension_contributions": -5.18,
+      "purchasing_power": 188.61,
+      "total": 286.46,
+      "details": {
+        "market_income": {
+          "baseline": 69289.46,
+          "reform": 69469.66
+        },
+        "taxes": {
+          "baseline": 16426.95,
+          "reform": 16479.97
+        },
+        "benefits": {
+          "baseline": 15135.16,
+          "reform": 15111.0
+        },
+        "pension_contributions": {
+          "baseline": 1529.54,
+          "reform": 1534.71
+        },
+        "net_income": {
+          "baseline": 66468.14,
+          "reform": 66565.98
+        },
+        "real_net_income": {
+          "baseline": 63849.54,
+          "reform": 64136.0
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single pensioner",
+    "weighted_n": 19066,
+    "decomposition": {
+      "market_income": -24.01,
+      "taxes": 4.94,
+      "benefits": -18.38,
+      "pension_contributions": -0.14,
+      "purchasing_power": 77.08,
+      "total": 39.49,
+      "details": {
+        "market_income": {
+          "baseline": 7071.26,
+          "reform": 7047.25
+        },
+        "taxes": {
+          "baseline": 2940.63,
+          "reform": 2935.7
+        },
+        "benefits": {
+          "baseline": 23151.91,
+          "reform": 23133.52
+        },
+        "pension_contributions": {
+          "baseline": 40.43,
+          "reform": 40.57
+        },
+        "net_income": {
+          "baseline": 27242.1,
+          "reform": 27204.5
+        },
+        "real_net_income": {
+          "baseline": 26168.86,
+          "reform": 26208.35
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "NORTHERN_IRELAND",
+    "group": "Pensioner couple",
+    "weighted_n": 155699,
+    "decomposition": {
+      "market_income": -76.49,
+      "taxes": 10.8,
+      "benefits": -2.44,
+      "pension_contributions": -0.95,
+      "purchasing_power": 153.92,
+      "total": 84.84,
+      "details": {
+        "market_income": {
+          "baseline": 20299.31,
+          "reform": 20222.82
+        },
+        "taxes": {
+          "baseline": 6180.23,
+          "reform": 6169.43
+        },
+        "benefits": {
+          "baseline": 40554.74,
+          "reform": 40552.3
+        },
+        "pension_contributions": {
+          "baseline": 281.84,
+          "reform": 282.79
+        },
+        "net_income": {
+          "baseline": 54391.99,
+          "reform": 54322.9
+        },
+        "real_net_income": {
+          "baseline": 52249.14,
+          "reform": 52333.98
+        }
+      }
+    }
+  },
+  {
+    "year": 2028,
+    "country": "NORTHERN_IRELAND",
+    "group": "All households",
+    "weighted_n": 768132,
+    "decomposition": {
+      "market_income": 97.3,
+      "taxes": -18.8,
+      "benefits": -20.04,
+      "pension_contributions": -3.08,
+      "purchasing_power": 161.2,
+      "total": 216.58,
+      "details": {
+        "market_income": {
+          "baseline": 49171.23,
+          "reform": 49268.53
+        },
+        "taxes": {
+          "baseline": 12122.89,
+          "reform": 12141.69
+        },
+        "benefits": {
+          "baseline": 20696.82,
+          "reform": 20676.78
+        },
+        "pension_contributions": {
+          "baseline": 909.63,
+          "reform": 912.71
+        },
+        "net_income": {
+          "baseline": 56835.53,
+          "reform": 56890.9
+        },
+        "real_net_income": {
+          "baseline": 54596.41,
+          "reform": 54812.99
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "UK",
+    "group": "Single adult, no children",
+    "weighted_n": 5517609,
+    "decomposition": {
+      "market_income": 41.6,
+      "taxes": -15.92,
+      "benefits": -25.7,
+      "pension_contributions": -1.99,
+      "purchasing_power": 95.89,
+      "total": 93.88,
+      "details": {
+        "market_income": {
+          "baseline": 26679.97,
+          "reform": 26721.57
+        },
+        "taxes": {
+          "baseline": 9178.15,
+          "reform": 9194.06
+        },
+        "benefits": {
+          "baseline": 12957.29,
+          "reform": 12931.6
+        },
+        "pension_contributions": {
+          "baseline": 744.55,
+          "reform": 746.54
+        },
+        "net_income": {
+          "baseline": 29714.57,
+          "reform": 29712.57
+        },
+        "real_net_income": {
+          "baseline": 27973.27,
+          "reform": 28067.15
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "UK",
+    "group": "Couple, no children",
+    "weighted_n": 8917778,
+    "decomposition": {
+      "market_income": 201.13,
+      "taxes": -86.38,
+      "benefits": -6.92,
+      "pension_contributions": -9.42,
+      "purchasing_power": 237.21,
+      "total": 335.62,
+      "details": {
+        "market_income": {
+          "baseline": 98154.36,
+          "reform": 98355.48
+        },
+        "taxes": {
+          "baseline": 29656.25,
+          "reform": 29742.63
+        },
+        "benefits": {
+          "baseline": 8318.34,
+          "reform": 8311.42
+        },
+        "pension_contributions": {
+          "baseline": 3406.17,
+          "reform": 3415.58
+        },
+        "net_income": {
+          "baseline": 73410.27,
+          "reform": 73508.69
+        },
+        "real_net_income": {
+          "baseline": 69108.37,
+          "reform": 69443.99
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "UK",
+    "group": "Single parent",
+    "weighted_n": 2062863,
+    "decomposition": {
+      "market_income": 46.7,
+      "taxes": -11.0,
+      "benefits": -71.32,
+      "pension_contributions": -1.64,
+      "purchasing_power": 130.87,
+      "total": 93.61,
+      "details": {
+        "market_income": {
+          "baseline": 19536.69,
+          "reform": 19583.39
+        },
+        "taxes": {
+          "baseline": 5818.69,
+          "reform": 5829.69
+        },
+        "benefits": {
+          "baseline": 27394.51,
+          "reform": 27323.19
+        },
+        "pension_contributions": {
+          "baseline": 518.18,
+          "reform": 519.82
+        },
+        "net_income": {
+          "baseline": 40594.33,
+          "reform": 40557.07
+        },
+        "real_net_income": {
+          "baseline": 38215.46,
+          "reform": 38309.07
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "UK",
+    "group": "Couple with children",
+    "weighted_n": 6780358,
+    "decomposition": {
+      "market_income": 230.1,
+      "taxes": -116.18,
+      "benefits": -27.05,
+      "pension_contributions": -7.82,
+      "purchasing_power": 256.17,
+      "total": 335.22,
+      "details": {
+        "market_income": {
+          "baseline": 93767.79,
+          "reform": 93997.88
+        },
+        "taxes": {
+          "baseline": 27786.68,
+          "reform": 27902.87
+        },
+        "benefits": {
+          "baseline": 16339.07,
+          "reform": 16312.02
+        },
+        "pension_contributions": {
+          "baseline": 3009.43,
+          "reform": 3017.25
+        },
+        "net_income": {
+          "baseline": 79310.74,
+          "reform": 79389.78
+        },
+        "real_net_income": {
+          "baseline": 74663.06,
+          "reform": 74998.28
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "UK",
+    "group": "Single pensioner",
+    "weighted_n": 3895795,
+    "decomposition": {
+      "market_income": -53.92,
+      "taxes": 14.29,
+      "benefits": -3.2,
+      "pension_contributions": -0.1,
+      "purchasing_power": 80.79,
+      "total": 37.86,
+      "details": {
+        "market_income": {
+          "baseline": 11295.99,
+          "reform": 11242.08
+        },
+        "taxes": {
+          "baseline": 8403.76,
+          "reform": 8389.47
+        },
+        "benefits": {
+          "baseline": 22219.17,
+          "reform": 22215.98
+        },
+        "pension_contributions": {
+          "baseline": 31.57,
+          "reform": 31.67
+        },
+        "net_income": {
+          "baseline": 25079.84,
+          "reform": 25036.91
+        },
+        "real_net_income": {
+          "baseline": 23610.13,
+          "reform": 23647.99
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "UK",
+    "group": "Pensioner couple",
+    "weighted_n": 4840231,
+    "decomposition": {
+      "market_income": -116.85,
+      "taxes": 29.67,
+      "benefits": 15.83,
+      "pension_contributions": -1.57,
+      "purchasing_power": 179.41,
+      "total": 106.49,
+      "details": {
+        "market_income": {
+          "baseline": 37073.15,
+          "reform": 36956.3
+        },
+        "taxes": {
+          "baseline": 14717.82,
+          "reform": 14688.15
+        },
+        "benefits": {
+          "baseline": 34017.67,
+          "reform": 34033.5
+        },
+        "pension_contributions": {
+          "baseline": 699.32,
+          "reform": 700.89
+        },
+        "net_income": {
+          "baseline": 55673.69,
+          "reform": 55600.76
+        },
+        "real_net_income": {
+          "baseline": 52411.16,
+          "reform": 52517.65
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "UK",
+    "group": "All households",
+    "weighted_n": 32244508,
+    "decomposition": {
+      "market_income": 90.86,
+      "taxes": -46.45,
+      "benefits": -15.13,
+      "pension_contributions": -4.97,
+      "purchasing_power": 182.51,
+      "total": 206.82,
+      "details": {
+        "market_income": {
+          "baseline": 59985.59,
+          "reform": 60076.46
+        },
+        "taxes": {
+          "baseline": 19332.31,
+          "reform": 19378.76
+        },
+        "benefits": {
+          "baseline": 17734.79,
+          "reform": 17719.66
+        },
+        "pension_contributions": {
+          "baseline": 1853.23,
+          "reform": 1858.2
+        },
+        "net_income": {
+          "baseline": 56534.85,
+          "reform": 56559.16
+        },
+        "real_net_income": {
+          "baseline": 53221.86,
+          "reform": 53428.68
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "ENGLAND",
+    "group": "Single adult, no children",
+    "weighted_n": 4611208,
+    "decomposition": {
+      "market_income": 44.17,
+      "taxes": -16.97,
+      "benefits": -26.35,
+      "pension_contributions": -2.2,
+      "purchasing_power": 99.0,
+      "total": 97.65,
+      "details": {
+        "market_income": {
+          "baseline": 28269.73,
+          "reform": 28313.91
+        },
+        "taxes": {
+          "baseline": 9859.41,
+          "reform": 9876.38
+        },
+        "benefits": {
+          "baseline": 13079.71,
+          "reform": 13053.36
+        },
+        "pension_contributions": {
+          "baseline": 811.76,
+          "reform": 813.96
+        },
+        "net_income": {
+          "baseline": 30678.26,
+          "reform": 30676.93
+        },
+        "real_net_income": {
+          "baseline": 28880.49,
+          "reform": 28978.14
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "ENGLAND",
+    "group": "Couple, no children",
+    "weighted_n": 7408435,
+    "decomposition": {
+      "market_income": 208.17,
+      "taxes": -88.84,
+      "benefits": -6.64,
+      "pension_contributions": -10.15,
+      "purchasing_power": 241.69,
+      "total": 344.23,
+      "details": {
+        "market_income": {
+          "baseline": 101801.17,
+          "reform": 102009.33
+        },
+        "taxes": {
+          "baseline": 31488.64,
+          "reform": 31577.48
+        },
+        "benefits": {
+          "baseline": 8167.12,
+          "reform": 8160.49
+        },
+        "pension_contributions": {
+          "baseline": 3683.52,
+          "reform": 3693.67
+        },
+        "net_income": {
+          "baseline": 74796.13,
+          "reform": 74898.67
+        },
+        "real_net_income": {
+          "baseline": 70413.01,
+          "reform": 70757.24
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "ENGLAND",
+    "group": "Single parent",
+    "weighted_n": 1723739,
+    "decomposition": {
+      "market_income": 48.4,
+      "taxes": -11.77,
+      "benefits": -72.94,
+      "pension_contributions": -1.74,
+      "purchasing_power": 130.74,
+      "total": 92.69,
+      "details": {
+        "market_income": {
+          "baseline": 19446.63,
+          "reform": 19495.03
+        },
+        "taxes": {
+          "baseline": 5877.01,
+          "reform": 5888.78
+        },
+        "benefits": {
+          "baseline": 27538.65,
+          "reform": 27465.71
+        },
+        "pension_contributions": {
+          "baseline": 551.35,
+          "reform": 553.09
+        },
+        "net_income": {
+          "baseline": 40556.92,
+          "reform": 40518.87
+        },
+        "real_net_income": {
+          "baseline": 38180.25,
+          "reform": 38272.94
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "ENGLAND",
+    "group": "Couple with children",
+    "weighted_n": 5748279,
+    "decomposition": {
+      "market_income": 238.05,
+      "taxes": -121.93,
+      "benefits": -27.27,
+      "pension_contributions": -7.71,
+      "purchasing_power": 261.48,
+      "total": 342.62,
+      "details": {
+        "market_income": {
+          "baseline": 95999.42,
+          "reform": 96237.47
+        },
+        "taxes": {
+          "baseline": 28474.23,
+          "reform": 28596.16
+        },
+        "benefits": {
+          "baseline": 16444.52,
+          "reform": 16417.26
+        },
+        "pension_contributions": {
+          "baseline": 3018.99,
+          "reform": 3026.7
+        },
+        "net_income": {
+          "baseline": 80950.72,
+          "reform": 81031.86
+        },
+        "real_net_income": {
+          "baseline": 76206.93,
+          "reform": 76549.55
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "ENGLAND",
+    "group": "Single pensioner",
+    "weighted_n": 3467838,
+    "decomposition": {
+      "market_income": -53.0,
+      "taxes": 14.24,
+      "benefits": 0.35,
+      "pension_contributions": -0.11,
+      "purchasing_power": 77.79,
+      "total": 39.27,
+      "details": {
+        "market_income": {
+          "baseline": 11370.6,
+          "reform": 11317.6
+        },
+        "taxes": {
+          "baseline": 8820.23,
+          "reform": 8805.99
+        },
+        "benefits": {
+          "baseline": 21634.32,
+          "reform": 21634.66
+        },
+        "pension_contributions": {
+          "baseline": 34.93,
+          "reform": 35.04
+        },
+        "net_income": {
+          "baseline": 24149.76,
+          "reform": 24111.23
+        },
+        "real_net_income": {
+          "baseline": 22734.57,
+          "reform": 22773.84
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "ENGLAND",
+    "group": "Pensioner couple",
+    "weighted_n": 3989706,
+    "decomposition": {
+      "market_income": -113.87,
+      "taxes": 29.82,
+      "benefits": 17.39,
+      "pension_contributions": -1.8,
+      "purchasing_power": 178.76,
+      "total": 110.3,
+      "details": {
+        "market_income": {
+          "baseline": 39431.17,
+          "reform": 39317.3
+        },
+        "taxes": {
+          "baseline": 15794.2,
+          "reform": 15764.38
+        },
+        "benefits": {
+          "baseline": 32627.39,
+          "reform": 32644.78
+        },
+        "pension_contributions": {
+          "baseline": 798.39,
+          "reform": 800.19
+        },
+        "net_income": {
+          "baseline": 55465.97,
+          "reform": 55397.51
+        },
+        "real_net_income": {
+          "baseline": 52215.62,
+          "reform": 52325.92
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "ENGLAND",
+    "group": "All households",
+    "weighted_n": 27151124,
+    "decomposition": {
+      "market_income": 95.13,
+      "taxes": -48.5,
+      "benefits": -14.69,
+      "pension_contributions": -5.19,
+      "purchasing_power": 184.29,
+      "total": 211.04,
+      "details": {
+        "market_income": {
+          "baseline": 61787.24,
+          "reform": 61882.36
+        },
+        "taxes": {
+          "baseline": 20244.96,
+          "reform": 20293.46
+        },
+        "benefits": {
+          "baseline": 17490.04,
+          "reform": 17475.35
+        },
+        "pension_contributions": {
+          "baseline": 1948.22,
+          "reform": 1953.41
+        },
+        "net_income": {
+          "baseline": 57084.1,
+          "reform": 57110.85
+        },
+        "real_net_income": {
+          "baseline": 53738.92,
+          "reform": 53949.96
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "SCOTLAND",
+    "group": "Single adult, no children",
+    "weighted_n": 535688,
+    "decomposition": {
+      "market_income": 42.07,
+      "taxes": -14.92,
+      "benefits": -18.4,
+      "pension_contributions": -1.1,
+      "purchasing_power": 79.38,
+      "total": 87.03,
+      "details": {
+        "market_income": {
+          "baseline": 20389.73,
+          "reform": 20431.8
+        },
+        "taxes": {
+          "baseline": 5613.09,
+          "reform": 5628.01
+        },
+        "benefits": {
+          "baseline": 10310.65,
+          "reform": 10292.25
+        },
+        "pension_contributions": {
+          "baseline": 492.61,
+          "reform": 493.71
+        },
+        "net_income": {
+          "baseline": 24594.68,
+          "reform": 24602.33
+        },
+        "real_net_income": {
+          "baseline": 23153.41,
+          "reform": 23240.44
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "SCOTLAND",
+    "group": "Couple, no children",
+    "weighted_n": 819270,
+    "decomposition": {
+      "market_income": 173.48,
+      "taxes": -81.66,
+      "benefits": -7.33,
+      "pension_contributions": -5.8,
+      "purchasing_power": 212.27,
+      "total": 290.96,
+      "details": {
+        "market_income": {
+          "baseline": 80188.33,
+          "reform": 80361.82
+        },
+        "taxes": {
+          "baseline": 20877.53,
+          "reform": 20959.19
+        },
+        "benefits": {
+          "baseline": 8550.48,
+          "reform": 8543.16
+        },
+        "pension_contributions": {
+          "baseline": 2162.7,
+          "reform": 2168.49
+        },
+        "net_income": {
+          "baseline": 65698.59,
+          "reform": 65777.29
+        },
+        "real_net_income": {
+          "baseline": 61848.59,
+          "reform": 62139.55
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "SCOTLAND",
+    "group": "Single parent",
+    "weighted_n": 185868,
+    "decomposition": {
+      "market_income": 42.49,
+      "taxes": -9.18,
+      "benefits": -57.47,
+      "pension_contributions": -1.45,
+      "purchasing_power": 128.13,
+      "total": 102.52,
+      "details": {
+        "market_income": {
+          "baseline": 20318.72,
+          "reform": 20361.21
+        },
+        "taxes": {
+          "baseline": 5413.11,
+          "reform": 5422.29
+        },
+        "benefits": {
+          "baseline": 25296.27,
+          "reform": 25238.8
+        },
+        "pension_contributions": {
+          "baseline": 469.71,
+          "reform": 471.16
+        },
+        "net_income": {
+          "baseline": 39732.16,
+          "reform": 39706.55
+        },
+        "real_net_income": {
+          "baseline": 37403.82,
+          "reform": 37506.34
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "SCOTLAND",
+    "group": "Couple with children",
+    "weighted_n": 542818,
+    "decomposition": {
+      "market_income": 191.62,
+      "taxes": -110.91,
+      "benefits": -21.23,
+      "pension_contributions": -10.05,
+      "purchasing_power": 238.87,
+      "total": 288.3,
+      "details": {
+        "market_income": {
+          "baseline": 91487.48,
+          "reform": 91679.11
+        },
+        "taxes": {
+          "baseline": 28890.65,
+          "reform": 29001.55
+        },
+        "benefits": {
+          "baseline": 14891.66,
+          "reform": 14870.43
+        },
+        "pension_contributions": {
+          "baseline": 3514.73,
+          "reform": 3524.78
+        },
+        "net_income": {
+          "baseline": 73973.76,
+          "reform": 74023.2
+        },
+        "real_net_income": {
+          "baseline": 69638.83,
+          "reform": 69927.13
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "SCOTLAND",
+    "group": "Single pensioner",
+    "weighted_n": 223927,
+    "decomposition": {
+      "market_income": -87.64,
+      "taxes": 21.25,
+      "benefits": -23.32,
+      "pension_contributions": -0.0,
+      "purchasing_power": 100.02,
+      "total": 10.31,
+      "details": {
+        "market_income": {
+          "baseline": 13460.46,
+          "reform": 13372.82
+        },
+        "taxes": {
+          "baseline": 5915.23,
+          "reform": 5893.98
+        },
+        "benefits": {
+          "baseline": 23541.3,
+          "reform": 23517.98
+        },
+        "pension_contributions": {
+          "baseline": 0.0,
+          "reform": 0.0
+        },
+        "net_income": {
+          "baseline": 31086.54,
+          "reform": 30996.82
+        },
+        "real_net_income": {
+          "baseline": 29264.84,
+          "reform": 29275.15
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "SCOTLAND",
+    "group": "Pensioner couple",
+    "weighted_n": 434862,
+    "decomposition": {
+      "market_income": -152.05,
+      "taxes": 33.7,
+      "benefits": 20.38,
+      "pension_contributions": -0.39,
+      "purchasing_power": 185.51,
+      "total": 87.15,
+      "details": {
+        "market_income": {
+          "baseline": 29041.23,
+          "reform": 28889.18
+        },
+        "taxes": {
+          "baseline": 10382.4,
+          "reform": 10348.71
+        },
+        "benefits": {
+          "baseline": 39189.47,
+          "reform": 39209.85
+        },
+        "pension_contributions": {
+          "baseline": 259.98,
+          "reform": 260.38
+        },
+        "net_income": {
+          "baseline": 57588.31,
+          "reform": 57489.95
+        },
+        "real_net_income": {
+          "baseline": 54213.58,
+          "reform": 54300.73
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "SCOTLAND",
+    "group": "All households",
+    "weighted_n": 2754148,
+    "decomposition": {
+      "market_income": 69.89,
+      "taxes": -42.88,
+      "benefits": -12.86,
+      "pension_contributions": -4.1,
+      "purchasing_power": 172.74,
+      "total": 182.79,
+      "details": {
+        "market_income": {
+          "baseline": 53179.16,
+          "reform": 53249.04
+        },
+        "taxes": {
+          "baseline": 15567.79,
+          "reform": 15610.67
+        },
+        "benefits": {
+          "baseline": 17422.54,
+          "reform": 17409.68
+        },
+        "pension_contributions": {
+          "baseline": 1511.9,
+          "reform": 1516.0
+        },
+        "net_income": {
+          "baseline": 53522.01,
+          "reform": 53532.06
+        },
+        "real_net_income": {
+          "baseline": 50385.57,
+          "reform": 50568.36
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "WALES",
+    "group": "Single adult, no children",
+    "weighted_n": 287007,
+    "decomposition": {
+      "market_income": 9.33,
+      "taxes": -2.72,
+      "benefits": -23.16,
+      "pension_contributions": -0.76,
+      "purchasing_power": 79.52,
+      "total": 62.21,
+      "details": {
+        "market_income": {
+          "baseline": 18437.29,
+          "reform": 18446.62
+        },
+        "taxes": {
+          "baseline": 6638.68,
+          "reform": 6641.39
+        },
+        "benefits": {
+          "baseline": 13176.76,
+          "reform": 13153.6
+        },
+        "pension_contributions": {
+          "baseline": 316.29,
+          "reform": 317.05
+        },
+        "net_income": {
+          "baseline": 24659.08,
+          "reform": 24641.77
+        },
+        "real_net_income": {
+          "baseline": 23214.04,
+          "reform": 23276.25
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "WALES",
+    "group": "Couple, no children",
+    "weighted_n": 448446,
+    "decomposition": {
+      "market_income": 145.66,
+      "taxes": -51.08,
+      "benefits": -6.6,
+      "pension_contributions": -6.93,
+      "purchasing_power": 219.97,
+      "total": 301.02,
+      "details": {
+        "market_income": {
+          "baseline": 83361.43,
+          "reform": 83507.09
+        },
+        "taxes": {
+          "baseline": 21780.79,
+          "reform": 21831.87
+        },
+        "benefits": {
+          "baseline": 8756.93,
+          "reform": 8750.33
+        },
+        "pension_contributions": {
+          "baseline": 2249.51,
+          "reform": 2256.45
+        },
+        "net_income": {
+          "baseline": 68088.06,
+          "reform": 68169.11
+        },
+        "real_net_income": {
+          "baseline": 64098.04,
+          "reform": 64399.06
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "WALES",
+    "group": "Single parent",
+    "weighted_n": 112528,
+    "decomposition": {
+      "market_income": 29.62,
+      "taxes": -3.73,
+      "benefits": -68.49,
+      "pension_contributions": -0.51,
+      "purchasing_power": 135.54,
+      "total": 92.43,
+      "details": {
+        "market_income": {
+          "baseline": 19763.24,
+          "reform": 19792.86
+        },
+        "taxes": {
+          "baseline": 5954.76,
+          "reform": 5958.49
+        },
+        "benefits": {
+          "baseline": 28393.9,
+          "reform": 28325.41
+        },
+        "pension_contributions": {
+          "baseline": 155.87,
+          "reform": 156.38
+        },
+        "net_income": {
+          "baseline": 42046.51,
+          "reform": 42003.4
+        },
+        "real_net_income": {
+          "baseline": 39582.55,
+          "reform": 39674.98
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "WALES",
+    "group": "Couple with children",
+    "weighted_n": 267703,
+    "decomposition": {
+      "market_income": 180.7,
+      "taxes": -55.17,
+      "benefits": -33.89,
+      "pension_contributions": -7.91,
+      "purchasing_power": 208.6,
+      "total": 292.33,
+      "details": {
+        "market_income": {
+          "baseline": 69237.55,
+          "reform": 69418.25
+        },
+        "taxes": {
+          "baseline": 19729.88,
+          "reform": 19785.05
+        },
+        "benefits": {
+          "baseline": 17842.93,
+          "reform": 17809.04
+        },
+        "pension_contributions": {
+          "baseline": 2789.74,
+          "reform": 2797.65
+        },
+        "net_income": {
+          "baseline": 64560.87,
+          "reform": 64644.6
+        },
+        "real_net_income": {
+          "baseline": 60777.54,
+          "reform": 61069.87
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "WALES",
+    "group": "Single pensioner",
+    "weighted_n": 184881,
+    "decomposition": {
+      "market_income": -33.07,
+      "taxes": 7.82,
+      "benefits": -43.15,
+      "pension_contributions": -0.02,
+      "purchasing_power": 112.64,
+      "total": 44.22,
+      "details": {
+        "market_income": {
+          "baseline": 7691.3,
+          "reform": 7658.23
+        },
+        "taxes": {
+          "baseline": 4162.17,
+          "reform": 4154.35
+        },
+        "benefits": {
+          "baseline": 31452.84,
+          "reform": 31409.68
+        },
+        "pension_contributions": {
+          "baseline": 5.28,
+          "reform": 5.3
+        },
+        "net_income": {
+          "baseline": 34976.68,
+          "reform": 34908.26
+        },
+        "real_net_income": {
+          "baseline": 32927.01,
+          "reform": 32971.23
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "WALES",
+    "group": "Pensioner couple",
+    "weighted_n": 259279,
+    "decomposition": {
+      "market_income": -121.84,
+      "taxes": 30.95,
+      "benefits": -1.89,
+      "pension_contributions": -0.51,
+      "purchasing_power": 180.0,
+      "total": 86.71,
+      "details": {
+        "market_income": {
+          "baseline": 24042.13,
+          "reform": 23920.29
+        },
+        "taxes": {
+          "baseline": 10443.26,
+          "reform": 10412.31
+        },
+        "benefits": {
+          "baseline": 42433.44,
+          "reform": 42431.55
+        },
+        "pension_contributions": {
+          "baseline": 155.31,
+          "reform": 155.82
+        },
+        "net_income": {
+          "baseline": 55877.01,
+          "reform": 55783.72
+        },
+        "real_net_income": {
+          "baseline": 52602.57,
+          "reform": 52689.28
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "WALES",
+    "group": "All households",
+    "weighted_n": 1567724,
+    "decomposition": {
+      "market_income": 52.62,
+      "taxes": -18.81,
+      "benefits": -22.61,
+      "pension_contributions": -3.6,
+      "purchasing_power": 166.72,
+      "total": 174.32,
+      "details": {
+        "market_income": {
+          "baseline": 45456.06,
+          "reform": 45508.68
+        },
+        "taxes": {
+          "baseline": 13496.19,
+          "reform": 13514.99
+        },
+        "benefits": {
+          "baseline": 20916.9,
+          "reform": 20894.29
+        },
+        "pension_contributions": {
+          "baseline": 1217.51,
+          "reform": 1221.11
+        },
+        "net_income": {
+          "baseline": 51659.26,
+          "reform": 51666.86
+        },
+        "real_net_income": {
+          "baseline": 48631.98,
+          "reform": 48806.3
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single adult, no children",
+    "weighted_n": 83705,
+    "decomposition": {
+      "market_income": 7.55,
+      "taxes": -9.6,
+      "benefits": -45.13,
+      "pension_contributions": -0.39,
+      "purchasing_power": 86.09,
+      "total": 38.52,
+      "details": {
+        "market_income": {
+          "baseline": 7620.14,
+          "reform": 7627.68
+        },
+        "taxes": {
+          "baseline": 3170.52,
+          "reform": 3180.12
+        },
+        "benefits": {
+          "baseline": 22398.8,
+          "reform": 22353.68
+        },
+        "pension_contributions": {
+          "baseline": 122.76,
+          "reform": 123.15
+        },
+        "net_income": {
+          "baseline": 26725.65,
+          "reform": 26678.08
+        },
+        "real_net_income": {
+          "baseline": 25159.5,
+          "reform": 25198.02
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "NORTHERN_IRELAND",
+    "group": "Couple, no children",
+    "weighted_n": 241627,
+    "decomposition": {
+      "market_income": 181.96,
+      "taxes": -92.53,
+      "benefits": -14.64,
+      "pension_contributions": -3.91,
+      "purchasing_power": 216.25,
+      "total": 287.13,
+      "details": {
+        "market_income": {
+          "baseline": 74711.97,
+          "reform": 74893.93
+        },
+        "taxes": {
+          "baseline": 17855.97,
+          "reform": 17948.5
+        },
+        "benefits": {
+          "baseline": 11353.54,
+          "reform": 11338.9
+        },
+        "pension_contributions": {
+          "baseline": 1265.1,
+          "reform": 1269.01
+        },
+        "net_income": {
+          "baseline": 66944.44,
+          "reform": 67015.32
+        },
+        "real_net_income": {
+          "baseline": 63021.43,
+          "reform": 63308.56
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single parent",
+    "weighted_n": 40729,
+    "decomposition": {
+      "market_income": 41.05,
+      "taxes": -6.42,
+      "benefits": -74.02,
+      "pension_contributions": -1.1,
+      "purchasing_power": 135.72,
+      "total": 95.23,
+      "details": {
+        "market_income": {
+          "baseline": 19153.64,
+          "reform": 19194.7
+        },
+        "taxes": {
+          "baseline": 4825.46,
+          "reform": 4831.88
+        },
+        "benefits": {
+          "baseline": 28108.3,
+          "reform": 28034.27
+        },
+        "pension_contributions": {
+          "baseline": 336.67,
+          "reform": 337.77
+        },
+        "net_income": {
+          "baseline": 42099.81,
+          "reform": 42059.32
+        },
+        "real_net_income": {
+          "baseline": 39632.72,
+          "reform": 39727.95
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "NORTHERN_IRELAND",
+    "group": "Couple with children",
+    "weighted_n": 221557,
+    "decomposition": {
+      "market_income": 177.72,
+      "taxes": -53.81,
+      "benefits": -27.41,
+      "pension_contributions": -5.14,
+      "purchasing_power": 218.63,
+      "total": 309.99,
+      "details": {
+        "market_income": {
+          "baseline": 71094.44,
+          "reform": 71272.17
+        },
+        "taxes": {
+          "baseline": 16978.36,
+          "reform": 17032.17
+        },
+        "benefits": {
+          "baseline": 15332.08,
+          "reform": 15304.68
+        },
+        "pension_contributions": {
+          "baseline": 1788.85,
+          "reform": 1793.99
+        },
+        "net_income": {
+          "baseline": 67659.31,
+          "reform": 67750.68
+        },
+        "real_net_income": {
+          "baseline": 63694.42,
+          "reform": 64004.41
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single pensioner",
+    "weighted_n": 19150,
+    "decomposition": {
+      "market_income": -26.83,
+      "taxes": 5.02,
+      "benefits": -23.83,
+      "pension_contributions": -0.14,
+      "purchasing_power": 89.3,
+      "total": 43.52,
+      "details": {
+        "market_income": {
+          "baseline": 7277.18,
+          "reform": 7250.35
+        },
+        "taxes": {
+          "baseline": 3035.8,
+          "reform": 3030.79
+        },
+        "benefits": {
+          "baseline": 23524.36,
+          "reform": 23500.53
+        },
+        "pension_contributions": {
+          "baseline": 46.69,
+          "reform": 46.83
+        },
+        "net_income": {
+          "baseline": 27719.05,
+          "reform": 27673.27
+        },
+        "real_net_income": {
+          "baseline": 26094.69,
+          "reform": 26138.21
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "NORTHERN_IRELAND",
+    "group": "Pensioner couple",
+    "weighted_n": 156384,
+    "decomposition": {
+      "market_income": -86.49,
+      "taxes": 12.43,
+      "benefits": -7.28,
+      "pension_contributions": -0.95,
+      "purchasing_power": 178.23,
+      "total": 95.94,
+      "details": {
+        "market_income": {
+          "baseline": 20854.34,
+          "reform": 20767.85
+        },
+        "taxes": {
+          "baseline": 6399.59,
+          "reform": 6387.16
+        },
+        "benefits": {
+          "baseline": 41152.37,
+          "reform": 41145.1
+        },
+        "pension_contributions": {
+          "baseline": 295.33,
+          "reform": 296.27
+        },
+        "net_income": {
+          "baseline": 55311.8,
+          "reform": 55229.52
+        },
+        "real_net_income": {
+          "baseline": 52070.48,
+          "reform": 52166.42
+        }
+      }
+    }
+  },
+  {
+    "year": 2029,
+    "country": "NORTHERN_IRELAND",
+    "group": "All households",
+    "weighted_n": 771512,
+    "decomposition": {
+      "market_income": 93.45,
+      "taxes": -43.36,
+      "benefits": -23.68,
+      "pension_contributions": -3.06,
+      "purchasing_power": 186.82,
+      "total": 210.17,
+      "details": {
+        "market_income": {
+          "baseline": 50403.85,
+          "reform": 50497.3
+        },
+        "taxes": {
+          "baseline": 12511.85,
+          "reform": 12555.21
+        },
+        "benefits": {
+          "baseline": 20996.62,
+          "reform": 20972.94
+        },
+        "pension_contributions": {
+          "baseline": 1020.49,
+          "reform": 1023.55
+        },
+        "net_income": {
+          "baseline": 57868.12,
+          "reform": 57891.49
+        },
+        "real_net_income": {
+          "baseline": 54477.0,
+          "reform": 54687.17
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "UK",
+    "group": "Single adult, no children",
+    "weighted_n": 5542438,
+    "decomposition": {
+      "market_income": 56.26,
+      "taxes": -17.45,
+      "benefits": -37.98,
+      "pension_contributions": -2.52,
+      "purchasing_power": 97.55,
+      "total": 95.86,
+      "details": {
+        "market_income": {
+          "baseline": 27375.19,
+          "reform": 27431.45
+        },
+        "taxes": {
+          "baseline": 9575.69,
+          "reform": 9593.14
+        },
+        "benefits": {
+          "baseline": 13191.16,
+          "reform": 13153.18
+        },
+        "pension_contributions": {
+          "baseline": 758.58,
+          "reform": 761.1
+        },
+        "net_income": {
+          "baseline": 30232.09,
+          "reform": 30230.39
+        },
+        "real_net_income": {
+          "baseline": 27902.41,
+          "reform": 27998.27
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "UK",
+    "group": "Couple, no children",
+    "weighted_n": 8957908,
+    "decomposition": {
+      "market_income": 263.84,
+      "taxes": -184.49,
+      "benefits": -8.53,
+      "pension_contributions": -11.94,
+      "purchasing_power": 241.78,
+      "total": 300.66,
+      "details": {
+        "market_income": {
+          "baseline": 100654.63,
+          "reform": 100918.47
+        },
+        "taxes": {
+          "baseline": 30683.54,
+          "reform": 30868.03
+        },
+        "benefits": {
+          "baseline": 8371.16,
+          "reform": 8362.62
+        },
+        "pension_contributions": {
+          "baseline": 3472.65,
+          "reform": 3484.59
+        },
+        "net_income": {
+          "baseline": 74869.6,
+          "reform": 74928.48
+        },
+        "real_net_income": {
+          "baseline": 69100.17,
+          "reform": 69400.83
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "UK",
+    "group": "Single parent",
+    "weighted_n": 2072146,
+    "decomposition": {
+      "market_income": 59.25,
+      "taxes": -13.02,
+      "benefits": -96.79,
+      "pension_contributions": -2.07,
+      "purchasing_power": 132.65,
+      "total": 80.02,
+      "details": {
+        "market_income": {
+          "baseline": 20037.5,
+          "reform": 20096.75
+        },
+        "taxes": {
+          "baseline": 6080.29,
+          "reform": 6093.31
+        },
+        "benefits": {
+          "baseline": 27734.39,
+          "reform": 27637.61
+        },
+        "pension_contributions": {
+          "baseline": 529.73,
+          "reform": 531.8
+        },
+        "net_income": {
+          "baseline": 41161.88,
+          "reform": 41109.25
+        },
+        "real_net_income": {
+          "baseline": 37989.96,
+          "reform": 38069.98
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "UK",
+    "group": "Couple with children",
+    "weighted_n": 6810870,
+    "decomposition": {
+      "market_income": 293.84,
+      "taxes": -109.48,
+      "benefits": -35.77,
+      "pension_contributions": -9.91,
+      "purchasing_power": 260.63,
+      "total": 399.31,
+      "details": {
+        "market_income": {
+          "baseline": 96123.25,
+          "reform": 96417.08
+        },
+        "taxes": {
+          "baseline": 28874.41,
+          "reform": 28983.89
+        },
+        "benefits": {
+          "baseline": 16448.02,
+          "reform": 16412.25
+        },
+        "pension_contributions": {
+          "baseline": 3064.64,
+          "reform": 3074.56
+        },
+        "net_income": {
+          "baseline": 80632.21,
+          "reform": 80770.89
+        },
+        "real_net_income": {
+          "baseline": 74418.71,
+          "reform": 74818.02
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "UK",
+    "group": "Single pensioner",
+    "weighted_n": 3913326,
+    "decomposition": {
+      "market_income": -55.12,
+      "taxes": 14.28,
+      "benefits": -5.74,
+      "pension_contributions": -0.13,
+      "purchasing_power": 81.37,
+      "total": 34.66,
+      "details": {
+        "market_income": {
+          "baseline": 11631.1,
+          "reform": 11575.98
+        },
+        "taxes": {
+          "baseline": 8787.84,
+          "reform": 8773.56
+        },
+        "benefits": {
+          "baseline": 22453.69,
+          "reform": 22447.95
+        },
+        "pension_contributions": {
+          "baseline": 32.29,
+          "reform": 32.42
+        },
+        "net_income": {
+          "baseline": 25264.65,
+          "reform": 25217.94
+        },
+        "real_net_income": {
+          "baseline": 23317.77,
+          "reform": 23352.43
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "UK",
+    "group": "Pensioner couple",
+    "weighted_n": 4862012,
+    "decomposition": {
+      "market_income": -114.23,
+      "taxes": 30.41,
+      "benefits": 14.63,
+      "pension_contributions": -1.99,
+      "purchasing_power": 182.02,
+      "total": 110.84,
+      "details": {
+        "market_income": {
+          "baseline": 38127.08,
+          "reform": 38012.85
+        },
+        "taxes": {
+          "baseline": 15332.69,
+          "reform": 15302.28
+        },
+        "benefits": {
+          "baseline": 34398.32,
+          "reform": 34412.95
+        },
+        "pension_contributions": {
+          "baseline": 710.42,
+          "reform": 712.42
+        },
+        "net_income": {
+          "baseline": 56482.28,
+          "reform": 56411.1
+        },
+        "real_net_income": {
+          "baseline": 52129.78,
+          "reform": 52240.62
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "UK",
+    "group": "All households",
+    "weighted_n": 32389610,
+    "decomposition": {
+      "market_income": 125.39,
+      "taxes": -71.95,
+      "benefits": -21.84,
+      "pension_contributions": -6.3,
+      "purchasing_power": 185.6,
+      "total": 210.9,
+      "details": {
+        "market_income": {
+          "baseline": 61532.26,
+          "reform": 61657.64
+        },
+        "taxes": {
+          "baseline": 20073.93,
+          "reform": 20145.88
+        },
+        "benefits": {
+          "baseline": 17922.16,
+          "reform": 17900.32
+        },
+        "pension_contributions": {
+          "baseline": 1888.32,
+          "reform": 1894.62
+        },
+        "net_income": {
+          "baseline": 57492.17,
+          "reform": 57517.47
+        },
+        "real_net_income": {
+          "baseline": 53061.84,
+          "reform": 53272.74
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "ENGLAND",
+    "group": "Single adult, no children",
+    "weighted_n": 4631959,
+    "decomposition": {
+      "market_income": 59.59,
+      "taxes": -18.54,
+      "benefits": -38.56,
+      "pension_contributions": -2.78,
+      "purchasing_power": 100.73,
+      "total": 100.44,
+      "details": {
+        "market_income": {
+          "baseline": 29007.89,
+          "reform": 29067.48
+        },
+        "taxes": {
+          "baseline": 10289.09,
+          "reform": 10307.63
+        },
+        "benefits": {
+          "baseline": 13326.75,
+          "reform": 13288.19
+        },
+        "pension_contributions": {
+          "baseline": 827.26,
+          "reform": 830.04
+        },
+        "net_income": {
+          "baseline": 31218.29,
+          "reform": 31217.99
+        },
+        "real_net_income": {
+          "baseline": 28812.61,
+          "reform": 28913.05
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "ENGLAND",
+    "group": "Couple, no children",
+    "weighted_n": 7441774,
+    "decomposition": {
+      "market_income": 272.85,
+      "taxes": -207.71,
+      "benefits": -8.2,
+      "pension_contributions": -12.86,
+      "purchasing_power": 246.35,
+      "total": 290.43,
+      "details": {
+        "market_income": {
+          "baseline": 104399.32,
+          "reform": 104672.17
+        },
+        "taxes": {
+          "baseline": 32562.74,
+          "reform": 32770.46
+        },
+        "benefits": {
+          "baseline": 8217.33,
+          "reform": 8209.13
+        },
+        "pension_contributions": {
+          "baseline": 3755.16,
+          "reform": 3768.02
+        },
+        "net_income": {
+          "baseline": 76298.74,
+          "reform": 76342.82
+        },
+        "real_net_income": {
+          "baseline": 70419.18,
+          "reform": 70709.61
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "ENGLAND",
+    "group": "Single parent",
+    "weighted_n": 1731496,
+    "decomposition": {
+      "market_income": 61.42,
+      "taxes": -13.73,
+      "benefits": -98.66,
+      "pension_contributions": -2.21,
+      "purchasing_power": 132.55,
+      "total": 79.37,
+      "details": {
+        "market_income": {
+          "baseline": 19940.85,
+          "reform": 20002.27
+        },
+        "taxes": {
+          "baseline": 6143.98,
+          "reform": 6157.7
+        },
+        "benefits": {
+          "baseline": 27893.45,
+          "reform": 27794.79
+        },
+        "pension_contributions": {
+          "baseline": 563.64,
+          "reform": 565.85
+        },
+        "net_income": {
+          "baseline": 41126.68,
+          "reform": 41073.51
+        },
+        "real_net_income": {
+          "baseline": 37957.47,
+          "reform": 38036.84
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "ENGLAND",
+    "group": "Couple with children",
+    "weighted_n": 5774147,
+    "decomposition": {
+      "market_income": 303.68,
+      "taxes": -112.53,
+      "benefits": -35.64,
+      "pension_contributions": -9.77,
+      "purchasing_power": 265.98,
+      "total": 411.72,
+      "details": {
+        "market_income": {
+          "baseline": 98406.18,
+          "reform": 98709.86
+        },
+        "taxes": {
+          "baseline": 29596.69,
+          "reform": 29709.22
+        },
+        "benefits": {
+          "baseline": 16547.91,
+          "reform": 16512.27
+        },
+        "pension_contributions": {
+          "baseline": 3073.42,
+          "reform": 3083.19
+        },
+        "net_income": {
+          "baseline": 82283.98,
+          "reform": 82429.72
+        },
+        "real_net_income": {
+          "baseline": 75943.2,
+          "reform": 76354.92
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "ENGLAND",
+    "group": "Single pensioner",
+    "weighted_n": 3483443,
+    "decomposition": {
+      "market_income": -54.09,
+      "taxes": 14.13,
+      "benefits": -1.29,
+      "pension_contributions": -0.14,
+      "purchasing_power": 78.36,
+      "total": 36.97,
+      "details": {
+        "market_income": {
+          "baseline": 11707.49,
+          "reform": 11653.4
+        },
+        "taxes": {
+          "baseline": 9222.42,
+          "reform": 9208.29
+        },
+        "benefits": {
+          "baseline": 21873.94,
+          "reform": 21872.66
+        },
+        "pension_contributions": {
+          "baseline": 35.73,
+          "reform": 35.87
+        },
+        "net_income": {
+          "baseline": 24323.28,
+          "reform": 24281.89
+        },
+        "real_net_income": {
+          "baseline": 22448.94,
+          "reform": 22485.91
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "ENGLAND",
+    "group": "Pensioner couple",
+    "weighted_n": 4007660,
+    "decomposition": {
+      "market_income": -110.39,
+      "taxes": 30.71,
+      "benefits": 16.53,
+      "pension_contributions": -2.28,
+      "purchasing_power": 181.32,
+      "total": 115.89,
+      "details": {
+        "market_income": {
+          "baseline": 40550.82,
+          "reform": 40440.43
+        },
+        "taxes": {
+          "baseline": 16450.7,
+          "reform": 16419.99
+        },
+        "benefits": {
+          "baseline": 32967.72,
+          "reform": 32984.25
+        },
+        "pension_contributions": {
+          "baseline": 811.07,
+          "reform": 813.34
+        },
+        "net_income": {
+          "baseline": 56256.77,
+          "reform": 56191.34
+        },
+        "real_net_income": {
+          "baseline": 51921.64,
+          "reform": 52037.53
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "ENGLAND",
+    "group": "All households",
+    "weighted_n": 27273305,
+    "decomposition": {
+      "market_income": 130.72,
+      "taxes": -78.6,
+      "benefits": -21.15,
+      "pension_contributions": -6.58,
+      "purchasing_power": 187.4,
+      "total": 211.79,
+      "details": {
+        "market_income": {
+          "baseline": 63380.92,
+          "reform": 63511.64
+        },
+        "taxes": {
+          "baseline": 21019.25,
+          "reform": 21097.84
+        },
+        "benefits": {
+          "baseline": 17673.55,
+          "reform": 17652.4
+        },
+        "pension_contributions": {
+          "baseline": 1984.88,
+          "reform": 1991.46
+        },
+        "net_income": {
+          "baseline": 58050.34,
+          "reform": 58074.73
+        },
+        "real_net_income": {
+          "baseline": 53577.0,
+          "reform": 53788.79
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "SCOTLAND",
+    "group": "Single adult, no children",
+    "weighted_n": 538099,
+    "decomposition": {
+      "market_income": 55.65,
+      "taxes": -18.24,
+      "benefits": -29.3,
+      "pension_contributions": -1.4,
+      "purchasing_power": 80.7,
+      "total": 87.41,
+      "details": {
+        "market_income": {
+          "baseline": 20897.11,
+          "reform": 20952.76
+        },
+        "taxes": {
+          "baseline": 5823.24,
+          "reform": 5841.48
+        },
+        "benefits": {
+          "baseline": 10429.07,
+          "reform": 10399.77
+        },
+        "pension_contributions": {
+          "baseline": 500.4,
+          "reform": 501.8
+        },
+        "net_income": {
+          "baseline": 25002.55,
+          "reform": 25009.25
+        },
+        "real_net_income": {
+          "baseline": 23075.86,
+          "reform": 23163.27
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "SCOTLAND",
+    "group": "Couple, no children",
+    "weighted_n": 822956,
+    "decomposition": {
+      "market_income": 227.81,
+      "taxes": -85.59,
+      "benefits": -8.62,
+      "pension_contributions": -7.35,
+      "purchasing_power": 216.51,
+      "total": 342.76,
+      "details": {
+        "market_income": {
+          "baseline": 82190.44,
+          "reform": 82418.24
+        },
+        "taxes": {
+          "baseline": 21620.57,
+          "reform": 21706.17
+        },
+        "benefits": {
+          "baseline": 8601.45,
+          "reform": 8592.84
+        },
+        "pension_contributions": {
+          "baseline": 2203.62,
+          "reform": 2210.96
+        },
+        "net_income": {
+          "baseline": 66967.7,
+          "reform": 67093.95
+        },
+        "real_net_income": {
+          "baseline": 61807.19,
+          "reform": 62149.95
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "SCOTLAND",
+    "group": "Single parent",
+    "weighted_n": 186704,
+    "decomposition": {
+      "market_income": 53.86,
+      "taxes": -12.0,
+      "benefits": -80.76,
+      "pension_contributions": -1.84,
+      "purchasing_power": 129.96,
+      "total": 89.22,
+      "details": {
+        "market_income": {
+          "baseline": 20852.02,
+          "reform": 20905.87
+        },
+        "taxes": {
+          "baseline": 5624.28,
+          "reform": 5636.28
+        },
+        "benefits": {
+          "baseline": 25568.99,
+          "reform": 25488.23
+        },
+        "pension_contributions": {
+          "baseline": 479.96,
+          "reform": 481.8
+        },
+        "net_income": {
+          "baseline": 40316.76,
+          "reform": 40276.02
+        },
+        "real_net_income": {
+          "baseline": 37209.96,
+          "reform": 37299.18
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "SCOTLAND",
+    "group": "Couple with children",
+    "weighted_n": 545261,
+    "decomposition": {
+      "market_income": 248.21,
+      "taxes": -115.24,
+      "benefits": -31.17,
+      "pension_contributions": -12.74,
+      "purchasing_power": 243.44,
+      "total": 332.5,
+      "details": {
+        "market_income": {
+          "baseline": 93844.18,
+          "reform": 94092.39
+        },
+        "taxes": {
+          "baseline": 29915.24,
+          "reform": 30030.48
+        },
+        "benefits": {
+          "baseline": 15008.62,
+          "reform": 14977.45
+        },
+        "pension_contributions": {
+          "baseline": 3585.7,
+          "reform": 3598.44
+        },
+        "net_income": {
+          "baseline": 75351.86,
+          "reform": 75440.92
+        },
+        "real_net_income": {
+          "baseline": 69545.27,
+          "reform": 69877.77
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "SCOTLAND",
+    "group": "Single pensioner",
+    "weighted_n": 224935,
+    "decomposition": {
+      "market_income": -90.8,
+      "taxes": 22.48,
+      "benefits": -27.36,
+      "pension_contributions": -0.0,
+      "purchasing_power": 100.55,
+      "total": 4.87,
+      "details": {
+        "market_income": {
+          "baseline": 13861.22,
+          "reform": 13770.43
+        },
+        "taxes": {
+          "baseline": 6145.79,
+          "reform": 6123.3
+        },
+        "benefits": {
+          "baseline": 23540.16,
+          "reform": 23512.8
+        },
+        "pension_contributions": {
+          "baseline": 0.0,
+          "reform": 0.0
+        },
+        "net_income": {
+          "baseline": 31255.6,
+          "reform": 31159.92
+        },
+        "real_net_income": {
+          "baseline": 28847.05,
+          "reform": 28851.92
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "SCOTLAND",
+    "group": "Pensioner couple",
+    "weighted_n": 436818,
+    "decomposition": {
+      "market_income": -154.99,
+      "taxes": 34.31,
+      "benefits": 18.71,
+      "pension_contributions": -0.5,
+      "purchasing_power": 188.65,
+      "total": 86.18,
+      "details": {
+        "market_income": {
+          "baseline": 29881.64,
+          "reform": 29726.66
+        },
+        "taxes": {
+          "baseline": 10794.16,
+          "reform": 10759.85
+        },
+        "benefits": {
+          "baseline": 39737.83,
+          "reform": 39756.54
+        },
+        "pension_contributions": {
+          "baseline": 262.75,
+          "reform": 263.25
+        },
+        "net_income": {
+          "baseline": 58562.56,
+          "reform": 58460.1
+        },
+        "real_net_income": {
+          "baseline": 54049.75,
+          "reform": 54135.93
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "SCOTLAND",
+    "group": "All households",
+    "weighted_n": 2766542,
+    "decomposition": {
+      "market_income": 100.04,
+      "taxes": -45.61,
+      "benefits": -19.59,
+      "pension_contributions": -5.2,
+      "purchasing_power": 175.84,
+      "total": 205.48,
+      "details": {
+        "market_income": {
+          "baseline": 54546.48,
+          "reform": 54646.53
+        },
+        "taxes": {
+          "baseline": 16132.84,
+          "reform": 16178.46
+        },
+        "benefits": {
+          "baseline": 17589.85,
+          "reform": 17570.26
+        },
+        "pension_contributions": {
+          "baseline": 1540.87,
+          "reform": 1546.07
+        },
+        "net_income": {
+          "baseline": 54462.62,
+          "reform": 54492.26
+        },
+        "real_net_income": {
+          "baseline": 50265.75,
+          "reform": 50471.23
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "WALES",
+    "group": "Single adult, no children",
+    "weighted_n": 288299,
+    "decomposition": {
+      "market_income": 17.43,
+      "taxes": -3.8,
+      "benefits": -37.13,
+      "pension_contributions": -0.96,
+      "purchasing_power": 80.56,
+      "total": 56.1,
+      "details": {
+        "market_income": {
+          "baseline": 18930.15,
+          "reform": 18947.59
+        },
+        "taxes": {
+          "baseline": 6954.89,
+          "reform": 6958.69
+        },
+        "benefits": {
+          "baseline": 13335.29,
+          "reform": 13298.15
+        },
+        "pension_contributions": {
+          "baseline": 321.65,
+          "reform": 322.61
+        },
+        "net_income": {
+          "baseline": 24988.9,
+          "reform": 24964.44
+        },
+        "real_net_income": {
+          "baseline": 23063.27,
+          "reform": 23119.37
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "WALES",
+    "group": "Couple, no children",
+    "weighted_n": 450464,
+    "decomposition": {
+      "market_income": 196.82,
+      "taxes": -66.33,
+      "benefits": -8.84,
+      "pension_contributions": -8.79,
+      "purchasing_power": 223.93,
+      "total": 336.79,
+      "details": {
+        "market_income": {
+          "baseline": 85490.91,
+          "reform": 85687.74
+        },
+        "taxes": {
+          "baseline": 22746.78,
+          "reform": 22813.11
+        },
+        "benefits": {
+          "baseline": 8834.68,
+          "reform": 8825.84
+        },
+        "pension_contributions": {
+          "baseline": 2298.47,
+          "reform": 2307.26
+        },
+        "net_income": {
+          "baseline": 69280.34,
+          "reform": 69393.21
+        },
+        "real_net_income": {
+          "baseline": 63941.62,
+          "reform": 64278.41
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "WALES",
+    "group": "Single parent",
+    "weighted_n": 113034,
+    "decomposition": {
+      "market_income": 37.54,
+      "taxes": -5.47,
+      "benefits": -92.66,
+      "pension_contributions": -0.64,
+      "purchasing_power": 137.11,
+      "total": 75.88,
+      "details": {
+        "market_income": {
+          "baseline": 20311.55,
+          "reform": 20349.1
+        },
+        "taxes": {
+          "baseline": 6250.38,
+          "reform": 6255.86
+        },
+        "benefits": {
+          "baseline": 28652.37,
+          "reform": 28559.71
+        },
+        "pension_contributions": {
+          "baseline": 159.44,
+          "reform": 160.08
+        },
+        "net_income": {
+          "baseline": 42554.1,
+          "reform": 42492.87
+        },
+        "real_net_income": {
+          "baseline": 39274.9,
+          "reform": 39350.78
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "WALES",
+    "group": "Couple with children",
+    "weighted_n": 268908,
+    "decomposition": {
+      "market_income": 230.34,
+      "taxes": -69.7,
+      "benefits": -46.78,
+      "pension_contributions": -10.03,
+      "purchasing_power": 211.84,
+      "total": 315.67,
+      "details": {
+        "market_income": {
+          "baseline": 70956.31,
+          "reform": 71186.65
+        },
+        "taxes": {
+          "baseline": 20599.92,
+          "reform": 20669.62
+        },
+        "benefits": {
+          "baseline": 18035.09,
+          "reform": 17988.31
+        },
+        "pension_contributions": {
+          "baseline": 2845.61,
+          "reform": 2855.64
+        },
+        "net_income": {
+          "baseline": 65545.87,
+          "reform": 65649.7
+        },
+        "real_net_income": {
+          "baseline": 60494.92,
+          "reform": 60810.59
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "WALES",
+    "group": "Single pensioner",
+    "weighted_n": 185713,
+    "decomposition": {
+      "market_income": -34.22,
+      "taxes": 8.06,
+      "benefits": -60.41,
+      "pension_contributions": -0.02,
+      "purchasing_power": 113.91,
+      "total": 27.32,
+      "details": {
+        "market_income": {
+          "baseline": 7925.8,
+          "reform": 7891.59
+        },
+        "taxes": {
+          "baseline": 4420.14,
+          "reform": 4412.08
+        },
+        "benefits": {
+          "baseline": 31885.92,
+          "reform": 31825.51
+        },
+        "pension_contributions": {
+          "baseline": 5.4,
+          "reform": 5.43
+        },
+        "net_income": {
+          "baseline": 35386.17,
+          "reform": 35299.58
+        },
+        "real_net_income": {
+          "baseline": 32659.32,
+          "reform": 32686.64
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "WALES",
+    "group": "Pensioner couple",
+    "weighted_n": 260446,
+    "decomposition": {
+      "market_income": -122.28,
+      "taxes": 30.94,
+      "benefits": -6.26,
+      "pension_contributions": -0.65,
+      "purchasing_power": 182.56,
+      "total": 84.31,
+      "details": {
+        "market_income": {
+          "baseline": 24722.6,
+          "reform": 24600.32
+        },
+        "taxes": {
+          "baseline": 10967.18,
+          "reform": 10936.24
+        },
+        "benefits": {
+          "baseline": 43077.58,
+          "reform": 43071.32
+        },
+        "pension_contributions": {
+          "baseline": 158.9,
+          "reform": 159.55
+        },
+        "net_income": {
+          "baseline": 56674.1,
+          "reform": 56575.85
+        },
+        "real_net_income": {
+          "baseline": 52306.81,
+          "reform": 52391.12
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "WALES",
+    "group": "All households",
+    "weighted_n": 1574779,
+    "decomposition": {
+      "market_income": 77.66,
+      "taxes": -25.97,
+      "benefits": -32.62,
+      "pension_contributions": -4.57,
+      "purchasing_power": 169.29,
+      "total": 183.79,
+      "details": {
+        "market_income": {
+          "baseline": 46631.17,
+          "reform": 46708.82
+        },
+        "taxes": {
+          "baseline": 14119.3,
+          "reform": 14145.26
+        },
+        "benefits": {
+          "baseline": 21179.51,
+          "reform": 21146.89
+        },
+        "pension_contributions": {
+          "baseline": 1242.95,
+          "reform": 1247.52
+        },
+        "net_income": {
+          "baseline": 52448.43,
+          "reform": 52462.93
+        },
+        "real_net_income": {
+          "baseline": 48406.77,
+          "reform": 48590.56
+        }
+      }
+    }
+  },
+  {
+    "year": 2030,
+    "country": "NORTHERN_IRELAND",
+    "group": "Single adult, no children",
+    "weighted_n": 84082,
+    "decomposition": {
+      "market_income": 9.9,
+      "taxes": 0.4,
+      "benefits": -64.3,
+      "pension_contributions": -0.49,
+      "purchasing_power": 88.08,
       "total": 33.59,
       "details": {
         "market_income": {
-          "baseline": 10676.17,
-          "reform": 10637.28
+          "baseline": 7846.18,
+          "reform": 7856.08
         },
         "taxes": {
-          "baseline": 5977.71,
-          "reform": 5968.07
+          "baseline": 3275.73,
+          "reform": 3275.33
         },
         "benefits": {
-          "baseline": 21610.28,
-          "reform": 21609.16
+          "baseline": 22903.97,
+          "reform": 22839.67
         },
         "pension_contributions": {
-          "baseline": 28.13,
-          "reform": 28.23
+          "baseline": 125.5,
+          "reform": 126.0
         },
         "net_income": {
-          "baseline": 26280.62,
-          "reform": 26250.15
+          "baseline": 27348.92,
+          "reform": 27294.43
         },
         "real_net_income": {
-          "baseline": 25760.26,
-          "reform": 25793.85
+          "baseline": 25241.42,
+          "reform": 25275.01
         }
       }
     }
   },
   {
-    "year": 2027,
-    "group": "Pensioner couple",
-    "weighted_n": 4791116,
-    "decomposition": {
-      "market_income": -81.72,
-      "taxes": 19.64,
-      "benefits": 18.03,
-      "pension_contributions": -1.59,
-      "purchasing_power": 130.56,
-      "total": 84.92,
-      "details": {
-        "market_income": {
-          "baseline": 34961.87,
-          "reform": 34880.16
-        },
-        "taxes": {
-          "baseline": 13927.19,
-          "reform": 13907.55
-        },
-        "benefits": {
-          "baseline": 32974.5,
-          "reform": 32992.53
-        },
-        "pension_contributions": {
-          "baseline": 468.49,
-          "reform": 470.08
-        },
-        "net_income": {
-          "baseline": 53540.69,
-          "reform": 53495.05
-        },
-        "real_net_income": {
-          "baseline": 52480.58,
-          "reform": 52565.5
-        }
-      }
-    }
-  },
-  {
-    "year": 2027,
-    "group": "All households",
-    "weighted_n": 32001183,
-    "decomposition": {
-      "market_income": 99.71,
-      "taxes": -14.98,
-      "benefits": -11.34,
-      "pension_contributions": -4.83,
-      "purchasing_power": 133.68,
-      "total": 202.24,
-      "details": {
-        "market_income": {
-          "baseline": 56870.42,
-          "reform": 56970.12
-        },
-        "taxes": {
-          "baseline": 17981.96,
-          "reform": 17996.94
-        },
-        "benefits": {
-          "baseline": 17247.78,
-          "reform": 17236.44
-        },
-        "pension_contributions": {
-          "baseline": 1425.8,
-          "reform": 1430.62
-        },
-        "net_income": {
-          "baseline": 54710.44,
-          "reform": 54778.99
-        },
-        "real_net_income": {
-          "baseline": 53627.17,
-          "reform": 53829.41
-        }
-      }
-    }
-  },
-  {
-    "year": 2028,
-    "group": "Single adult, no children",
-    "weighted_n": 5529528,
-    "decomposition": {
-      "market_income": 44.94,
-      "taxes": -14.9,
-      "benefits": -23.72,
-      "pension_contributions": -1.94,
-      "purchasing_power": 80.74,
-      "total": 85.12,
-      "details": {
-        "market_income": {
-          "baseline": 25009.57,
-          "reform": 25054.51
-        },
-        "taxes": {
-          "baseline": 8497.62,
-          "reform": 8512.52
-        },
-        "benefits": {
-          "baseline": 12550.65,
-          "reform": 12526.94
-        },
-        "pension_contributions": {
-          "baseline": 574.02,
-          "reform": 575.96
-        },
-        "net_income": {
-          "baseline": 28488.59,
-          "reform": 28492.97
-        },
-        "real_net_income": {
-          "baseline": 27366.24,
-          "reform": 27451.36
-        }
-      }
-    }
-  },
-  {
-    "year": 2028,
+    "year": 2030,
+    "country": "NORTHERN_IRELAND",
     "group": "Couple, no children",
-    "weighted_n": 8830735,
+    "weighted_n": 242715,
     "decomposition": {
-      "market_income": 205.95,
-      "taxes": -75.49,
-      "benefits": -5.94,
-      "pension_contributions": -9.35,
-      "purchasing_power": 205.69,
-      "total": 320.86,
+      "market_income": 233.89,
+      "taxes": -27.11,
+      "benefits": -17.82,
+      "pension_contributions": -4.95,
+      "purchasing_power": 220.71,
+      "total": 404.72,
       "details": {
         "market_income": {
-          "baseline": 95649.77,
-          "reform": 95855.72
+          "baseline": 76588.77,
+          "reform": 76822.66
         },
         "taxes": {
-          "baseline": 28722.12,
-          "reform": 28797.61
+          "baseline": 18525.28,
+          "reform": 18552.39
         },
         "benefits": {
-          "baseline": 8313.7,
-          "reform": 8307.76
+          "baseline": 11446.28,
+          "reform": 11428.46
         },
         "pension_contributions": {
-          "baseline": 2763.41,
-          "reform": 2772.76
+          "baseline": 1292.7,
+          "reform": 1297.65
         },
         "net_income": {
-          "baseline": 72477.94,
-          "reform": 72593.1
+          "baseline": 68217.08,
+          "reform": 68401.08
         },
         "real_net_income": {
-          "baseline": 69622.57,
-          "reform": 69943.43
+          "baseline": 62960.29,
+          "reform": 63365.01
         }
       }
     }
   },
   {
-    "year": 2028,
+    "year": 2030,
+    "country": "NORTHERN_IRELAND",
     "group": "Single parent",
-    "weighted_n": 2050101,
+    "weighted_n": 40912,
     "decomposition": {
-      "market_income": 48.13,
-      "taxes": -10.18,
-      "benefits": -65.32,
-      "pension_contributions": -1.68,
-      "purchasing_power": 110.76,
-      "total": 81.71,
+      "market_income": 52.03,
+      "taxes": -8.81,
+      "benefits": -102.09,
+      "pension_contributions": -1.39,
+      "purchasing_power": 137.47,
+      "total": 77.21,
       "details": {
         "market_income": {
-          "baseline": 19285.1,
-          "reform": 19333.23
+          "baseline": 19653.62,
+          "reform": 19705.65
         },
         "taxes": {
-          "baseline": 6432.77,
-          "reform": 6442.96
+          "baseline": 4995.93,
+          "reform": 5004.74
         },
         "benefits": {
-          "baseline": 26762.24,
-          "reform": 26696.93
+          "baseline": 28348.43,
+          "reform": 28246.33
         },
         "pension_contributions": {
-          "baseline": 496.05,
-          "reform": 497.73
+          "baseline": 344.44,
+          "reform": 345.83
         },
         "net_income": {
-          "baseline": 39118.52,
-          "reform": 39089.47
+          "baseline": 42661.68,
+          "reform": 42601.42
         },
         "real_net_income": {
-          "baseline": 37577.39,
-          "reform": 37659.1
+          "baseline": 39374.18,
+          "reform": 39451.39
         }
       }
     }
   },
   {
-    "year": 2028,
+    "year": 2030,
+    "country": "NORTHERN_IRELAND",
     "group": "Couple with children",
-    "weighted_n": 6755755,
+    "weighted_n": 222554,
     "decomposition": {
-      "market_income": 232.57,
-      "taxes": -67.55,
-      "benefits": -25.03,
-      "pension_contributions": -7.76,
-      "purchasing_power": 221.57,
-      "total": 353.8,
+      "market_income": 227.13,
+      "taxes": -64.3,
+      "benefits": -37.07,
+      "pension_contributions": -6.51,
+      "purchasing_power": 222.85,
+      "total": 342.1,
       "details": {
         "market_income": {
-          "baseline": 91960.05,
-          "reform": 92192.61
+          "baseline": 72885.08,
+          "reform": 73112.22
         },
         "taxes": {
-          "baseline": 27777.39,
-          "reform": 27844.94
+          "baseline": 17582.79,
+          "reform": 17647.09
         },
         "benefits": {
-          "baseline": 16174.56,
-          "reform": 16149.53
+          "baseline": 15465.33,
+          "reform": 15428.26
         },
         "pension_contributions": {
-          "baseline": 2293.6,
-          "reform": 2301.36
+          "baseline": 1825.12,
+          "reform": 1831.63
         },
         "net_income": {
-          "baseline": 78063.62,
-          "reform": 78195.84
+          "baseline": 68942.5,
+          "reform": 69061.75
         },
         "real_net_income": {
-          "baseline": 74988.2,
-          "reform": 75342.0
+          "baseline": 63629.81,
+          "reform": 63971.91
         }
       }
     }
   },
   {
-    "year": 2028,
+    "year": 2030,
+    "country": "NORTHERN_IRELAND",
     "group": "Single pensioner",
-    "weighted_n": 3921629,
+    "weighted_n": 19236,
     "decomposition": {
-      "market_income": -46.98,
-      "taxes": 12.16,
-      "benefits": -2.85,
-      "pension_contributions": -0.1,
-      "purchasing_power": 75.45,
-      "total": 37.68,
+      "market_income": -27.18,
+      "taxes": 4.17,
+      "benefits": -31.26,
+      "pension_contributions": -0.17,
+      "purchasing_power": 90.06,
+      "total": 35.62,
       "details": {
         "market_income": {
-          "baseline": 11000.69,
-          "reform": 10953.71
+          "baseline": 7493.19,
+          "reform": 7466.01
         },
         "taxes": {
-          "baseline": 6245.84,
-          "reform": 6233.68
+          "baseline": 3151.97,
+          "reform": 3147.79
         },
         "benefits": {
-          "baseline": 21940.14,
-          "reform": 21937.29
+          "baseline": 23672.08,
+          "reform": 23640.82
         },
         "pension_contributions": {
-          "baseline": 28.72,
-          "reform": 28.82
+          "baseline": 47.65,
+          "reform": 47.82
         },
         "net_income": {
-          "baseline": 26666.27,
-          "reform": 26628.5
+          "baseline": 27965.65,
+          "reform": 27911.21
         },
         "real_net_income": {
-          "baseline": 25615.72,
-          "reform": 25653.4
+          "baseline": 25810.63,
+          "reform": 25846.25
         }
       }
     }
   },
   {
-    "year": 2028,
+    "year": 2030,
+    "country": "NORTHERN_IRELAND",
     "group": "Pensioner couple",
-    "weighted_n": 4810280,
+    "weighted_n": 157088,
     "decomposition": {
-      "market_income": -102.72,
-      "taxes": 25.07,
-      "benefits": 17.71,
-      "pension_contributions": -1.62,
-      "purchasing_power": 153.9,
-      "total": 92.34,
+      "market_income": -85.6,
+      "taxes": 10.9,
+      "benefits": -10.47,
+      "pension_contributions": -1.2,
+      "purchasing_power": 180.85,
+      "total": 94.48,
       "details": {
         "market_income": {
-          "baseline": 35965.08,
-          "reform": 35862.36
+          "baseline": 21444.45,
+          "reform": 21358.86
         },
         "taxes": {
-          "baseline": 14527.92,
-          "reform": 14502.85
+          "baseline": 6667.96,
+          "reform": 6657.06
         },
         "benefits": {
-          "baseline": 33413.49,
-          "reform": 33431.2
+          "baseline": 41658.46,
+          "reform": 41647.99
         },
         "pension_contributions": {
-          "baseline": 478.33,
-          "reform": 479.95
+          "baseline": 302.01,
+          "reform": 303.21
         },
         "net_income": {
-          "baseline": 54372.31,
-          "reform": 54310.76
+          "baseline": 56132.94,
+          "reform": 56046.57
         },
         "real_net_income": {
-          "baseline": 52230.24,
-          "reform": 52322.58
+          "baseline": 51807.35,
+          "reform": 51901.83
         }
       }
     }
   },
   {
-    "year": 2028,
+    "year": 2030,
+    "country": "NORTHERN_IRELAND",
     "group": "All households",
-    "weighted_n": 32129186,
+    "weighted_n": 774984,
     "decomposition": {
-      "market_income": 96.01,
-      "taxes": -32.61,
-      "benefits": -13.45,
-      "pension_contributions": -4.93,
-      "purchasing_power": 157.74,
-      "total": 202.76,
+      "market_income": 125.09,
+      "taxes": -25.38,
+      "benefits": -31.98,
+      "pension_contributions": -3.87,
+      "purchasing_power": 190.31,
+      "total": 254.17,
       "details": {
         "market_income": {
-          "baseline": 58262.51,
-          "reform": 58358.51
+          "baseline": 51691.25,
+          "reform": 51816.34
         },
         "taxes": {
-          "baseline": 18654.86,
-          "reform": 18687.47
+          "baseline": 12974.95,
+          "reform": 13000.33
         },
         "benefits": {
-          "baseline": 17470.61,
-          "reform": 17457.16
+          "baseline": 21238.45,
+          "reform": 21206.48
         },
         "pension_contributions": {
-          "baseline": 1455.74,
-          "reform": 1460.67
+          "baseline": 1042.06,
+          "reform": 1045.94
         },
         "net_income": {
-          "baseline": 55622.51,
-          "reform": 55667.53
+          "baseline": 58912.69,
+          "reform": 58976.55
         },
         "real_net_income": {
-          "baseline": 53431.19,
-          "reform": 53633.95
-        }
-      }
-    }
-  },
-  {
-    "year": 2029,
-    "group": "Single adult, no children",
-    "weighted_n": 5553858,
-    "decomposition": {
-      "market_income": 43.05,
-      "taxes": -15.98,
-      "benefits": -25.49,
-      "pension_contributions": -1.93,
-      "purchasing_power": 93.43,
-      "total": 93.08,
-      "details": {
-        "market_income": {
-          "baseline": 25747.87,
-          "reform": 25790.92
-        },
-        "taxes": {
-          "baseline": 8857.69,
-          "reform": 8873.67
-        },
-        "benefits": {
-          "baseline": 12797.63,
-          "reform": 12772.14
-        },
-        "pension_contributions": {
-          "baseline": 734.94,
-          "reform": 736.87
-        },
-        "net_income": {
-          "baseline": 28952.87,
-          "reform": 28952.52
-        },
-        "real_net_income": {
-          "baseline": 27256.21,
-          "reform": 27349.29
-        }
-      }
-    }
-  },
-  {
-    "year": 2029,
-    "group": "Couple, no children",
-    "weighted_n": 8869591,
-    "decomposition": {
-      "market_income": 200.02,
-      "taxes": -86.17,
-      "benefits": -6.77,
-      "pension_contributions": -9.28,
-      "purchasing_power": 237.66,
-      "total": 335.46,
-      "details": {
-        "market_income": {
-          "baseline": 98413.5,
-          "reform": 98613.52
-        },
-        "taxes": {
-          "baseline": 29858.37,
-          "reform": 29944.55
-        },
-        "benefits": {
-          "baseline": 8363.42,
-          "reform": 8356.65
-        },
-        "pension_contributions": {
-          "baseline": 3363.48,
-          "reform": 3372.76
-        },
-        "net_income": {
-          "baseline": 73555.07,
-          "reform": 73652.86
-        },
-        "real_net_income": {
-          "baseline": 69244.68,
-          "reform": 69580.14
-        }
-      }
-    }
-  },
-  {
-    "year": 2029,
-    "group": "Single parent",
-    "weighted_n": 2059121,
-    "decomposition": {
-      "market_income": 47.66,
-      "taxes": -10.69,
-      "benefits": -71.69,
-      "pension_contributions": -1.67,
-      "purchasing_power": 128.04,
-      "total": 91.65,
-      "details": {
-        "market_income": {
-          "baseline": 19752.77,
-          "reform": 19800.44
-        },
-        "taxes": {
-          "baseline": 6718.93,
-          "reform": 6729.62
-        },
-        "benefits": {
-          "baseline": 27209.65,
-          "reform": 27137.96
-        },
-        "pension_contributions": {
-          "baseline": 529.6,
-          "reform": 531.27
-        },
-        "net_income": {
-          "baseline": 39713.89,
-          "reform": 39677.51
-        },
-        "real_net_income": {
-          "baseline": 37386.62,
-          "reform": 37478.27
-        }
-      }
-    }
-  },
-  {
-    "year": 2029,
-    "group": "Couple with children",
-    "weighted_n": 6785480,
-    "decomposition": {
-      "market_income": 229.41,
-      "taxes": -115.85,
-      "benefits": -25.85,
-      "pension_contributions": -7.7,
-      "purchasing_power": 255.99,
-      "total": 336.0,
-      "details": {
-        "market_income": {
-          "baseline": 94685.41,
-          "reform": 94914.82
-        },
-        "taxes": {
-          "baseline": 28811.67,
-          "reform": 28927.51
-        },
-        "benefits": {
-          "baseline": 16343.95,
-          "reform": 16318.09
-        },
-        "pension_contributions": {
-          "baseline": 2965.7,
-          "reform": 2973.4
-        },
-        "net_income": {
-          "baseline": 79251.99,
-          "reform": 79332.0
-        },
-        "real_net_income": {
-          "baseline": 74607.75,
-          "reform": 74943.75
-        }
-      }
-    }
-  },
-  {
-    "year": 2029,
-    "group": "Single pensioner",
-    "weighted_n": 3938884,
-    "decomposition": {
-      "market_income": -52.27,
-      "taxes": 14.11,
-      "benefits": -3.99,
-      "pension_contributions": -0.1,
-      "purchasing_power": 87.18,
-      "total": 44.93,
-      "details": {
-        "market_income": {
-          "baseline": 11314.78,
-          "reform": 11262.52
-        },
-        "taxes": {
-          "baseline": 6506.22,
-          "reform": 6492.11
-        },
-        "benefits": {
-          "baseline": 22280.32,
-          "reform": 22276.33
-        },
-        "pension_contributions": {
-          "baseline": 29.68,
-          "reform": 29.78
-        },
-        "net_income": {
-          "baseline": 27059.2,
-          "reform": 27016.95
-        },
-        "real_net_income": {
-          "baseline": 25473.51,
-          "reform": 25518.44
-        }
-      }
-    }
-  },
-  {
-    "year": 2029,
-    "group": "Pensioner couple",
-    "weighted_n": 4831445,
-    "decomposition": {
-      "market_income": -116.94,
-      "taxes": 30.01,
-      "benefits": 16.55,
-      "pension_contributions": -1.61,
-      "purchasing_power": 177.86,
-      "total": 105.87,
-      "details": {
-        "market_income": {
-          "baseline": 37156.28,
-          "reform": 37039.35
-        },
-        "taxes": {
-          "baseline": 15114.98,
-          "reform": 15084.97
-        },
-        "benefits": {
-          "baseline": 33853.08,
-          "reform": 33869.63
-        },
-        "pension_contributions": {
-          "baseline": 706.27,
-          "reform": 707.88
-        },
-        "net_income": {
-          "baseline": 55188.11,
-          "reform": 55116.13
-        },
-        "real_net_income": {
-          "baseline": 51954.04,
-          "reform": 52059.91
-        }
-      }
-    }
-  },
-  {
-    "year": 2029,
-    "group": "All households",
-    "weighted_n": 32270555,
-    "decomposition": {
-      "market_income": 90.58,
-      "taxes": -46.17,
-      "benefits": -14.84,
-      "pension_contributions": -4.89,
-      "purchasing_power": 182.28,
-      "total": 206.96,
-      "details": {
-        "market_income": {
-          "baseline": 59978.48,
-          "reform": 60069.06
-        },
-        "taxes": {
-          "baseline": 19388.52,
-          "reform": 19434.69
-        },
-        "benefits": {
-          "baseline": 17702.42,
-          "reform": 17687.57
-        },
-        "pension_contributions": {
-          "baseline": 1826.63,
-          "reform": 1831.51
-        },
-        "net_income": {
-          "baseline": 56465.76,
-          "reform": 56490.43
-        },
-        "real_net_income": {
-          "baseline": 53156.82,
-          "reform": 53363.78
-        }
-      }
-    }
-  },
-  {
-    "year": 2030,
-    "group": "Single adult, no children",
-    "weighted_n": 5578851,
-    "decomposition": {
-      "market_income": 57.89,
-      "taxes": -17.6,
-      "benefits": -37.5,
-      "pension_contributions": -2.44,
-      "purchasing_power": 95.04,
-      "total": 95.39,
-      "details": {
-        "market_income": {
-          "baseline": 26411.93,
-          "reform": 26469.82
-        },
-        "taxes": {
-          "baseline": 9243.81,
-          "reform": 9261.41
-        },
-        "benefits": {
-          "baseline": 13031.44,
-          "reform": 12993.95
-        },
-        "pension_contributions": {
-          "baseline": 748.55,
-          "reform": 751.0
-        },
-        "net_income": {
-          "baseline": 29451.01,
-          "reform": 29451.36
-        },
-        "real_net_income": {
-          "baseline": 27181.52,
-          "reform": 27276.91
-        }
-      }
-    }
-  },
-  {
-    "year": 2030,
-    "group": "Couple, no children",
-    "weighted_n": 8909504,
-    "decomposition": {
-      "market_income": 262.61,
-      "taxes": -186.24,
-      "benefits": -8.3,
-      "pension_contributions": -11.76,
-      "purchasing_power": 242.24,
-      "total": 298.55,
-      "details": {
-        "market_income": {
-          "baseline": 100923.28,
-          "reform": 101185.89
-        },
-        "taxes": {
-          "baseline": 30899.44,
-          "reform": 31085.67
-        },
-        "benefits": {
-          "baseline": 8416.82,
-          "reform": 8408.52
-        },
-        "pension_contributions": {
-          "baseline": 3429.01,
-          "reform": 3440.77
-        },
-        "net_income": {
-          "baseline": 75011.65,
-          "reform": 75067.97
-        },
-        "real_net_income": {
-          "baseline": 69231.27,
-          "reform": 69529.82
-        }
-      }
-    }
-  },
-  {
-    "year": 2030,
-    "group": "Single parent",
-    "weighted_n": 2068387,
-    "decomposition": {
-      "market_income": 60.47,
-      "taxes": -12.8,
-      "benefits": -97.61,
-      "pension_contributions": -2.11,
-      "purchasing_power": 129.57,
-      "total": 77.52,
-      "details": {
-        "market_income": {
-          "baseline": 20257.2,
-          "reform": 20317.67
-        },
-        "taxes": {
-          "baseline": 7028.92,
-          "reform": 7041.72
-        },
-        "benefits": {
-          "baseline": 27517.74,
-          "reform": 27420.13
-        },
-        "pension_contributions": {
-          "baseline": 541.36,
-          "reform": 543.48
-        },
-        "net_income": {
-          "baseline": 40204.66,
-          "reform": 40152.61
-        },
-        "real_net_income": {
-          "baseline": 37106.5,
-          "reform": 37184.02
-        }
-      }
-    }
-  },
-  {
-    "year": 2030,
-    "group": "Couple with children",
-    "weighted_n": 6816015,
-    "decomposition": {
-      "market_income": 293.08,
-      "taxes": -109.37,
-      "benefits": -35.16,
-      "pension_contributions": -9.76,
-      "purchasing_power": 260.35,
-      "total": 399.14,
-      "details": {
-        "market_income": {
-          "baseline": 97070.54,
-          "reform": 97363.62
-        },
-        "taxes": {
-          "baseline": 29959.25,
-          "reform": 30068.62
-        },
-        "benefits": {
-          "baseline": 16456.25,
-          "reform": 16421.08
-        },
-        "pension_contributions": {
-          "baseline": 3020.09,
-          "reform": 3029.85
-        },
-        "net_income": {
-          "baseline": 80547.45,
-          "reform": 80686.23
-        },
-        "real_net_income": {
-          "baseline": 74340.49,
-          "reform": 74739.63
-        }
-      }
-    }
-  },
-  {
-    "year": 2030,
-    "group": "Single pensioner",
-    "weighted_n": 3956609,
-    "decomposition": {
-      "market_income": -53.41,
-      "taxes": 14.12,
-      "benefits": -6.29,
-      "pension_contributions": -0.12,
-      "purchasing_power": 88.25,
-      "total": 42.55,
-      "details": {
-        "market_income": {
-          "baseline": 11650.93,
-          "reform": 11597.51
-        },
-        "taxes": {
-          "baseline": 6785.26,
-          "reform": 6771.14
-        },
-        "benefits": {
-          "baseline": 22560.81,
-          "reform": 22554.52
-        },
-        "pension_contributions": {
-          "baseline": 30.37,
-          "reform": 30.49
-        },
-        "net_income": {
-          "baseline": 27396.11,
-          "reform": 27350.41
-        },
-        "real_net_income": {
-          "baseline": 25284.97,
-          "reform": 25327.52
-        }
-      }
-    }
-  },
-  {
-    "year": 2030,
-    "group": "Pensioner couple",
-    "weighted_n": 4853187,
-    "decomposition": {
-      "market_income": -114.17,
-      "taxes": 30.9,
-      "benefits": 15.36,
-      "pension_contributions": -2.04,
-      "purchasing_power": 180.45,
-      "total": 110.5,
-      "details": {
-        "market_income": {
-          "baseline": 38211.17,
-          "reform": 38097.0
-        },
-        "taxes": {
-          "baseline": 15757.47,
-          "reform": 15726.57
-        },
-        "benefits": {
-          "baseline": 34255.91,
-          "reform": 34271.27
-        },
-        "pension_contributions": {
-          "baseline": 717.62,
-          "reform": 719.65
-        },
-        "net_income": {
-          "baseline": 55992.0,
-          "reform": 55922.05
-        },
-        "real_net_income": {
-          "baseline": 51677.27,
-          "reform": 51787.77
-        }
-      }
-    }
-  },
-  {
-    "year": 2030,
-    "group": "All households",
-    "weighted_n": 32415774,
-    "decomposition": {
-      "market_income": 125.03,
-      "taxes": -72.05,
-      "benefits": -21.61,
-      "pension_contributions": -6.2,
-      "purchasing_power": 185.39,
-      "total": 210.56,
-      "details": {
-        "market_income": {
-          "baseline": 61525.7,
-          "reform": 61650.73
-        },
-        "taxes": {
-          "baseline": 20137.43,
-          "reform": 20209.48
-        },
-        "benefits": {
-          "baseline": 17897.63,
-          "reform": 17876.02
-        },
-        "pension_contributions": {
-          "baseline": 1861.14,
-          "reform": 1867.34
-        },
-        "net_income": {
-          "baseline": 57424.75,
-          "reform": 57449.92
-        },
-        "real_net_income": {
-          "baseline": 52999.62,
-          "reform": 53210.18
+          "baseline": 54372.9,
+          "reform": 54627.07
         }
       }
     }

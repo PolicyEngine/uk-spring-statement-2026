@@ -201,7 +201,7 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
         Net change by household type
       </h3>
       <p className="chart-subtitle">
-        Net change in mean household income for {(row.weighted_n / 1e6).toFixed(2)}m {selectedGroup === "All households" ? "households" : `${selectedGroup.toLowerCase()} households`}, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
+        Net change in mean household income{selectedGroup !== "All households" ? ` for ${selectedGroup.toLowerCase()} households` : ""}, comparing pre- and post-Spring Statement OBR forecasts (&pound;/year)
       </p>
       <div style={{ marginBottom: 16 }}>
         <select
@@ -380,7 +380,7 @@ function HouseholdDecompositionTable({ decompositionData, selectedYear }) {
   );
 }
 
-export default function HouseholdArchetypes({ selectedYear }) {
+export default function HouseholdArchetypes({ selectedYear, selectedCountry = "UK" }) {
   const [allDecomposition, setAllDecomposition] = useState(null);
 
   useEffect(() => {
@@ -392,19 +392,26 @@ export default function HouseholdArchetypes({ selectedYear }) {
 
   if (!allDecomposition) return null;
 
-  const hasYear = allDecomposition.some((d) => d.year === selectedYear);
+  // Filter by country
+  const filtered = allDecomposition.filter((d) => {
+    // Support old data format without country field
+    if (!d.country) return selectedCountry === "UK";
+    return d.country === selectedCountry;
+  });
+
+  const hasYear = filtered.some((d) => d.year === selectedYear);
   if (!hasYear) return null;
 
   return (
     <div className="mt-8">
       <HouseholdDecompositionTable
-        decompositionData={allDecomposition}
+        decompositionData={filtered}
         selectedYear={selectedYear}
       />
 
       <div className="mt-8">
         <ChangeBarChart
-          decompositionData={allDecomposition}
+          decompositionData={filtered}
           selectedYear={selectedYear}
         />
       </div>

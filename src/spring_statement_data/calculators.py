@@ -23,6 +23,8 @@ DECILE_LABELS = [
     "6th", "7th", "8th", "9th", "10th",
 ]
 
+# Countries available for filtering
+COUNTRIES = ["UK", "ENGLAND", "SCOTLAND", "WALES", "NORTHERN_IRELAND"]
 
 _cached_sims = None
 
@@ -79,6 +81,17 @@ def _create_simulations():
     return baseline, reformed
 
 
+def _get_country_mask(sim, year: int, country: str):
+    """Return a boolean mask for households in the given country.
+
+    If country is "UK" or None, returns None (no filtering).
+    """
+    if not country or country == "UK":
+        return None
+    country_arr = np.array(sim.calculate("country", year))
+    return country_arr == country
+
+
 class DistributionalImpactCalculator:
     """Calculate impact by income decile.
 
@@ -88,7 +101,7 @@ class DistributionalImpactCalculator:
     - Uses baseline weights for reform MicroSeries
     """
 
-    def calculate(self, year: int) -> list[dict]:
+    def calculate(self, year: int, country: str = "UK") -> list[dict]:
         baseline, reformed = _create_simulations()
         deflator = get_real_deflator(year)
 
@@ -106,6 +119,11 @@ class DistributionalImpactCalculator:
         )
 
         valid = np.array(income_decile) >= 0
+        # Apply country filter
+        country_mask = _get_country_mask(baseline, year, country)
+        if country_mask is not None:
+            valid = valid & country_mask
+
         baseline_income = baseline_income[valid]
         reform_income_nominal = reform_income_nominal[valid]
         reform_income_real = reform_income_real[valid]
@@ -131,6 +149,7 @@ class DistributionalImpactCalculator:
 
             results.append({
                 "year": year,
+                "country": country,
                 "decile": DECILE_LABELS[decile - 1],
                 "absolute_change_nominal": round(float(avg_change_nom), 2),
                 "absolute_change_real": round(float(avg_change_real), 2),
@@ -149,6 +168,7 @@ class DistributionalImpactCalculator:
         )
         results.append({
             "year": year,
+            "country": country,
             "decile": "All",
             "absolute_change_nominal": round(float(income_change_nominal.mean()), 2),
             "absolute_change_real": round(float(income_change_real.mean()), 2),
@@ -166,11 +186,19 @@ class MetricsCalculator:
     Poverty rates are binary variables — no nominal/real distinction needed.
     """
 
-    def calculate(self, year: int) -> list[dict]:
+    def calculate(self, year: int, country: str = "UK") -> list[dict]:
         baseline, reformed = _create_simulations()
         is_child = np.array(
             baseline.calculate("is_child", year, map_to="person")
         )
+
+        # Country filter at person level
+        country_mask = None
+        if country and country != "UK":
+            person_country = np.array(
+                baseline.calculate("country", year, map_to="person")
+            )
+            country_mask = person_country == country
 
         results = []
 
@@ -178,16 +206,25 @@ class MetricsCalculator:
             reformed_aligned = mdf.MicroSeries(
                 reformed_ms.values, weights=baseline_ms.weights
             )
-            if child_filter is not None:
-                b_rate = baseline_ms[child_filter].mean() * 100
-                r_rate = reformed_aligned[child_filter].mean() * 100
+            # Combine filters
+            filt = None
+            if country_mask is not None and child_filter is not None:
+                filt = country_mask & child_filter
+            elif country_mask is not None:
+                filt = country_mask
+            elif child_filter is not None:
+                filt = child_filter
+
+            if filt is not None:
+                b_rate = baseline_ms[filt].mean() * 100
+                r_rate = reformed_aligned[filt].mean() * 100
             else:
                 b_rate = baseline_ms.mean() * 100
                 r_rate = reformed_aligned.mean() * 100
 
-            results.append({"year": year, "metric": f"{prefix}_baseline", "value": round(float(b_rate), 6)})
-            results.append({"year": year, "metric": f"{prefix}_reform", "value": round(float(r_rate), 6)})
-            results.append({"year": year, "metric": f"{prefix}_change", "value": round(float(r_rate - b_rate), 6)})
+            results.append({"year": year, "country": country, "metric": f"{prefix}_baseline", "value": round(float(b_rate), 6)})
+            results.append({"year": year, "country": country, "metric": f"{prefix}_reform", "value": round(float(r_rate), 6)})
+            results.append({"year": year, "country": country, "metric": f"{prefix}_change", "value": round(float(r_rate - b_rate), 6)})
 
         for housing_cost in ["bhc", "ahc"]:
             for poverty_type in ["absolute", "relative"]:
@@ -224,18 +261,25 @@ class InequalityCalculator:
     - Restores weights for share calculation
     """
 
-    def calculate(self, year: int) -> list[dict]:
+    def calculate(self, year: int, country: str = "UK") -> list[dict]:
         baseline, reformed = _create_simulations()
         deflator = get_real_deflator(year)
+        country_mask = _get_country_mask(baseline, year, country)
         results = []
 
         # Compute baseline once (nominal: equiv_household_net_income)
         b_income = baseline.calculate("equiv_household_net_income", year)
-        b_vals = b_income.values.copy()
+        b_vals = np.array(b_income.values.copy())
         b_vals[b_vals < 0] = 0
-        b_hh_count = baseline.calculate("household_count_people", year)
-        b_original_weights = b_income.weights.copy()
-        b_person_weights = b_original_weights * np.array(b_hh_count)
+        b_hh_count = np.array(baseline.calculate("household_count_people", year))
+        b_original_weights = np.array(b_income.weights)
+        b_person_weights = b_original_weights * b_hh_count
+
+        # Apply country filter
+        if country_mask is not None:
+            b_vals = b_vals[country_mask]
+            b_original_weights = b_original_weights[country_mask]
+            b_person_weights = b_person_weights[country_mask]
 
         b_income_ms = mdf.MicroSeries(b_vals, weights=b_person_weights)
         b_gini = b_income_ms.gini()
@@ -248,15 +292,23 @@ class InequalityCalculator:
 
         # Reform nominal: equiv_household_net_income
         r_income_nom = reformed.calculate("equiv_household_net_income", year)
-        r_hh_count = reformed.calculate("household_count_people", year)
-        r_original_weights = r_income_nom.weights.copy()
-        r_person_weights = r_original_weights * np.array(r_hh_count)
+        r_hh_count = np.array(reformed.calculate("household_count_people", year))
+        r_original_weights = np.array(r_income_nom.weights)
+        r_person_weights = r_original_weights * r_hh_count
 
         # Reform real: deflate equiv_household_net_income to baseline prices
-        r_real_equiv_vals = r_income_nom.values.copy() * deflator
+        r_real_equiv_vals = np.array(r_income_nom.values) * deflator
+
+        # Apply country filter to reform
+        r_nom_vals = np.array(r_income_nom.values)
+        if country_mask is not None:
+            r_nom_vals = r_nom_vals[country_mask]
+            r_real_equiv_vals = r_real_equiv_vals[country_mask]
+            r_original_weights = r_original_weights[country_mask]
+            r_person_weights = r_person_weights[country_mask]
 
         reform_results = {}
-        for mode, r_vals_raw in [("nominal", r_income_nom.values.copy()), ("real", r_real_equiv_vals.copy())]:
+        for mode, r_vals_raw in [("nominal", r_nom_vals.copy()), ("real", r_real_equiv_vals.copy())]:
             r_vals = r_vals_raw.copy()
             r_vals[r_vals < 0] = 0
 
@@ -280,6 +332,7 @@ class InequalityCalculator:
             baseline_val = {"gini": b_gini, "top_10_pct_share": b_top_10_share, "top_1_pct_share": b_top_1_share}[metric]
             merged.append({
                 "year": year,
+                "country": country,
                 "metric": metric,
                 "baseline": float(baseline_val),
                 "reform_nominal": float(reform_results["nominal"][metric]),
@@ -294,7 +347,7 @@ class WinnersLosersCalculator:
 
     THRESHOLD = 0.50
 
-    def calculate(self, year: int) -> list[dict]:
+    def calculate(self, year: int, country: str = "UK") -> list[dict]:
         baseline, reformed = _create_simulations()
         deflator = get_real_deflator(year)
 
@@ -311,6 +364,13 @@ class WinnersLosersCalculator:
         )
         change = reform_income_real - baseline_income
         change_arr = np.array(change)
+
+        # Apply country filter
+        country_mask = _get_country_mask(baseline, year, country)
+        if country_mask is not None:
+            weights = weights[country_mask]
+            decile_arr = decile_arr[country_mask]
+            change_arr = change_arr[country_mask]
 
         results = []
 
@@ -329,6 +389,7 @@ class WinnersLosersCalculator:
 
             results.append({
                 "year": year,
+                "country": country,
                 "decile": DECILE_LABELS[decile - 1],
                 "pct_gaining": round(gaining, 2),
                 "pct_losing": round(losing, 2),
@@ -342,6 +403,7 @@ class WinnersLosersCalculator:
 
         results.append({
             "year": year,
+            "country": country,
             "decile": "All",
             "pct_gaining": round(gaining, 2),
             "pct_losing": round(losing, 2),
