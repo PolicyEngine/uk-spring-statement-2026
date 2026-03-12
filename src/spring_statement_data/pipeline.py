@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 
 from .calculators import (
+    COUNTRIES,
     DistributionalImpactCalculator,
     InequalityCalculator,
     MetricsCalculator,
@@ -63,21 +64,22 @@ def generate_all_data(
     all_inequality = []
 
     for year in years:
-        print(f"\nYear {year}...")
+        for country in COUNTRIES:
+            print(f"\nYear {year}, country {country}...")
 
-        distributional = distributional_calc.calculate(year)
-        all_distributional.extend(distributional)
+            distributional = distributional_calc.calculate(year, country=country)
+            all_distributional.extend(distributional)
 
-        metrics = metrics_calc.calculate(year)
-        all_metrics.extend(metrics)
+            metrics = metrics_calc.calculate(year, country=country)
+            all_metrics.extend(metrics)
 
-        winners_losers = winners_losers_calc.calculate(year)
-        all_winners_losers.extend(winners_losers)
+            winners_losers = winners_losers_calc.calculate(year, country=country)
+            all_winners_losers.extend(winners_losers)
 
-        inequality = inequality_calc.calculate(year)
-        all_inequality.extend(inequality)
+            inequality = inequality_calc.calculate(year, country=country)
+            all_inequality.extend(inequality)
 
-        print(f"  Done: {year}")
+            print(f"  Done: {year} / {country}")
 
     # Build DataFrames
     results = {
@@ -134,11 +136,12 @@ def _classify_household(sim, year):
 
 
 def _generate_household_archetypes(output_dir: Path, years: list[int] = None):
-    """Generate household decomposition JSON for all years.
+    """Generate household decomposition JSON for all years and countries.
 
-    Output: household_decomposition.json — decomposition per group per year.
+    Output: household_decomposition.json — decomposition per group per year per country.
     """
     import microdf as mdf
+    from .calculators import _get_country_mask
 
     if years is None:
         years = DEFAULT_YEARS
@@ -148,18 +151,15 @@ def _generate_household_archetypes(output_dir: Path, years: list[int] = None):
     all_decomposition = []
 
     for year in years:
-        print(f"  Household archetypes: {year}...")
+        # Pre-compute all household-level arrays once per year
         groups = _classify_household(baseline, year)
         baseline_hnet = baseline.calculate("household_net_income", year)
         reform_hnet_raw = reformed.calculate("household_net_income", year)
-
-        # Align reform weights to baseline
         reform_hnet_nominal = mdf.MicroSeries(
             reform_hnet_raw.values, weights=baseline_hnet.weights
         )
-        weights = np.array(baseline_hnet.weights)
+        all_weights = np.array(baseline_hnet.weights)
 
-        # Use PE's own aggregate variables so components sum to net income
         market_b = np.array(baseline.calculate("household_market_income", year))
         market_r = np.array(reformed.calculate("household_market_income", year))
         taxes_b = np.array(baseline.calculate("household_tax", year))
@@ -173,72 +173,95 @@ def _generate_household_archetypes(output_dir: Path, years: list[int] = None):
             reformed.calculate("pension_contributions", year, map_to="household")
         )
 
-        for group in _HH_GROUPS:
-            mask = groups == group
-            if not mask.any():
-                continue
+        for country in COUNTRIES:
+            print(f"  Household archetypes: {year} / {country}...")
+            country_mask = _get_country_mask(baseline, year, country)
 
-            w = weights[mask]
-            weighted_n = float(w.sum())
+            # Apply country filter
+            if country_mask is not None:
+                idx = country_mask
+                c_groups = groups[idx]
+                c_weights = all_weights[idx]
+                c_baseline_hnet = np.array(baseline_hnet)[idx]
+                c_reform_hnet = np.array(reform_hnet_nominal)[idx]
+                c_market_b = market_b[idx]
+                c_market_r = market_r[idx]
+                c_taxes_b = taxes_b[idx]
+                c_taxes_r = taxes_r[idx]
+                c_benefits_b = benefits_b[idx]
+                c_benefits_r = benefits_r[idx]
+                c_pc_b = pension_contrib_b[idx]
+                c_pc_r = pension_contrib_r[idx]
+            else:
+                c_groups = groups
+                c_weights = all_weights
+                c_baseline_hnet = np.array(baseline_hnet)
+                c_reform_hnet = np.array(reform_hnet_nominal)
+                c_market_b = market_b
+                c_market_r = market_r
+                c_taxes_b = taxes_b
+                c_taxes_r = taxes_r
+                c_benefits_b = benefits_b
+                c_benefits_r = benefits_r
+                c_pc_b = pension_contrib_b
+                c_pc_r = pension_contrib_r
 
-            # Weighted means
-            def _wmean(arr):
-                return float(np.average(arr[mask], weights=w))
+            for group in _HH_GROUPS:
+                mask = c_groups == group
+                if not mask.any():
+                    continue
 
-            mean_b = _wmean(np.array(baseline_hnet))
-            mean_r_nom = _wmean(np.array(reform_hnet_nominal))
-            mean_market_b = _wmean(market_b)
-            mean_market_r = _wmean(market_r)
-            mean_taxes_b = _wmean(taxes_b)
-            mean_taxes_r = _wmean(taxes_r)
-            mean_benefits_b = _wmean(benefits_b)
-            mean_benefits_r = _wmean(benefits_r)
-            mean_pc_b = _wmean(pension_contrib_b)
-            mean_pc_r = _wmean(pension_contrib_r)
+                w = c_weights[mask]
+                weighted_n = float(w.sum())
 
-            decomposition = _compute_decomposition(
-                mean_b,
-                mean_r_nom,
-                mean_taxes_b,
-                mean_taxes_r,
-                mean_benefits_b,
-                mean_benefits_r,
-                mean_market_b,
-                mean_market_r,
-                year,
-                pension_contrib_b=mean_pc_b,
-                pension_contrib_r=mean_pc_r,
-            )
+                def _wmean(arr, _mask=mask, _w=w):
+                    return float(np.average(arr[_mask], weights=_w))
+
+                decomposition = _compute_decomposition(
+                    _wmean(c_baseline_hnet),
+                    _wmean(c_reform_hnet),
+                    _wmean(c_taxes_b),
+                    _wmean(c_taxes_r),
+                    _wmean(c_benefits_b),
+                    _wmean(c_benefits_r),
+                    _wmean(c_market_b),
+                    _wmean(c_market_r),
+                    year,
+                    pension_contrib_b=_wmean(c_pc_b),
+                    pension_contrib_r=_wmean(c_pc_r),
+                )
+
+                all_decomposition.append({
+                    "year": year,
+                    "country": country,
+                    "group": group,
+                    "weighted_n": round(weighted_n),
+                    "decomposition": decomposition,
+                })
+
+            # "All households" aggregate for this country
+            def _wmean_all(arr, _w=c_weights):
+                return float(np.average(arr, weights=_w))
 
             all_decomposition.append({
                 "year": year,
-                "group": group,
-                "weighted_n": round(weighted_n),
-                "decomposition": decomposition,
+                "country": country,
+                "group": "All households",
+                "weighted_n": round(float(c_weights.sum())),
+                "decomposition": _compute_decomposition(
+                    _wmean_all(c_baseline_hnet),
+                    _wmean_all(c_reform_hnet),
+                    _wmean_all(c_taxes_b),
+                    _wmean_all(c_taxes_r),
+                    _wmean_all(c_benefits_b),
+                    _wmean_all(c_benefits_r),
+                    _wmean_all(c_market_b),
+                    _wmean_all(c_market_r),
+                    year,
+                    pension_contrib_b=_wmean_all(c_pc_b),
+                    pension_contrib_r=_wmean_all(c_pc_r),
+                ),
             })
-
-        # "All households" aggregate
-        def _wmean_all(arr):
-            return float(np.average(arr, weights=weights))
-
-        all_decomposition.append({
-            "year": year,
-            "group": "All households",
-            "weighted_n": round(float(weights.sum())),
-            "decomposition": _compute_decomposition(
-                _wmean_all(np.array(baseline_hnet)),
-                _wmean_all(np.array(reform_hnet_nominal)),
-                _wmean_all(taxes_b),
-                _wmean_all(taxes_r),
-                _wmean_all(benefits_b),
-                _wmean_all(benefits_r),
-                _wmean_all(market_b),
-                _wmean_all(market_r),
-                year,
-                pension_contrib_b=_wmean_all(pension_contrib_b),
-                pension_contrib_r=_wmean_all(pension_contrib_r),
-            ),
-        })
 
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / "household_decomposition.json", "w") as f:

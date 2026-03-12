@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import {
   ComposedChart,
   Bar,
@@ -19,6 +19,80 @@ import { colors } from "@policyengine/design-system/tokens/colors";
 
 
 const YEARS = [2026, 2027, 2028, 2029, 2030];
+
+const YEAR_OPTIONS = YEARS.map((y) => ({
+  value: y,
+  label: `${y}-${(y + 1).toString().slice(-2)}`,
+}));
+
+const COUNTRY_OPTIONS = [
+  { value: "UK", label: "UK" },
+  { value: "ENGLAND", label: "England" },
+  { value: "SCOTLAND", label: "Scotland" },
+  { value: "WALES", label: "Wales" },
+  { value: "NORTHERN_IRELAND", label: "Northern Ireland" },
+];
+
+function ExpandableSelector({ options, selected, onSelect }) {
+  const [expanded, setExpanded] = useState(false);
+  const selectedOption = options.find((o) => o.value === selected);
+  const ref = useRef(null);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!expanded) return;
+    function handleClick(e) {
+      if (ref.current && !ref.current.contains(e.target)) setExpanded(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [expanded]);
+
+  return (
+    <div ref={ref} style={{ position: "relative" }}>
+      <button
+        className="year-selector-trigger"
+        onClick={() => setExpanded(!expanded)}
+      >
+        {selectedOption?.label}
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{
+            marginLeft: 8,
+            opacity: 0.45,
+            transition: "transform 0.2s",
+            transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+          }}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      {expanded && (
+        <div className="year-selector-dropdown">
+          {options.map((opt) => (
+            <button
+              key={opt.value}
+              className={selected === opt.value ? "active" : ""}
+              onClick={() => {
+                onSelect(opt.value);
+                setExpanded(false);
+              }}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 const DECILE_ORDER = [
   "1st", "2nd", "3rd", "4th", "5th",
@@ -192,6 +266,7 @@ function WinnersLosersChart({ data, year }) {
 
 export default function PopulationTab({ data }) {
   const [selectedYear, setSelectedYear] = useState(2029);
+  const [selectedCountry, setSelectedCountry] = useState("UK");
   const [inequalityData, setInequalityData] = useState(null);
 
   useEffect(() => {
@@ -202,6 +277,33 @@ export default function PopulationTab({ data }) {
       })
       .catch(() => null);
   }, []);
+
+  // Filter data by selected country
+  const filteredData = useMemo(() => {
+    if (!data) return data;
+    const filterByCountry = (arr) => {
+      if (!arr) return arr;
+      // If data has no country column (old format), show all for UK only
+      if (arr.length > 0 && !arr[0].country) {
+        return selectedCountry === "UK" ? arr : [];
+      }
+      return arr.filter((d) => d.country === selectedCountry);
+    };
+    return {
+      ...data,
+      distributional: filterByCountry(data.distributional),
+      metrics: filterByCountry(data.metrics),
+      winnersLosers: filterByCountry(data.winnersLosers),
+    };
+  }, [data, selectedCountry]);
+
+  const filteredInequality = useMemo(() => {
+    if (!inequalityData) return inequalityData;
+    if (inequalityData.length > 0 && !inequalityData[0].country) {
+      return selectedCountry === "UK" ? inequalityData : [];
+    }
+    return inequalityData.filter((d) => d.country === selectedCountry);
+  }, [inequalityData, selectedCountry]);
 
   const hasWinnersLosers =
     data?.winnersLosers && data.winnersLosers.length > 0;
@@ -220,38 +322,39 @@ export default function PopulationTab({ data }) {
 
   return (
     <div style={{ animation: "fadeIn 0.3s ease-out" }}>
-      <div className="year-selector mb-6">
-        {YEARS.map((year) => (
-          <button
-            key={year}
-            className={selectedYear === year ? "active" : ""}
-            onClick={() => setSelectedYear(year)}
-          >
-            {year}-{(year + 1).toString().slice(-2)}
-          </button>
-        ))}
+      <div className="flex items-center gap-3 mb-6 flex-wrap">
+        <ExpandableSelector
+          options={YEAR_OPTIONS}
+          selected={selectedYear}
+          onSelect={setSelectedYear}
+        />
+        <ExpandableSelector
+          options={COUNTRY_OPTIONS}
+          selected={selectedCountry}
+          onSelect={setSelectedCountry}
+        />
       </div>
 
       <MetricsBar
-        metrics={data.metrics}
-        winnersLosers={data.winnersLosers}
-        distributional={data.distributional}
+        metrics={filteredData.metrics}
+        winnersLosers={filteredData.winnersLosers}
+        distributional={filteredData.distributional}
         year={selectedYear}
       />
 
-      <HouseholdArchetypes selectedYear={selectedYear} />
+      <HouseholdArchetypes selectedYear={selectedYear} selectedCountry={selectedCountry} />
 
       <div className="mt-8">
-        {hasWinnersLosers && (
+        {filteredData.winnersLosers && filteredData.winnersLosers.length > 0 && (
           <WinnersLosersChart
-            data={data.winnersLosers}
+            data={filteredData.winnersLosers}
             year={selectedYear}
           />
         )}
       </div>
 
       <InequalityTable
-        data={inequalityData}
+        data={filteredInequality}
         selectedYear={selectedYear}
       />
     </div>
