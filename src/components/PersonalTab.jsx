@@ -316,7 +316,7 @@ export default function PersonalTab() {
               .html(
                 `<div class="tooltip-label">${d.label}</div>` +
                 `<div class="tooltip-breakdown">${rows}</div>` +
-                `<div style="margin-top:6px;padding-top:6px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;gap:16px;font-weight:600"><span>Net</span><span style="color:${totalColor}">${totalSign}\u00A3${Math.round(Math.abs(d.impact))}/yr</span></div>`
+                `<div style="margin-top:6px;padding-top:6px;border-top:1px solid ${COLORS.border};display:flex;justify-content:space-between;gap:16px;font-weight:600"><span>Net</span><span style="color:${totalColor}">${totalSign}\u00A3${Math.round(Math.abs(d.impact))}/yr</span></div>`
               );
           })
           .on("mousemove", (event) => {
@@ -679,8 +679,8 @@ export default function PersonalTab() {
               {draftStudentLoan !== "NO_STUDENT_LOAN" && draftHasPostgrad && (
                 <div className="student-loan-limitation-note">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M8 1L1 14h14L8 1z" stroke="#d97706" strokeWidth="1.5" fill="none" />
-                    <path d="M8 6v3M8 11v1" stroke="#d97706" strokeWidth="1.5" strokeLinecap="round" />
+                    <path d="M8 1L1 14h14L8 1z" stroke={colors.text.warning} strokeWidth="1.5" fill="none" />
+                    <path d="M8 6v3M8 11v1" stroke={colors.text.warning} strokeWidth="1.5" strokeLinecap="round" />
                   </svg>
                   <span>
                     PolicyEngine currently models only one loan plan at a time. Your undergrad plan ({STUDENT_LOAN_PLANS.find((p) => p.value === draftStudentLoan)?.label}) will be used for the calculation.
