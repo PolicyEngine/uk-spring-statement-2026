@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-import { colors } from "@policyengine/design-system/tokens/colors";
+import { colors } from "../../lib/legacyTokens";
 
 const DECOMP_META = {
   market_income: { label: "Market income", color: colors.blue[600], sign: 1 },

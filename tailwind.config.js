@@ -1,6 +1,6 @@
 /**
  * Tailwind CSS config with PolicyEngine design tokens.
- * Colors sourced from @policyengine/design-system — keep in sync.
+ * Colors sourced from @policyengine/ui-kit — keep in sync.
  * @type {import('tailwindcss').Config}
  */
 module.exports = {

@@ -15,7 +15,7 @@ import {
 import InequalityTable from "./InequalityTable";
 import HouseholdArchetypes from "./HouseholdArchetypes";
 import parseCSV from "../../lib/parseCSV";
-import { colors } from "@policyengine/design-system/tokens/colors";
+import { colors } from "../../lib/legacyTokens";
 
 
 const YEARS = [2026, 2027, 2028, 2029, 2030];

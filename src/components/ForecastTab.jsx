@@ -12,8 +12,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import ForecastTable from "./ForecastTable";
-import { colors } from "@policyengine/design-system/tokens/colors";
-import { chartColors } from "@policyengine/design-system/charts";
+import { colors } from "@policyengine/ui-kit/legacy/tokens/colors";
+import { chartColors } from "@policyengine/ui-kit/legacy/charts";
 
 const SERIES_CONFIG = {
   cpi_inflation: { title: "CPI inflation", unit: "%" },
