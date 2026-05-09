@@ -11,7 +11,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { colors } from "@policyengine/design-system/tokens/colors";
+import { colors } from "@policyengine/ui-kit/legacy/tokens/colors";
 
 
 const OUTCOME_COLORS = {
