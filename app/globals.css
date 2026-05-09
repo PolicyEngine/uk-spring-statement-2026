@@ -1,6 +1,36 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@policyengine/ui-kit/theme.css";
+
+/* Tailwind v4 theme tokens — preserved from the legacy `tailwind.config.js`
+   theme.extend block so utility classes (font-sans, gray-*, pe-*) keep the
+   PolicyEngine palette and Inter font. */
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
+
+  --color-pe-50: #e6fffa;
+  --color-pe-100: #b2f5ea;
+  --color-pe-200: #81e6d9;
+  --color-pe-300: #4fd1c5;
+  --color-pe-400: #38b2ac;
+  --color-pe-500: #319795;
+  --color-pe-600: #2c7a7b;
+  --color-pe-700: #285e61;
+  --color-pe-800: #234e52;
+  --color-pe-900: #1d4044;
+
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f2f4f7;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #344054;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #101828;
+}
 
 /* PolicyEngine design system - CSS variables for @layer component styles */
 :root {
