@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -19,20 +21,22 @@
   },
   "homepage": "https://github.com/PolicyEngine/uk-spring-statement-2026#readme",
   "dependencies": {
+    "@policyengine/ui-kit": "^0.9.0",
     "d3": "^7.9.0",
+    "next": "^16.2.6",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-is": "^19.2.4",
     "recharts": "^3.7.0"
   },
   "devDependencies": {
-    "@policyengine/ui-kit": "^0.8.0",
+    "@tailwindcss/postcss": "^4.2.4",
     "@types/node": "25.3.3",
     "@types/react": "19.2.14",
-    "autoprefixer": "^10.4.27",
-    "next": "^14.2",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^3.4",
+    "eslint": "^9",
+    "eslint-config-next": "^16",
+    "postcss": "^8.5.13",
+    "tailwindcss": "^4.2.4",
     "typescript": "5.9.3"
   }
 }

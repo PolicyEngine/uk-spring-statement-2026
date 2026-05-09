@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import * as d3 from "d3";
-import { colors } from "../../lib/legacyTokens";
+import { colors } from "@policyengine/ui-kit/legacy/tokens/colors";
 import { chartColors } from "@policyengine/ui-kit/legacy/charts";
 
 const API_URL =
