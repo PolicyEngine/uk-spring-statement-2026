@@ -7,7 +7,6 @@ const nextConfig = {
   ...(basePath ? { basePath } : {}),
   env: { NEXT_PUBLIC_BASE_PATH: basePath },
   output: "export",
-  trailingSlash: true,
   assetPrefix: basePath || undefined,
   images: { unoptimized: true },
   // Pin the workspace root so Turbopack does not pick up a stray lockfile from

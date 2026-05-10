@@ -1,4 +1,5 @@
 import "./globals.css";
+import PolicyEngineHeader from "./PolicyEngineHeader";
 
 export const metadata = {
   title: "Spring Statement 2026 | PolicyEngine",
@@ -21,7 +22,10 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <PolicyEngineHeader />
+        {children}
+      </body>
     </html>
   );
 }
