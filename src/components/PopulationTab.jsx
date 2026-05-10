@@ -270,7 +270,7 @@ export default function PopulationTab({ data }) {
   const [inequalityData, setInequalityData] = useState(null);
 
   useEffect(() => {
-    fetch("/data/inequality.csv")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/data/inequality.csv`)
       .then((r) => (r.ok ? r.text() : null))
       .then((text) => {
         if (text) setInequalityData(parseCSV(text));

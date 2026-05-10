@@ -384,7 +384,7 @@ export default function HouseholdArchetypes({ selectedYear, selectedCountry = "U
   const [allDecomposition, setAllDecomposition] = useState(null);
 
   useEffect(() => {
-    fetch("/data/household_decomposition.json")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/data/household_decomposition.json`)
       .then((r) => (r.ok ? r.json() : null))
       .catch(() => null)
       .then(setAllDecomposition);
