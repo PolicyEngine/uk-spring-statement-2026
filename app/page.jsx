@@ -25,19 +25,19 @@ function Dashboard() {
   // Load data on mount
   useEffect(() => {
     Promise.all([
-      fetch("/data/economic_forecast.json").then((r) => {
+      fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/data/economic_forecast.json`).then((r) => {
         if (!r.ok) throw new Error("economic_forecast.json not found");
         return r.json();
       }),
-      fetch("/data/distributional_impact.csv").then((r) => {
+      fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/data/distributional_impact.csv`).then((r) => {
         if (!r.ok) throw new Error("distributional_impact.csv not found");
         return r.text();
       }),
-      fetch("/data/metrics.csv").then((r) => {
+      fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/data/metrics.csv`).then((r) => {
         if (!r.ok) throw new Error("metrics.csv not found");
         return r.text();
       }),
-      fetch("/data/winners_losers.csv")
+      fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/data/winners_losers.csv`)
         .then((r) => {
           if (!r.ok) return null;
           return r.text();
