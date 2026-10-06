@@ -11,8 +11,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { colors } from "@policyengine/design-system/tokens/colors";
-import { chartColors } from "@policyengine/design-system/charts";
+import { colors, chartColors } from "../themeTokens";
 
 
 const OUTCOME_COLORS = {

@@ -1,36 +1,47 @@
 @import "tailwindcss";
-@import "@policyengine/design-system/tokens.css";
+@import "@policyengine/ui-kit/theme.css";
 
-@theme {
-  --font-sans: var(--pe-font-family-primary);
-  --font-mono: var(--pe-font-family-mono);
-
-  --color-pe-50: var(--pe-color-primary-50);
-  --color-pe-100: var(--pe-color-primary-100);
-  --color-pe-200: var(--pe-color-primary-200);
-  --color-pe-300: var(--pe-color-primary-300);
-  --color-pe-400: var(--pe-color-primary-400);
-  --color-pe-500: var(--pe-color-primary-500);
-  --color-pe-600: var(--pe-color-primary-600);
-  --color-pe-700: var(--pe-color-primary-700);
-  --color-pe-800: var(--pe-color-primary-800);
-  --color-pe-900: var(--pe-color-primary-900);
-
-  --color-gray-50: var(--pe-color-gray-50);
-  --color-gray-100: var(--pe-color-gray-100);
-  --color-gray-200: var(--pe-color-gray-200);
-  --color-gray-300: var(--pe-color-gray-300);
-  --color-gray-400: var(--pe-color-gray-400);
-  --color-gray-500: var(--pe-color-gray-500);
-  --color-gray-600: var(--pe-color-gray-600);
-  --color-gray-700: var(--pe-color-gray-700);
-  --color-gray-800: var(--pe-color-gray-800);
-  --color-gray-900: var(--pe-color-gray-900);
-}
-
-/* PolicyEngine design system - CSS variables for @layer component styles */
+/* PolicyEngine ui-kit theme bridged into legacy CSS variable names */
 :root {
-  /* Teal palette — sourced from design-system tokens */
+  --pe-color-primary-50: var(--color-teal-50);
+  --pe-color-primary-100: var(--color-teal-100);
+  --pe-color-primary-200: var(--color-teal-200);
+  --pe-color-primary-300: var(--color-teal-300);
+  --pe-color-primary-400: var(--color-teal-400);
+  --pe-color-primary-500: var(--color-teal-500);
+  --pe-color-primary-600: var(--primary);
+  --pe-color-primary-700: var(--color-teal-700);
+  --pe-color-primary-800: var(--color-teal-800);
+  --pe-color-primary-900: var(--color-teal-900);
+
+  --pe-color-gray-50: var(--color-gray-50);
+  --pe-color-gray-100: var(--color-gray-100);
+  --pe-color-gray-200: var(--color-gray-200);
+  --pe-color-gray-300: var(--color-gray-300);
+  --pe-color-gray-400: var(--color-gray-400);
+  --pe-color-gray-500: var(--color-gray-500);
+  --pe-color-gray-600: var(--color-gray-600);
+  --pe-color-gray-700: var(--color-gray-700);
+  --pe-color-gray-800: var(--color-gray-800);
+  --pe-color-gray-900: var(--color-gray-900);
+
+  --pe-color-bg-primary: var(--background);
+  --pe-color-border-light: var(--border-light);
+  --pe-color-text-primary: var(--text-primary);
+  --pe-color-text-secondary: var(--text-secondary);
+  --pe-color-text-tertiary: var(--text-tertiary);
+  --pe-color-text-inverse: var(--text-inverse);
+  --pe-color-success: var(--color-success);
+  --pe-color-warning: var(--color-warning);
+  --pe-color-error: var(--color-error);
+  --pe-color-error-bg: color-mix(in srgb, var(--color-error) 10%, white);
+  --pe-color-error-border: color-mix(in srgb, var(--color-error) 28%, white);
+  --pe-color-warning-bg: color-mix(in srgb, var(--color-warning) 16%, white);
+  --pe-color-warning-border: color-mix(in srgb, var(--color-warning) 30%, white);
+  --pe-color-text-warning: var(--color-gray-800);
+  --pe-font-family-primary: var(--font-sans);
+  --pe-font-family-mono: var(--font-mono);
+
   --pe-teal-50: var(--pe-color-primary-50);
   --pe-teal-100: var(--pe-color-primary-100);
   --pe-teal-200: var(--pe-color-primary-200);
@@ -42,7 +53,6 @@
   --pe-teal-800: var(--pe-color-primary-800);
   --pe-teal-900: var(--pe-color-primary-900);
 
-  /* Gray palette — sourced from design-system tokens */
   --pe-gray-50: var(--pe-color-gray-50);
   --pe-gray-100: var(--pe-color-gray-100);
   --pe-gray-200: var(--pe-color-gray-200);
@@ -55,9 +65,9 @@
   --pe-gray-900: var(--pe-color-gray-900);
 
   /* Semantic */
-  --pe-text-primary: var(--pe-color-gray-800);
-  --pe-text-secondary: var(--pe-color-gray-600);
-  --pe-text-muted: var(--pe-color-gray-500);
+  --pe-text-primary: var(--pe-color-text-primary);
+  --pe-text-secondary: var(--pe-color-text-secondary);
+  --pe-text-muted: var(--pe-color-text-tertiary);
   --pe-background: var(--pe-color-gray-50);
   --pe-surface: var(--pe-color-bg-primary);
   --pe-border: var(--pe-color-border-light);

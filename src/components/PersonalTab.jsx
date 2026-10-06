@@ -2,8 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import * as d3 from "d3";
-import { colors } from "@policyengine/design-system/tokens/colors";
-import { chartColors } from "@policyengine/design-system/charts";
+import { colors, chartColors } from "../themeTokens";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
