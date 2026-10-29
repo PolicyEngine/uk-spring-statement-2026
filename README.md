@@ -2,7 +2,7 @@
 
 Interactive tool analysing the household impact of the UK Spring Statement 2026, built by [PolicyEngine](https://policyengine.org).
 
-**Live site:** https://uk-spring-statement-2026-policy-engine.vercel.app/
+**Live site:** https://policyengine.org/uk/spring-statement-2026
 
 ## Features
 
